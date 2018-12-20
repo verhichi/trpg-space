@@ -1,9 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+
+import Header from './header/header';
+import Body from './body/body';
+import Modal from './modal/modal';
 
 class App extends Component {
   render() {
     return (
-      <main>yay</main>
+      <Fragment>
+        <Header/>
+        <Body/>
+        <Modal/>
+      </Fragment>
     );
   }
 }
