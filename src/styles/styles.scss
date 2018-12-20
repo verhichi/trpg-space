@@ -1,0 +1,29 @@
+// This file contains all global stylings
+// Styles specific to components will be written under each component folder
+
+// IMPORTS
+  @import "./partials/variables";
+  @import "./partials/fonts";
+
+// Box sizing
+  *,
+  *::after,
+  *::before{
+    box-sizing: inherit;
+    font-family: "ColabThin";
+  }
+
+  html{
+    box-sizing: border-box;
+  }
+
+// Height
+  html,
+  body{
+    height: 100%;
+  }
+
+// REACT ROOT ELEMENT
+  #root{
+    height: 100%;
+  }
