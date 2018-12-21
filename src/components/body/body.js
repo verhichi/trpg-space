@@ -6,7 +6,9 @@ import './body.scss';
 class Body extends Component {
   render() {
     return (
-      <main>BODY WORKS!</main>
+      <main>
+        BODY WORKS!
+      </main>
     );
   }
 }

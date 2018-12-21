@@ -34,7 +34,18 @@
     background: $primary-clr;
   }
 
-// Cursor
-  .cursor-pointer{
-    cursor: pointer;
-  }
+// GENERAL CLASSES (BOOTSTRAP-LIKE)
+  // Width
+    .w-100{
+      width: 100%;
+    }
+
+  // Height
+    .h-100{
+      height: 100%;
+    }
+
+  // Cursor
+    .cursor-pointer{
+      cursor: pointer;
+    }
