@@ -1,0 +1,31 @@
+@import '../../../styles/partials/variables';
+@import '../../../styles/partials/mediaQueries';
+
+.lobby-cont{
+  align-items: center;
+  color: $white-clr;
+  display: flex;
+  justify-content: center;
+}
+
+.lobby-inp-cont{
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px 15px;
+  margin: 10px 0;
+}
+
+.lobby-inp-label{
+  font-size: $font-size-lg;
+
+  @include md{
+    font-size: $font-size-xl;
+  }
+}
+
+.lobby-inp-field{
+  border: none;
+  border-radius: 0;
+  height: 40px;
+  line-height: 30px;
+  padding: 5px;
+}

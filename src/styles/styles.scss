@@ -45,7 +45,38 @@
       height: 100%;
     }
 
+  // Text Align
+    .align-center{
+      text-align: center;
+    }
+
+    .align-right{
+      text-align: right;
+    }
+
+    .align-left{
+      text-align: left;
+    }
+
   // Cursor
     .cursor-pointer{
       cursor: pointer;
+    }
+
+  // Button styling
+    .btn{
+      border: none;
+      display: flex;
+      font-size: $font-size-lg;
+      margin-top: 5px;
+      padding: 15px 10px;
+    }
+
+    .btn-hot{
+      background: $hot-clr;
+      color: $white-clr;
+    }
+
+    .btn-text{
+      flex-grow: 1;
     }
