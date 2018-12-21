@@ -29,6 +29,11 @@
     height: 100%;
   }
 
+// Background
+  body {
+    background: $primary-clr;
+  }
+
 // Cursor
   .cursor-pointer{
     cursor: pointer;

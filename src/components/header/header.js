@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+
+// Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+// Style
 import './header.scss';
 
 class Header extends Component {

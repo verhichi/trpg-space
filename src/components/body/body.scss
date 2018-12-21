@@ -1,0 +1,10 @@
+@import '../../styles/partials/variables';
+@import '../../styles/partials/mediaQueries';
+
+main{
+  width: 100%;
+  @include xl {
+    margin: 0 auto;
+    width: 1200px;
+  }
+}
