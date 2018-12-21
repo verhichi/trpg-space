@@ -9,6 +9,7 @@ import './body.scss';
 
 // Components
 import Lobby from './lobby/lobby';
+import Room from './room/room';
 
 class Body extends Component {
   render() {
@@ -16,7 +17,8 @@ class Body extends Component {
       <main>
         <Router>
           <Switch>
-            <Route component={Lobby} />
+            <Route exact path="/"  component={Lobby} />
+            <Route exact path="/:room_id" component={Room} />
           </Switch>
         </Router>
       </main>
