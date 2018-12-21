@@ -1,0 +1,74 @@
+@import '../../../styles/partials/variables';
+@import '../../../styles/partials/mediaQueries';
+
+.room-cont{
+  display: flex;
+  flex-direction: column;
+}
+
+.room-center-cont{
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.tool-bar{
+  background: $secondary-clr;
+  color: $white-clr;
+  display: flex;
+  font-size: $font-size-xl;
+  padding: 10px;
+}
+
+.room-id{
+  flex-grow: 1;
+}
+
+.tool-bar-btn{
+  padding: 0 5px;
+}
+
+.chat-cont{
+  background: $secondary-clr;
+  color: $white-clr;
+  display: flex;
+  font-size: $font-size-xl;
+  height: 45px;
+}
+
+.chat-bar-btn{
+  line-height: 45px;
+  padding: 0 10px;
+}
+
+.chat-inp{
+  background: #464646;
+  border: none;
+  border-radius: 0;
+  color: $white-clr;
+  flex-grow: 1;
+  line-height: 45px;
+  padding: 0 10px;
+  resize: none;
+}
+
+.chat-log-cont{
+  color: $white-clr;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 5px 10px;
+
+  @include lg{
+    padding: 5px 30px;
+  }
+}
+
+.chat-log{
+  margin-bottom: 10px;
+}
+
+.chat-log-user{
+  font-size: $font-size-lg;
+  font-weight: bold;
+  padding-right: 10px;
+}

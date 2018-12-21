@@ -3,15 +3,5 @@
 
 main{
   height: calc(100% - 40px);
-  padding: 5px;
   width: 100%;
-
-  @include lg {
-    padding: 10px;
-  }
-
-  @include xl {
-    margin: 0 auto;
-    width: 1200px;
-  }
 }

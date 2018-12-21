@@ -80,3 +80,12 @@
     .btn-text{
       flex-grow: 1;
     }
+
+  // Display None for smartphone screens
+    .d-none-sm{
+      display: none;
+
+      @include md{
+        display: inline;
+      }
+    }
