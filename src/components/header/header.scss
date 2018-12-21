@@ -1,0 +1,17 @@
+@import '../../styles/partials/variables';
+@import '../../styles/partials/mediaQueries';
+
+header{
+  background: $black;
+  color: $white;
+  display: flex;
+  font-size: $font-size-xxl;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 10px;
+}
+
+.header-title{
+  text-align: center;
+  flex-grow: 1;
+}
