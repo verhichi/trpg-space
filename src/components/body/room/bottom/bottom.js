@@ -56,10 +56,10 @@ class Bottom extends Component {
     return (
       <div className="room-bottom-cont">
         <div className="chat-cont">
-          <div className="chat-bar-btn cursor-pointer" onClick={this.handleDiceSettingClick}>
+          <div className="chat-bar-btn cursor-pointer" onClick={this.handleCharListClick}>
             <FontAwesomeIcon icon="address-card"/>
           </div>
-          <div className="chat-bar-btn btn-hot cursor-pointer" onClick={this.handleCharListClick}>
+          <div className="chat-bar-btn btn-hot cursor-pointer" onClick={this.handleDiceSettingClick}>
             <FontAwesomeIcon icon="dice"/>
           </div>
           <textarea className="chat-inp" placeholder="Enter text here" value={this.state.chatText} onChange={this.handleChange}></textarea>

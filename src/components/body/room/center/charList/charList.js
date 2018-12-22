@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,10 +7,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Style
 import './charList.scss';
 
+// Redux Map State To Prop
+const mapStateToProps = (state) => {
+  return { showCharList: state.showCharList };
+};
+
 class CharList extends Component {
   render() {
+    const toggleClass = this.props.showCharList ? 'is-active' : '';
+
     return (
-      <div className="char-list-cont">
+      <div className={`char-list-cont ${toggleClass}`}>
         <div className="char-list-tool-bar d-flex">
           <div className="f-grow-1 align-center font-weight-bold text-dec-underline">Character List</div>
           <div className="cursor-pointer">
@@ -43,4 +51,4 @@ class CharList extends Component {
   }
 }
 
-export default CharList;
+export default connect(mapStateToProps)(CharList);

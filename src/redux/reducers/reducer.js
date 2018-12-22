@@ -17,7 +17,7 @@ const rootReducer = (state = initialState, action) => {
     case TOGGLE_DICE_BUBBLE:
       return {
         ...state,
-        showDiceSetting: !this.showDiceSetting
+        showDiceSetting: !state.showDiceSetting
       };
 
     case TOGGLE_CHAR_LIST:

@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 // Style
 import './diceBalloon.scss';
 
+// Redux Map State To Prop
+const mapStateToProps = (state) => {
+  return { showDiceSetting: state.showDiceSetting };
+};
+
 class DiceBalloon extends Component {
   render() {
+    const toggleClass = this.props.showDiceSetting ? 'is-active' : '';
+
     return (
-      <div className="dice-help-balloon font-weight-bold is-active">
+      <div className={`dice-help-balloon font-weight-bold ${toggleClass}`}>
         <div className="dice-setting">
           Dice:
           <div className="sel-cont">
@@ -66,4 +74,4 @@ class DiceBalloon extends Component {
   }
 }
 
-export default DiceBalloon;
+export default connect(mapStateToProps)(DiceBalloon);
