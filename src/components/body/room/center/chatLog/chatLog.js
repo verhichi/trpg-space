@@ -1,33 +1,41 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 // Style
 import './chatLog.scss';
 
+// Redux Map State To Prop
+const mapStateToProps = (state) => {
+  return {chatLog: state.chatLog};
+};
+
 class ChatLog extends Component {
+
   render() {
+
+    const chatLog = this.props.chatLog.map((val, idx) => {
+      switch (val.type){
+        default:
+          return(
+            <div className="chat-log" key={idx}>
+              <div className="chat-log-head">
+                <span className="chat-log-user">{val.displayName}</span>
+                <span className="chat-log-time">{val.time}</span>
+              </div>
+              <div className="chat-log-body">
+                {val.text}
+              </div>
+            </div>
+          );
+      }
+    });
+
     return (
       <div className="chat-log-cont h-100 w-100">
-        <div className="chat-log">
-          <div className="chat-log-head">
-            <span className="chat-log-user">name</span>
-            <span className="chat-log-time">4:21</span>
-          </div>
-          <div className="chat-log-body">
-            Whats up nigga!
-          </div>
-        </div>
-        <div className="chat-log">
-          <div className="chat-log-head">
-            <span className="chat-log-user">name2</span>
-            <span className="chat-log-time">4:21</span>
-          </div>
-          <div className="chat-log-body">
-            Hey!
-          </div>
-        </div>
+        {chatLog}
       </div>
     );
   }
 }
 
-export default ChatLog;
+export default connect(mapStateToProps)(ChatLog);

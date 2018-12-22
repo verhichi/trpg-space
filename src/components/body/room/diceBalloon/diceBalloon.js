@@ -7,7 +7,7 @@ class DiceBalloon extends Component {
   render() {
     return (
       <div className="dice-help-balloon font-weight-bold is-active">
-        <div class="dice-setting">
+        <div className="dice-setting">
           Dice:
           <div className="sel-cont">
             <select name="dice-number">
@@ -55,7 +55,7 @@ class DiceBalloon extends Component {
             </select>
           </div>
         </div>
-        <div className="">
+        <div>
           <label><input type="checkbox"/> Do not share result</label>
         </div>
         <button className="btn btn-hot w-100 cursor-pointer">
