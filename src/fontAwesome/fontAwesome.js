@@ -2,7 +2,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 
 // import your icons
-import { faQuestionCircle, faTools, faSignInAlt, faUsers, faDice, faPaperPlane, faCog, faAddressCard } from '@fortawesome/free-solid-svg-icons';
+import { faQuestionCircle, faTools, faSignInAlt, faUsers, faDice, faPaperPlane, faCog, faAddressCard, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
   faQuestionCircle,
@@ -12,5 +12,6 @@ library.add(
   faDice,
   faPaperPlane,
   faCog,
-  faAddressCard
+  faAddressCard,
+  faPlusSquare
 );

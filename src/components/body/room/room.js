@@ -12,8 +12,8 @@ class Room extends Component {
       <div className="room-cont h-100">
 
         <div className="room-top-cont">
-          <div className="tool-bar">
-            <div className="room-id">(2)Room ID: 123456</div>
+          <div className="tool-bar d-flex">
+            <div className="f-grow-1">(2)Room ID: 123456</div>
             <div className="tool-bar-btn cursor-pointer">
               <FontAwesomeIcon icon="cog"/>
               <span className="d-none-sm"> Settings</span>
@@ -21,8 +21,15 @@ class Room extends Component {
           </div>
         </div>
 
-        <div className="room-center-cont">
+        <div className="room-center-cont d-flex f-grow-1">
           <div className="char-list-cont">
+            <div className="char-list-tool-bar d-flex">
+              <div className="f-grow-1 align-center font-weight-bold text-dec-underline">Character List</div>
+              <div className="cursor-pointer">
+                <FontAwesomeIcon icon="plus-square"/>
+                <span className="d-none-sm"> New</span>
+              </div>
+            </div>
           </div>
           <div className="chat-log-cont h-100 w-100">
             <div className="chat-log">

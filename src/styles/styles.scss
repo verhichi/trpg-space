@@ -58,6 +58,25 @@
       text-align: left;
     }
 
+  // Font Weight
+    .font-weight-bold{
+      font-weight: bold;
+    }
+
+  // Text Decoration
+    .text-dec-underline{
+      text-decoration: underline;
+    }
+
+  // Flex
+    .d-flex{
+      display: flex;
+    }
+
+    .f-grow-1{
+      flex-grow: 1;
+    }
+
   // Cursor
     .cursor-pointer{
       cursor: pointer;
