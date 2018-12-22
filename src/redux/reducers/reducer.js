@@ -1,15 +1,17 @@
-import { ADD_ARTICLE } from '../constants/actionTypes';
+import { ADD_TO_CHAT_LOG } from '../constants/actionTypes';
 
 const initialState = {
-  articles: []
+  chatLog: [],
+  showCharList: false,
+  showDiceSetting: false
 };
 
 const rootReducer = (state = initialState, action) => {
   switch(action.type){
-    case ADD_ARTICLE:
+    case ADD_TO_CHAT_LOG:
       return {
         ...state,
-        articles: [...state.articles, action.payload]
+        chatLog: [...state.chatLog, action.content]
       };
 
     default:

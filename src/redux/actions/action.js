@@ -1,8 +1,8 @@
-import  { ADD_ARTICLE } from '../constants/actionTypes';
+import  { ADD_TO_CHAT_LOG } from '../constants/actionTypes';
 
-export const addArticle = (article) => {
+export const addToChatLog = (content) => {
   return {
-    type: ADD_ARTICLE,
-    payload: article
+    type: ADD_TO_CHAT_LOG,
+    content: content
   };
 };

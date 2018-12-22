@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 
-// Font Awesome Component
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 // Style
 import './center.scss';
 
