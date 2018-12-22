@@ -1,0 +1,63 @@
+@import '../../../../../styles/partials/variables';
+@import '../../../../../styles/partials/mediaQueries';
+
+.char-list-cont{
+  background: $secondary-clr;
+  border-top: 1px solid $primary-clr;
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  transition: width 0.3s;
+  width: 0;
+
+  @include md{
+    position: static;
+  }
+
+  &.is-active{
+    padding: 5px;
+    width: 100%;
+
+    @include md{
+      width: 400px;
+    }
+  }
+}
+
+.char-list-tool-bar{
+  color: $white-clr;
+  height: 25px;
+  font-size: $font-size-lg;
+  margin-bottom: 5px;
+}
+
+.char-list{
+  height: calc(100% - 25px);
+  padding: 5px;
+  overflow-y: scroll;
+}
+
+.char-cont{
+  background: $white-clr;
+  border: 1px solid white;
+  color: $primary-clr;
+  font-size: $font-size-lg;
+  margin-bottom: 5px;
+  padding: 5px;
+}
+
+.char-head{
+  margin-bottom: 5px;
+}
+
+.chat-log-cont{
+  color: $white-clr;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  padding: 5px 10px;
+
+  @include lg{
+    padding: 5px 30px;
+  }
+}

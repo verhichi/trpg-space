@@ -1,0 +1,26 @@
+@import '../../../../styles/partials/variables';
+@import '../../../../styles/partials/mediaQueries';
+
+.chat-cont{
+  background: $secondary-clr;
+  color: $white-clr;
+  display: flex;
+  font-size: $font-size-xl;
+  height: 45px;
+}
+
+.chat-bar-btn{
+  line-height: 45px;
+  padding: 0 10px;
+}
+
+.chat-inp{
+  background: $tertiary-clr;
+  border: none;
+  border-radius: 0;
+  color: $white-clr;
+  flex-grow: 1;
+  line-height: 45px;
+  padding: 0 10px;
+  resize: none;
+}

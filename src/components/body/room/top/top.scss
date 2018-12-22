@@ -1,0 +1,18 @@
+@import '../../../../styles/partials/variables';
+@import '../../../../styles/partials/mediaQueries';
+
+.tool-bar{
+  background: $secondary-clr;
+  color: $white-clr;
+  font-size: $font-size-xl;
+  height: 45px;
+  padding: 10px;
+}
+
+.room-id{
+  flex-grow: 1;
+}
+
+.tool-bar-btn{
+  padding: 0 5px;
+}
