@@ -30,6 +30,27 @@ class Room extends Component {
                 <span className="d-none-sm"> New</span>
               </div>
             </div>
+            <div className="char-list h-100">
+              <div className="char-cont w-100">
+                <div className="char-head d-flex">
+                  <div className="pr-1 cursor-pointer">
+                    <FontAwesomeIcon icon="pen-square"/>
+                  </div>
+                  <div className="f-grow-1 font-weight-bold">Asumade</div>
+                  <div className="cursor-pointer">
+                    <FontAwesomeIcon icon="window-close"/>
+                  </div>
+                </div>
+                <div className="char-body">
+                  <div>
+                    <FontAwesomeIcon icon="heart"/> 32 / 35
+                  </div>
+                  <div>
+                    <FontAwesomeIcon icon="flask"/> 50 / 50
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="chat-log-cont h-100 w-100">
             <div className="chat-log">
@@ -69,6 +90,64 @@ class Room extends Component {
               <span className="d-none-sm"> Send</span>
             </div>
           </div>
+        </div>
+
+        <div className="dice-help-balloon font-weight-bold is-active">
+          <div class="dice-setting">
+            Dice:
+            <div className="sel-cont">
+              <select name="dice-number">
+                <option value="1">1</option>
+                <option value="2" selected>2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            d
+            <div className="sel-cont">
+              <select name="dice-type">
+                <option value="4">4</option>
+                <option value="6" selected>6</option>
+                <option value="8">8</option>
+                <option value="10">10</option>
+                <option value="12">12</option>
+                <option value="20">20</option>
+                <option value="100">100</option>
+              </select>
+            </div>
+          </div>
+          <div className="dice-setting">
+            Bonus:
+            <div className="sel-cont">
+              <select name="symbol">
+                <option value="+" selected>+</option>
+                <option value="-">-</option>
+              </select>
+            </div>
+            <div className="sel-cont">
+              <select name="modifier">
+                <option value="0" selected>0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+          </div>
+          <div className="">
+            <input type="checkbox"/> Do not share result
+          </div>
+          <button className="btn btn-hot w-100 cursor-pointer">
+            <div className="btn-text font-weight-bold">Roll</div>
+          </button>
+
         </div>
 
       </div>

@@ -34,24 +34,57 @@
   .char-list-cont{
     background: $secondary-clr;
     border-top: 1px solid $primary-clr;
-    padding: 5px;
-    width: 400px;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    transition: width 0.3s;
+    width: 0;
+
+    @include md{
+      position: static;
+    }
+
+    &.is-active{
+      padding: 5px;
+      width: 100%;
+
+      @include md{
+        width: 400px;
+      }
+    }
   }
 
   .char-list-tool-bar{
     color: $white-clr;
+    height: 25px;
     font-size: $font-size-lg;
+    margin-bottom: 5px;
   }
 
   .char-list{
+    height: calc(100% - 25px);
     padding: 5px;
+    overflow-y: scroll;
+  }
+
+  .char-cont{
+    background: $white-clr;
+    border: 1px solid white;
+    color: $primary-clr;
+    font-size: $font-size-lg;
+    margin-bottom: 5px;
+    padding: 5px;
+  }
+
+  .char-head{
+    margin-bottom: 5px;
   }
 
   .chat-log-cont{
     color: $white-clr;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    overflow-y: scroll;
     padding: 5px 10px;
 
     @include lg{
@@ -85,7 +118,7 @@
   }
 
   .chat-inp{
-    background: #464646;
+    background: $tertiary-clr;
     border: none;
     border-radius: 0;
     color: $white-clr;
@@ -94,3 +127,72 @@
     padding: 0 10px;
     resize: none;
   }
+
+
+// HELP BALLOON
+  .dice-help-balloon{
+    background: $tertiary-clr;
+    bottom: 60px;
+    color: $white-clr;
+    display: none;
+    left: 30px;
+    padding: 15px;
+    position: absolute;
+    z-index: 100;
+
+    &.is-active{
+      display: block;
+    }
+
+    &::before{
+      border: 15px solid transparent;
+      border-top: 15px solid $tertiary-clr;
+      content: "";
+      left: 15%;
+      position: absolute;
+      top: 100%;
+    }
+  }
+
+  .dice-setting{
+    line-height: 30px;
+  }
+
+  // SELECT
+    .sel-cont{
+      display: inline-block;
+      height: 30px;
+      margin: 0 5px;
+      overflow: hidden;
+      position: relative;
+      width: 50px;
+
+      &::after{
+        bottom: 0;
+        color: #000;
+        content: '\25BC';
+        font-size: 10px;
+        padding: 0 3px;
+        pointer-events: none;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+
+      select{
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -o-appearance: none;
+        appearance: none;
+        background: #FFF;
+        border: none;
+        border-radius: 0;
+        height: 100%;
+        left: 0;
+        outline: none;
+        padding: 3px;
+        position: absolute;
+        top: 0;
+        width: 100%;
+      }
+    }
