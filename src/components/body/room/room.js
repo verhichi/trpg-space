@@ -142,7 +142,7 @@ class Room extends Component {
             </div>
           </div>
           <div className="">
-            <input type="checkbox"/> Do not share result
+            <label><input type="checkbox"/> Do not share result</label>
           </div>
           <button className="btn btn-hot w-100 cursor-pointer">
             <div className="btn-text font-weight-bold">Roll</div>
