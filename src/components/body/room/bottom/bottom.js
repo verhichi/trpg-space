@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addToChatLog } from '../../../../redux/actions/action';
+import { addToChatLog, toggleCharList, toggleDiceBubble } from '../../../../redux/actions/action';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,7 +11,9 @@ import './bottom.scss';
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    addToChatLog: content => dispatch(addToChatLog(content))
+    addToChatLog: content => dispatch(addToChatLog(content)),
+    toggleCharList: () => dispatch(toggleCharList()),
+    toggleDiceBubble: () => dispatch(toggleDiceBubble())
   };
 };
 
@@ -21,14 +23,16 @@ class Bottom extends Component {
     this.state = { chatText: '' };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleSendClick = this.handleSendClick.bind(this);
+    this.handleDiceSettingClick = this.handleDiceSettingClick.bind(this);
+    this.handleCharListClick = this.handleCharListClick.bind(this);
   }
 
   handleChange (e){
     this.setState({ chatText: e.target.value });
   }
 
-  handleClick (e){
+  handleSendClick (e){
     e.preventDefault();
     this.props.addToChatLog({
       displayName: 'Daichi',
@@ -38,18 +42,28 @@ class Bottom extends Component {
     this.setState({ chatText: '' });
   }
 
+  handleDiceSettingClick (e){
+    e.preventDefault();
+    this.props.toggleDiceBubble();
+  }
+
+  handleCharListClick (e){
+    e.preventDefault();
+    this.props.toggleCharList();
+  }
+
   render() {
     return (
       <div className="room-bottom-cont">
         <div className="chat-cont">
-          <div className="chat-bar-btn cursor-pointer">
+          <div className="chat-bar-btn cursor-pointer" onClick={this.handleDiceSettingClick}>
             <FontAwesomeIcon icon="address-card"/>
           </div>
-          <div className="chat-bar-btn btn-hot cursor-pointer">
+          <div className="chat-bar-btn btn-hot cursor-pointer" onClick={this.handleCharListClick}>
             <FontAwesomeIcon icon="dice"/>
           </div>
           <textarea className="chat-inp" placeholder="Enter text here" value={this.state.chatText} onChange={this.handleChange}></textarea>
-          <div className="chat-bar-btn btn-hot cursor-pointer" onClick={this.handleClick}>
+          <div className="chat-bar-btn btn-hot cursor-pointer" onClick={this.handleSendClick}>
             <FontAwesomeIcon icon="paper-plane"/>
             <span className="d-none-sm"> Send</span>
           </div>

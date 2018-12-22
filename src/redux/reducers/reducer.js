@@ -1,4 +1,4 @@
-import { ADD_TO_CHAT_LOG } from '../constants/actionTypes';
+import { ADD_TO_CHAT_LOG, TOGGLE_CHAR_LIST, TOGGLE_DICE_BUBBLE } from '../constants/actionTypes';
 
 const initialState = {
   chatLog: [],
@@ -12,6 +12,18 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         chatLog: [...state.chatLog, action.content]
+      };
+
+    case TOGGLE_DICE_BUBBLE:
+      return {
+        ...state,
+        showDiceSetting: !this.showDiceSetting
+      };
+
+    case TOGGLE_CHAR_LIST:
+      return {
+        ...state,
+        showCharList: !state.showCharList
       };
 
     default:

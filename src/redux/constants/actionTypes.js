@@ -1,1 +1,3 @@
 export const ADD_TO_CHAT_LOG = 'ADD_TO_CHAT_LOG';
+export const TOGGLE_DICE_BUBBLE = 'TOGGLE_DICE_BUBBLE';
+export const TOGGLE_CHAR_LIST = 'TOGGLE_CHAR_LIST';
