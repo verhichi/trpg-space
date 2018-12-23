@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { toggleModal, removeFromCharList } from '../../../../../../redux/actions/action';
+import { showModal, removeFromCharList } from '../../../../../../redux/actions/action';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,7 +16,7 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleModal: (modalType) => dispatch(toggleModal(modalType)),
+    showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
     removeFromCharList: (charId) => dispatch(removeFromCharList(charId))
   };
 };
@@ -33,7 +33,7 @@ class Char extends Component {
   }
 
   handleEditClick (e){
-     this.props.toggleModal('editChar');
+     this.props.showModal('editChar', { charId: this.props.charData.charId });
   }
 
   render() {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { toggleModal } from '../../../../../redux/actions/action';
+import { showModal } from '../../../../../redux/actions/action';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleModal: (modalType) => dispatch(toggleModal(modalType))
+    showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp))
   };
 };
 
@@ -34,7 +34,7 @@ class CharList extends Component {
   }
 
   handleNewClick (){
-    this.props.toggleModal('newChar');
+    this.props.showModal('newChar');
   }
 
   render() {

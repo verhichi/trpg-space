@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { toggleModal } from '../../redux/actions/action';
+import { hideModal } from '../../redux/actions/action';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,7 +18,7 @@ const mapStateToProps = (state) => {
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
-  return { toggleModal: (modalType) => dispatch(toggleModal(modalType)) };
+  return { hideModal: () => dispatch(hideModal()) };
 };
 
 class Modal extends Component {
@@ -28,7 +28,7 @@ class Modal extends Component {
   }
 
   handleCloseClick (){
-    this.props.toggleModal();
+    this.props.hideModal();
   }
 
   render() {

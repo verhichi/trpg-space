@@ -54,7 +54,7 @@ class ChatLog extends Component {
       }
 
       return (
-        <div className="chat-log">
+        <div className="chat-log" key={idx}>
           {chatHead}
           {chatBody}
         </div>

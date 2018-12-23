@@ -1,10 +1,11 @@
-import { ADD_TO_CHAT_LOG, ADD_TO_CHAR_LIST, REMOVE_FROM_CHAR_LIST, TOGGLE_CHAR_LIST, TOGGLE_DICE_BUBBLE, TOGGLE_MODAL } from '../constants/actionTypes';
+import { ADD_TO_CHAT_LOG, ADD_TO_CHAR_LIST, REMOVE_FROM_CHAR_LIST, TOGGLE_CHAR_LIST, TOGGLE_DICE_BUBBLE, SHOW_MODAL, HIDE_MODAL } from '../constants/actionTypes';
 
 const initialState = {
   id: '123456',
   modalSetting: {
     show: false,
-    modalType: 'help'
+    modalType: '',
+    modalProp: {}
   },
   showCharList: false,
   showDiceSetting: false,
@@ -32,12 +33,23 @@ const rootReducer = (state = initialState, action) => {
         charList: state.charList.filter((char) => char.charId !== action.charId)
       };
 
-    case TOGGLE_MODAL:
+    case SHOW_MODAL:
       return {
         ...state,
         modalSetting: {
-          show: !state.modalSetting.show,
-          modalType: action.modalType
+          show: true,
+          modalType: action.modalType,
+          modalProp: action.modalProp
+        }
+      };
+
+    case HIDE_MODAL:
+      return {
+        ...state,
+        modalSetting: {
+          show: false,
+          modalType: '',
+          modalProp: {}
         }
       };
 

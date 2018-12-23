@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addToCharList, toggleModal } from '../../../redux/actions/action';
+import { addToCharList, hideModal } from '../../../redux/actions/action';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,7 +20,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addToCharList: (charData) => dispatch(addToCharList(charData)),
-    toggleModal: (modalType) => dispatch(toggleModal(modalType))
+    hideModal: () => dispatch(hideModal())
   };
 };
 
@@ -86,7 +86,7 @@ class NewChar extends Component {
       curMp: ''
     });
 
-    this.props.toggleModal();
+    this.props.hideModal();
   }
 
   render() {
