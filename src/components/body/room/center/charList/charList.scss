@@ -7,7 +7,6 @@
   flex-direction: column;
   overflow-x: hidden;
   position: absolute;
-  transition: width 0.3s;
   width: 0;
 
   @include md{

@@ -67,6 +67,7 @@ class NewChar extends Component {
   handleButtonClick (e){
     e.preventDefault();
     const randomNum = Math.random().toString().substr(2, 9);
+
     this.props.addToCharList({
       charId: randomNum,
       ownerId: this.props.id,
@@ -75,6 +76,14 @@ class NewChar extends Component {
       curHp: this.state.curHp,
       maxMp: this.state.maxMp,
       curMp: this.state.curMp
+    });
+
+    this.setState({
+      name: '',
+      maxHp: '',
+      curHp: '',
+      maxMp: '',
+      curMp: ''
     });
 
     this.props.toggleModal();
@@ -92,15 +101,15 @@ class NewChar extends Component {
         <div className="f-grow-1 font-size-lg">
           <div className="mb-2">
             <div>Name:</div>
-            <input className="inp w-100" type="text" placeholder="Enter character name..." onChange={this.handleNameChange}/>
+            <input className="inp w-100" type="text" placeholder="Enter character name..." value={this.state.name} onChange={this.handleNameChange}/>
           </div>
           <div className="mb-2">
             <div>HP:</div>
-            <input className="inp stat-inp" type="tel" onChange={this.handleCurHpChange}/> / <input className="inp stat-inp" type="tel" onChange={this.handleMaxHpChange}/>
+            <input className="inp stat-inp" type="tel" value={this.state.curHp} onChange={this.handleCurHpChange}/> / <input className="inp stat-inp" type="tel" value={this.state.maxHp} onChange={this.handleMaxHpChange}/>
           </div>
           <div className="mb-2">
             <div>MP:</div>
-            <input className="inp stat-inp" type="tel" onChange={this.handleCurMpChange}/> / <input className="inp stat-inp" type="tel" onChange={this.handleMaxMpChange}/>
+            <input className="inp stat-inp" type="tel" value={this.state.curMp} onChange={this.handleCurMpChange}/> / <input className="inp stat-inp" type="tel" value={this.state.maxMp} onChange={this.handleMaxMpChange}/>
           </div>
         </div>
         <button className="btn btn-hot cursor-pointer" disabled={isDisabled} onClick={this.handleButtonClick}>

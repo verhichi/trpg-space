@@ -8,18 +8,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Style
 import './charList.scss';
 
+// Component
+import Char from './char/char';
+
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
     id: state.id,
-    showCharList: state.showCharList ,
+    showCharList: state.showCharList,
     charList: state.charList
   };
 };
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
-  return { toggleModal: (modalType) => dispatch(toggleModal(modalType)) };
+  return {
+    toggleModal: (modalType) => dispatch(toggleModal(modalType))
+  };
 };
 
 class CharList extends Component {
@@ -35,28 +40,8 @@ class CharList extends Component {
   render() {
     const toggleClass = this.props.showCharList ? 'is-active' : '';
 
-    const charList = this.props.charList.map((char, idx) => {
-      return(
-        <div className="char-cont w-100" key={idx}>
-          <div className="char-head d-flex mb-3">
-            <div className="pr-1 cursor-pointer">
-              <FontAwesomeIcon icon="user-cog"/>
-            </div>
-            <div className="f-grow-1 font-weight-bold">{char.name}</div>
-            <div className="cursor-pointer">
-              <FontAwesomeIcon icon="window-close"/>
-            </div>
-          </div>
-          <div className="char-body">
-            <div>
-              <FontAwesomeIcon icon="heart"/> {char.curHp} /  {char.maxHp}
-            </div>
-            <div>
-              <FontAwesomeIcon icon="flask"/> {char.curMp} / {char.maxMp}
-            </div>
-          </div>
-        </div>
-      );
+    const charList = this.props.charList.map((charData, idx) => {
+      return <Char key={idx} charData={charData}/>;
     });
 
     return (
