@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { addToChatLog, toggleDiceBubble } from '../../../../redux/actions/action';
 
 // Style
 import './diceBalloon.scss';
@@ -7,6 +8,14 @@ import './diceBalloon.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return { showDiceSetting: state.showDiceSetting };
+};
+
+// Redux Map Dispatch To Props
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToChatLog: content => dispatch(addToChatLog(content)),
+    toggleDiceBubble: () => dispatch(toggleDiceBubble())
+  };
 };
 
 class DiceBalloon extends Component {
@@ -25,6 +34,7 @@ class DiceBalloon extends Component {
     this.handleSymbolChange = this.handleSymbolChange.bind(this);
     this.handleModifierChange = this.handleModifierChange.bind(this);
     this.handlePrivateChange = this.handlePrivateChange.bind(this);
+    this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
   handleDiceNumberChange (e){
@@ -45,6 +55,31 @@ class DiceBalloon extends Component {
 
   handlePrivateChange (e){
     this.setState({ private: !this.state.private });
+  }
+
+  handleButtonClick (e){
+    let result = [];
+
+    for (let idx = 0; idx < this.state.diceNumber; idx++){
+      const roll = Math.floor(Math.random() * this.state.diceType) + 1
+      result.push(roll);
+    }
+
+    const resultString = result.join(', ') + '(' + this.state.symbol + this.state.modifier + ')';
+    const total = result.reduce((prev, next) => {
+      return prev + next;
+    }, Number(this.state.symbol + this.state.modifier));
+
+    this.props.addToChatLog({
+      type: 'roll',
+      displayName: 'Daichi',
+      time: '3:13',
+      result: resultString,
+      total: total,
+      private: this.state.private
+    });
+
+    this.props.toggleDiceBubble();
   }
 
   render (){
@@ -103,7 +138,7 @@ class DiceBalloon extends Component {
         <div>
           <label><input type="checkbox" checked={this.state.private} onChange={this.handlePrivateChange}/> Do not share result</label>
         </div>
-        <button className="btn btn-hot w-100 cursor-pointer">
+        <button className="btn btn-hot w-100 cursor-pointer" onClick={this.handleButtonClick}>
           <div className="btn-text font-weight-bold">Roll</div>
         </button>
       </div>
@@ -111,4 +146,4 @@ class DiceBalloon extends Component {
   }
 }
 
-export default connect(mapStateToProps)(DiceBalloon);
+export default connect(mapStateToProps, mapDispatchToProps)(DiceBalloon);

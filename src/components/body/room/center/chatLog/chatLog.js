@@ -15,18 +15,43 @@ class ChatLog extends Component {
 
     const chatLog = this.props.chatLog.map((val, idx) => {
       switch (val.type){
-        default:
+        case 'text':
           return(
             <div className="chat-log" key={idx}>
               <div className="chat-log-head">
                 <span className="chat-log-user">{val.displayName}</span>
                 <span className="chat-log-time">{val.time}</span>
               </div>
-              <div className="chat-log-body">
+              <div className="chat-log-body pl-3">
                 {val.text}
               </div>
             </div>
           );
+
+        case 'roll':
+          return(
+            <div className="chat-log" key={idx}>
+              <div className="chat-log-head">
+                <span className="chat-log-user">{val.displayName}</span>
+                <span className="chat-log-time">{val.time}</span>
+              </div>
+              <div className="chat-log-body pl-3">
+                <div className="d-flex">
+                  <div>
+                    <div>Dice Roll Result(Bonus):</div>
+                    <div className="font-size-xxl">{val.result}</div>
+                  </div>
+                  <div className="pl-3">
+                    <div>Total:</div>
+                    <div className="font-size-xxl">{val.total}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+
+        default:
+          return null;
       }
     });
 

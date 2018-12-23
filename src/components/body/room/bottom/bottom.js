@@ -35,6 +35,7 @@ class Bottom extends Component {
   handleSendClick (e){
     e.preventDefault();
     this.props.addToChatLog({
+      type: 'text',
       displayName: 'Daichi',
       time: '3:13',
       text: this.state.chatText
