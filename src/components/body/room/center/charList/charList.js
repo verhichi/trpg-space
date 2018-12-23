@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { toggleModal } from '../../../../../redux/actions/action';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,13 +17,27 @@ const mapStateToProps = (state) => {
   };
 };
 
+// Redux Map Dispatch To Props
+const mapDispatchToProps = (dispatch) => {
+  return { toggleModal: () => dispatch(toggleModal()) };
+};
+
 class CharList extends Component {
+  constructor (props){
+    super(props);
+    this.handleNewClick = this.handleNewClick.bind(this);
+  }
+
+  handleNewClick (){
+    this.props.toggleModal();
+  }
+
   render() {
     const toggleClass = this.props.showCharList ? 'is-active' : '';
 
     const charList = this.props.charList.map((char, idx) => {
       return(
-        <div className="char-cont w-100">
+        <div className="char-cont w-100" key={idx}>
           <div className="char-head d-flex">
             <div className="pr-1 cursor-pointer">
               <FontAwesomeIcon icon="pen-square"/>
@@ -34,7 +49,7 @@ class CharList extends Component {
           </div>
           <div className="char-body">
             <div>
-              <FontAwesomeIcon icon="heart"/> {char.curHp} / {char.maxHp}
+              <FontAwesomeIcon icon="heart"/> {char.curHp} /  {char.maxHp}
             </div>
             <div>
               <FontAwesomeIcon icon="flask"/> {char.curMp} / {char.maxMp}
@@ -45,15 +60,15 @@ class CharList extends Component {
     });
 
     return (
-      <div className={`char-list-cont ${toggleClass}`}>
+      <div className={`char-list-cont d-flex ${toggleClass}`}>
         <div className="char-list-tool-bar d-flex">
           <div className="f-grow-1 align-center font-weight-bold text-dec-underline">Character List</div>
-          <div className="cursor-pointer">
+          <div className="cursor-pointer" onClick={this.handleNewClick}>
             <FontAwesomeIcon icon="plus-square"/>
             <span className="d-none-sm"> New</span>
           </div>
         </div>
-        <div className="char-list h-100">
+        <div className="char-list d-flex f-grow-1">
           {charList}
         </div>
       </div>
@@ -61,4 +76,4 @@ class CharList extends Component {
   }
 }
 
-export default connect(mapStateToProps)(CharList);
+export default connect(mapStateToProps, mapDispatchToProps)(CharList);

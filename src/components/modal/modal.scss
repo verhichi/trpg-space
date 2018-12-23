@@ -12,11 +12,16 @@
   top: 0;
   position: fixed;
   z-index: 100;
+
+  &.is-active{
+    display: flex;
+  }
 }
 
 .modal-cont{
   background: $white-clr;
   border: none;
   height: 75%;
+  padding: 5px;
   width: 75%;
 }

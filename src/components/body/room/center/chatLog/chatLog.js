@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 // Style
@@ -54,15 +54,15 @@ class ChatLog extends Component {
       }
 
       return (
-        <Fragment>
+        <div className="chat-log">
           {chatHead}
           {chatBody}
-        </Fragment>
+        </div>
       );
     });
 
     return (
-      <div className="chat-log-cont h-100 w-100">
+      <div className="chat-log-cont w-100">
         {chatLog}
       </div>
     );

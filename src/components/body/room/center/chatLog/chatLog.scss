@@ -1,6 +1,18 @@
 @import '../../../../../styles/partials/variables';
 @import '../../../../../styles/partials/mediaQueries';
 
+.chat-log-cont{
+  color: $white-clr;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  padding: 5px 10px;
+
+  @include lg{
+    padding: 5px 30px;
+  }
+}
+
 .chat-log{
   margin-bottom: 10px;
 }

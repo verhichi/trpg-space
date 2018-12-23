@@ -4,8 +4,8 @@
 .char-list-cont{
   background: $secondary-clr;
   border-top: 1px solid $primary-clr;
-  height: 100%;
-  overflow: hidden;
+  flex-direction: column;
+  overflow-x: hidden;
   position: absolute;
   transition: width 0.3s;
   width: 0;
@@ -32,7 +32,10 @@
 }
 
 .char-list{
-  height: calc(100% - 25px);
+  flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
   padding: 5px;
   overflow-y: scroll;
 }
@@ -48,16 +51,4 @@
 
 .char-head{
   margin-bottom: 5px;
-}
-
-.chat-log-cont{
-  color: $white-clr;
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
-  padding: 5px 10px;
-
-  @include lg{
-    padding: 5px 30px;
-  }
 }

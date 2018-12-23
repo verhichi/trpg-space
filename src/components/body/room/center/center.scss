@@ -3,6 +3,9 @@
 
 .room-center-cont{
   align-items: stretch;
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+    -ms-grid-row-align: stretch;
   overflow: hidden;
   position: relative;
 }

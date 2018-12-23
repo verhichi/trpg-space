@@ -1,7 +1,8 @@
-import { ADD_TO_CHAT_LOG, TOGGLE_CHAR_LIST, TOGGLE_DICE_BUBBLE } from '../constants/actionTypes';
+import { ADD_TO_CHAT_LOG, TOGGLE_CHAR_LIST, TOGGLE_DICE_BUBBLE, TOGGLE_MODAL } from '../constants/actionTypes';
 
 const initialState = {
   id: '123456',
+  showModal: false,
   showCharList: false,
   showDiceSetting: false,
   chatLog: [],
@@ -15,14 +16,122 @@ const initialState = {
     curMp: 50
   },
   {
-    charId: '354523235',
+    charId: '3545345235',
     ownerId: '123456',
-    name: 'Asumade2',
-    maxHp: 61,
-    curHp: 61,
-    maxMp: 15,
-    curMp: 12
-  }]
+    name: 'Asumade1',
+    maxHp: 35,
+    curHp: 12,
+    maxMp: 50,
+    curMp: 50
+  },
+  {
+    charId: '3545345235',
+    ownerId: '123456',
+    name: 'Asumade1',
+    maxHp: 35,
+    curHp: 12,
+    maxMp: 50,
+    curMp: 50
+  },
+  {
+    charId: '3545345235',
+    ownerId: '123456',
+    name: 'Asumade1',
+    maxHp: 35,
+    curHp: 12,
+    maxMp: 50,
+    curMp: 50
+  },
+  {
+    charId: '3545345235',
+    ownerId: '123456',
+    name: 'Asumade1',
+    maxHp: 35,
+    curHp: 12,
+    maxMp: 50,
+    curMp: 50
+  },
+  {
+    charId: '3545345235',
+    ownerId: '123456',
+    name: 'Asumade1',
+    maxHp: 35,
+    curHp: 12,
+    maxMp: 50,
+    curMp: 50
+  },
+  {
+    charId: '3545345235',
+    ownerId: '123456',
+    name: 'Asumade1',
+    maxHp: 35,
+    curHp: 12,
+    maxMp: 50,
+    curMp: 50
+  },
+  {
+    charId: '3545345235',
+    ownerId: '123456',
+    name: 'Asumade1',
+    maxHp: 35,
+    curHp: 12,
+    maxMp: 50,
+    curMp: 50
+  },
+  {
+    charId: '3545345235',
+    ownerId: '123456',
+    name: 'Asumade1',
+    maxHp: 35,
+    curHp: 12,
+    maxMp: 50,
+    curMp: 50
+  },
+  {
+    charId: '3545345235',
+    ownerId: '123456',
+    name: 'Asumade1',
+    maxHp: 35,
+    curHp: 12,
+    maxMp: 50,
+    curMp: 50
+  },
+  {
+    charId: '3545345235',
+    ownerId: '123456',
+    name: 'Asumade1',
+    maxHp: 35,
+    curHp: 12,
+    maxMp: 50,
+    curMp: 50
+  },
+  {
+    charId: '3545345235',
+    ownerId: '123456',
+    name: 'Asumade1',
+    maxHp: 35,
+    curHp: 12,
+    maxMp: 50,
+    curMp: 50
+  },
+  {
+    charId: '3545345235',
+    ownerId: '123456',
+    name: 'Asumade1',
+    maxHp: 35,
+    curHp: 12,
+    maxMp: 50,
+    curMp: 50
+  },
+  {
+    charId: '3545345235',
+    ownerId: '123456',
+    name: 'Asumade1',
+    maxHp: 35,
+    curHp: 12,
+    maxMp: 50,
+    curMp: 50
+  },]
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -31,6 +140,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         chatLog: [...state.chatLog, action.content]
+      };
+
+    case TOGGLE_MODAL:
+      return {
+        ...state,
+        showModal: !state.showModal
       };
 
     case TOGGLE_DICE_BUBBLE:
