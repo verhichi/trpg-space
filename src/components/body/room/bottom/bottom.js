@@ -54,20 +54,23 @@ class Bottom extends Component {
   }
 
   render() {
+
+    const isDisabled = this.state.chatText.trim().length === 0;
+
     return (
       <div className="room-bottom-cont">
         <div className="chat-cont">
           <div className="chat-bar-btn cursor-pointer" onClick={this.handleCharListClick}>
             <FontAwesomeIcon icon="address-card"/>
           </div>
-          <div className="chat-bar-btn btn-hot cursor-pointer" onClick={this.handleDiceSettingClick}>
+          <button className="chat-bar-btn btn-hot cursor-pointer" onClick={this.handleDiceSettingClick}>
             <FontAwesomeIcon icon="dice"/>
-          </div>
+          </button>
           <textarea className="chat-inp" placeholder="Enter text here" value={this.state.chatText} onChange={this.handleChange}></textarea>
-          <div className="chat-bar-btn btn-hot cursor-pointer" onClick={this.handleSendClick}>
+          <button className="chat-bar-btn btn-hot cursor-pointer" disabled={isDisabled} onClick={this.handleSendClick}>
             <FontAwesomeIcon icon="paper-plane"/>
             <span className="d-none-sm"> Send</span>
-          </div>
+          </button>
         </div>
       </div>
     );

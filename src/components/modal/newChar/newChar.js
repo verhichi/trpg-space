@@ -45,23 +45,23 @@ class NewChar extends Component {
   }
 
   handleNameChange (e){
-    this.setState({ name: e.target.value });
+    this.setState({ name: e.target.value.trim() });
   }
 
   handleMaxHpChange (e){
-    this.setState({ maxHp: e.target.value });
+    this.setState({ maxHp: e.target.value.trim() });
   }
 
   handleCurHpChange (e){
-    this.setState({ curHp: e.target.value });
+    this.setState({ curHp: e.target.value.trim() });
   }
 
   handleMaxMpChange (e){
-    this.setState({ maxMp: e.target.value });
+    this.setState({ maxMp: e.target.value.trim() });
   }
 
   handleCurMpChange (e){
-    this.setState({ curMp: e.target.value });
+    this.setState({ curMp: e.target.value.trim() });
   }
 
   handleButtonClick (e){
@@ -81,6 +81,12 @@ class NewChar extends Component {
   }
 
   render() {
+    const isDisabled = this.state.name.length  === 0 ||
+                       this.state.maxHp.length === 0 ||
+                       this.state.curHp.length === 0 ||
+                       this.state.maxMp.length === 0 ||
+                       this.state.curMp.length === 0;
+
     return (
       <div className="d-flex f-dir-col f-grow-1">
         <div className="f-grow-1 font-size-lg">
@@ -97,7 +103,7 @@ class NewChar extends Component {
             <input className="inp stat-inp" type="tel" onChange={this.handleCurMpChange}/> / <input className="inp stat-inp" type="tel" onChange={this.handleMaxMpChange}/>
           </div>
         </div>
-        <button className="btn btn-hot cursor-pointer" onClick={this.handleButtonClick}>
+        <button className="btn btn-hot cursor-pointer" disabled={isDisabled} onClick={this.handleButtonClick}>
           <FontAwesomeIcon icon="user-plus"/>
           <div className="btn-text">Create Character</div>
         </button>

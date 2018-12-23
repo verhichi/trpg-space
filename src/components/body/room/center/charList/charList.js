@@ -38,7 +38,7 @@ class CharList extends Component {
     const charList = this.props.charList.map((char, idx) => {
       return(
         <div className="char-cont w-100" key={idx}>
-          <div className="char-head d-flex">
+          <div className="char-head d-flex mb-3">
             <div className="pr-1 cursor-pointer">
               <FontAwesomeIcon icon="user-cog"/>
             </div>
@@ -61,7 +61,7 @@ class CharList extends Component {
 
     return (
       <div className={`char-list-cont d-flex ${toggleClass}`}>
-        <div className="char-list-tool-bar d-flex">
+        <div className="char-list-tool-bar d-flex mb-1">
           <div className="f-grow-1 align-center font-weight-bold text-dec-underline">Character List</div>
           <div className="cursor-pointer" onClick={this.handleNewClick}>
             <FontAwesomeIcon icon="user-plus"/>
