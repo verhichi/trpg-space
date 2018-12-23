@@ -15,6 +15,9 @@ export const toggleCharList = () => {
   return { type: TOGGLE_CHAR_LIST };
 };
 
-export const toggleModal = () => {
-  return { type: TOGGLE_MODAL };
+export const toggleModal = (modalType) => {
+  return {
+    type: TOGGLE_MODAL,
+    modalType: modalType
+  };
 };

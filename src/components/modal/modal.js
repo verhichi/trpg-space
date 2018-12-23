@@ -10,12 +10,12 @@ import './modal.scss';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
-  return { showModal: state.showModal };
+  return { modalSetting: state.modalSetting };
 };
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
-  return { toggleModal: () => dispatch(toggleModal()) };
+  return { toggleModal: (modalType) => dispatch(toggleModal(modalType)) };
 };
 
 class Modal extends Component {
@@ -29,7 +29,7 @@ class Modal extends Component {
   }
 
   render() {
-    const toggleClass = this.props.showModal ? 'is-active' : '';
+    const toggleClass = this.props.modalSetting.show ? 'is-active' : '';
 
     return (
       <div className={`modal-background w-100 h-100 ${toggleClass}`}>

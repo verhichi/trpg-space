@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
-  return { toggleModal: () => dispatch(toggleModal()) };
+  return { toggleModal: (modalType) => dispatch(toggleModal(modalType)) };
 };
 
 class CharList extends Component {
@@ -29,7 +29,7 @@ class CharList extends Component {
   }
 
   handleNewClick (){
-    this.props.toggleModal();
+    this.props.toggleModal('newChar');
   }
 
   render() {
