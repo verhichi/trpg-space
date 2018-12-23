@@ -8,6 +8,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Style
 import './modal.scss';
 
+// Component
+import NewChar from './newChar/newChar';
+
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return { modalSetting: state.modalSetting };
@@ -33,7 +36,7 @@ class Modal extends Component {
 
     return (
       <div className={`modal-background w-100 h-100 ${toggleClass}`}>
-        <div className="modal-cont">
+        <div className="modal-cont d-flex f-dir-col">
           <div className="d-flex font-size-xl">
             <div className="f-grow-1 align-center">
               MODAL TITLE!
@@ -41,6 +44,9 @@ class Modal extends Component {
             <div className="cursor-pointer" onClick={this.handleCloseClick}>
               <FontAwesomeIcon icon="window-close"/>
             </div>
+          </div>
+          <div className="f-grow-1">
+            <NewChar/>
           </div>
         </div>
       </div>

@@ -128,6 +128,10 @@
       -ms-flex-positive: 1;
     }
 
+    .f-dir-col{
+      flex-direction: column;
+    }
+
   // Cursor
     .cursor-pointer{
       cursor: pointer;
