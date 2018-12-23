@@ -39,15 +39,13 @@ class Modal extends Component {
         <div className="modal-cont d-flex f-dir-col">
           <div className="d-flex font-size-xl">
             <div className="f-grow-1 align-center">
-              MODAL TITLE!
+              Create New Character
             </div>
-            <div className="cursor-pointer" onClick={this.handleCloseClick}>
-              <FontAwesomeIcon icon="window-close"/>
+            <div className="font-size-xxl cursor-pointer" onClick={this.handleCloseClick}>
+              <FontAwesomeIcon icon="times"/>
             </div>
           </div>
-          <div className="f-grow-1">
-            <NewChar/>
-          </div>
+          <NewChar/>
         </div>
       </div>
     );

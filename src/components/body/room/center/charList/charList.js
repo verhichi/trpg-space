@@ -40,7 +40,7 @@ class CharList extends Component {
         <div className="char-cont w-100" key={idx}>
           <div className="char-head d-flex">
             <div className="pr-1 cursor-pointer">
-              <FontAwesomeIcon icon="pen-square"/>
+              <FontAwesomeIcon icon="user-cog"/>
             </div>
             <div className="f-grow-1 font-weight-bold">{char.name}</div>
             <div className="cursor-pointer">
@@ -64,7 +64,7 @@ class CharList extends Component {
         <div className="char-list-tool-bar d-flex">
           <div className="f-grow-1 align-center font-weight-bold text-dec-underline">Character List</div>
           <div className="cursor-pointer" onClick={this.handleNewClick}>
-            <FontAwesomeIcon icon="plus-square"/>
+            <FontAwesomeIcon icon="user-plus"/>
             <span className="d-none-sm"> New</span>
           </div>
         </div>

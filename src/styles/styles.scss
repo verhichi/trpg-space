@@ -103,6 +103,14 @@
       padding-right: 5px;
     }
 
+    .pr-2{
+      padding-right: 10px;
+    }
+
+    .pr-3{
+      padding-right: 15px;
+    }
+
     .pl-1{
       padding-left: 5px;
     }
@@ -113,6 +121,15 @@
 
     .pl-3{
       padding-left: 15px;
+    }
+
+  // margin
+    .mb-1{
+      margin-bottom: 5px;
+    }
+
+    .mb-2{
+      margin-bottom: 10px;
     }
 
   // Flex
@@ -135,6 +152,15 @@
   // Cursor
     .cursor-pointer{
       cursor: pointer;
+    }
+
+  // Input
+    .inp{
+      border: 1px solid $black-clr;
+      border-radius: 0;
+      height: 40px;
+      line-height: 30px;
+      padding: 5px;
     }
 
   // Button styling
