@@ -1,4 +1,4 @@
-import { ADD_TO_CHAT_LOG, ADD_TO_CHAR_LIST, EDIT_CHAR, REMOVE_FROM_CHAR_LIST, TOGGLE_CHAR_LIST, TOGGLE_DICE_BUBBLE, SHOW_MODAL, HIDE_MODAL } from '../constants/actionTypes';
+import { ADD_TO_CHAT_LOG, ADD_TO_CHAR_LIST, EDIT_CHAR, REMOVE_FROM_CHAR_LIST, TOGGLE_CHAR_LIST, TOGGLE_DICE_BUBBLE, SHOW_MODAL, HIDE_MODAL, TOGGLE_USER_LIST } from '../constants/actionTypes';
 
 const initialState = {
   id: '123456',
@@ -9,8 +9,10 @@ const initialState = {
   },
   showCharList: false,
   showDiceSetting: false,
+  showUserList: false,
+  userList: [],
+  charList: [],
   chatLog: [],
-  charList: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -82,6 +84,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         showCharList: !state.showCharList
+      };
+
+    case TOGGLE_USER_LIST:
+      return {
+        ...state,
+        showUserList: !state.showUserList
       };
 
     default:
