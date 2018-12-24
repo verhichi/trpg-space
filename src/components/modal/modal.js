@@ -11,6 +11,7 @@ import './modal.scss';
 // Component
 import NewChar from './newChar/newChar';
 import EditChar from './editChar/editChar';
+import Confirm from './confirm/confirm';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -40,7 +41,8 @@ class Modal extends Component {
 
     const modalBody = {
       newChar: <NewChar />,
-      editChar: <EditChar />
+      editChar: <EditChar />,
+      confirm: <Confirm />
     };
 
     return (
@@ -50,7 +52,7 @@ class Modal extends Component {
             <div className="f-grow-1 align-center">
               {this.props.modalSetting.modalProp.title}
             </div>
-            <div className="font-size-xxl cursor-pointer" onClick={this.handleCloseClick}>
+            <div className="cursor-pointer" onClick={this.handleCloseClick}>
               <FontAwesomeIcon icon="times"/>
             </div>
           </div>
