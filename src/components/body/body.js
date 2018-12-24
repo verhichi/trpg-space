@@ -18,7 +18,7 @@ class Body extends Component {
         <Router>
           <Switch>
             <Route exact path="/"  component={Lobby} />
-            <Route exact path="/:room_id" component={Room} />
+            <Route exact path="/:roomId" component={Room} />
           </Switch>
         </Router>
       </main>

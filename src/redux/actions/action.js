@@ -2,16 +2,17 @@ import {
   ADD_TO_CHAT_LOG,
   ADD_TO_CHAR_LIST,
   EDIT_CHAR,
-  REMOVE_FROM_CHAR_LIST,
-  TOGGLE_DICE_BUBBLE,
-  SHOW_MODAL,
-  HIDE_MODAL,
   EDIT_USER,
-  REMOVE_USER,
-  SHOW_CHAR_LIST,
   HIDE_CHAR_LIST,
+  HIDE_MODAL,
+  HIDE_USER_LIST,
+  REMOVE_FROM_CHAR_LIST,
+  REMOVE_USER,
+  SET_ROOM_ID,
+  SHOW_CHAR_LIST,
+  SHOW_MODAL,
   SHOW_USER_LIST,
-  HIDE_USER_LIST
+  TOGGLE_DICE_BUBBLE
 } from '../constants/actionTypes';
 
 export const addToChatLog = (content) => {
@@ -85,5 +86,12 @@ export const removeUser = (userId) => {
   return {
     type: REMOVE_USER,
     userId
+  }
+};
+
+export const setRoomId = (roomId) => {
+  return {
+    type: SET_ROOM_ID,
+    roomId
   }
 };

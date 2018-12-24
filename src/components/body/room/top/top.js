@@ -11,6 +11,7 @@ import './top.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
+    roomId: state.roomId,
     displayUserList: state.displayUserList,
     userList: state.userList
   };
@@ -41,7 +42,7 @@ class Top extends Component {
     return (
       <div className="room-top-cont">
         <div className="tool-bar d-flex">
-          <div className="f-grow-1">({this.props.userList.length})Room ID: 123456</div>
+          <div className="f-grow-1">({this.props.userList.length})Room ID: {this.props.roomId}</div>
           <div className="tool-bar-btn cursor-pointer" onClick={this.handleSettingClick}>
             <FontAwesomeIcon icon="cog"/>
             <span className="d-none-sm"> Settings</span>
