@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { showModal, removeFromCharList } from '../../../../../../redux/actions/action';
+import { showModal, hideModal, removeFromCharList } from '../../../../../../redux/actions/action';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,6 +17,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
+    hideModal: () => dispatch(hideModal()),
     removeFromCharList: (charId) => dispatch(removeFromCharList(charId))
   };
 };
@@ -24,12 +25,17 @@ const mapDispatchToProps = (dispatch) => {
 class Char extends Component {
   constructor (props){
     super(props);
-    this.handleRemoveClick = this.handleRemoveClick.bind(this, this.props.charData.charId)
+    this.handleRemoveClick = this.handleRemoveClick.bind(this);
     this.handleEditClick = this.handleEditClick.bind(this);
   }
 
   handleRemoveClick (charId, e){
-    this.props.removeFromCharList(charId);
+    this.props.showModal('confirm', {
+      title: 'Delete Character',
+      confirmText: `Are you sure you want to delete ${this.props.charData.name}?`,
+      accept: this.props.removeFromCharList.bind(null, this.props.charData.charId),
+      decline: this.props.hideModal
+    });
   }
 
   handleEditClick (e){
