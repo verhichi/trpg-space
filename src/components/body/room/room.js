@@ -21,7 +21,8 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 class Room extends Component {
-  componentWillMount (){
+  constructor (props){
+    super(props);
     this.props.setRoomId(this.props.match.params.roomId);
     this.props.setUserId(uuid.v4());
   }
