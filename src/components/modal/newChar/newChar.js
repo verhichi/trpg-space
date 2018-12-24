@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import uuid from 'uuid';
 import { addToCharList, hideModal } from '../../../redux/actions/action';
 
 // Font Awesome Component
@@ -66,7 +67,7 @@ class NewChar extends Component {
 
   handleButtonClick (e){
     e.preventDefault();
-    const randomNum = Math.random().toString().substr(2, 9);
+    const randomNum = uuid.v4();
 
     this.props.addToCharList({
       charId: randomNum,
