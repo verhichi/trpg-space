@@ -20,8 +20,8 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    showUserList: () => dispatch(showUserList()),
-    hideUserList: () => dispatch(hideUserList())
+    hideUserList: () => dispatch(hideUserList()),
+    showUserList: () => dispatch(showUserList())
   };
 };
 

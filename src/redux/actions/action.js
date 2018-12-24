@@ -9,6 +9,7 @@ import {
   REMOVE_FROM_CHAR_LIST,
   REMOVE_USER,
   SET_ROOM_ID,
+  SET_USER_ID,
   SHOW_CHAR_LIST,
   SHOW_MODAL,
   SHOW_USER_LIST,
@@ -86,12 +87,19 @@ export const removeUser = (userId) => {
   return {
     type: REMOVE_USER,
     userId
-  }
+  };
 };
 
 export const setRoomId = (roomId) => {
   return {
     type: SET_ROOM_ID,
     roomId
-  }
+  };
+};
+
+export const setUserId = (userId) => {
+  return {
+    type: SET_USER_ID,
+    userId
+  };
 };

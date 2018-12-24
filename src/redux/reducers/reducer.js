@@ -9,6 +9,7 @@ import {
   REMOVE_FROM_CHAR_LIST,
   REMOVE_USER,
   SET_ROOM_ID,
+  SET_USER_ID,
   SHOW_CHAR_LIST,
   SHOW_MODAL,
   SHOW_USER_LIST,
@@ -160,6 +161,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         roomId: action.roomId
+      };
+
+    case SET_USER_ID:
+      return {
+        ...state,
+        userId: action.userId
       };
 
     default:
