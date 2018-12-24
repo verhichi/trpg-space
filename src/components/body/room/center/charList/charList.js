@@ -34,14 +34,14 @@ class CharList extends Component {
   }
 
   handleNewClick (){
-    this.props.showModal('newChar');
+    this.props.showModal('newChar', { title: 'Create New Character' });
   }
 
   render() {
     const toggleClass = this.props.showCharList ? 'is-active' : '';
 
-    const charList = this.props.charList.map((charData, idx) => {
-      return <Char key={idx} charData={charData}/>;
+    const charList = this.props.charList.map((charData) => {
+      return <Char key={charData.charId} charData={charData}/>;
     });
 
     return (

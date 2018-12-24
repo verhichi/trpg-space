@@ -1,4 +1,4 @@
-import  { ADD_TO_CHAT_LOG, ADD_TO_CHAR_LIST, REMOVE_FROM_CHAR_LIST, TOGGLE_CHAR_LIST, TOGGLE_DICE_BUBBLE, SHOW_MODAL, HIDE_MODAL } from '../constants/actionTypes';
+import  { ADD_TO_CHAT_LOG, ADD_TO_CHAR_LIST, EDIT_CHAR, REMOVE_FROM_CHAR_LIST, TOGGLE_CHAR_LIST, TOGGLE_DICE_BUBBLE, SHOW_MODAL, HIDE_MODAL } from '../constants/actionTypes';
 
 export const addToChatLog = (content) => {
   return {
@@ -40,3 +40,10 @@ export const removeFromCharList = (charId) => {
     charId
   };
 };
+
+export const editChar = (charData) => {
+  return {
+    type: EDIT_CHAR,
+    charData
+  };
+}

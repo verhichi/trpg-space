@@ -10,10 +10,14 @@ import './modal.scss';
 
 // Component
 import NewChar from './newChar/newChar';
+import EditChar from './editChar/editChar';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
-  return { modalSetting: state.modalSetting };
+  return {
+    charList: state.charList,
+    modalSetting: state.modalSetting
+  };
 };
 
 // Redux Map Dispatch To Props
@@ -34,18 +38,23 @@ class Modal extends Component {
   render() {
     const toggleClass = this.props.modalSetting.show ? 'is-active' : '';
 
+    const modalBody = {
+      newChar: <NewChar />,
+      editChar: <EditChar />
+    };
+
     return (
       <div className={`modal-background w-100 h-100 ${toggleClass}`}>
         <div className="modal-cont d-flex f-dir-col">
           <div className="d-flex font-size-xl">
             <div className="f-grow-1 align-center">
-              Create New Character
+              {this.props.modalSetting.modalProp.title}
             </div>
             <div className="font-size-xxl cursor-pointer" onClick={this.handleCloseClick}>
               <FontAwesomeIcon icon="times"/>
             </div>
           </div>
-          <NewChar/>
+          {modalBody[this.props.modalSetting.modalType]}
         </div>
       </div>
     );

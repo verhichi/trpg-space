@@ -33,7 +33,7 @@ class Char extends Component {
   }
 
   handleEditClick (e){
-     this.props.showModal('editChar', { charId: this.props.charData.charId });
+     this.props.showModal('editChar', { title: 'Edit Character', charId: this.props.charData.charId });
   }
 
   render() {

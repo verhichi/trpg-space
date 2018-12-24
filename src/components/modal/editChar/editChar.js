@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addToCharList, hideModal } from '../../../redux/actions/action';
+import { editChar, hideModal } from '../../../redux/actions/action';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Style
-import './newChar.scss';
+import './editChar.scss';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
     id:           state.id,
+    charList:     state.charList,
     modalSetting: state.modalSetting
   };
 };
@@ -19,21 +20,22 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    addToCharList: (charData) => dispatch(addToCharList(charData)),
+    editChar: (charData) => dispatch(editChar(charData)),
     hideModal: () => dispatch(hideModal())
   };
 };
 
 
-class NewChar extends Component {
+class EditChar extends Component {
   constructor (props){
     super(props);
+    const char = this.props.charList.find((char) => char.charId === this.props.modalSetting.modalProp.charId);
     this.state = {
-      name: '',
-      maxHp: '',
-      curHp: '',
-      maxMp: '',
-      curMp: ''
+      name: char.name,
+      maxHp: char.maxHp,
+      curHp: char.curHp,
+      maxMp: char.maxMp,
+      curMp: char.curMp
     };
 
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -66,11 +68,9 @@ class NewChar extends Component {
 
   handleButtonClick (e){
     e.preventDefault();
-    const randomNum = Math.random().toString().substr(2, 9);
 
-    this.props.addToCharList({
-      charId: randomNum,
-      ownerId: this.props.id,
+    this.props.editChar({
+      charId: this.props.modalSetting.modalProp.charId,
       name: this.state.name.trim(),
       maxHp: this.state.maxHp.trim(),
       curHp: this.state.curHp.trim(),
@@ -121,4 +121,4 @@ class NewChar extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewChar);
+export default connect(mapStateToProps, mapDispatchToProps)(EditChar);
