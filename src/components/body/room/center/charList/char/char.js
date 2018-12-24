@@ -46,13 +46,19 @@ class Char extends Component {
     return(
       <div className="char-cont w-100">
         <div className="char-head d-flex mb-3">
-          <div className="pr-1 cursor-pointer" onClick={this.handleEditClick}>
-            <FontAwesomeIcon icon="user-cog"/>
-          </div>
+          {this.props.charData.ownerId === this.props.id
+            ? (<div className="pr-1 cursor-pointer" onClick={this.handleEditClick}>
+                 <FontAwesomeIcon icon="user-cog"/>
+               </div>)
+            : null
+          }
           <div className="char-name f-grow-1 font-weight-bold">{this.props.charData.name}</div>
-          <div className="cursor-pointer" onClick={this.handleRemoveClick}>
-            <FontAwesomeIcon icon="window-close"/>
-          </div>
+          {this.props.charData.ownerId === this.props.id
+            ? (<div className="cursor-pointer" onClick={this.handleRemoveClick}>
+                 <FontAwesomeIcon icon="window-close"/>
+               </div>)
+            : null
+          }
         </div>
         <div className="char-body">
           <div>

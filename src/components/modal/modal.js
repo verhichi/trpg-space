@@ -11,6 +11,7 @@ import './modal.scss';
 // Component
 import NewChar from './newChar/newChar';
 import EditChar from './editChar/editChar';
+import EditUser from './editUser/editUser';
 import Confirm from './confirm/confirm';
 
 // Redux Map State To Prop
@@ -37,11 +38,12 @@ class Modal extends Component {
   }
 
   render() {
-    const toggleClass = this.props.modalSetting.show ? 'is-active' : '';
+    const toggleClass = this.props.modalSetting.display ? 'is-active' : '';
 
     const modalBody = {
       newChar: <NewChar />,
       editChar: <EditChar />,
+      editUser: <EditUser />,
       confirm: <Confirm />
     };
 

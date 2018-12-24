@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 // import { showModal } from '../../../../../redux/actions/action';
 
 // Font Awesome Component
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Style
 import './userList.scss';
@@ -15,30 +15,15 @@ import User from './user/user';
 const mapStateToProps = (state) => {
   return {
     id: state.id,
-    showUserList: state.showUserList,
+    displayUserList: state.displayUserList,
     userList: state.userList
   };
 };
 
-// // Redux Map Dispatch To Props
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp))
-//   };
-// };
-
 class UserList extends Component {
-  // constructor (props){
-  //   super(props);
-  //   this.handleNewClick = this.handleNewClick.bind(this);
-  // }
-
-  // handleNewClick (){
-  //   this.props.showModal('newChar', { title: 'Create New Character' });
-  // }
 
   render() {
-    const toggleClass = this.props.showUserList ? 'is-active' : '';
+    const toggleClass = this.props.displayUserList ? 'is-active' : '';
 
     const userList = this.props.userList.map((userData) => {
       return <User key={userData.id} userData={userData}/>;

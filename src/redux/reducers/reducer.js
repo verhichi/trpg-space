@@ -1,17 +1,44 @@
-import { ADD_TO_CHAT_LOG, ADD_TO_CHAR_LIST, EDIT_CHAR, REMOVE_FROM_CHAR_LIST, TOGGLE_CHAR_LIST, TOGGLE_DICE_BUBBLE, SHOW_MODAL, HIDE_MODAL, TOGGLE_USER_LIST } from '../constants/actionTypes';
+import {
+  ADD_TO_CHAT_LOG,
+  ADD_TO_CHAR_LIST,
+  EDIT_CHAR,
+  REMOVE_FROM_CHAR_LIST,
+  TOGGLE_DICE_BUBBLE,
+  SHOW_MODAL,
+  HIDE_MODAL,
+  EDIT_USER,
+  REMOVE_USER,
+  SHOW_CHAR_LIST,
+  HIDE_CHAR_LIST,
+  SHOW_USER_LIST,
+  HIDE_USER_LIST
+} from '../constants/actionTypes';
 
 const initialState = {
-  id: '123456',
+  id: '123457',
+  host: true,
   modalSetting: {
-    show: false,
+    display: false,
     modalType: '',
     modalProp: {}
   },
-  showCharList: false,
-  showDiceSetting: false,
-  showUserList: false,
-  userList: [],
-  charList: [],
+  displayCharList: false,
+  displayDiceSetting: false,
+  displayUserList: false,
+  userList: [{
+    id: '123457',
+    name: 'Daichi Nishida',
+    host: true
+  }],
+  charList: [{
+    charId: '23984743543',
+    ownerId: '1234567',
+    name: 'Djakovich',
+    maxHp: '50',
+    curHp: '15',
+    maxMp: '60',
+    curMp: '45'
+  }],
   chatLog: [],
 };
 
@@ -46,7 +73,22 @@ const rootReducer = (state = initialState, action) => {
             return char;
           }
         })
-      }
+      };
+
+      case EDIT_USER:
+        return {
+          ...state,
+          userList: state.userList.map((user) => {
+            if (user.id === action.userData.id){
+              return {
+                ...user,
+                name: action.userData.name
+              };
+            } else {
+              return user;
+            }
+          })
+        };
 
     case REMOVE_FROM_CHAR_LIST:
       return {
@@ -54,11 +96,17 @@ const rootReducer = (state = initialState, action) => {
         charList: state.charList.filter((char) => char.charId !== action.charId)
       };
 
+    case REMOVE_USER:
+      return {
+        ...state,
+        userList: state.userList.filter((user) => user.id !== action.userId)
+      };
+
     case SHOW_MODAL:
       return {
         ...state,
         modalSetting: {
-          show: true,
+          display: true,
           modalType: action.modalType,
           modalProp: action.modalProp
         }
@@ -68,7 +116,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         modalSetting: {
-          show: false,
+          display: false,
           modalType: '',
           modalProp: {}
         }
@@ -77,19 +125,33 @@ const rootReducer = (state = initialState, action) => {
     case TOGGLE_DICE_BUBBLE:
       return {
         ...state,
-        showDiceSetting: !state.showDiceSetting
+        displayDiceSetting: !state.displayDiceSetting
       };
 
-    case TOGGLE_CHAR_LIST:
+    case SHOW_CHAR_LIST:
       return {
         ...state,
-        showCharList: !state.showCharList
+        displayCharList: true,
+        displayUserList: false
       };
 
-    case TOGGLE_USER_LIST:
+    case HIDE_CHAR_LIST:
       return {
         ...state,
-        showUserList: !state.showUserList
+        displayCharList: false
+      };
+
+    case SHOW_USER_LIST:
+      return {
+        ...state,
+        displayUserList: true,
+        displayCharList: false
+      };
+
+    case HIDE_USER_LIST:
+      return {
+        ...state,
+        displayUserList: false
       };
 
     default:

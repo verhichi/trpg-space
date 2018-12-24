@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addToChatLog, toggleCharList, toggleDiceBubble } from '../../../../redux/actions/action';
+import { addToChatLog, showCharList, hideCharList, toggleDiceBubble } from '../../../../redux/actions/action';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,11 +8,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Style
 import './bottom.scss';
 
+// Redux Map State To Prop
+const mapStateToProps = (state) => {
+  return { displayCharList: state.displayCharList };
+};
+
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
     addToChatLog: content => dispatch(addToChatLog(content)),
-    toggleCharList: () => dispatch(toggleCharList()),
+    showCharList: () => dispatch(showCharList()),
+    hideCharList: () => dispatch(hideCharList()),
     toggleDiceBubble: () => dispatch(toggleDiceBubble())
   };
 };
@@ -36,7 +42,7 @@ class Bottom extends Component {
     e.preventDefault();
     this.props.addToChatLog({
       type: 'text',
-      displayName: 'Daichi',
+      name: 'Daichi',
       time: '3:13',
       text: this.state.chatText
     });
@@ -50,11 +56,12 @@ class Bottom extends Component {
 
   handleCharListClick (e){
     e.preventDefault();
-    this.props.toggleCharList();
+    this.props.displayCharList
+      ? this.props.hideCharList()
+      : this.props.showCharList();
   }
 
   render() {
-
     const isDisabled = this.state.chatText.trim().length === 0;
 
     return (
@@ -77,4 +84,4 @@ class Bottom extends Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Bottom);
+export default connect(mapStateToProps, mapDispatchToProps)(Bottom);

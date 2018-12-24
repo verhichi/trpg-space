@@ -90,11 +90,11 @@ class EditChar extends Component {
   }
 
   render() {
-    const isDisabled = this.state.name.length  === 0 ||
-                       this.state.maxHp.length === 0 ||
-                       this.state.curHp.length === 0 ||
-                       this.state.maxMp.length === 0 ||
-                       this.state.curMp.length === 0;
+    const isDisabled = this.state.name.trim().length  === 0 ||
+                       this.state.maxHp.trim().length === 0 ||
+                       this.state.curHp.trim().length === 0 ||
+                       this.state.maxMp.trim().length === 0 ||
+                       this.state.curMp.trim().length === 0;
 
     return (
       <div className="d-flex f-dir-col f-grow-1">

@@ -1,0 +1,21 @@
+@import '../../../../../../styles/partials/variables';
+@import '../../../../../../styles/partials/mediaQueries';
+
+.user-cont{
+  color: $white-clr;
+  font-size: $font-size-lg;
+}
+
+.user-name{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-stat{
+  flex-basis: 40px;
+}
+
+.user-btn{
+  flex-basis: 30px;
+}

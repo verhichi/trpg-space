@@ -15,7 +15,7 @@ import Char from './char/char';
 const mapStateToProps = (state) => {
   return {
     id: state.id,
-    showCharList: state.showCharList,
+    displayCharList: state.displayCharList,
     charList: state.charList
   };
 };
@@ -38,7 +38,7 @@ class CharList extends Component {
   }
 
   render() {
-    const toggleClass = this.props.showCharList ? 'is-active' : '';
+    const toggleClass = this.props.displayCharList ? 'is-active' : '';
 
     const charList = this.props.charList.map((charData) => {
       return <Char key={charData.charId} charData={charData}/>;

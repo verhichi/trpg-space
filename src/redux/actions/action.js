@@ -1,4 +1,18 @@
-import  { ADD_TO_CHAT_LOG, ADD_TO_CHAR_LIST, EDIT_CHAR, REMOVE_FROM_CHAR_LIST, TOGGLE_CHAR_LIST, TOGGLE_DICE_BUBBLE, SHOW_MODAL, HIDE_MODAL, TOGGLE_USER_LIST } from '../constants/actionTypes';
+import {
+  ADD_TO_CHAT_LOG,
+  ADD_TO_CHAR_LIST,
+  EDIT_CHAR,
+  REMOVE_FROM_CHAR_LIST,
+  TOGGLE_DICE_BUBBLE,
+  SHOW_MODAL,
+  HIDE_MODAL,
+  EDIT_USER,
+  REMOVE_USER,
+  SHOW_CHAR_LIST,
+  HIDE_CHAR_LIST,
+  SHOW_USER_LIST,
+  HIDE_USER_LIST
+} from '../constants/actionTypes';
 
 export const addToChatLog = (content) => {
   return {
@@ -11,13 +25,21 @@ export const toggleDiceBubble = () => {
   return { type: TOGGLE_DICE_BUBBLE };
 };
 
-export const toggleCharList = () => {
-  return { type: TOGGLE_CHAR_LIST };
+export const showCharList = () => {
+  return { type: SHOW_CHAR_LIST };
 };
 
-export const toggleUserList = () => {
-  return { type: TOGGLE_USER_LIST };
-}
+export const hideCharList = () => {
+  return { type: HIDE_CHAR_LIST };
+};
+
+export const showUserList = () => {
+  return { type: SHOW_USER_LIST };
+};
+
+export const hideUserList = () => {
+  return { type: HIDE_USER_LIST };
+};
 
 export const showModal = (modalType, modalProp) => {
   return {
@@ -50,4 +72,18 @@ export const editChar = (charData) => {
     type: EDIT_CHAR,
     charData
   };
-}
+};
+
+export const editUser = (userData) => {
+  return {
+    type: EDIT_USER,
+    userData
+  };
+};
+
+export const removeUser = (userId) => {
+  return {
+    type: REMOVE_USER,
+    userId
+  }
+};

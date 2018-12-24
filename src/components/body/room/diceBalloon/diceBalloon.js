@@ -7,7 +7,7 @@ import './diceBalloon.scss';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
-  return { showDiceSetting: state.showDiceSetting };
+  return { displayDiceSetting: state.displayDiceSetting };
 };
 
 // Redux Map Dispatch To Props
@@ -72,7 +72,7 @@ class DiceBalloon extends Component {
 
     this.props.addToChatLog({
       type: 'roll',
-      displayName: 'Daichi',
+      name: 'Daichi',
       time: '3:13',
       result: resultString,
       total: total,
@@ -83,7 +83,7 @@ class DiceBalloon extends Component {
   }
 
   render (){
-    const toggleClass = this.props.showDiceSetting ? 'is-active' : '';
+    const toggleClass = this.props.displayDiceSetting ? 'is-active' : '';
 
     return (
       <div className={`dice-help-balloon font-weight-bold ${toggleClass}`}>

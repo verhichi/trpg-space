@@ -16,7 +16,7 @@ class ChatLog extends Component {
     const chatLog = this.props.chatLog.map((val, idx) => {
       const chatHead = (
         <div className="chat-log-head">
-          <span className="chat-log-user">{val.displayName}</span>
+          <span className="chat-log-user">{val.name}</span>
           <span className="chat-log-time">{val.time}</span>
         </div>
       );
