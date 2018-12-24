@@ -45,15 +45,15 @@ class CharList extends Component {
     });
 
     return (
-      <div className={`char-list-cont d-flex ${toggleClass}`}>
-        <div className="char-list-tool-bar d-flex mb-1">
+      <div className={`list-cont d-flex ${toggleClass}`}>
+        <div className="list-tool-bar d-flex mb-1">
           <div className="f-grow-1 align-center font-weight-bold text-dec-underline">Character List</div>
           <div className="cursor-pointer" onClick={this.handleNewClick}>
             <FontAwesomeIcon icon="user-plus"/>
             <span className="d-none-sm"> New</span>
           </div>
         </div>
-        <div className="char-list d-flex f-grow-1">
+        <div className="list d-flex f-grow-1">
           {charList}
         </div>
       </div>

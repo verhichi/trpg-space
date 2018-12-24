@@ -5,6 +5,7 @@ import './center.scss';
 
 // Components
 import CharList from './charList/charList';
+import UserList from './userList/userList';
 import ChatLog from './chatLog/chatLog';
 
 class Center extends Component {
@@ -13,6 +14,7 @@ class Center extends Component {
         <div className="room-center-cont d-flex f-grow-1">
           <CharList/>
           <ChatLog/>
+          <UserList/>
         </div>
     );
   }
