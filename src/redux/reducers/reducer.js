@@ -16,6 +16,7 @@ import {
 
 const initialState = {
   id: '123457',
+  roomId: '123456',
   host: true,
   modalSetting: {
     display: false,
