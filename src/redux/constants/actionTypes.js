@@ -13,3 +13,11 @@ export const SHOW_CHAR_LIST = 'SHOW_CHAR_LIST';
 export const SHOW_MODAL = 'SHOW_MODAL';
 export const SHOW_USER_LIST = 'SHOW_USER_LIST';
 export const TOGGLE_DICE_BUBBLE = 'TOGGLE_DICE_BUBBLE';
+
+export const SEND_DATA = 'SEND_DATA';
+export const CONNECT = 'CONNECT';
+export const DISCONNECT = 'DISCONNECT';
+
+export const REQUEST = 'REQUEST';
+export const FAILURE = 'FAILURE';
+export const SUCCESS = 'SUCCESS';

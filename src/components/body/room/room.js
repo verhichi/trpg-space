@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
-import { setRoomId, setUserId } from '../../../redux/actions/action';
+import { setRoomId, setUserId, socketConnect } from '../../../redux/actions/action';
 
 // Style
 import './room.scss';
@@ -16,7 +16,8 @@ import DiceBalloon from './diceBalloon/diceBalloon';
 const mapDispatchToProps = (dispatch) => {
   return {
     setRoomId: (roomId) => dispatch(setRoomId(roomId)),
-    setUserId: (userId) => dispatch(setUserId(userId))
+    setUserId: (userId) => dispatch(setUserId(userId)),
+    socketConnect: () => dispatch(socketConnect())
   };
 };
 
@@ -25,6 +26,7 @@ class Room extends Component {
     super(props);
     this.props.setRoomId(this.props.match.params.roomId);
     this.props.setUserId(uuid.v4());
+    this.props.socketConnect();
   }
 
   render() {

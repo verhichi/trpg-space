@@ -26,15 +26,25 @@ server.listen(portNo, () => {
 // Set path for file to ./dist
 app.use(express.static(path.join(__dirname, '../build')));
 
+// GET new room id to host a new room
+app.get('/newRoomId', (req, res) => {
+  let room_id = '';
+  do {
+    room_id = Math.random().toString().slice(2,8);
+  } while(!!io.sockets.adapter.rooms[room_id]);
+  res.json({result: room_id});
+});
+
 // Place Holder socket.io logic
 io.on('connection', (socket) => {
+  console.log('A user has connected to the socket.io server!');
 
   // Logic for when a new user joins the room
-  socket.on('join', (room_id) => {
-    for (let room in socket.rooms){
-      socket.leave(room);
-    }
-    socket.join(room_id);
-  });
+  // socket.on('join', (room_id) => {
+  //   for (let room in socket.rooms){
+  //     socket.leave(room);
+  //   }
+  //   socket.join(room_id);
+  // });
 
 });

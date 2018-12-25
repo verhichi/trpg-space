@@ -7,6 +7,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './lobby.scss';
 
 class Lobby extends Component {
+  constructor (props){
+    super(props);
+    this.handleNewClick = this.handleNewClick.bind(this);
+  }
+
+  handleNewClick (e){
+    console.log('create button was clicked');
+    this.props.history.push('/RANDOM_ROOM_NUM');
+  }
+
   render() {
     return (
       <div className="lobby-cont h-100">
@@ -25,7 +35,7 @@ class Lobby extends Component {
 
           <div className="lobby-inp-cont w-100">
             <div className="lobby-inp-label">Click here to start your own Room:</div>
-            <button className="btn btn-hot w-100 cursor-pointer">
+            <button className="btn btn-hot w-100 cursor-pointer" onClick={this.handleNewClick}>
               <FontAwesomeIcon icon="tools"/>
               <div className="btn-text">Start New Room</div>
             </button>
