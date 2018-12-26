@@ -18,7 +18,7 @@ import {
   CONNECT
 } from '../constants/actionTypes';
 
-const initialState = {
+export const initialState = {
   id: '',
   roomId: '',
   host: true,
