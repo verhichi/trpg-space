@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,12 +10,32 @@ import './lobby.scss';
 class Lobby extends Component {
   constructor (props){
     super(props);
+    this.state = {
+      roomId: ''
+    };
     this.handleNewClick = this.handleNewClick.bind(this);
+    this.handleJoinClick = this.handleJoinClick.bind(this);
+    this.handleRoomIdChange = this.handleRoomIdChange.bind(this);
   }
 
   handleNewClick (e){
-    console.log('create button was clicked');
-    this.props.history.push('/RANDOM_ROOM_NUM');
+    axios.get('/newRoomId')
+      .then((result) => {
+        this.props.history.push(`/${result.data.roomId}`);
+      });
+  }
+
+  handleJoinClick (e){
+    axios.get('/checkRoomId', {params: { roomId: this.state.roomId }})
+      .then((result) => {
+        if (result.data.roomExists){
+          this.props.history.push(`/${this.state.roomId}`);
+        }
+      });
+  }
+
+  handleRoomIdChange (e){
+    this.setState({ roomId: e.target.value });
   }
 
   render() {
@@ -24,8 +45,8 @@ class Lobby extends Component {
         <div>
           <div className="lobby-inp-cont w-100">
             <div className="lobby-inp-label">Enter Room ID to join:</div>
-            <div><input className="lobby-inp-field w-100" type="tel"/></div>
-            <button className="btn btn-hot w-100 cursor-pointer">
+            <div><input className="lobby-inp-field w-100" type="tel" onChange={this.handleRoomIdChange}/></div>
+            <button className="btn btn-hot w-100 cursor-pointer" onClick={this.handleJoinClick}>
               <FontAwesomeIcon icon="sign-in-alt"/>
               <div className="btn-text">Join Existing Room</div>
             </button>

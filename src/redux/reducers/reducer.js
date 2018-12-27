@@ -166,7 +166,7 @@ const rootReducer = (state = initialState, action) => {
     case SET_USER_ID:
       return {
         ...state,
-        userId: action.userId
+        id: action.userId
       };
 
     default:

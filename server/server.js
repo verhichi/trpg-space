@@ -28,11 +28,21 @@ app.use(express.static(path.join(__dirname, '../build')));
 
 // GET new room id to host a new room
 app.get('/newRoomId', (req, res) => {
-  let room_id = '';
+  let roomId = '';
   do {
-    room_id = Math.random().toString().slice(2,8);
-  } while(!!io.sockets.adapter.rooms[room_id]);
-  res.json({result: room_id});
+    roomId = Math.random().toString().slice(2,10);
+  } while(!!io.sockets.adapter.rooms[roomId]);
+  res.json({ roomId });
+});
+
+// GET check if room id to join exists
+app.get('/checkRoomId', (req, res) => {
+  console.log(req.query);
+  let roomExists = true;
+  if(!io.sockets.adapter.rooms[req.query.roomId]){
+    roomExists = false;
+  }
+  res.json({ roomExists });
 });
 
 // Place Holder socket.io logic
