@@ -14,51 +14,63 @@ class ChatLog extends Component {
   render() {
 
     const chatLog = this.props.chatLog.map((val, idx) => {
-      const chatHead = (
-        <div className="chat-log-head">
-          <span className="chat-log-user">{val.name}</span>
-          <span className="chat-log-time">{val.time}</span>
-        </div>
-      );
-
-      let chatBody;
-
       switch (val.type){
         case 'text':
-          chatBody = (
-            <div className="chat-log-body pl-3">
-              {val.text}
+          return (
+            <div className="chat-log" key={idx}>
+              <div className="chat-log-head">
+                <span className="chat-log-user">{val.name}</span>
+                <span className="chat-log-time">{val.time}</span>
+              </div>
+              <div className="chat-log-body pl-3">
+                {val.text}
+              </div>
             </div>
           );
-          break;
 
         case 'roll':
-          chatBody = (
-            <div className="chat-log-body pl-3">
-              <div className="d-flex">
-                <div>
-                  <div>Dice Roll Result(Bonus):</div>
-                  <div className="font-size-xxl">{val.result}</div>
-                </div>
-                <div className="pl-3">
-                  <div>Total:</div>
-                  <div className="font-size-xxl">{val.total}</div>
+          return (
+            <div className="chat-log" key={idx}>
+              <div className="chat-log-head">
+                <span className="chat-log-user">{val.name}</span>
+                <span className="chat-log-time">{val.time}</span>
+              </div>
+              <div className="chat-log-body pl-3">
+                <div className="d-flex">
+                  <div>
+                    <div>Dice Roll Result(Bonus):</div>
+                    <div className="font-size-xxl">{val.result}</div>
+                  </div>
+                  <div className="pl-3">
+                    <div>Total:</div>
+                    <div className="font-size-xxl">{val.total}</div>
+                  </div>
                 </div>
               </div>
             </div>
           );
-          break;
+
+        case 'join':
+          return (
+            <div className="chat-log" key={idx}>
+              <div className="chat-log-join p-2">
+                {val.name} has joined the room.
+              </div>
+            </div>
+          );
+
+        case 'leave':
+          return (
+            <div className="chat-log" key={idx}>
+              <div className="chat-log-join p-2">
+                {val.name} has left the room.
+              </div>
+            </div>
+          );
 
         default:
           return null;
       }
-
-      return (
-        <div className="chat-log" key={idx}>
-          {chatHead}
-          {chatBody}
-        </div>
-      );
     });
 
     return (

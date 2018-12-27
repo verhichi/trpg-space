@@ -19,7 +19,10 @@ class socketAPI {
     if (!this.socket){
       console.log('No socket connection.');
     } else {
-      this.socket.emit(event, data);
+      return new Promise((resolve, reject) => {
+        this.socket.emit(event, data);
+        resolve();
+      });
     }
   }
 

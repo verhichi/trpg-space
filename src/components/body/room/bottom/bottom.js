@@ -49,8 +49,6 @@ class Bottom extends Component {
   }
 
   handleSendClick (e){
-    e.preventDefault();
-
     socket.emit('chat', {
       type: 'text',
       roomId: this.props.roomId,

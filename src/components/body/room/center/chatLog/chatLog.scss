@@ -26,3 +26,10 @@
 .chat-log-body{
   white-space: pre-line;
 }
+
+.chat-log-join{
+  background: $tertiary-clr;
+  border-radius: 3px;
+  color: $white-clr;
+  display: inline-block;
+}

@@ -35,10 +35,22 @@ class Room extends Component {
   }
 
   componentDidMount (){
-    socket.emit('join', this.props.match.params.roomId);
+    socket.emit('join', this.props.match.params.roomId)
+      .then(() => {
+        socket.emit('chat', {
+          type: 'join',
+          roomId: this.props.roomId,
+          name: 'Daichi'
+        });
+      });
   }
 
   componentWillUnmount (){
+    socket.emit('chat', {
+      type: 'leave',
+      roomId: this.props.roomId,
+      name: 'Daichi'
+    });
     socket.disconnect();
   }
 
