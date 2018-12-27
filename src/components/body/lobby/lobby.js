@@ -32,7 +32,7 @@ class Lobby extends Component {
           title:  'Enter Display Name',
           host:   true,
           roomId: result.data.roomId,
-          redirect: this.props.history.push.bind(this, `/${result.data.roomId}`);
+          redirect: this.props.history.push.bind(this, `/${result.data.roomId}`)
         });
       });
   }
@@ -45,7 +45,7 @@ class Lobby extends Component {
             title:  'Enter Display Name',
             host:   false,
             roomId: this.state.roomId,
-            redirect: this.props.history.push.bind(this, `/${this.state.roomId}`);
+            redirect: this.props.history.push.bind(this, `/${this.state.roomId}`)
           });
         }
       });

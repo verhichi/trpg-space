@@ -20,7 +20,6 @@ import {
 export const initialState = {
   id: '',
   roomId: '',
-  host: true,
   modalSetting: {
     display: false,
     modalType: '',
@@ -32,7 +31,7 @@ export const initialState = {
   userList: [{
     id: '123457',
     name: 'Daichi Nishida',
-    host: true
+    host: false
   }],
   charList: [{
     charId: '23984743543',

@@ -12,7 +12,7 @@ import './user.scss';
 const mapStateToProps = (state) => {
   return {
     id: state.id,
-    host: state.host
+    userList: state.userList
   };
 };
 
@@ -66,7 +66,7 @@ class User extends Component {
           }
         </div>
         <div className="user-btn" >
-          {this.props.host && this.props.id !== this.props.userData.id
+          {this.props.userList.find((user) => user.id === this.props.id).host && this.props.id !== this.props.userData.id
             ? (<div className="cursor-pointer" onClick={this.handleRemoveClick}>
                  <FontAwesomeIcon icon="window-close"/>
                </div>)
