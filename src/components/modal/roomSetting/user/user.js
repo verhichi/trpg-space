@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { showModal, hideModal, removeUser } from '../../../../../../redux/actions/action';
+import { showModal, hideModal, removeUser } from '../../../../redux/actions/action';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -40,24 +40,24 @@ class User extends Component {
     this.props.showModal('confirm', {
       title: 'Kick User',
       confirmText: `Are you sure you want to kick ${this.props.userData.name} from this room?`,
-      accept: this.props.removeUser.bind(null, this.props.userData.id),
-      decline: this.props.hideModal
+      accept: [
+        this.props.removeUser.bind(null, this.props.userData.id),
+        this.props.showModal.bind(null, 'roomSetting', { title: 'Room Setting' })
+      ],
+      decline: this.props.showModal.bind(null, 'roomSetting', { title: 'Room Setting' })
     });
   }
 
   render() {
     return (
       <div className="user-cont d-flex w-100 mb-2">
-        <div className="user-stat">
+        <div className="user-stat mr-3">
           {this.props.userData.host
             ? (<FontAwesomeIcon icon="chess-queen"/>)
             : (<FontAwesomeIcon icon="chess-pawn"/>)
           }
         </div>
-        <div className="user-name f-grow-1 font-weight-bold">
-          {this.props.userData.name}
-        </div>
-        <div className="user-btn ml-3">
+        <div className="user-btn mr-3">
           {this.props.id === this.props.userData.id
             ? (<div className="cursor-pointer" onClick={this.handleEditClick}>
                  <FontAwesomeIcon icon="pen-square"/>
@@ -65,13 +65,16 @@ class User extends Component {
             : null
           }
         </div>
-        <div className="user-btn" >
+        <div className="user-btn mr-3" >
           {this.props.userList.find((user) => user.id === this.props.id).host && this.props.id !== this.props.userData.id
             ? (<div className="cursor-pointer" onClick={this.handleRemoveClick}>
                  <FontAwesomeIcon icon="window-close"/>
                </div>)
             : null
           }
+        </div>
+        <div className="user-name f-grow-1 font-weight-bold">
+          {this.props.userData.name}
         </div>
       </div>
     );

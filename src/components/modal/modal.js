@@ -14,6 +14,7 @@ import NewUser from './NewUser/NewUser';
 import EditChar from './editChar/editChar';
 import EditUser from './editUser/editUser';
 import Confirm from './confirm/confirm';
+import RoomSetting from './roomSetting/roomSetting';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -46,7 +47,8 @@ class Modal extends Component {
       newUser: <NewUser />,
       editChar: <EditChar />,
       editUser: <EditUser />,
-      confirm: <Confirm />
+      confirm: <Confirm />,
+      roomSetting: <RoomSetting />
     };
 
     return (

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { showUserList, hideUserList } from '../../../../redux/actions/action';
+import { showModal, showUserList, hideUserList } from '../../../../redux/actions/action';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,6 +20,7 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
+    showModal: (modalType, modalProp)=> dispatch(showModal(modalType, modalProp)),
     hideUserList: () => dispatch(hideUserList()),
     showUserList: () => dispatch(showUserList())
   };
@@ -33,9 +34,12 @@ class Top extends Component {
   }
 
   handleSettingClick (e){
-    this.props.displayUserList
-      ? this.props.hideUserList()
-      : this.props.showUserList();
+    // this.props.displayUserList
+    //   ? this.props.hideUserList()
+    //   : this.props.showUserList();
+    this.props.showModal('roomSetting', {
+      title: 'Setting'
+    });
   }
 
   render() {

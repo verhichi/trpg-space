@@ -10,8 +10,8 @@ import socket from '../../../../../socket/socketClient';
 // Style
 import './userList.scss';
 
-// Component
-import User from './user/user';
+// // Component
+// import User from './user/user';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -51,9 +51,9 @@ class UserList extends Component {
   render() {
     const toggleClass = this.props.displayUserList ? 'is-active' : '';
 
-    const userList = this.props.userList.map((userData) => {
-      return <User key={userData.id} userData={userData}/>;
-    });
+    // const userList = this.props.userList.map((userData) => {
+    //   return <User key={userData.id} userData={userData}/>;
+    // });
 
     return (
       <div className={`list-cont d-flex ${toggleClass}`}>
@@ -61,7 +61,7 @@ class UserList extends Component {
           <div className="f-grow-1 align-center font-weight-bold text-dec-underline">User List</div>
         </div>
         <div className="list d-flex f-grow-1">
-          {userList}
+          // {userList}
         </div>
       </div>
     );

@@ -1,0 +1,25 @@
+@import '../../../styles/partials/variables';
+@import '../../../styles/partials/mediaQueries';
+
+.setting-title{
+  border-bottom: 1px solid $black-clr;
+  padding-bottom: 5px;
+
+  @include md{
+    font-size: $font-size-lg;
+  }
+
+  @include lg{
+    font-size: $font-size-xl;
+  }
+}
+
+.setting-detail{
+  @include md{
+    font-size: $font-size-lg;
+  }
+
+  @include lg{
+    font-size: $font-size-xl;
+  }
+}
