@@ -73,6 +73,12 @@ io.on('connection', (socket) => {
   // Logic for when a user removes a character
   socket.on('delChar', (roomId, charId) => {
     io.to(roomId).emit('delChar', charId);
-  })
+  });
+
+  // Logic for when a user creates a new character or edits a character
+  socket.on('user', (roomId, content) => {
+    io.to(roomId).emit('user', content);
+  });
+
 
 });

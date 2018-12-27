@@ -1,4 +1,5 @@
 import {
+  ADD_USER,
   ADD_TO_CHAT_LOG,
   ADD_TO_CHAR_LIST,
   EDIT_CHAR,
@@ -77,6 +78,12 @@ const rootReducer = (state = initialState, action) => {
           }
         })
       };
+
+      case ADD_USER:
+        return {
+          ...state,
+          userList: [...state.userList, action.userData]
+        };
 
       case EDIT_USER:
         return {

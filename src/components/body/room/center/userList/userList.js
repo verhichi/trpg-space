@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { showModal } from '../../../../../redux/actions/action';
+import { addUser, editUser } from '../../../../../redux/actions/action';
+import socket from '../../../../../socket/socketClient';
+
 
 // Font Awesome Component
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,7 +22,25 @@ const mapStateToProps = (state) => {
   };
 };
 
+// Redux Map Dispatch To Props
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addUser: (userData) => dispatch(addUser(userData)),
+    editUser: (userData) => dispatch(editUser(userData))
+  };
+};
+
 class UserList extends Component {
+
+  componentDidMount (){
+    socket.on('user', (content) => {
+      if (this.props.userList.some((user) => user.id === content.id)){
+        this.props.editUser(content);
+      } else {
+        this.props.adduser(content);
+      }
+    })
+  }
 
   render() {
     const toggleClass = this.props.displayUserList ? 'is-active' : '';
@@ -42,4 +62,4 @@ class UserList extends Component {
   }
 }
 
-export default connect(mapStateToProps)(UserList);
+export default connect(mapStateToProps, mapDispatchToProps)(UserList);

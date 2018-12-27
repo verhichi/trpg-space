@@ -1,4 +1,5 @@
 import {
+  ADD_USER,
   ADD_TO_CHAT_LOG,
   ADD_TO_CHAR_LIST,
   EDIT_CHAR,
@@ -75,6 +76,13 @@ export const editChar = (charData) => {
     charData
   };
 };
+
+export const addUser = (userData) => {
+  return {
+    type: ADD_USER,
+    userData
+  };
+}
 
 export const editUser = (userData) => {
   return {

@@ -15,7 +15,11 @@ import DiceBalloon from './diceBalloon/diceBalloon';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
-  return { roomId: state.roomId };
+  return {
+    id:       state.id,
+    roomId:   state.roomId,
+    userList: state.userList
+  };
 };
 
 // Redux Map Dispatch To Props
@@ -29,8 +33,8 @@ const mapDispatchToProps = (dispatch) => {
 class Room extends Component {
   constructor (props){
     super(props);
-    this.props.setRoomId(this.props.match.params.roomId);
-    this.props.setUserId(uuid.v4());
+    // this.props.setRoomId(this.props.match.params.roomId);
+    // this.props.setUserId(uuid.v4());
     socket.connect();
   }
 
@@ -39,7 +43,7 @@ class Room extends Component {
       .then(() => {
         socket.emit('chat', this.props.roomId, {
           type: 'join',
-          name: 'Daichi'
+          name: this.props.userList.find((user) => user.id === this.props.id).name
         });
       });
   }
@@ -47,7 +51,7 @@ class Room extends Component {
   componentWillUnmount (){
     socket.emit('chat', this.props.roomId, {
       type: 'leave',
-      name: 'Daichi'
+      name: this.props.userList.find((user) => user.id === this.props.id).name
     });
     socket.disconnect();
   }

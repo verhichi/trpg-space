@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { showModal } from '../../../redux/actions/action';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Style
 import './lobby.scss';
+
+// Redux Map Dispatch To Props
+const mapDispatchToProps = (dispatch) => {
+  return { showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)) };
+};
 
 class Lobby extends Component {
   constructor (props){
@@ -21,7 +28,12 @@ class Lobby extends Component {
   handleNewClick (e){
     axios.get('/newRoomId')
       .then((result) => {
-        this.props.history.push(`/${result.data.roomId}`);
+        this.props.showModal('newUser', {
+          title:  'Enter Display Name',
+          host:   true,
+          roomId: result.data.roomId,
+          redirect: this.props.history.push.bind(this, `/${result.data.roomId}`);
+        });
       });
   }
 
@@ -29,7 +41,12 @@ class Lobby extends Component {
     axios.get('/checkRoomId', {params: { roomId: this.state.roomId }})
       .then((result) => {
         if (result.data.roomExists){
-          this.props.history.push(`/${this.state.roomId}`);
+          this.props.showModal('newUser', {
+            title:  'Enter Display Name',
+            host:   false,
+            roomId: this.state.roomId,
+            redirect: this.props.history.push.bind(this, `/${this.state.roomId}`);
+          });
         }
       });
   }
@@ -68,4 +85,4 @@ class Lobby extends Component {
   }
 }
 
-export default Lobby;
+export default connect(null, mapDispatchToProps)(Lobby);

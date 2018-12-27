@@ -10,6 +10,7 @@ import './modal.scss';
 
 // Component
 import NewChar from './newChar/newChar';
+import NewUser from './NewUser/NewUser';
 import EditChar from './editChar/editChar';
 import EditUser from './editUser/editUser';
 import Confirm from './confirm/confirm';
@@ -42,6 +43,7 @@ class Modal extends Component {
 
     const modalBody = {
       newChar: <NewChar />,
+      newUser: <NewUser />,
       editChar: <EditChar />,
       editUser: <EditUser />,
       confirm: <Confirm />

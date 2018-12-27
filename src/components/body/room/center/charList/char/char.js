@@ -35,11 +35,11 @@ class Char extends Component {
 
   handleRemoveClick (charId, e){
     const delCharEmit = socket.emit.bind(socket, 'delChar', this.props.roomId, this.props.charData.charId);
-    console.log(`charId: ${this.props.charData.charId}`);
+
     this.props.showModal('confirm', {
       title: 'Delete Character',
       confirmText: `Are you sure you want to delete ${this.props.charData.name}?`,
-      accept: delCharEmit,
+      accept: [delCharEmit, this.props.hideModal],
       decline: this.props.hideModal
     });
   }

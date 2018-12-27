@@ -81,15 +81,6 @@ class EditChar extends Component {
       curMp: this.state.curMp.trim()
     });
 
-    // this.props.editChar({
-    //   charId: this.props.modalSetting.modalProp.charId,
-    //   name: this.state.name.trim(),
-    //   maxHp: this.state.maxHp.trim(),
-    //   curHp: this.state.curHp.trim(),
-    //   maxMp: this.state.maxMp.trim(),
-    //   curMp: this.state.curMp.trim()
-    // });
-
     this.setState({
       name: '',
       maxHp: '',

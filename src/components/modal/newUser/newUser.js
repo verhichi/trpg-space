@@ -1,21 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { editUser, hideModal } from '../../../redux/actions/action';
-import socket from '../../../socket/socketClient';
-
+import uuid from 'uuid';
+import { addUser, hideModal, setUserId, setRoomId } from '../../../redux/actions/action';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Style
-import './editUser.scss';
+import './newUser.scss';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id:           state.id,
-    roomId:       state.roomId,
-    userList:     state.userList,
     modalSetting: state.modalSetting
   };
 };
@@ -23,17 +19,18 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    editUser: (userData) => dispatch(editUser(userData)),
-    hideModal: () => dispatch(hideModal())
+    addUser: (userData) => dispatch(addUser(userData)),
+    hideModal: () => dispatch(hideModal()),
+    setUserId: (userId) => dispatch(setUserId(userId)),
+    setRoomId: (roomId) => dispatch(setRoomId(roomId))
   };
 };
 
 
-class EditUser extends Component {
+class NewUser extends Component {
   constructor (props){
     super(props);
-    const user = this.props.userList.find((user) => user.id === this.props.id);
-    this.state = { name: user.name };
+    this.state = { name: '' };
 
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
@@ -46,16 +43,19 @@ class EditUser extends Component {
   handleButtonClick (e){
     e.preventDefault();
 
-    socket.emit('editUser', this.props.roomId, {
-      id: this.props.id,
-      name: this.state.name.trim()
+    const id = uuid.v4();
+    this.props.setUserId(id);
+    this.props.setRoomId(this.props.modalSetting.modalProp.roomId);
+
+    this.props.addUser({
+      id: id,
+      name: this.state.name.trim(),
+      host: this.props.modalSetting.modalProp.host
     });
-    // this.props.editUser({
-    //   id: this.props.id,
-    //   name: this.state.name.trim()
-    // });
+
     this.setState({ name: '' });
     this.props.hideModal();
+    this.props.modalSetting.modalProp.redirect();
   }
 
   render() {
@@ -76,4 +76,4 @@ class EditUser extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditUser);
+export default connect(mapStateToProps, mapDispatchToProps)(NewUser);

@@ -24,8 +24,13 @@ class Confirm extends Component {
   }
 
   handleAcceptClick (e){
-    this.props.modalSetting.modalProp.accept();
-    this.props.hideModal();
+    if (this.props.modalSetting.modalProp.accept.constructor === Array){
+      this.props.modalSetting.modalProp.accept.forEach((fun) => {
+        fun();
+      });
+    } else {
+      this.props.modalSetting.modalProp.accept();
+    }
   }
 
   handleDeclineClick (e){
