@@ -13,13 +13,7 @@ import {
   SHOW_CHAR_LIST,
   SHOW_MODAL,
   SHOW_USER_LIST,
-  TOGGLE_DICE_BUBBLE,
-  SEND_DATA,
-  CONNECT,
-  DISCONNECT,
-  REQUEST,
-  FAILURE,
-  SUCCESS
+  TOGGLE_DICE_BUBBLE
 } from '../constants/actionTypes';
 
 export const addToChatLog = (content) => {
@@ -109,27 +103,3 @@ export const setUserId = (userId) => {
     userId
   };
 };
-
-export const sendData = (eventName, socketData) => {
-  return {
-    type: SEND_DATA,
-    // types: [REQUEST, SUCCESS, FAILURE],
-    promise: (socket) => socket.emit(eventName, socketData)
-  };
-}
-
-export const socketConnect = () => {
-  return {
-    type: CONNECT,
-    // types: [REQUEST, SUCCESS, FAILURE],
-    promise: (socket) => socket.connect()
-  };
-}
-
-export const socketDisconnect = () => {
-  return {
-    type: DISCONNECT,
-    // types: [REQUEST, SUCCESS, FAILURE],
-    promise: (socket) => socket.disconnect()
-  };
-}

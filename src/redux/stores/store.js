@@ -1,7 +1,5 @@
 import { configureStore } from './configureStore';
-import SocketAPI from '../../socket/socketClient';
 
-const socketClient = new SocketAPI();
-const store = configureStore(socketClient);
+const store = configureStore();
 
 export default store;

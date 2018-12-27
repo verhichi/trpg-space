@@ -14,8 +14,6 @@ import {
   SHOW_MODAL,
   SHOW_USER_LIST,
   TOGGLE_DICE_BUBBLE,
-  SEND_DATA,
-  CONNECT
 } from '../constants/actionTypes';
 
 export const initialState = {

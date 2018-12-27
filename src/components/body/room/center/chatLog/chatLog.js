@@ -6,7 +6,7 @@ import './chatLog.scss';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
-  return {chatLog: state.chatLog};
+  return { chatLog: state.chatLog };
 };
 
 class ChatLog extends Component {

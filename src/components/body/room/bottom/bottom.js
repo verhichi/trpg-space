@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addToChatLog, showCharList, hideCharList, toggleDiceBubble } from '../../../../redux/actions/action';
+import socket from '../../../../socket/socketClient';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,7 +11,10 @@ import './bottom.scss';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
-  return { displayCharList: state.displayCharList };
+  return {
+    roomId: state.roomId,
+    displayCharList: state.displayCharList
+  };
 };
 
 // Redux Map Dispatch To Props
@@ -34,18 +38,28 @@ class Bottom extends Component {
     this.handleCharListClick = this.handleCharListClick.bind(this);
   }
 
+  componentDidMount (){
+    console.log();
+    socket.on('chat', (content) => {
+      this.props.addToChatLog(content);
+    });
+  }
+
   handleChange (e){
     this.setState({ chatText: e.target.value });
   }
 
   handleSendClick (e){
     e.preventDefault();
-    this.props.addToChatLog({
+
+    socket.emit('chat', {
       type: 'text',
+      roomId: this.props.roomId,
       name: 'Daichi',
       time: '3:13',
       text: this.state.chatText
     });
+
     this.setState({ chatText: '' });
   }
 

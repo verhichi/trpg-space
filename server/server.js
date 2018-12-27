@@ -37,14 +37,27 @@ app.get('/newRoomId', (req, res) => {
 
 // Place Holder socket.io logic
 io.on('connection', (socket) => {
-  console.log('A user has connected to the socket.io server!');
+  console.log('User has connected');
+
+  socket.on('disconnect', () => {
+    console.log('User has disconnected');
+  });
 
   // Logic for when a new user joins the room
-  // socket.on('join', (room_id) => {
-  //   for (let room in socket.rooms){
-  //     socket.leave(room);
-  //   }
-  //   socket.join(room_id);
-  // });
+  socket.on('join', (roomId) => {
+    for (let room in socket.rooms){
+      socket.leave(room);
+    }
+    console.log(`User will join room ${roomId}`);
+    socket.join(roomId);
+  });
+
+  // Logic for when a user sends a chat
+  socket.on('chat', (content) => {
+    console.log('CHAT DATA HAS BEEN RECEIVED!');
+    console.log(content);
+    io.to(content.roomId).emit('chat', content);
+  })
+
 
 });
