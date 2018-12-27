@@ -5,7 +5,8 @@ class socketAPI {
   socket;
 
   connect() {
-    this.socket = io(host);
+    // this.socket = io(host); // Specfifying host url when using local environment causes error on smart devices.
+    this.socket = io();
   }
 
   disconnect() {

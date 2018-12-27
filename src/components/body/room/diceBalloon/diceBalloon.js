@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addToChatLog, toggleDiceBubble } from '../../../../redux/actions/action';
+import socket from '../../../../socket/socketClient';
+import { getDiceRollResult } from './roll';
 
 // Style
 import './diceBalloon.scss';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
-  return { displayDiceSetting: state.displayDiceSetting };
+  return {
+    displayDiceSetting: state.displayDiceSetting,
+    roomId: state.roomId
+  };
 };
 
 // Redux Map Dispatch To Props
@@ -58,26 +63,27 @@ class DiceBalloon extends Component {
   }
 
   handleButtonClick (e){
-    let result = [];
 
-    for (let idx = 0; idx < this.state.diceNumber; idx++){
-      const roll = Math.floor(Math.random() * this.state.diceType) + 1
-      result.push(roll);
+    const result = getDiceRollResult(this.state);
+
+    if (this.state.private){
+      this.props.addToChatLog({
+        type: 'roll',
+        roomId: this.props.roomId,
+        name: 'Daichi',
+        time: '3:13',
+        private: this.state.private,
+        ...result
+      });
+    } else {
+      socket.emit('chat', {
+        type: 'roll',
+        roomId: this.props.roomId,
+        name: 'Daichi',
+        time: '3:13',
+        ...result
+      });
     }
-
-    const resultString = result.join(', ') + '(' + this.state.symbol + this.state.modifier + ')';
-    const total = result.reduce((prev, next) => {
-      return prev + next;
-    }, Number(this.state.symbol + this.state.modifier));
-
-    this.props.addToChatLog({
-      type: 'roll',
-      name: 'Daichi',
-      time: '3:13',
-      result: resultString,
-      total: total,
-      private: this.state.private
-    });
 
     this.props.toggleDiceBubble();
   }

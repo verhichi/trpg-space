@@ -39,7 +39,6 @@ class Bottom extends Component {
   }
 
   componentDidMount (){
-    console.log();
     socket.on('chat', (content) => {
       this.props.addToChatLog(content);
     });
