@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { showModal } from '../../../../../redux/actions/action';
+import { showModal, editChar, addToCharList, removeFromCharList } from '../../../../../redux/actions/action';
+import socket from '../../../../../socket/socketClient';
+
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,7 +25,10 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp))
+    showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
+    editChar: (charData) => dispatch(editChar(charData)),
+    addToCharList: (charData) => dispatch(addToCharList(charData)),
+    removeFromCharList: (charId) => dispatch(removeFromCharList(charId))
   };
 };
 
@@ -31,6 +36,20 @@ class CharList extends Component {
   constructor (props){
     super(props);
     this.handleNewClick = this.handleNewClick.bind(this);
+  }
+
+  componentDidMount (){
+    socket.on('char', (content) => {
+      if (this.props.charList.some((char) => char.charId === content.charId)){
+        this.props.editChar(content);
+      } else {
+        this.props.addToCharList(content);
+      }
+    });
+
+    socket.on('delChar', (charId) => {
+      this.props.removeFromCharList(charId)
+    })
   }
 
   handleNewClick (){

@@ -69,18 +69,17 @@ class DiceBalloon extends Component {
     if (this.state.private){
       this.props.addToChatLog({
         type: 'roll',
-        roomId: this.props.roomId,
         name: 'Daichi',
         time: '3:13',
         private: this.state.private,
         ...result
       });
     } else {
-      socket.emit('chat', {
+      socket.emit('chat', this.props.roomId, {
         type: 'roll',
-        roomId: this.props.roomId,
         name: 'Daichi',
         time: '3:13',
+        private: this.state.private,
         ...result
       });
     }

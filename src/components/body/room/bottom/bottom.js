@@ -49,9 +49,8 @@ class Bottom extends Component {
   }
 
   handleSendClick (e){
-    socket.emit('chat', {
+    socket.emit('chat', this.props.roomId, {
       type: 'text',
-      roomId: this.props.roomId,
       name: 'Daichi',
       time: '3:13',
       text: this.state.chatText

@@ -15,12 +15,12 @@ class socketAPI {
     });
   }
 
-  emit(event, data) {
+  emit(event, ...data) {
     if (!this.socket){
       console.log('No socket connection.');
     } else {
       return new Promise((resolve, reject) => {
-        this.socket.emit(event, data);
+        this.socket.emit(event, ...data);
         resolve();
       });
     }

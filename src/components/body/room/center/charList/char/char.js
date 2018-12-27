@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { showModal, hideModal, removeFromCharList } from '../../../../../../redux/actions/action';
+import socket from '../../../../../../socket/socketClient';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,7 +11,10 @@ import './char.scss';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
-  return { id: state.id };
+  return {
+    id: state.id,
+    roomId: state.roomId
+  };
 };
 
 // Redux Map Dispatch To Props
@@ -30,10 +34,12 @@ class Char extends Component {
   }
 
   handleRemoveClick (charId, e){
+    const delCharEmit = socket.emit.bind(socket, 'delChar', this.props.roomId, this.props.charData.charId);
+    console.log(`charId: ${this.props.charData.charId}`);
     this.props.showModal('confirm', {
       title: 'Delete Character',
       confirmText: `Are you sure you want to delete ${this.props.charData.name}?`,
-      accept: this.props.removeFromCharList.bind(null, this.props.charData.charId),
+      accept: delCharEmit,
       decline: this.props.hideModal
     });
   }

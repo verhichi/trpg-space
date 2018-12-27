@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { editChar, hideModal } from '../../../redux/actions/action';
+import socket from '../../../socket/socketClient';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,6 +13,7 @@ import './editChar.scss';
 const mapStateToProps = (state) => {
   return {
     id:           state.id,
+    roomId:       state.roomId,
     charList:     state.charList,
     modalSetting: state.modalSetting
   };
@@ -69,14 +71,24 @@ class EditChar extends Component {
   handleButtonClick (e){
     e.preventDefault();
 
-    this.props.editChar({
+    socket.emit('char', this.props.roomId, {
       charId: this.props.modalSetting.modalProp.charId,
+      ownerId: this.props.id,
       name: this.state.name.trim(),
       maxHp: this.state.maxHp.trim(),
       curHp: this.state.curHp.trim(),
       maxMp: this.state.maxMp.trim(),
       curMp: this.state.curMp.trim()
     });
+
+    // this.props.editChar({
+    //   charId: this.props.modalSetting.modalProp.charId,
+    //   name: this.state.name.trim(),
+    //   maxHp: this.state.maxHp.trim(),
+    //   curHp: this.state.curHp.trim(),
+    //   maxMp: this.state.maxMp.trim(),
+    //   curMp: this.state.curMp.trim()
+    // });
 
     this.setState({
       name: '',

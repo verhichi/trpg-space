@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
 import { addToCharList, hideModal } from '../../../redux/actions/action';
+import socket from '../../../socket/socketClient';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,6 +14,7 @@ import './newChar.scss';
 const mapStateToProps = (state) => {
   return {
     id:           state.id,
+    roomId:       state.roomId,
     modalSetting: state.modalSetting
   };
 };
@@ -69,7 +71,17 @@ class NewChar extends Component {
     e.preventDefault();
     const randomNum = uuid.v4();
 
-    this.props.addToCharList({
+    // this.props.addToCharList({
+    //   charId: randomNum,
+    //   ownerId: this.props.id,
+    //   name: this.state.name.trim(),
+    //   maxHp: this.state.maxHp.trim(),
+    //   curHp: this.state.curHp.trim(),
+    //   maxMp: this.state.maxMp.trim(),
+    //   curMp: this.state.curMp.trim()
+    // });
+
+    socket.emit('char', this.props.roomId, {
       charId: randomNum,
       ownerId: this.props.id,
       name: this.state.name.trim(),
