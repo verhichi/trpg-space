@@ -46,14 +46,11 @@ class EditUser extends Component {
   handleButtonClick (e){
     e.preventDefault();
 
-    socket.emit('editUser', this.props.roomId, {
+    socket.emit('user', this.props.roomId, {
       id: this.props.id,
       name: this.state.name.trim()
     });
-    // this.props.editUser({
-    //   id: this.props.id,
-    //   name: this.state.name.trim()
-    // });
+
     this.setState({ name: '' });
     this.props.hideModal();
   }
