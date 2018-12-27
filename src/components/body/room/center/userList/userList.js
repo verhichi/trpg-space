@@ -16,9 +16,10 @@ import User from './user/user';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id: state.id,
+    id:              state.id,
+    roomId:          state.roomId,
     displayUserList: state.displayUserList,
-    userList: state.userList
+    userList:        state.userList
   };
 };
 
@@ -33,13 +34,18 @@ const mapDispatchToProps = (dispatch) => {
 class UserList extends Component {
 
   componentDidMount (){
+    socket.on('join', (content) => {
+      this.props.addUser(content);
+      socket.emit('user', this.props.roomId, this.props.userList.find((user) => user.id === this.props.id));
+    });
+
     socket.on('user', (content) => {
       if (this.props.userList.some((user) => user.id === content.id)){
         this.props.editUser(content);
       } else {
-        this.props.adduser(content);
+        this.props.addUser(content);
       }
-    })
+    });
   }
 
   render() {

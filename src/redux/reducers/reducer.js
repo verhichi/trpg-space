@@ -28,20 +28,24 @@ export const initialState = {
   displayCharList: false,
   displayDiceSetting: false,
   displayUserList: false,
-  userList: [{
-    id: '123457',
-    name: 'Daichi Nishida',
-    host: false
-  }],
-  charList: [{
-    charId: '23984743543',
-    ownerId: '1234567',
-    name: 'Djakovich',
-    maxHp: '50',
-    curHp: '15',
-    maxMp: '60',
-    curMp: '45'
-  }],
+  userList: [
+  //   {
+  //   id: '123457',
+  //   name: 'Daichi Nishida',
+  //   host: false
+  // }
+],
+  charList: [
+  //   {
+  //   charId: '23984743543',
+  //   ownerId: '1234567',
+  //   name: 'Djakovich',
+  //   maxHp: '50',
+  //   curHp: '15',
+  //   maxMp: '60',
+  //   curMp: '45'
+  // }
+],
   chatLog: [],
 };
 

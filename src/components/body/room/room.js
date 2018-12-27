@@ -39,7 +39,7 @@ class Room extends Component {
   }
 
   componentDidMount (){
-    socket.emit('join', this.props.match.params.roomId)
+    socket.emit('join', this.props.match.params.roomId, this.props.userList.find((user) => user.id === this.props.id))
       .then(() => {
         socket.emit('chat', this.props.roomId, {
           type: 'join',

@@ -53,11 +53,12 @@ io.on('connection', (socket) => {
   });
 
   // Logic for when a new user joins the room
-  socket.on('join', (roomId) => {
+  socket.on('join', (roomId, content) => {
     for (let room in socket.rooms){
       socket.leave(room);
     }
     socket.join(roomId);
+    socket.to(roomId).emit('join', content);
   });
 
   // Logic for when a user sends a chat
