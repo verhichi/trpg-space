@@ -29,7 +29,14 @@
 
 .chat-log-join{
   background: $tertiary-clr;
-  border-radius: 3px;
+  border-radius: 1px;
+  color: $white-clr;
+  display: inline-block;
+}
+
+.chat-log-private{
+  background: $tertiary-clr;
+  border-radius: 1px;
   color: $white-clr;
   display: inline-block;
 }

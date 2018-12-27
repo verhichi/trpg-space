@@ -34,6 +34,9 @@ class ChatLog extends Component {
               <div className="chat-log-head">
                 <span className="chat-log-user">{val.name}</span>
                 <span className="chat-log-time">{val.time}</span>
+                {val.private
+                  ? (<span className="chat-log-private ml-2 p-1 font-size-xs">PRIVATE</span>)
+                  : null}
               </div>
               <div className="chat-log-body pl-3">
                 <div className="d-flex">
