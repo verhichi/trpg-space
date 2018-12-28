@@ -77,7 +77,7 @@ class User extends Component {
           }
         </div>
         <div className="user-name f-grow-1 font-weight-bold">
-          {this.props.userData.name}
+          {this.props.userData.name} {this.props.userData.id === this.props.id ? ('(YOU)') : null}
         </div>
       </div>
     );
