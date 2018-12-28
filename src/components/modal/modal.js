@@ -43,9 +43,10 @@ class Modal extends Component {
     const toggleClass = this.props.modalSetting.display ? 'is-active' : '';
 
     const modalBody = {
-      newChar: <NewChar />,
-      newUser: <NewUser />,
+      newChar: <NewChar charType={'char'}/>,
+      newEnemy: <NewChar charType={'enemy'}/>,
       editChar: <EditChar />,
+      newUser: <NewUser />,
       editUser: <EditUser />,
       confirm: <Confirm />,
       roomSetting: <RoomSetting />

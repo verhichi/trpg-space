@@ -17,7 +17,10 @@ import {
   SHOW_USER_LIST,
   TOGGLE_DICE_BUBBLE,
   SHOW_ENEMY_LIST,
-  HIDE_ENEMY_LIST
+  HIDE_ENEMY_LIST,
+  ADD_ENEMY,
+  EDIT_ENEMY,
+  REMOVE_ENEMY
 } from '../constants/actionTypes';
 
 export const resetState = () => {
@@ -95,6 +98,27 @@ export const editUser = (userData) => {
   return {
     type: EDIT_USER,
     userData
+  };
+};
+
+export const addEnemy = (enemyData) => {
+  return {
+    type: ADD_ENEMY,
+    enemyData
+  };
+};
+
+export const editEnemy = (enemyData) => {
+  return {
+    type: EDIT_ENEMY,
+    enemyData
+  };
+};
+
+export const removeEnemy = (enemyId) => {
+  return {
+    type: REMOVE_ENEMY,
+    enemyId
   };
 };
 

@@ -17,7 +17,10 @@ import {
   SHOW_USER_LIST,
   TOGGLE_DICE_BUBBLE,
   SHOW_ENEMY_LIST,
-  HIDE_ENEMY_LIST
+  HIDE_ENEMY_LIST,
+  ADD_ENEMY,
+  EDIT_ENEMY,
+  REMOVE_ENEMY
 } from '../constants/actionTypes';
 
 export const initialState = {
@@ -51,7 +54,17 @@ export const initialState = {
   //   curMp: '45'
   // }
   ],
-  enemyList: [],
+  enemyList: [
+    //   {
+    //   charId: '23984743543',
+    //   ownerId: '1234567',
+    //   name: 'Djakovich',
+    //   maxHp: '50',
+    //   curHp: '15',
+    //   maxMp: '60',
+    //   curMp: '45'
+    // }
+  ],
   chatLog: [],
 };
 
@@ -199,6 +212,37 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         displayEnemyList: false
+      };
+
+    case ADD_ENEMY:
+      return {
+        ...state,
+        enemyList: [...state.enemyList, action.enemyData]
+      };
+
+    case EDIT_ENEMY:
+      return {
+        ...state,
+        enemyList: state.enemyList.map((enemy) => {
+          if (enemy.charId === action.enemyData.charId){
+            return {
+              ...enemy,
+              name: action.charData.name,
+              maxHp: action.charData.maxHp,
+              curHp: action.charData.curHp,
+              maxMp: action.charData.maxMp,
+              curMp: action.charData.curMp
+            };
+          } else {
+            return enemy;
+          }
+        })
+      };
+
+    case REMOVE_ENEMY:
+      return {
+        ...state,
+        enemyList: state.enemyList.filter((enemy) => enemy.charId !== action.charId)
       };
 
     default:
