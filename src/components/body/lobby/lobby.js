@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { showModal } from '../../../redux/actions/action';
+import { showModal, resetState } from '../../../redux/actions/action';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,7 +11,10 @@ import './lobby.scss';
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
-  return { showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)) };
+  return {
+    resetState: () => dispatch(resetState()),
+    showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp))
+  };
 };
 
 class Lobby extends Component {
@@ -23,6 +26,10 @@ class Lobby extends Component {
     this.handleNewClick = this.handleNewClick.bind(this);
     this.handleJoinClick = this.handleJoinClick.bind(this);
     this.handleRoomIdChange = this.handleRoomIdChange.bind(this);
+  }
+
+  componentDidMount (){
+    this.props.resetState();
   }
 
   handleNewClick (e){

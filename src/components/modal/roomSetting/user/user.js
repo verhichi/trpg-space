@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { showModal, hideModal, removeUser } from '../../../../redux/actions/action';
+import socket from '../../../../socket/socketClient';
+
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,6 +14,7 @@ import './user.scss';
 const mapStateToProps = (state) => {
   return {
     id: state.id,
+    roomId: state.roomId,
     userList: state.userList
   };
 };
@@ -41,7 +44,7 @@ class User extends Component {
       title: 'Kick User',
       confirmText: `Are you sure you want to kick ${this.props.userData.name} from this room?`,
       accept: [
-        this.props.removeUser.bind(null, this.props.userData.id),
+        socket.emit.bind(socket, 'delUser', this.props.roomId, this.props.userData.id),
         this.props.showModal.bind(null, 'roomSetting', { title: 'Room Setting' })
       ],
       decline: this.props.showModal.bind(null, 'roomSetting', { title: 'Room Setting' })
@@ -51,13 +54,13 @@ class User extends Component {
   render() {
     return (
       <div className="user-cont d-flex w-100 mb-2">
-        <div className="user-stat mr-3">
+        <div className="user-stat mr-3 align-center">
           {this.props.userData.host
             ? (<FontAwesomeIcon icon="chess-queen"/>)
             : (<FontAwesomeIcon icon="chess-pawn"/>)
           }
         </div>
-        <div className="user-btn mr-3">
+        <div className="user-btn mr-3 align-center">
           {this.props.id === this.props.userData.id
             ? (<div className="cursor-pointer" onClick={this.handleEditClick}>
                  <FontAwesomeIcon icon="pen-square"/>
@@ -65,7 +68,7 @@ class User extends Component {
             : null
           }
         </div>
-        <div className="user-btn mr-3" >
+        <div className="user-btn mr-3 align-center" >
           {this.props.userList.find((user) => user.id === this.props.id).host && this.props.id !== this.props.userData.id
             ? (<div className="cursor-pointer" onClick={this.handleRemoveClick}>
                  <FontAwesomeIcon icon="window-close"/>

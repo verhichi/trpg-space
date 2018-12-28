@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
-import { setRoomId, setUserId } from '../../../redux/actions/action';
+import { addUser, editUser, removeUser, setRoomId, setUserId } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
 // Style
@@ -25,6 +25,9 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
+    addUser:  (user) => dispatch(addUser(user)),
+    editUser: (user) => dispatch(editUser(user)),
+    removeUser: (userId) => dispatch(removeUser(userId)),
     setRoomId: (roomId) => dispatch(setRoomId(roomId)),
     setUserId: (userId) => dispatch(setUserId(userId))
   };
@@ -33,12 +36,30 @@ const mapDispatchToProps = (dispatch) => {
 class Room extends Component {
   constructor (props){
     super(props);
-    // this.props.setRoomId(this.props.match.params.roomId);
-    // this.props.setUserId(uuid.v4());
     socket.connect();
   }
 
   componentDidMount (){
+    socket.on('delUser', (id) => {
+      if (id === this.props.id){
+        this.props.history.push('/');
+      }
+      this.props.removeUser(id);
+    });
+
+    socket.on('join', (content) => {
+      this.props.addUser(content);
+      socket.emit('user', this.props.roomId, this.props.userList.find((user) => user.id === this.props.id));
+    });
+
+    socket.on('user', (content) => {
+      if (this.props.userList.some((user) => user.id === content.id)){
+        this.props.editUser(content);
+      } else {
+        this.props.addUser(content);
+      }
+    });
+
     socket.emit('join', this.props.match.params.roomId, this.props.userList.find((user) => user.id === this.props.id))
       .then(() => {
         socket.emit('chat', this.props.roomId, {

@@ -9,6 +9,7 @@ import {
   HIDE_USER_LIST,
   REMOVE_FROM_CHAR_LIST,
   REMOVE_USER,
+  RESET_STATE,
   SET_ROOM_ID,
   SET_USER_ID,
   SHOW_CHAR_LIST,
@@ -51,6 +52,9 @@ export const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch(action.type){
+    case RESET_STATE:
+      return initialState;
+
     case ADD_TO_CHAT_LOG:
       return {
         ...state,

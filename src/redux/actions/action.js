@@ -9,6 +9,7 @@ import {
   HIDE_USER_LIST,
   REMOVE_FROM_CHAR_LIST,
   REMOVE_USER,
+  RESET_STATE,
   SET_ROOM_ID,
   SET_USER_ID,
   SHOW_CHAR_LIST,
@@ -16,6 +17,10 @@ import {
   SHOW_USER_LIST,
   TOGGLE_DICE_BUBBLE
 } from '../constants/actionTypes';
+
+export const resetState = () => {
+  return { type: RESET_STATE };
+};
 
 export const addToChatLog = (content) => {
   return {
