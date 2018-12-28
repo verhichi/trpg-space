@@ -16,6 +16,8 @@ import {
   SHOW_MODAL,
   SHOW_USER_LIST,
   TOGGLE_DICE_BUBBLE,
+  SHOW_ENEMY_LIST,
+  HIDE_ENEMY_LIST
 } from '../constants/actionTypes';
 
 export const initialState = {
@@ -29,13 +31,15 @@ export const initialState = {
   displayCharList: false,
   displayDiceSetting: false,
   displayUserList: false,
+  displayEnemyList: false,
   userList: [
   //   {
   //   id: '123457',
   //   name: 'Daichi Nishida',
-  //   host: false
+  //   host: false,
+  //   master: false
   // }
-],
+  ],
   charList: [
   //   {
   //   charId: '23984743543',
@@ -46,7 +50,8 @@ export const initialState = {
   //   maxMp: '60',
   //   curMp: '45'
   // }
-],
+  ],
+  enemyList: [],
   chatLog: [],
 };
 
@@ -181,6 +186,19 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         id: action.userId
+      };
+
+    case SHOW_ENEMY_LIST:
+      return {
+        ...state,
+        displayEnemyList: true
+      };
+
+
+    case HIDE_ENEMY_LIST:
+      return {
+        ...state,
+        displayEnemyList: false
       };
 
     default:

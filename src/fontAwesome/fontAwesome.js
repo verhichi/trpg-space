@@ -22,7 +22,8 @@ import {
   faTimes,
   faCheck,
   faChessQueen,
-  faChessPawn
+  faChessPawn,
+  faDragon
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -45,5 +46,6 @@ library.add(
   faTimes,
   faCheck,
   faChessQueen,
-  faChessPawn
+  faChessPawn,
+  faDragon
 );

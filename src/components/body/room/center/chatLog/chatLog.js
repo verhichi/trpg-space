@@ -77,7 +77,7 @@ class ChatLog extends Component {
     });
 
     return (
-      <div className="chat-log-cont w-100">
+      <div className="chat-log-cont f-grow-1">
         {chatLog}
       </div>
     );

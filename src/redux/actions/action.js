@@ -15,7 +15,9 @@ import {
   SHOW_CHAR_LIST,
   SHOW_MODAL,
   SHOW_USER_LIST,
-  TOGGLE_DICE_BUBBLE
+  TOGGLE_DICE_BUBBLE,
+  SHOW_ENEMY_LIST,
+  HIDE_ENEMY_LIST
 } from '../constants/actionTypes';
 
 export const resetState = () => {
@@ -115,4 +117,12 @@ export const setUserId = (userId) => {
     type: SET_USER_ID,
     userId
   };
+};
+
+export const showEnemyList = () => {
+  return { type: SHOW_ENEMY_LIST };
+};
+
+export const hideEnemyList = () => {
+  return { type: HIDE_ENEMY_LIST };
 };

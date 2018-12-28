@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addToChatLog, showCharList, hideCharList, toggleDiceBubble } from '../../../../redux/actions/action';
+import { addToChatLog, showCharList, hideCharList, toggleDiceBubble, showEnemyList, hideEnemyList } from '../../../../redux/actions/action';
 import socket from '../../../../socket/socketClient';
 
 // Font Awesome Component
@@ -13,7 +13,8 @@ import './bottom.scss';
 const mapStateToProps = (state) => {
   return {
     roomId: state.roomId,
-    displayCharList: state.displayCharList
+    displayCharList: state.displayCharList,
+    displayEnemyList: state.displayEnemyList
   };
 };
 
@@ -23,6 +24,8 @@ const mapDispatchToProps = (dispatch) => {
     addToChatLog: content => dispatch(addToChatLog(content)),
     showCharList: () => dispatch(showCharList()),
     hideCharList: () => dispatch(hideCharList()),
+    showEnemyList: () => dispatch(showEnemyList()),
+    hideEnemyList: () => dispatch(hideEnemyList()),
     toggleDiceBubble: () => dispatch(toggleDiceBubble())
   };
 };
@@ -36,6 +39,7 @@ class Bottom extends Component {
     this.handleSendClick = this.handleSendClick.bind(this);
     this.handleDiceSettingClick = this.handleDiceSettingClick.bind(this);
     this.handleCharListClick = this.handleCharListClick.bind(this);
+    this.handleEnemyListClick = this.handleEnemyListClick.bind(this);
   }
 
   componentDidMount (){
@@ -71,6 +75,13 @@ class Bottom extends Component {
       : this.props.showCharList();
   }
 
+  handleEnemyListClick (e){
+    e.preventDefault();
+    this.props.displayEnemyList
+    ? this.props.hideEnemyList()
+    : this.props.showEnemyList();
+  }
+
   render() {
     const isDisabled = this.state.chatText.trim().length === 0;
 
@@ -79,6 +90,9 @@ class Bottom extends Component {
         <div className="chat-cont">
           <div className="chat-bar-btn cursor-pointer" onClick={this.handleCharListClick}>
             <FontAwesomeIcon icon="address-card"/>
+          </div>
+          <div className="chat-bar-btn cursor-pointer" onClick={this.handleEnemyListClick}>
+            <FontAwesomeIcon icon="dragon"/>
           </div>
           <button className="chat-bar-btn btn-hot cursor-pointer" onClick={this.handleDiceSettingClick}>
             <FontAwesomeIcon icon="dice"/>

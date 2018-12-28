@@ -15,3 +15,5 @@ export const SHOW_CHAR_LIST = 'SHOW_CHAR_LIST';
 export const SHOW_MODAL = 'SHOW_MODAL';
 export const SHOW_USER_LIST = 'SHOW_USER_LIST';
 export const TOGGLE_DICE_BUBBLE = 'TOGGLE_DICE_BUBBLE';
+export const SHOW_ENEMY_LIST = 'SHOW_ENEMY_LIST';
+export const HIDE_ENEMY_LIST = 'HIDE_ENEMY_LIST';
