@@ -26,6 +26,11 @@ server.listen(portNo, () => {
 // Set path for file to ./dist
 app.use(express.static(path.join(__dirname, '../build')));
 
+// All URL sends user to home page
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build/index.html'));
+});
+
 // GET new room id to host a new room
 app.get('/newRoomId', (req, res) => {
   let roomId = '';
@@ -47,7 +52,7 @@ app.get('/checkRoomId', (req, res) => {
 
 // All URL sends user to home page
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../build/index.html'));
+  res.redirect('/');
 });
 
 // Place Holder socket.io logic

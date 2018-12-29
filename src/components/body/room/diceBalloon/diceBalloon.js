@@ -10,8 +10,10 @@ import './diceBalloon.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
+    id: state.id,
+    roomId: state.roomId,
     displayDiceSetting: state.displayDiceSetting,
-    roomId: state.roomId
+    userList: state.userList
   };
 };
 
@@ -65,21 +67,27 @@ class DiceBalloon extends Component {
   handleButtonClick (e){
 
     const result = getDiceRollResult(this.state);
+    const name = this.props.userList.find((user) => this.props.id === user.id).name;
+
+    const now = new Date();
+    const hour = now.getHours();
+    const min = now.getMinutes();
+    const time = `${hour}:${min}`;
 
     if (this.state.private){
       this.props.addToChatLog({
         type: 'roll',
-        name: 'Daichi',
-        time: '3:13',
         private: this.state.private,
+        time,
+        name,
         ...result
       });
     } else {
       socket.emit('chat', this.props.roomId, {
         type: 'roll',
-        name: 'Daichi',
-        time: '3:13',
         private: this.state.private,
+        time,
+        name,
         ...result
       });
     }

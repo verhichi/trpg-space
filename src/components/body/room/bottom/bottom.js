@@ -12,7 +12,9 @@ import './bottom.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
+    id: state.id,
     roomId: state.roomId,
+    userList: state.userList,
     displayCharList: state.displayCharList,
     displayEnemyList: state.displayEnemyList
   };
@@ -53,11 +55,18 @@ class Bottom extends Component {
   }
 
   handleSendClick (e){
+    const name = this.props.userList.find((user) => this.props.id === user.id).name;
+
+    const now = new Date();
+    const hour = now.getHours();
+    const min = now.getMinutes();
+    const time = `${hour}:${min}`;
+
     socket.emit('chat', this.props.roomId, {
       type: 'text',
-      name: 'Daichi',
-      time: '3:13',
-      text: this.state.chatText
+      text: this.state.chatText,
+      time,
+      name,
     });
 
     this.setState({ chatText: '' });
