@@ -58,8 +58,8 @@ class Bottom extends Component {
     const name = this.props.userList.find((user) => this.props.id === user.id).name;
 
     const now = new Date();
-    const hour = now.getHours();
-    const min = now.getMinutes();
+    const hour = now.getHours().toString().padStart(2, '0');
+    const min = now.getMinutes().toString().padStart(2, '0');
     const time = `${hour}:${min}`;
 
     socket.emit('chat', this.props.roomId, {
