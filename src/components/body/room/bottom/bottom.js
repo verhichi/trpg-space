@@ -64,7 +64,7 @@ class Bottom extends Component {
 
     socket.emit('chat', this.props.roomId, {
       type: 'text',
-      text: this.state.chatText,
+      text: this.state.chatText.trim(),
       time,
       name,
     });

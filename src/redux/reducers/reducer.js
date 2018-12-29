@@ -21,7 +21,8 @@ import {
   ADD_ENEMY,
   EDIT_ENEMY,
   REMOVE_ENEMY,
-  USER_CLEANUP
+  USER_CLEANUP,
+  NEW_HOST
 } from '../constants/actionTypes';
 
 export const initialState = {
@@ -251,6 +252,21 @@ const rootReducer = (state = initialState, action) => {
         userList: state.userList.filter((user) => user.id !== action.id),
         enemyList: state.enemyList.filter((enemy) => enemy.ownerId !== action.id),
         charList: state.charList.filter((char) => char.ownerId !== action.id)
+      }
+
+    case NEW_HOST:
+      return {
+        ...state,
+        userList: state.userList.map((user) => {
+          if (user.id === action.id){
+            return {
+              ...user,
+              host: true
+            };
+          } else {
+            return user;
+          }
+        })
       }
 
     default:

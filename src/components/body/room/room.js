@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addUser, editUser, removeUser, setRoomId, setUserId, userCleanup, addToChatLog } from '../../../redux/actions/action';
+import { addUser, editUser, removeUser, setRoomId, setUserId, userCleanup, addToChatLog, newHost } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
 // Style
@@ -32,7 +32,8 @@ const mapDispatchToProps = (dispatch) => {
     setRoomId: (roomId) => dispatch(setRoomId(roomId)),
     setUserId: (userId) => dispatch(setUserId(userId)),
     userCleanup: (id) => dispatch(userCleanup(id)),
-    addToChatLog: (content) => dispatch(addToChatLog(content))
+    addToChatLog: (content) => dispatch(addToChatLog(content)),
+    newHost: (id) => dispatch(newHost(id))
   };
 };
 
@@ -75,11 +76,21 @@ class Room extends Component {
       });
     });
 
+    socket.on('newHost', (id) => {
+      this.props.addToChatLog({
+        type: 'newHost',
+        name: this.props.userList.find((user) => user.id === id).name
+      });
+
+      this.props.newHost(id);
+    });
+
     socket.on('leave', (id) => {
       this.props.addToChatLog({
         type: 'leave',
         name: this.props.userList.find((user) => user.id === id).name
-      })
+      });
+
       this.props.userCleanup(id);
     });
 
@@ -95,6 +106,16 @@ class Room extends Component {
 
   componentWillUnmount (){
     socket.emit('leave', this.props.roomId, this.props.id);
+
+    // If the user that left was host, get new host
+    if (this.props.userList.find(user => user.id === this.props.id).host){
+      for (let idx = 0; idx < this.props.userList.length; idx++){
+        if (this.props.userList[idx].id === this.props.id) continue; // can't set user that's leaving as host
+
+        socket.emit('newHost', this.props.roomId, this.props.userList[idx].id);
+        break;
+      }
+    }
     socket.disconnect();
   }
 

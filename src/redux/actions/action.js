@@ -21,7 +21,8 @@ import {
   ADD_ENEMY,
   EDIT_ENEMY,
   REMOVE_ENEMY,
-  USER_CLEANUP
+  USER_CLEANUP,
+  NEW_HOST
 } from '../constants/actionTypes';
 
 export const resetState = () => {
@@ -155,6 +156,13 @@ export const hideEnemyList = () => {
 export const userCleanup = (id) => {
   return {
     type: USER_CLEANUP,
+    id
+  };
+};
+
+export const newHost = (id) => {
+  return {
+    type: NEW_HOST,
     id
   };
 };

@@ -106,6 +106,11 @@ io.on('connection', (socket) => {
     io.to(roomId).emit('delEnemy', content);
   });
 
+  // Logic for setting a user as a host
+  socket.on('newHost', (roomId, id) => {
+    io.to(roomId).emit('newHost', id);
+  });
+
   // Logic for when a user leaves a room
   socket.on('leave', (roomId, id) => {
     io.to(roomId).emit('leave', id);

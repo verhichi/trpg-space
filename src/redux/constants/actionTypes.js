@@ -21,3 +21,4 @@ export const ADD_ENEMY = 'ADD_ENEMY';
 export const EDIT_ENEMY = 'EDIT_ENEMY';
 export const REMOVE_ENEMY = 'REMOVE_ENEMY';
 export const USER_CLEANUP = 'USER_CLEANUP';
+export const NEW_HOST = 'NEW_HOST';

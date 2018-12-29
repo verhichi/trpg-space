@@ -62,10 +62,19 @@ class ChatLog extends Component {
             </div>
           );
 
+        case 'newHost':
+          return (
+            <div className="chat-log" key={idx}>
+              <div className="chat-log-join p-2">
+                {val.name} is now the host.
+              </div>
+            </div>
+          );
+
         case 'leave':
           return (
             <div className="chat-log" key={idx}>
-              <div className="chat-log-join p-2 ml-3">
+              <div className="chat-log-join p-2">
                 {val.name} has left the room.
               </div>
             </div>
