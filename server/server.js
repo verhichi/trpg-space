@@ -45,6 +45,11 @@ app.get('/checkRoomId', (req, res) => {
   res.json({ roomExists });
 });
 
+// All URL sends user to home page
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build/index.html'));
+});
+
 // Place Holder socket.io logic
 io.on('connection', (socket) => {
 
@@ -86,5 +91,20 @@ io.on('connection', (socket) => {
     io.to(roomId).emit('delUser', content);
   });
 
+  // Logic for when a user creates a new enemy or edits an enemy
+  socket.on('enemy', (roomId, content) => {
+    console.log('enemy');
+    console.log(roomId);
+    console.log(content);
+    io.to(roomId).emit('enemy', content);
+  });
+
+  // Logic for when a user deletes an enemy
+  socket.on('delEnemy', (roomId, content) => {
+    console.log('delEnemy');
+    console.log(roomId);
+    console.log(content);
+    io.to(roomId).emit('delEnemy', content);
+  });
 
 });

@@ -21,10 +21,15 @@
 .modal-cont{
   background: $white-clr;
   border: none;
-  max-height: 75%;
-  width: 75%;
+  height: 100%;
+  width: 100%;
   overflow: hidden;
   padding: 5px 10px;
+
+  @include md{
+    max-height: 75%;
+    max-width: 75%;
+  }
 }
 
 .stat-inp{

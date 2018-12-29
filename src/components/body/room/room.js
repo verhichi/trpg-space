@@ -40,6 +40,14 @@ class Room extends Component {
   }
 
   componentDidMount (){
+    socket.on('user', (content) => {
+      if (this.props.userList.some((user) => user.id === content.id)){
+        this.props.editUser(content);
+      } else {
+        this.props.addUser(content);
+      }
+    });
+
     socket.on('delUser', (id) => {
       if (id === this.props.id){
         this.props.history.push('/');
@@ -52,13 +60,6 @@ class Room extends Component {
       socket.emit('user', this.props.roomId, this.props.userList.find((user) => user.id === this.props.id));
     });
 
-    socket.on('user', (content) => {
-      if (this.props.userList.some((user) => user.id === content.id)){
-        this.props.editUser(content);
-      } else {
-        this.props.addUser(content);
-      }
-    });
 
     socket.emit('join', this.props.match.params.roomId, this.props.userList.find((user) => user.id === this.props.id))
       .then(() => {

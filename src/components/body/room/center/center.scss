@@ -14,11 +14,13 @@
   background: $secondary-clr;
   border-top: 1px solid $primary-clr;
   flex-direction: column;
+  height: 100%;
   overflow-x: hidden;
   position: absolute;
   width: 0;
 
   @include md{
+    height: auto;
     position: static;
   }
 

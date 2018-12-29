@@ -45,7 +45,8 @@ class Modal extends Component {
     const modalBody = {
       newChar: <NewChar charType={'char'}/>,
       newEnemy: <NewChar charType={'enemy'}/>,
-      editChar: <EditChar />,
+      editChar: <EditChar charType={'char'}/>,
+      editEnemy: <EditChar charType={'enemy'}/>,
       newUser: <NewUser />,
       editUser: <EditUser />,
       confirm: <Confirm />,

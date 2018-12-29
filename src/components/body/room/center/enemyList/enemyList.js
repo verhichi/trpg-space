@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { showModal } from '../../../../../redux/actions/action';
+import { showModal, addEnemy, editEnemy, removeEnemy } from '../../../../../redux/actions/action';
+import socket from '../../../../../socket/socketClient';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './enemyList.scss';
 
 // // Component
-// import User from './user/user';
+import Enemy from './enemy/enemy';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -23,13 +24,32 @@ const mapStateToProps = (state) => {
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
-  return { showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)) };
+  return {
+    showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
+    addEnemy:    (enemyData) => dispatch(addEnemy(enemyData)),
+    editEnemy:   (enemyData) => dispatch(editEnemy(enemyData)),
+    removeEnemy: (enemyId) => dispatch(removeEnemy(enemyId))
+  };
 };
 
 class EnemyList extends Component {
   constructor (props){
     super(props);
     this.handleNewClick = this.handleNewClick.bind(this);
+  }
+
+  componentDidMount (){
+    socket.on('enemy', (content) => {
+      if (this.props.enemyList.some((enemy) => enemy.charId === content.charId)){
+        this.props.editEnemy(content);
+      } else {
+        this.props.addEnemy(content);
+      }
+    });
+
+    socket.on('delEnemy', (enemyId) => {
+      this.props.removeEnemy(enemyId);
+    });
   }
 
   handleNewClick (e){
@@ -41,6 +61,10 @@ class EnemyList extends Component {
   render() {
     const toggleClass = this.props.displayEnemyList ? 'is-active' : '';
 
+    const enemyList = this.props.enemyList.map((enemy) => {
+      return ( <Enemy key={enemy.charId} enemyData={enemy}/> );
+    });
+
     return (
       <div className={`list-cont d-flex ${toggleClass}`}>
         <div className="list-tool-bar d-flex mb-1">
@@ -51,6 +75,7 @@ class EnemyList extends Component {
           </div>
         </div>
         <div className="list d-flex f-grow-1">
+          {enemyList}
         </div>
       </div>
     );

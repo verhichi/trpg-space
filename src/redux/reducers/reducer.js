@@ -227,11 +227,11 @@ const rootReducer = (state = initialState, action) => {
           if (enemy.charId === action.enemyData.charId){
             return {
               ...enemy,
-              name: action.charData.name,
-              maxHp: action.charData.maxHp,
-              curHp: action.charData.curHp,
-              maxMp: action.charData.maxMp,
-              curMp: action.charData.curMp
+              name: action.enemyData.name,
+              maxHp: action.enemyData.maxHp,
+              curHp: action.enemyData.curHp,
+              maxMp: action.enemyData.maxMp,
+              curMp: action.enemyData.curMp
             };
           } else {
             return enemy;
@@ -242,7 +242,7 @@ const rootReducer = (state = initialState, action) => {
     case REMOVE_ENEMY:
       return {
         ...state,
-        enemyList: state.enemyList.filter((enemy) => enemy.charId !== action.charId)
+        enemyList: state.enemyList.filter((enemy) => enemy.charId !== action.enemyId)
       };
 
     default:

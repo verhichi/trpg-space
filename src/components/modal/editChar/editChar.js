@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { editChar, hideModal } from '../../../redux/actions/action';
+import { editChar, editEnemy, hideModal } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
 // Font Awesome Component
@@ -15,23 +15,24 @@ const mapStateToProps = (state) => {
     id:           state.id,
     roomId:       state.roomId,
     charList:     state.charList,
+    enemyList:        state.enemyList,
     modalSetting: state.modalSetting
   };
 };
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
-  return {
-    editChar: (charData) => dispatch(editChar(charData)),
-    hideModal: () => dispatch(hideModal())
-  };
+  return { hideModal: () => dispatch(hideModal()) };
 };
 
 
 class EditChar extends Component {
   constructor (props){
     super(props);
-    const char = this.props.charList.find((char) => char.charId === this.props.modalSetting.modalProp.charId);
+    const char = this.props.charType === 'char'
+      ? this.props.charList.find((char) => char.charId === this.props.modalSetting.modalProp.charId)
+      : this.props.enemyList.find((enemy) => enemy.charId === this.props.modalSetting.modalProp.charId);
+
     this.state = {
       name: char.name,
       maxHp: char.maxHp,
@@ -71,15 +72,27 @@ class EditChar extends Component {
   handleButtonClick (e){
     e.preventDefault();
 
-    socket.emit('char', this.props.roomId, {
-      charId: this.props.modalSetting.modalProp.charId,
-      ownerId: this.props.id,
-      name: this.state.name.trim(),
-      maxHp: this.state.maxHp.trim(),
-      curHp: this.state.curHp.trim(),
-      maxMp: this.state.maxMp.trim(),
-      curMp: this.state.curMp.trim()
-    });
+    if (this.props.charType === 'char'){
+      socket.emit('char', this.props.roomId, {
+        charId: this.props.modalSetting.modalProp.charId,
+        ownerId: this.props.id,
+        name: this.state.name.trim(),
+        maxHp: this.state.maxHp.trim(),
+        curHp: this.state.curHp.trim(),
+        maxMp: this.state.maxMp.trim(),
+        curMp: this.state.curMp.trim()
+      });
+    } else {
+      socket.emit('enemy', this.props.roomId, {
+        charId: this.props.modalSetting.modalProp.charId,
+        ownerId: this.props.id,
+        name: this.state.name.trim(),
+        maxHp: this.state.maxHp.trim(),
+        curHp: this.state.curHp.trim(),
+        maxMp: this.state.maxMp.trim(),
+        curMp: this.state.curMp.trim()
+      });
+    }
 
     this.setState({
       name: '',
