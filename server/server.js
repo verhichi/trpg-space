@@ -98,18 +98,18 @@ io.on('connection', (socket) => {
 
   // Logic for when a user creates a new enemy or edits an enemy
   socket.on('enemy', (roomId, content) => {
-    console.log('enemy');
-    console.log(roomId);
-    console.log(content);
     io.to(roomId).emit('enemy', content);
   });
 
   // Logic for when a user deletes an enemy
   socket.on('delEnemy', (roomId, content) => {
-    console.log('delEnemy');
-    console.log(roomId);
-    console.log(content);
     io.to(roomId).emit('delEnemy', content);
   });
+
+  // Logic for when a user leaves a room
+  socket.on('leave', (roomId, id) => {
+    io.to(roomId).emit('leave', id);
+  });
+
 
 });

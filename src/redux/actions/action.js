@@ -20,7 +20,8 @@ import {
   HIDE_ENEMY_LIST,
   ADD_ENEMY,
   EDIT_ENEMY,
-  REMOVE_ENEMY
+  REMOVE_ENEMY,
+  USER_CLEANUP
 } from '../constants/actionTypes';
 
 export const resetState = () => {
@@ -149,4 +150,11 @@ export const showEnemyList = () => {
 
 export const hideEnemyList = () => {
   return { type: HIDE_ENEMY_LIST };
+};
+
+export const userCleanup = (id) => {
+  return {
+    type: USER_CLEANUP,
+    id
+  };
 };

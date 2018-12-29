@@ -34,9 +34,6 @@ class Top extends Component {
   }
 
   handleSettingClick (e){
-    // this.props.displayUserList
-    //   ? this.props.hideUserList()
-    //   : this.props.showUserList();
     this.props.showModal('roomSetting', {
       title: 'Setting'
     });

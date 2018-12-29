@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import uuid from 'uuid';
-import { addUser, editUser, removeUser, setRoomId, setUserId } from '../../../redux/actions/action';
+import { addUser, editUser, removeUser, setRoomId, setUserId, userCleanup, addToChatLog } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
 // Style
@@ -18,7 +17,9 @@ const mapStateToProps = (state) => {
   return {
     id:       state.id,
     roomId:   state.roomId,
-    userList: state.userList
+    userList: state.userList,
+    enemyList: state.enemyList,
+    charList: state.charList
   };
 };
 
@@ -29,7 +30,9 @@ const mapDispatchToProps = (dispatch) => {
     editUser: (user) => dispatch(editUser(user)),
     removeUser: (userId) => dispatch(removeUser(userId)),
     setRoomId: (roomId) => dispatch(setRoomId(roomId)),
-    setUserId: (userId) => dispatch(setUserId(userId))
+    setUserId: (userId) => dispatch(setUserId(userId)),
+    userCleanup: (id) => dispatch(userCleanup(id)),
+    addToChatLog: (content) => dispatch(addToChatLog(content))
   };
 };
 
@@ -58,8 +61,27 @@ class Room extends Component {
     socket.on('join', (content) => {
       this.props.addUser(content);
       socket.emit('user', this.props.roomId, this.props.userList.find((user) => user.id === this.props.id));
+
+      this.props.charList.forEach((char) => {
+        if (char.ownerId === this.props.id){
+          socket.emit('char', this.props.roomId, char);
+        }
+      });
+
+      this.props.enemyList.forEach((enemy) => {
+        if (enemy.ownerId === this.props.id){
+          socket.emit('enemy', this.props.roomId, enemy)
+        }
+      });
     });
 
+    socket.on('leave', (id) => {
+      this.props.addToChatLog({
+        type: 'leave',
+        name: this.props.userList.find((user) => user.id === id).name
+      })
+      this.props.userCleanup(id);
+    });
 
     socket.emit('join', this.props.match.params.roomId, this.props.userList.find((user) => user.id === this.props.id))
       .then(() => {
@@ -68,13 +90,11 @@ class Room extends Component {
           name: this.props.userList.find((user) => user.id === this.props.id).name
         });
       });
+
   }
 
   componentWillUnmount (){
-    socket.emit('chat', this.props.roomId, {
-      type: 'leave',
-      name: this.props.userList.find((user) => user.id === this.props.id).name
-    });
+    socket.emit('leave', this.props.roomId, this.props.id);
     socket.disconnect();
   }
 

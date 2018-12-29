@@ -20,7 +20,8 @@ import {
   HIDE_ENEMY_LIST,
   ADD_ENEMY,
   EDIT_ENEMY,
-  REMOVE_ENEMY
+  REMOVE_ENEMY,
+  USER_CLEANUP
 } from '../constants/actionTypes';
 
 export const initialState = {
@@ -244,6 +245,14 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         enemyList: state.enemyList.filter((enemy) => enemy.charId !== action.enemyId)
       };
+
+    case USER_CLEANUP:
+      return {
+        ...state,
+        userList: state.userList.filter((user) => user.id !== action.id),
+        enemyList: state.enemyList.filter((enemy) => enemy.ownerId !== action.id),
+        charList: state.charList.filter((char) => char.ownerId !== action.id)
+      }
 
     default:
       return state;
