@@ -22,7 +22,7 @@ class ChatLog extends Component {
                 <span className="chat-log-user">{val.name}</span>
                 <span className="chat-log-time">{val.time}</span>
               </div>
-              <div className="chat-log-body pl-3">
+              <div className="chat-log-body p-2 ml-3">
                 {val.text}
               </div>
             </div>
@@ -38,7 +38,7 @@ class ChatLog extends Component {
                   ? (<span className="chat-log-private ml-2 p-1 font-size-xs">PRIVATE</span>)
                   : null}
               </div>
-              <div className="chat-log-body pl-3">
+              <div className="chat-log-body p-2 ml-3">
                 <div className="d-flex">
                   <div>
                     <div>Dice Roll Result(Bonus):</div>
@@ -65,7 +65,7 @@ class ChatLog extends Component {
         case 'leave':
           return (
             <div className="chat-log" key={idx}>
-              <div className="chat-log-join p-2">
+              <div className="chat-log-join p-2 ml-3">
                 {val.name} has left the room.
               </div>
             </div>

@@ -24,7 +24,21 @@
 }
 
 .chat-log-body{
+  background: $tertiary-clr;
+  border-radius: 1px;
+  display: inline-block;
+  position: relative;
   white-space: pre-line;
+  z-index: 1;
+
+  &::before{
+    border: 15px solid transparent;
+    border-top: 15px solid $tertiary-clr;
+    content: "";
+    left: -15px;
+    position: absolute;
+    top: 0;
+  }
 }
 
 .chat-log-join{

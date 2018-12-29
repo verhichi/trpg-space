@@ -41,7 +41,6 @@ export const initialState = {
   //   id: '123457',
   //   name: 'Daichi Nishida',
   //   host: false,
-  //   master: false
   // }
   ],
   charList: [
