@@ -38,6 +38,7 @@ class Char extends Component {
 
     this.props.showModal('confirm', {
       title: 'Delete Character',
+      displayClose: false,
       confirmText: `Are you sure you want to delete ${this.props.charData.name}?`,
       accept: [delCharEmit, this.props.hideModal],
       decline: this.props.hideModal
@@ -45,7 +46,11 @@ class Char extends Component {
   }
 
   handleEditClick (e){
-     this.props.showModal('editChar', { title: 'Edit Character', charId: this.props.charData.charId });
+    this.props.showModal('editChar', {
+      title: 'Edit Character',
+      displayClose: true,
+      charId: this.props.charData.charId
+    });
   }
 
   render() {

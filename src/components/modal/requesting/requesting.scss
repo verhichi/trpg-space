@@ -1,0 +1,22 @@
+@import '../../../styles/partials/variables';
+@import '../../../styles/partials/mediaQueries';
+
+.requesting-cont{
+  align-items: center;
+  justify-content: center;
+}
+
+.requesting-circle{
+  animation: spin 1s infinite;
+  border: 15px solid $tertiary-clr;
+  border-bottom: 15px solid transparent;
+  border-radius: 50%;
+  height: 150px;
+  margin: auto;
+  width: 150px;
+}
+
+@keyframes spin{
+  0%{transform:   rotate(0deg);}
+  100%{transform: rotate(360deg);}
+}

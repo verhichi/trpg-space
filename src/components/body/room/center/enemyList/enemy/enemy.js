@@ -36,6 +36,7 @@ class Enemy extends Component {
   handleRemoveClick (charId, e){
     this.props.showModal('confirm', {
       title: 'Delete Character',
+      displayClose: false,
       confirmText: `Are you sure you want to delete ${this.props.enemyData.name}?`,
       accept: [socket.emit.bind(socket, 'delEnemy', this.props.roomId, this.props.enemyData.charId), this.props.hideModal],
       decline: this.props.hideModal
@@ -43,7 +44,11 @@ class Enemy extends Component {
   }
 
   handleEditClick (e){
-     this.props.showModal('editEnemy', { title: 'Edit Character', charId: this.props.enemyData.charId });
+     this.props.showModal('editEnemy', {
+       title: 'Edit Character',
+       displayClose: true,
+       charId: this.props.enemyData.charId
+     });
   }
 
   render() {

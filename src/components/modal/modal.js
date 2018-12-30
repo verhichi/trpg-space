@@ -15,6 +15,7 @@ import EditChar from './editChar/editChar';
 import EditUser from './editUser/editUser';
 import Confirm from './confirm/confirm';
 import RoomSetting from './roomSetting/roomSetting';
+import Requesting from './requesting/requesting';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -50,7 +51,8 @@ class Modal extends Component {
       newUser: <NewUser />,
       editUser: <EditUser />,
       confirm: <Confirm />,
-      roomSetting: <RoomSetting />
+      roomSetting: <RoomSetting />,
+      requesting: <Requesting />
     };
 
     return (
@@ -60,9 +62,11 @@ class Modal extends Component {
             <div className="f-grow-1 align-center">
               {this.props.modalSetting.modalProp.title}
             </div>
-            <div className="cursor-pointer" onClick={this.handleCloseClick}>
-              <FontAwesomeIcon icon="times"/>
-            </div>
+            {this.props.modalSetting.modalProp.displayClose
+              ? (<div className="cursor-pointer" onClick={this.handleCloseClick}>
+                   <FontAwesomeIcon icon="times"/>
+                 </div>)
+              : null}
           </div>
           {modalBody[this.props.modalSetting.modalType]}
         </div>

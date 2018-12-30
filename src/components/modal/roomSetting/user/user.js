@@ -36,12 +36,16 @@ class User extends Component {
   }
 
   handleEditClick (e){
-    this.props.showModal('editUser', { title: 'Edit User' });
+    this.props.showModal('editUser', {
+      title: 'Edit User',
+      displayClose: true
+    });
   }
 
   handleRemoveClick (e){
     this.props.showModal('confirm', {
       title: 'Kick User',
+      displayClose: false,
       confirmText: `Are you sure you want to kick ${this.props.userData.name} from this room?`,
       accept: [
         socket.emit.bind(socket, 'delUser', this.props.roomId, this.props.userData.id),

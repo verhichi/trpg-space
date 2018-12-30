@@ -20,7 +20,10 @@ class Header extends Component {
   }
 
   handleHelpClick (e){
-    this.props.showModal('help', { title: 'Help' });
+    this.props.showModal('help', {
+      title: 'Help',
+      displayClose: true
+    });
   }
 
   render() {

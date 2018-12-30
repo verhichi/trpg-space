@@ -54,7 +54,8 @@ class EnemyList extends Component {
 
   handleNewClick (e){
     this.props.showModal('newEnemy', {
-      title: 'Create New Enemy'
+      title: 'Create New Enemy',
+      displayClose: true
     });
   }
 

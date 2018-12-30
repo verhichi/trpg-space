@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { editUser, hideModal } from '../../../redux/actions/action';
-// import socket from '../../../socket/socketClient';
-
-// Font Awesome Component
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Style
 import './roomSetting.scss';
@@ -21,15 +16,6 @@ const mapStateToProps = (state) => {
     modalSetting: state.modalSetting
   };
 };
-
-// // Redux Map Dispatch To Props
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     editUser: (userData) => dispatch(editUser(userData)),
-//     hideModal: () => dispatch(hideModal())
-//   };
-// };
-
 
 class RoomSetting extends Component {
   render() {

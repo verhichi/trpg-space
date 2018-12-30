@@ -53,7 +53,10 @@ class CharList extends Component {
   }
 
   handleNewClick (){
-    this.props.showModal('newChar', { title: 'Create New Character' });
+    this.props.showModal('newChar', {
+      title: 'Create New Character',
+      displayClose: true
+    });
   }
 
   render() {

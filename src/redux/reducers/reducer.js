@@ -32,6 +32,11 @@ export const initialState = {
     display: false,
     modalType: '',
     modalProp: {}
+    //   {
+    //   *required
+    //   title*: header title of modal
+    //   displayClose*: display the X button on the top-right to close modal
+    // }
   },
   displayCharList: false,
   displayDiceSetting: false,

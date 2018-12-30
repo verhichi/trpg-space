@@ -33,10 +33,16 @@ class Lobby extends Component {
   }
 
   handleNewClick (e){
+    this.props.showModal('requesting', {
+      title: '',
+      displayClose: false
+    });
+
     axios.get('/newRoomId')
       .then((result) => {
         this.props.showModal('newUser', {
           title:  'Enter Display Name',
+          displayClose: true,
           host:   true,
           roomId: result.data.roomId,
           redirect: this.props.history.push.bind(this, `/${result.data.roomId}`)
@@ -50,6 +56,7 @@ class Lobby extends Component {
         if (result.data.roomExists){
           this.props.showModal('newUser', {
             title:  'Enter Display Name',
+            displayClose: true,
             host:   false,
             roomId: this.state.roomId,
             redirect: this.props.history.push.bind(this, `/${this.state.roomId}`)

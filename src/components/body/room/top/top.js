@@ -35,7 +35,8 @@ class Top extends Component {
 
   handleSettingClick (e){
     this.props.showModal('roomSetting', {
-      title: 'Setting'
+      title: 'Setting',
+      displayClose: true
     });
   }
 
