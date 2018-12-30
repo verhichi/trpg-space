@@ -16,6 +16,7 @@ import Char from './char/char';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
+    isMobileOrSafari: state.isMobileOrSafari,
     id: state.id,
     displayCharList: state.displayCharList,
     charList: state.charList
@@ -60,14 +61,15 @@ class CharList extends Component {
   }
 
   render() {
-    const toggleClass = this.props.displayCharList ? 'is-active' : '';
+    const toggleActive = this.props.displayCharList ? 'is-active' : '';
+    const toggleClass = this.props.isMobileOrSafari ? '' : 'hideScroll';
 
     const charList = this.props.charList.map((charData) => {
       return <Char key={charData.charId} charData={charData}/>;
     });
 
     return (
-      <div className={`list-cont d-flex ${toggleClass}`}>
+      <div className={`list-cont d-flex ${toggleActive}`}>
         <div className="list-tool-bar d-flex mb-1">
           <div className="f-grow-1 align-center font-weight-bold text-dec-underline">Character List</div>
           <div className="cursor-pointer" onClick={this.handleNewClick}>
@@ -75,7 +77,7 @@ class CharList extends Component {
             <span className="d-none-sm"> New</span>
           </div>
         </div>
-        <div className="list d-flex f-grow-1">
+        <div className={`list d-flex f-grow-1 ${toggleClass}`}>
           {charList}
         </div>
       </div>

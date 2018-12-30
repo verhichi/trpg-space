@@ -6,12 +6,26 @@ import './chatLog.scss';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
-  return { chatLog: state.chatLog };
+  return {
+    isMobileOrSafari: state.isMobileOrSafari,
+    chatLog: state.chatLog
+  };
 };
 
 class ChatLog extends Component {
+  constructor (props){
+    super(props);
+    this.myRef = React.createRef();
+  }
+
+  componentDidUpdate (){
+    console.log(this.myRef.current.scrollHeight);
+    this.myRef.current.scrollTop = this.myRef.current.scrollHeight;
+  }
 
   render() {
+
+    const toggleClass = this.props.isMobileOrSafari ? '' : 'hideScroll';
 
     const chatLog = this.props.chatLog.map((val, idx) => {
       switch (val.type){
@@ -87,7 +101,9 @@ class ChatLog extends Component {
 
     return (
       <div className="chat-log-cont f-grow-1">
-        {chatLog}
+        <div className={`chat-log-wrap d-flex f-dir-col h-100 ${toggleClass}`} ref={this.myRef}>
+          {chatLog}
+        </div>
       </div>
     );
   }

@@ -15,6 +15,7 @@ import Enemy from './enemy/enemy';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
+    isMobileOrSafari: state.isMobileOrSafari,
     id:               state.id,
     roomId:           state.roomId,
     displayEnemyList: state.displayEnemyList,
@@ -60,14 +61,15 @@ class EnemyList extends Component {
   }
 
   render() {
-    const toggleClass = this.props.displayEnemyList ? 'is-active' : '';
+    const toggleActive = this.props.displayEnemyList ? 'is-active' : '';
+    const toggleClass = this.props.isMobileOrSafari ? '' : 'hideScroll';
 
     const enemyList = this.props.enemyList.map((enemy) => {
       return ( <Enemy key={enemy.charId} enemyData={enemy}/> );
     });
 
     return (
-      <div className={`list-cont d-flex ${toggleClass}`}>
+      <div className={`list-cont d-flex ${toggleActive}`}>
         <div className="list-tool-bar d-flex mb-1">
           <div className="f-grow-1 align-center font-weight-bold text-dec-underline">Enemy List</div>
           <div className="cursor-pointer" onClick={this.handleNewClick}>
@@ -75,7 +77,7 @@ class EnemyList extends Component {
             <span className="d-none-sm"> New</span>
           </div>
         </div>
-        <div className="list d-flex f-grow-1">
+        <div className={`list d-flex f-grow-1 ${toggleClass}`}>
           {enemyList}
         </div>
       </div>

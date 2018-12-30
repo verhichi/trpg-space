@@ -49,7 +49,7 @@ class User extends Component {
       confirmText: `Are you sure you want to kick ${this.props.userData.name} from this room?`,
       accept: [
         socket.emit.bind(socket, 'delUser', this.props.roomId, this.props.userData.id),
-        this.props.showModal.bind(null, 'roomSetting', { title: 'Room Setting' })
+        this.props.showModal.bind(null, 'roomSetting', { title: 'Setting', displayClose: true })
       ],
       decline: this.props.showModal.bind(null, 'roomSetting', { title: 'Room Setting' })
     });

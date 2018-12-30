@@ -3,13 +3,19 @@
 
 .chat-log-cont{
   color: $white-clr;
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
+  overflow: hidden;
   padding: 5px 10px;
 
   @include lg{
     padding: 5px 30px;
+  }
+}
+
+.chat-log-wrap{
+  overflow-y: scroll;
+
+  &.hideScroll{
+    width: calc(100% + 47px);
   }
 }
 
@@ -24,6 +30,7 @@
 }
 
 .chat-log-body{
+  animation: slidein 0.5s ease-out;
   background: $tertiary-clr;
   border-radius: 1px;
   display: inline-block;
@@ -39,6 +46,11 @@
     position: absolute;
     top: 0;
   }
+}
+
+@keyframes slidein{
+  0%{ left: -100%; }
+  100%{ left: 0; }
 }
 
 .chat-log-join{

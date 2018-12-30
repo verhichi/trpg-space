@@ -52,6 +52,10 @@
     -ms-flex-direction: column;
   padding: 5px;
   overflow-y: scroll;
+
+  &.hideScroll{
+    width: calc(100% + 22px);
+  }
 }
 
 .char-cont{
