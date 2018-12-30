@@ -70,10 +70,12 @@ class Lobby extends Component {
   }
 
   handleRoomIdChange (e){
-    this.setState({ roomId: e.target.value });
+    this.setState({ roomId: e.target.value.trim() });
   }
 
   render() {
+    const isDisabled = this.state.roomId.trim().length === 0;
+
     return (
       <div className="lobby-cont h-100">
 
@@ -81,7 +83,7 @@ class Lobby extends Component {
           <div className="lobby-inp-cont w-100">
             <div className="lobby-inp-label">Enter Room ID to join:</div>
             <div><input className="lobby-inp-field w-100" type="tel" onChange={this.handleRoomIdChange}/></div>
-            <button className="btn btn-hot w-100 cursor-pointer" onClick={this.handleJoinClick}>
+            <button className="btn btn-hot w-100 cursor-pointer" disabled={isDisabled} onClick={this.handleJoinClick}>
               <FontAwesomeIcon icon="sign-in-alt"/>
               <div className="btn-text">Join Existing Room</div>
             </button>
