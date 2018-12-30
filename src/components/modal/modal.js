@@ -9,13 +9,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './modal.scss';
 
 // Component
-import NewChar from './newChar/newChar';
-import NewUser from './NewUser/NewUser';
-import EditChar from './editChar/editChar';
-import EditUser from './editUser/editUser';
-import Confirm from './confirm/confirm';
+import NewChar     from './newChar/newChar';
+import NewUser     from './NewUser/NewUser';
+import EditChar    from './editChar/editChar';
+import EditUser    from './editUser/editUser';
+import Confirm     from './confirm/confirm';
+import Alert       from './alert/alert';
 import RoomSetting from './roomSetting/roomSetting';
-import Requesting from './requesting/requesting';
+import Requesting  from './requesting/requesting';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -51,6 +52,7 @@ class Modal extends Component {
       newUser: <NewUser />,
       editUser: <EditUser />,
       confirm: <Confirm />,
+      alert: <Alert />,
       roomSetting: <RoomSetting />,
       requesting: <Requesting />
     };

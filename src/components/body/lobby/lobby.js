@@ -20,9 +20,7 @@ const mapDispatchToProps = (dispatch) => {
 class Lobby extends Component {
   constructor (props){
     super(props);
-    this.state = {
-      roomId: ''
-    };
+    this.state = { roomId: '' };
     this.handleNewClick = this.handleNewClick.bind(this);
     this.handleJoinClick = this.handleJoinClick.bind(this);
     this.handleRoomIdChange = this.handleRoomIdChange.bind(this);
@@ -60,6 +58,12 @@ class Lobby extends Component {
             host:   false,
             roomId: this.state.roomId,
             redirect: this.props.history.push.bind(this, `/${this.state.roomId}`)
+          });
+        } else {
+          this.props.showModal('alert', {
+            title: '',
+            displayClose: false,
+            alertText: `Room ID "${this.state.roomId}" does not exist.`
           });
         }
       });
