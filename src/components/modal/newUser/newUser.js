@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
-import { addUser, hideModal, setUserId, setRoomId } from '../../../redux/actions/action';
+import { addUser, showModal, hideModal, setUserId, setRoomId } from '../../../redux/actions/action';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,6 +22,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addUser: (userData) => dispatch(addUser(userData)),
     hideModal: () => dispatch(hideModal()),
+    showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
     setUserId: (userId) => dispatch(setUserId(userId)),
     setRoomId: (roomId) => dispatch(setRoomId(roomId))
   };
@@ -43,19 +45,55 @@ class NewUser extends Component {
   handleButtonClick (e){
     e.preventDefault();
 
-    const id = uuid.v4();
-    this.props.setUserId(id);
-    this.props.setRoomId(this.props.modalSetting.modalProp.roomId);
-
-    this.props.addUser({
-      id: id,
-      name: this.state.name.trim(),
-      host: this.props.modalSetting.modalProp.host
+    this.props.showModal('requesting', {
+      title: '',
+      displayClose: false
     });
 
-    this.setState({ name: '' });
-    this.props.hideModal();
-    this.props.modalSetting.modalProp.redirect();
+    if (this.props.modalSetting.modalProp.host){
+      axios.get('/newRoomId')
+        .then((result) => {
+          const id = uuid.v4();
+          this.props.setUserId(id);
+          this.props.setRoomId(result.data.roomId);
+
+          this.props.addUser({
+            id: id,
+            name: this.state.name.trim(),
+            host: this.props.modalSetting.modalProp.host
+          });
+
+          this.setState({ name: '' });
+          this.props.hideModal();
+          this.props.modalSetting.modalProp.redirect(`/${result.data.roomId}`);
+        });
+    } else {
+      axios.get('/checkRoomId', {params: { roomId: this.props.modalSetting.modalProp.roomId }})
+        .then((result) => {
+          if (result.data.roomExists){
+            const id = uuid.v4();
+            this.props.setUserId(id);
+            this.props.setRoomId(this.props.modalSetting.modalProp.roomId);
+
+            this.props.addUser({
+              id: id,
+              name: this.state.name.trim(),
+              host: this.props.modalSetting.modalProp.host
+            });
+
+            this.setState({ name: '' });
+            this.props.hideModal();
+            this.props.modalSetting.modalProp.redirect(`/${this.props.modalSetting.modalProp.roomId}`);
+          } else {
+            this.props.showModal('alert', {
+              title: '',
+              displayClose: false,
+              alertText: `Room ID "${this.props.modalSetting.modalProp.roomId}" does not exist.`
+            });
+          }
+        });
+    }
+
   }
 
   render() {
