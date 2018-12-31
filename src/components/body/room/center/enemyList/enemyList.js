@@ -15,7 +15,7 @@ import Enemy from './enemy/enemy';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    isMobile: state.isMobile,
+    isMobile:         state.isMobile,
     id:               state.id,
     roomId:           state.roomId,
     displayEnemyList: state.displayEnemyList,

@@ -205,6 +205,14 @@
       justify-content: space-around;
     }
 
+    .justify-content-between{
+      justify-content: space-between;
+    }
+
+    .f-align-self-end{
+      align-self: flex-end;
+    }
+
   // Cursor
     .cursor-pointer{
       cursor: pointer;

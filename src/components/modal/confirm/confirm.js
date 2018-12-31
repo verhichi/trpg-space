@@ -39,7 +39,7 @@ class Confirm extends Component {
 
   render() {
     return(
-      <div className="d-flex f-dir-col f-grow-1">
+      <div className="d-flex f-dir-col f-grow-1 justify-content-between">
         <div className="align-center font-size-xxl mb-3 pb-3">{this.props.modalSetting.modalProp.confirmText}</div>
         <div className="d-flex justify-content-around">
           <button className="confirm-btn btn btn-danger cursor-pointer" onClick={this.handleDeclineClick}>

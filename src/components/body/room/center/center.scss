@@ -12,6 +12,7 @@
 
 .list-cont{
   background: $secondary-clr;
+  border-bottom: 1px solid $primary-clr;
   border-top: 1px solid $primary-clr;
   flex-direction: column;
   height: 100%;
@@ -59,8 +60,7 @@
 }
 
 .char-cont{
-  background: $white-clr;
-  border: 1px solid white;
+  background: linear-gradient(160deg, $white-clr 70%, #E0E0E0 70%);
   color: $primary-clr;
   font-size: $font-size-lg;
   margin-bottom: 5px;

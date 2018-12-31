@@ -28,7 +28,7 @@ class Alert extends Component {
 
   render() {
     return(
-      <div className="d-flex f-dir-col f-grow-1">
+      <div className="d-flex f-dir-col f-grow-1 justify-content-between">
         <div className="align-center font-size-xxl mb-3 pb-3">{this.props.modalSetting.modalProp.alertText}</div>
         <div className="d-flex justify-content-around">
           <button className="btn btn-danger w-100 cursor-pointer" onClick={this.handleButtonClick}>
