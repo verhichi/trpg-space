@@ -24,7 +24,7 @@ import {
   faChessQueen,
   faChessPawn,
   faDragon,
-  faChevronCircleLeft
+  faDoorOpen
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -49,5 +49,5 @@ library.add(
   faChessQueen,
   faChessPawn,
   faDragon,
-  faChevronCircleLeft
+  faDoorOpen
 );

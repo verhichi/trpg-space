@@ -57,7 +57,7 @@ class Top extends Component {
       <div className="room-top-cont">
         <div className="tool-bar d-flex">
           <div className="tool-bar-btn cursor-pointer" onClick={this.handleLeaveClick}>
-            <FontAwesomeIcon icon="chevron-circle-left"/>
+            <FontAwesomeIcon icon="door-open"/>
             <span className="d-none-sm"> Leave</span>
           </div>
           <div className="f-grow-1 align-center">({this.props.userList.length})Room ID: {this.props.roomId}</div>

@@ -71,6 +71,7 @@ class EnemyList extends Component {
     return (
       <div className={`list-cont d-flex ${toggleActive}`}>
         <div className="list-tool-bar d-flex mb-1">
+          <FontAwesomeIcon icon="dragon"/>
           <div className="f-grow-1 align-center font-weight-bold text-dec-underline">Enemy List</div>
           <div className="cursor-pointer" onClick={this.handleNewClick}>
             <FontAwesomeIcon icon="user-plus"/>
