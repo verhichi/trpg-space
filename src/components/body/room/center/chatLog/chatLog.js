@@ -31,7 +31,7 @@ class ChatLog extends Component {
       switch (val.type){
         case 'text':
           return (
-            <div className="chat-log" key={idx}>
+            <div className="chat-log mb-3" key={idx}>
               <div className="chat-log-head">
                 <span className="chat-log-user">{val.name}</span>
                 <span className="chat-log-time">{val.time}</span>
@@ -44,7 +44,7 @@ class ChatLog extends Component {
 
         case 'roll':
           return (
-            <div className="chat-log" key={idx}>
+            <div className="chat-log mb-3" key={idx}>
               <div className="chat-log-head">
                 <span className="chat-log-user">{val.name}</span>
                 <span className="chat-log-time">{val.time}</span>
@@ -69,7 +69,7 @@ class ChatLog extends Component {
 
         case 'join':
           return (
-            <div className="chat-log" key={idx}>
+            <div className="chat-log mb-3" key={idx}>
               <div className="chat-log-join p-2">
                 {val.name} has joined the room.
               </div>
@@ -78,7 +78,7 @@ class ChatLog extends Component {
 
         case 'newHost':
           return (
-            <div className="chat-log" key={idx}>
+            <div className="chat-log mb-3" key={idx}>
               <div className="chat-log-join p-2">
                 {val.name} is now the host.
               </div>
@@ -87,7 +87,7 @@ class ChatLog extends Component {
 
         case 'leave':
           return (
-            <div className="chat-log" key={idx}>
+            <div className="chat-log mb-3" key={idx}>
               <div className="chat-log-join p-2">
                 {val.name} has left the room.
               </div>
