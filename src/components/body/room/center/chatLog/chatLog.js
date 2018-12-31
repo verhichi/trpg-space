@@ -69,8 +69,8 @@ class ChatLog extends Component {
 
         case 'join':
           return (
-            <div className="chat-log mb-3" key={idx}>
-              <div className="chat-log-join p-2">
+            <div className="chat-log mb-3 align-center" key={idx}>
+              <div className="chat-log-system p-2">
                 {val.name} has joined the room.
               </div>
             </div>
@@ -78,8 +78,8 @@ class ChatLog extends Component {
 
         case 'newHost':
           return (
-            <div className="chat-log mb-3" key={idx}>
-              <div className="chat-log-join p-2">
+            <div className="chat-log mb-3 align-center" key={idx}>
+              <div className="chat-log-system p-2">
                 {val.name} is now the host.
               </div>
             </div>
@@ -87,8 +87,8 @@ class ChatLog extends Component {
 
         case 'leave':
           return (
-            <div className="chat-log mb-3" key={idx}>
-              <div className="chat-log-join p-2">
+            <div className="chat-log mb-3 align-center" key={idx}>
+              <div className="chat-log-system p-2">
                 {val.name} has left the room.
               </div>
             </div>

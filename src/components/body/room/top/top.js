@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { showModal, showUserList, hideUserList } from '../../../../redux/actions/action';
+import { showModal, hideModal, showUserList, hideUserList } from '../../../../redux/actions/action';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,6 +21,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     showModal: (modalType, modalProp)=> dispatch(showModal(modalType, modalProp)),
+    hideModal: () => dispatch(hideModal()),
     hideUserList: () => dispatch(hideUserList()),
     showUserList: () => dispatch(showUserList())
   };
@@ -31,6 +32,17 @@ class Top extends Component {
   constructor (props){
     super(props);
     this.handleSettingClick = this.handleSettingClick.bind(this);
+    this.handleLeaveClick = this.handleLeaveClick.bind(this);
+  }
+
+  handleLeaveClick (e){
+    this.props.showModal('confirm', {
+      title: 'Leave Room',
+      displayClose: false,
+      confirmText: 'Are you sure you want to leave the Room?',
+      accept: this.props.redirect,
+      decline: this.props.hideModal
+    });
   }
 
   handleSettingClick (e){
@@ -44,7 +56,11 @@ class Top extends Component {
     return (
       <div className="room-top-cont">
         <div className="tool-bar d-flex">
-          <div className="f-grow-1">({this.props.userList.length})Room ID: {this.props.roomId}</div>
+          <div className="tool-bar-btn cursor-pointer" onClick={this.handleLeaveClick}>
+            <FontAwesomeIcon icon="chevron-circle-left"/>
+            <span className="d-none-sm"> Leave</span>
+          </div>
+          <div className="f-grow-1 align-center">({this.props.userList.length})Room ID: {this.props.roomId}</div>
           <div className="tool-bar-btn cursor-pointer" onClick={this.handleSettingClick}>
             <FontAwesomeIcon icon="cog"/>
             <span className="d-none-sm"> Settings</span>

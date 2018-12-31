@@ -23,7 +23,8 @@ import {
   faCheck,
   faChessQueen,
   faChessPawn,
-  faDragon
+  faDragon,
+  faChevronCircleLeft
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -47,5 +48,6 @@ library.add(
   faCheck,
   faChessQueen,
   faChessPawn,
-  faDragon
+  faDragon,
+  faChevronCircleLeft
 );

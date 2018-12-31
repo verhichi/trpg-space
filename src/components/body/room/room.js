@@ -122,7 +122,7 @@ class Room extends Component {
   render() {
     return (
       <div className="room-cont h-100">
-        <Top/>
+        <Top redirect={this.props.history.push.bind(this, '/')}/>
         <Center/>
         <Bottom/>
         <DiceBalloon/>
