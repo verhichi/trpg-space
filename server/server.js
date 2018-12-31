@@ -12,6 +12,11 @@ const bodyParser = require('body-parser');        // import body-parser
 app.use(bodyParser.urlencoded({extended: true})); // use body-parser
 app.use(bodyParser.json());                       // parse body to json
 
+
+
+
+
+
 // Set express listener at port 3000
 server.listen(portNo, () => {
   const serverStartTimestamp = new Date().toLocaleString();
@@ -22,6 +27,12 @@ server.listen(portNo, () => {
   console.log('The Server is up and running!');
   console.log(`Access the website at: http://localhost:${portNo}`);
 });
+
+
+
+
+
+
 
 // Set path for file to ./dist
 app.use(express.static(path.join(__dirname, '../build')));
@@ -54,6 +65,12 @@ app.get('/checkRoomId', (req, res) => {
 app.get('*', (req, res) => {
   res.redirect('/');
 });
+
+
+
+
+
+
 
 // Place Holder socket.io logic
 io.on('connection', (socket) => {
@@ -115,6 +132,5 @@ io.on('connection', (socket) => {
   socket.on('leave', (roomId, id) => {
     io.to(roomId).emit('leave', id);
   });
-
 
 });
