@@ -16,7 +16,7 @@ import Char from './char/char';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    isMobileOrSafari: state.isMobileOrSafari,
+    isMobile: state.isMobile,
     id: state.id,
     displayCharList: state.displayCharList,
     charList: state.charList
@@ -62,7 +62,7 @@ class CharList extends Component {
 
   render() {
     const toggleActive = this.props.displayCharList ? 'is-active' : '';
-    const toggleClass = this.props.isMobileOrSafari ? '' : 'hideScroll';
+    const toggleClass = this.props.isMobile ? '' : 'hideScroll';
 
     const charList = this.props.charList.map((charData) => {
       return <Char key={charData.charId} charData={charData}/>;

@@ -26,7 +26,7 @@ import {
 } from '../constants/actionTypes';
 
 export const initialState = {
-  isMobileOrSafari: /Mobile|Safari/.test(navigator.userAgent),
+  isMobile: /Mobile/.test(navigator.userAgent),
   id: '',
   roomId: '',
   modalSetting: {

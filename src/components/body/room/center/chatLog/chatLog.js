@@ -7,7 +7,7 @@ import './chatLog.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    isMobileOrSafari: state.isMobileOrSafari,
+    isMobile: state.isMobile,
     chatLog: state.chatLog
   };
 };
@@ -25,7 +25,7 @@ class ChatLog extends Component {
 
   render() {
 
-    const toggleClass = this.props.isMobileOrSafari ? '' : 'hideScroll';
+    const toggleClass = this.props.isMobile ? '' : 'hideScroll';
 
     const chatLog = this.props.chatLog.map((val, idx) => {
       switch (val.type){

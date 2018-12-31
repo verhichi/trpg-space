@@ -15,7 +15,7 @@ import Enemy from './enemy/enemy';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    isMobileOrSafari: state.isMobileOrSafari,
+    isMobile: state.isMobile,
     id:               state.id,
     roomId:           state.roomId,
     displayEnemyList: state.displayEnemyList,
@@ -62,7 +62,7 @@ class EnemyList extends Component {
 
   render() {
     const toggleActive = this.props.displayEnemyList ? 'is-active' : '';
-    const toggleClass = this.props.isMobileOrSafari ? '' : 'hideScroll';
+    const toggleClass = this.props.isMobile ? '' : 'hideScroll';
 
     const enemyList = this.props.enemyList.map((enemy) => {
       return ( <Enemy key={enemy.charId} enemyData={enemy}/> );
