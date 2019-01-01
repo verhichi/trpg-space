@@ -1,5 +1,6 @@
 import io from 'socket.io-client';
-const host = 'http://localhost:3000';
+// const host = 'http://localhost:3000';
+// const host = 'https://6c8a8534.ngrok.io';
 
 class socketAPI {
   socket;

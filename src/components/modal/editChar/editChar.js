@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { editChar, editEnemy, hideModal } from '../../../redux/actions/action';
+import { hideModal } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
 // Font Awesome Component
@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
     id:           state.id,
     roomId:       state.roomId,
     charList:     state.charList,
-    enemyList:        state.enemyList,
+    enemyList:    state.enemyList,
     modalSetting: state.modalSetting
   };
 };
