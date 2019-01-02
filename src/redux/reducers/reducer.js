@@ -112,10 +112,14 @@ const rootReducer = (state = initialState, action) => {
       };
 
       case ADD_USER:
-        return {
-          ...state,
-          userList: [...state.userList, action.userData]
-        };
+        if (state.userList.some(user => user.id === action.userData.id)){
+          return state;
+        } else {
+          return {
+            ...state,
+            userList: [...state.userList, action.userData]
+          };
+        }
 
       case EDIT_USER:
         return {

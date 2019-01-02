@@ -2,13 +2,16 @@ import 'react-app-polyfill/ie9';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import store from './redux/stores/store';
+import { store, persistor } from './redux/stores/configureStore';
+import { PersistGate } from 'redux-persist/integration/react'
 
 import App from './components/App';
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </ PersistGate>
   </ Provider>,
   document.getElementById('root')
 );

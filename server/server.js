@@ -62,8 +62,12 @@ app.get('/checkRoomId', (req, res) => {
 });
 
 // All URL sends user to home page
-app.get('*', (req, res) => {
-  res.redirect('/');
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build/index.html'), (err) => {
+    if (err){
+      res.redirect('/');
+    }
+  });
 });
 
 
