@@ -25,6 +25,7 @@ import rootReducer, { initialState } from '../reducers/reducer';
 const persistConfig = {
   key: 'root',
   storage,
+  blacklist: ['chatLog']
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

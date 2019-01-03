@@ -41,9 +41,28 @@ class Room extends Component {
   constructor (props){
     super(props);
     socket.connect();
+
+    // this.onUnload = this.onUnload.bind(this);
   }
 
+  // onUnload (){
+  //   socket.emit('leave', this.props.roomId, this.props.id);
+  //
+  //   // If the user that left was host, get new host
+  //   if (this.props.userList.find(user => user.id === this.props.id).host){
+  //     for (let idx = 0; idx < this.props.userList.length; idx++){
+  //       if (this.props.userList[idx].id === this.props.id) continue; // can't set user that's leaving as host
+  //
+  //       socket.emit('newHost', this.props.roomId, this.props.userList[idx].id);
+  //       break;
+  //     }
+  //   }
+  //   socket.disconnect();
+  // }
+
   componentDidMount (){
+    // window.addEventListener('beforeunload', this.onUnload);
+
     socket.on('user', (content) => {
       if (this.props.userList.some((user) => user.id === content.id)){
         this.props.editUser(content);
@@ -105,6 +124,9 @@ class Room extends Component {
   }
 
   componentWillUnmount (){
+    // window.removeEventListener('beforeunload', this.onUnload);
+    //
+    // this.onUnload();
     socket.emit('leave', this.props.roomId, this.props.id);
 
     // If the user that left was host, get new host
