@@ -35,9 +35,14 @@ const mapDispatchToProps = (dispatch) => {
 class Bottom extends Component {
   constructor (props){
     super(props);
-    this.state = { chatText: '' };
+    this.state = {
+      chatText: '',
+      inputFocus: false
+    };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
     this.handleSendClick = this.handleSendClick.bind(this);
     this.handleDiceSettingClick = this.handleDiceSettingClick.bind(this);
     this.handleCharListClick = this.handleCharListClick.bind(this);
@@ -48,6 +53,14 @@ class Bottom extends Component {
     socket.on('chat', (content) => {
       this.props.addToChatLog(content);
     });
+  }
+
+  handleFocus (e){
+    this.setState({inputFocus: true});
+  }
+
+  handleBlur (e){
+    this.setState({inputFocus: false});
   }
 
   handleChange (e){
@@ -94,23 +107,27 @@ class Bottom extends Component {
   render() {
     const isDisabled = this.state.chatText.trim().length === 0;
 
+    const toggleClass = this.state.inputFocus ? 'd-none' : '';
+
     return (
       <div className="room-bottom-cont">
         <div className="chat-cont">
-          <div className="chat-bar-btn cursor-pointer" onClick={this.handleCharListClick}>
+          <div className={`chat-bar-btn cursor-pointer align-center ${toggleClass}`} onClick={this.handleCharListClick}>
             <FontAwesomeIcon icon="address-card"/>
           </div>
-          <div className="chat-bar-btn cursor-pointer" onClick={this.handleEnemyListClick}>
+          <div className={`chat-bar-btn cursor-pointer align-center ${toggleClass}`} onClick={this.handleEnemyListClick}>
             <FontAwesomeIcon icon="dragon"/>
           </div>
-          <button className="chat-bar-btn btn-hot cursor-pointer" onClick={this.handleDiceSettingClick}>
+          <div className={`chat-bar-btn cursor-pointer align-center ${toggleClass}`} onClick={this.handleDiceSettingClick}>
             <FontAwesomeIcon icon="dice"/>
-          </button>
-          <textarea className="chat-inp" placeholder="Enter text here" value={this.state.chatText} onChange={this.handleChange}></textarea>
+          </div>
+          <textarea className="chat-inp" placeholder="Enter text here" value={this.state.chatText} onChange={this.handleChange} onFocus={this.handleFocus} onBlur={this.handleBlur}></textarea>
           <button className="chat-bar-btn btn-hot cursor-pointer" disabled={isDisabled} onClick={this.handleSendClick}>
             <FontAwesomeIcon icon="paper-plane"/>
-            <span className="d-none-sm"> Send</span>
           </button>
+          <div className="chat-bar-btn cursor-pointer align-center">
+            <FontAwesomeIcon icon="file-image"/>
+          </div>
         </div>
       </div>
     );
