@@ -19,7 +19,6 @@ class ChatLog extends Component {
   }
 
   componentDidUpdate (){
-    console.log(this.myRef.current.scrollHeight);
     this.myRef.current.scrollTop = this.myRef.current.scrollHeight;
   }
 
@@ -63,6 +62,19 @@ class ChatLog extends Component {
                     <div className="font-size-xxl">{val.total}</div>
                   </div>
                 </div>
+              </div>
+            </div>
+          );
+
+        case 'image':
+          return (
+            <div className="chat-log mb-3" key={idx}>
+              <div className="chat-log-head">
+                <span className="chat-log-user">{val.name}</span>
+                <span className="chat-log-time">{val.time}</span>
+              </div>
+              <div className="chat-log-body p-2 ml-3">
+                <img className="chat-img" src={val.src} />
               </div>
             </div>
           );

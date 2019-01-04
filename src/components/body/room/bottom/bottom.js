@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addToChatLog, showCharList, hideCharList, toggleDiceBubble, showEnemyList, hideEnemyList } from '../../../../redux/actions/action';
+import { addToChatLog, showCharList, hideCharList, toggleDiceBubble, showEnemyList, hideEnemyList, showModal } from '../../../../redux/actions/action';
 import socket from '../../../../socket/socketClient';
 
 // Font Awesome Component
@@ -28,7 +28,8 @@ const mapDispatchToProps = (dispatch) => {
     hideCharList: () => dispatch(hideCharList()),
     showEnemyList: () => dispatch(showEnemyList()),
     hideEnemyList: () => dispatch(hideEnemyList()),
-    toggleDiceBubble: () => dispatch(toggleDiceBubble())
+    toggleDiceBubble: () => dispatch(toggleDiceBubble()),
+    showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp))
   };
 };
 
@@ -47,6 +48,7 @@ class Bottom extends Component {
     this.handleDiceSettingClick = this.handleDiceSettingClick.bind(this);
     this.handleCharListClick = this.handleCharListClick.bind(this);
     this.handleEnemyListClick = this.handleEnemyListClick.bind(this);
+    this.handleImageClick = this.handleImageClick.bind(this);
   }
 
   componentDidMount (){
@@ -104,6 +106,14 @@ class Bottom extends Component {
     : this.props.showEnemyList();
   }
 
+  handleImageClick (e){
+    e.preventDefault(e);
+    this.props.showModal('uploadImg', {
+      title: 'Upload an image',
+      displayClose: true
+    });
+  }
+
   render() {
     const isDisabled = this.state.chatText.trim().length === 0;
 
@@ -125,7 +135,7 @@ class Bottom extends Component {
           <button className="chat-bar-btn btn-hot cursor-pointer" disabled={isDisabled} onClick={this.handleSendClick}>
             <FontAwesomeIcon icon="paper-plane"/>
           </button>
-          <div className="chat-bar-btn cursor-pointer align-center">
+          <div className="chat-bar-btn cursor-pointer align-center" onClick={this.handleImageClick}>
             <FontAwesomeIcon icon="file-image"/>
           </div>
         </div>

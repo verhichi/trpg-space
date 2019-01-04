@@ -260,6 +260,11 @@
       flex-grow: 1;
     }
 
+  // Text Color
+    .text-danger{
+      color: $danger-clr;
+    }
+
   // Display None for smartphone screens
     .d-none-sm{
       display: none;

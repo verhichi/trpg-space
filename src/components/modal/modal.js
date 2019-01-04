@@ -9,14 +9,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './modal.scss';
 
 // Component
-import NewChar     from './newChar/newChar';
-import NewUser     from './NewUser/NewUser';
+import Alert       from './alert/alert';
+import Confirm     from './confirm/confirm';
 import EditChar    from './editChar/editChar';
 import EditUser    from './editUser/editUser';
-import Confirm     from './confirm/confirm';
-import Alert       from './alert/alert';
-import RoomSetting from './roomSetting/roomSetting';
+import NewChar     from './newChar/newChar';
+import NewUser     from './NewUser/NewUser';
 import Requesting  from './requesting/requesting';
+import RoomSetting from './roomSetting/roomSetting';
+import UploadImg   from './uploadImg/uploadImg';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -45,16 +46,17 @@ class Modal extends Component {
     const toggleClass = this.props.modalSetting.display ? 'is-active' : '';
 
     const modalBody = {
-      newChar: <NewChar charType={'char'}/>,
-      newEnemy: <NewChar charType={'enemy'}/>,
+      alert: <Alert />,
+      confirm: <Confirm />,
       editChar: <EditChar charType={'char'}/>,
       editEnemy: <EditChar charType={'enemy'}/>,
-      newUser: <NewUser />,
       editUser: <EditUser />,
-      confirm: <Confirm />,
-      alert: <Alert />,
+      newChar: <NewChar charType={'char'}/>,
+      newEnemy: <NewChar charType={'enemy'}/>,
+      newUser: <NewUser />,
+      requesting: <Requesting />,
       roomSetting: <RoomSetting />,
-      requesting: <Requesting />
+      uploadImg: <UploadImg />,
     };
 
     return (

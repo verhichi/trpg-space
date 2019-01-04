@@ -1,0 +1,10 @@
+.inp-file-cont{
+  border: 1px solid #BBB;
+  padding: 10px 10px 10px 15px;
+}
+
+.inp-file-text{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
