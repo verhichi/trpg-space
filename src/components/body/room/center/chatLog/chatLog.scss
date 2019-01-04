@@ -64,6 +64,8 @@
 }
 
 .chat-img{
-  height: 300px;
-  width: 300px;
+  height: auto;
+  max-height: 300px;
+  max-width:  200px;
+  width: auto;
 }
