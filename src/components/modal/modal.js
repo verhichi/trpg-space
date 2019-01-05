@@ -13,6 +13,7 @@ import Alert       from './alert/alert';
 import Confirm     from './confirm/confirm';
 import EditChar    from './editChar/editChar';
 import EditUser    from './editUser/editUser';
+import Image       from './image/image';
 import NewChar     from './newChar/newChar';
 import NewUser     from './NewUser/NewUser';
 import Requesting  from './requesting/requesting';
@@ -51,6 +52,7 @@ class Modal extends Component {
       editChar: <EditChar charType={'char'}/>,
       editEnemy: <EditChar charType={'enemy'}/>,
       editUser: <EditUser />,
+      image: <Image />,
       newChar: <NewChar charType={'char'}/>,
       newEnemy: <NewChar charType={'enemy'}/>,
       newUser: <NewUser />,
