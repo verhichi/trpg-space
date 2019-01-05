@@ -77,7 +77,7 @@ class UploadImg extends Component {
     this.setState({
       fileExist: file.name.length !== 0,
       fileTypeError: !imagePattern.test(file.name),
-      fileSizeError: file.size > 2000000
+      fileSizeError: file.size > 1000000
     });
   }
 
@@ -87,7 +87,7 @@ class UploadImg extends Component {
     return (
       <div className="d-flex f-dir-col f-grow-1">
         <div className="f-grow-1 font-size-lg">
-          <div>Select an image to send:</div>
+          <div>Select an image to send(max 1MB):</div>
           <label class="inp-file-cont d-flex w-100 cursor-pointer">
             <FontAwesomeIcon icon="upload"/>
             <div className="inp-file-text f-grow-1 pl-3">{this.fileInput.current ? this.fileInput.current.files[0].name : 'Choose an image...'}</div>
@@ -98,7 +98,7 @@ class UploadImg extends Component {
           ? (<div className="text-danger">File must be in jpg/png/gif format</div>)
           : null}
         {this.state.fileSizeError
-          ? (<div className="text-danger">File must be smaller than 2MB</div>)
+          ? (<div className="text-danger">File must be smaller than 1MB</div>)
           : null}
         <button className="btn btn-hot cursor-pointer" disabled={isDisabled} onClick={this.handleButtonClick}>
           <FontAwesomeIcon icon="check"/>
