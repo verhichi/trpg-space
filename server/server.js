@@ -94,47 +94,47 @@ io.on('connection', (socket) => {
 
   // Logic for when a user sends a chat
   socket.on('chat', (roomId, content) => {
-    io.to(roomId).emit('chat', content);
+    socket.broadcast.to(roomId).emit('chat', content);
   });
 
   // Logic for when a user creates a new character or edits a character
   socket.on('char', (roomId, content) => {
-    io.to(roomId).emit('char', content);
+    socket.broadcast.to(roomId).emit('char', content);
   });
 
   // Logic for when a user removes a character
   socket.on('delChar', (roomId, charId) => {
-    io.to(roomId).emit('delChar', charId);
+    socket.broadcast.to(roomId).emit('delChar', charId);
   });
 
   // Logic for when a user creates a new character or edits a character
   socket.on('user', (roomId, content) => {
-    io.to(roomId).emit('user', content);
+    socket.broadcast.to(roomId).emit('user', content);
   });
 
   // Logic for when a user creates a new character or edits a character
   socket.on('delUser', (roomId, content) => {
-    io.to(roomId).emit('delUser', content);
+    socket.broadcast.to(roomId).emit('delUser', content);
   });
 
   // Logic for when a user creates a new enemy or edits an enemy
   socket.on('enemy', (roomId, content) => {
-    io.to(roomId).emit('enemy', content);
+    socket.broadcast.to(roomId).emit('enemy', content);
   });
 
   // Logic for when a user deletes an enemy
   socket.on('delEnemy', (roomId, content) => {
-    io.to(roomId).emit('delEnemy', content);
+    socket.broadcast.to(roomId).emit('delEnemy', content);
   });
 
   // Logic for setting a user as a host
   socket.on('newHost', (roomId, id) => {
-    io.to(roomId).emit('newHost', id);
+    socket.broadcast.to(roomId).emit('newHost', id);
   });
 
   // Logic for when a user leaves a room
   socket.on('leave', (roomId, id) => {
-    io.to(roomId).emit('leave', id);
+    socket.broadcast.to(roomId).emit('leave', id);
   });
 
 });

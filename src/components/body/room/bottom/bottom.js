@@ -77,6 +77,13 @@ class Bottom extends Component {
     const min = now.getMinutes().toString().padStart(2, '0');
     const time = `${hour}:${min}`;
 
+    this.props.addToChatLog({
+      type: 'text',
+      text: this.state.chatText.trim(),
+      time,
+      name,
+    });
+
     socket.emit('chat', this.props.roomId, {
       type: 'text',
       text: this.state.chatText.trim(),

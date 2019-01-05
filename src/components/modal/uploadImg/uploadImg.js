@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { hideModal } from '../../../redux/actions/action';
+import { addToChatLog, hideModal } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
 
@@ -22,7 +22,10 @@ const mapStateToProps = (state) => {
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
-  return { hideModal: () => dispatch(hideModal()) };
+  return {
+    hideModal: () => dispatch(hideModal()),
+    addToChatLog: (content) => dispatch(addToChatLog(content))
+  };
 };
 
 
@@ -47,10 +50,6 @@ class UploadImg extends Component {
     const reader = new FileReader();
     reader.readAsDataURL(this.fileInput.current.files[0]);
 
-    // reader.onload = function () {
-    //  console.log(reader.result);
-    // };
-
     reader.onload = () => {
       const name = this.props.userList.find((user) => this.props.id === user.id).name;
 
@@ -58,6 +57,13 @@ class UploadImg extends Component {
       const hour = now.getHours().toString().padStart(2, '0');
       const min = now.getMinutes().toString().padStart(2, '0');
       const time = `${hour}:${min}`;
+
+      this.props.addToChatLog({
+        type: 'image',
+        src: reader.result,
+        name,
+        time
+      });
 
       socket.emit('chat', this.props.roomId, {
         type: 'image',

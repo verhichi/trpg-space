@@ -38,7 +38,10 @@ class Enemy extends Component {
       title: 'Delete Character',
       displayClose: false,
       confirmText: `Are you sure you want to delete ${this.props.enemyData.name}?`,
-      accept: [socket.emit.bind(socket, 'delEnemy', this.props.roomId, this.props.enemyData.charId), this.props.hideModal],
+      accept: [
+        this.props.removeEnemy.bind(null, this.props.enemyData.charId),
+        socket.emit.bind(socket, 'delEnemy', this.props.roomId, this.props.enemyData.charId), this.props.hideModal
+      ],
       decline: this.props.hideModal
     });
   }

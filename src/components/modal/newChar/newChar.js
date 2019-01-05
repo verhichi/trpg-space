@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
-import { hideModal } from '../../../redux/actions/action';
+import { addToCharList, addEnemy, hideModal } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
 // Font Awesome Component
@@ -21,7 +21,11 @@ const mapStateToProps = (state) => {
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
-  return { hideModal: () => dispatch(hideModal()) };
+  return {
+    addToCharList: (charData) => dispatch(addToCharList(charData)),
+    addEnemy: (enemyData) => dispatch(addEnemy(enemyData)),
+    hideModal: () => dispatch(hideModal())
+  };
 };
 
 
@@ -69,6 +73,16 @@ class NewChar extends Component {
     const randomNum = uuid.v4();
 
     if (this.props.charType === 'char'){
+      this.props.addToCharList({
+        charId: randomNum,
+        ownerId: this.props.id,
+        name: this.state.name.trim(),
+        maxHp: this.state.maxHp.trim(),
+        curHp: this.state.curHp.trim(),
+        maxMp: this.state.maxMp.trim(),
+        curMp: this.state.curMp.trim()
+      });
+
       socket.emit('char', this.props.roomId, {
         charId: randomNum,
         ownerId: this.props.id,
@@ -79,6 +93,16 @@ class NewChar extends Component {
         curMp: this.state.curMp.trim()
       });
     } else {
+      this.props.addEnemy({
+        charId: randomNum,
+        ownerId: this.props.id,
+        name: this.state.name.trim(),
+        maxHp: this.state.maxHp.trim(),
+        curHp: this.state.curHp.trim(),
+        maxMp: this.state.maxMp.trim(),
+        curMp: this.state.curMp.trim()
+      });
+
       socket.emit('enemy', this.props.roomId, {
         charId: randomNum,
         ownerId: this.props.id,

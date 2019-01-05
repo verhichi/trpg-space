@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { hideModal } from '../../../redux/actions/action';
+import { editEnemy, editChar, hideModal } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
 // Font Awesome Component
@@ -22,7 +22,11 @@ const mapStateToProps = (state) => {
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
-  return { hideModal: () => dispatch(hideModal()) };
+  return {
+    hideModal: () => dispatch(hideModal()),
+    editChar: (charData) => dispatch(editChar(charData)),
+    editEnemy: (enemyData) => dispatch(editEnemy(enemyData))
+  };
 };
 
 
@@ -73,6 +77,16 @@ class EditChar extends Component {
     e.preventDefault();
 
     if (this.props.charType === 'char'){
+      this.props.editChar({
+        charId: this.props.modalSetting.modalProp.charId,
+        ownerId: this.props.id,
+        name: this.state.name.trim(),
+        maxHp: this.state.maxHp.trim(),
+        curHp: this.state.curHp.trim(),
+        maxMp: this.state.maxMp.trim(),
+        curMp: this.state.curMp.trim()
+      });
+
       socket.emit('char', this.props.roomId, {
         charId: this.props.modalSetting.modalProp.charId,
         ownerId: this.props.id,
@@ -83,6 +97,16 @@ class EditChar extends Component {
         curMp: this.state.curMp.trim()
       });
     } else {
+      this.props.editEnemy({
+        charId: this.props.modalSetting.modalProp.charId,
+        ownerId: this.props.id,
+        name: this.state.name.trim(),
+        maxHp: this.state.maxHp.trim(),
+        curHp: this.state.curHp.trim(),
+        maxMp: this.state.maxMp.trim(),
+        curMp: this.state.curMp.trim()
+      });
+
       socket.emit('enemy', this.props.roomId, {
         charId: this.props.modalSetting.modalProp.charId,
         ownerId: this.props.id,

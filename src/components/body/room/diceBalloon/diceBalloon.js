@@ -65,7 +65,6 @@ class DiceBalloon extends Component {
   }
 
   handleButtonClick (e){
-
     const result = getDiceRollResult(this.state);
     const name = this.props.userList.find((user) => this.props.id === user.id).name;
 
@@ -83,6 +82,14 @@ class DiceBalloon extends Component {
         ...result
       });
     } else {
+      this.props.addToChatLog({
+        type: 'roll',
+        private: this.state.private,
+        time,
+        name,
+        ...result
+      });
+
       socket.emit('chat', this.props.roomId, {
         type: 'roll',
         private: this.state.private,
