@@ -1,8 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { showModal } from '../../../../../redux/actions/action';
 
 // Style
 import './chatLog.scss';
+
+// Components
+import ChatHost from './chatHost/chatHost';
+import ChatImage from './chatImage/chatImage';
+import ChatJoin from './chatJoin/chatJoin';
+import ChatLeave from './chatLeave/chatLeave';
+import ChatRoll from './chatRoll/chatRoll';
+import ChatText from './chatText/chatText';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -10,6 +19,11 @@ const mapStateToProps = (state) => {
     isMobile: state.isMobile,
     chatLog: state.chatLog
   };
+};
+
+// Redux Map Dispatch To Props
+const mapDispatchToProps = (dispatch) => {
+  return { showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)) };
 };
 
 class ChatLog extends Component {
@@ -26,89 +40,18 @@ class ChatLog extends Component {
 
     const toggleClass = this.props.isMobile ? '' : 'hideScroll';
 
-    const chatLog = this.props.chatLog.map((val, idx) => {
-      switch (val.type){
-        case 'text':
-          return (
-            <div className="chat-log mb-3" key={idx}>
-              <div className="chat-log-head">
-                <span className="chat-log-user">{val.name}</span>
-                <span className="chat-log-time">{val.time}</span>
-              </div>
-              <div className="chat-log-body p-2 ml-3">
-                {val.text}
-              </div>
-            </div>
-          );
+    // Choose component based on chat type
+    const chatType = {
+      text: (chatData, idx) => <ChatText chatData={chatData} key={idx}/>,
+      roll: (chatData, idx) => <ChatRoll chatData={chatData} key={idx}/>,
+      image: (chatData, idx) => <ChatImage chatData={chatData} key={idx}/>,
+      join: (chatData, idx) => <ChatJoin chatData={chatData} key={idx}/>,
+      leave: (chatData, idx) => <ChatLeave chatData={chatData} key={idx}/>,
+      newHost: (chatData, idx) => <ChatHost chatData={chatData} key={idx}/>,
+    };
 
-        case 'roll':
-          return (
-            <div className="chat-log mb-3" key={idx}>
-              <div className="chat-log-head">
-                <span className="chat-log-user">{val.name}</span>
-                <span className="chat-log-time">{val.time}</span>
-                {val.private
-                  ? (<span className="chat-log-private ml-2 p-1 font-size-xs">PRIVATE</span>)
-                  : null}
-              </div>
-              <div className="chat-log-body p-2 ml-3">
-                <div className="d-flex">
-                  <div>
-                    <div>Dice Roll Result(Bonus):</div>
-                    <div className="font-size-xxl">{val.result}</div>
-                  </div>
-                  <div className="pl-3">
-                    <div>Total:</div>
-                    <div className="font-size-xxl">{val.total}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-
-        case 'image':
-          return (
-            <div className="chat-log mb-3" key={idx}>
-              <div className="chat-log-head">
-                <span className="chat-log-user">{val.name}</span>
-                <span className="chat-log-time">{val.time}</span>
-              </div>
-              <div className="chat-log-body p-2 ml-3">
-                <img className="chat-img" src={val.src} />
-              </div>
-            </div>
-          );
-
-        case 'join':
-          return (
-            <div className="chat-log mb-3 align-center" key={idx}>
-              <div className="chat-log-system p-2">
-                {val.name} has joined the room.
-              </div>
-            </div>
-          );
-
-        case 'newHost':
-          return (
-            <div className="chat-log mb-3 align-center" key={idx}>
-              <div className="chat-log-system p-2">
-                {val.name} is now the host.
-              </div>
-            </div>
-          );
-
-        case 'leave':
-          return (
-            <div className="chat-log mb-3 align-center" key={idx}>
-              <div className="chat-log-system p-2">
-                {val.name} has left the room.
-              </div>
-            </div>
-          );
-
-        default:
-          return null;
-      }
+    const chatLog = this.props.chatLog.map((chatData, idx) => {
+      return chatType[chatData.type](chatData, idx);
     });
 
     return (
@@ -121,4 +64,4 @@ class ChatLog extends Component {
   }
 }
 
-export default connect(mapStateToProps)(ChatLog);
+export default connect(mapStateToProps, mapDispatchToProps)(ChatLog);
