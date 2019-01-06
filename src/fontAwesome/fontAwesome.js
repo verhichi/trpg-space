@@ -25,8 +25,9 @@ import {
   faChessPawn,
   faDragon,
   faDoorOpen,
-  faFileImage,
-  faUpload
+  faPaperclip,
+  faUpload,
+  faMapMarkedAlt
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -52,6 +53,7 @@ library.add(
   faChessPawn,
   faDragon,
   faDoorOpen,
-  faFileImage,
-  faUpload
+  faPaperclip,
+  faUpload,
+  faMapMarkedAlt
 );

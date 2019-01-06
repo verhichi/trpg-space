@@ -43,7 +43,7 @@ class Bottom extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
-    this.handleBlur = this.handleBlur.bind(this);
+    this.handleOnFocusClick = this.handleOnFocusClick.bind(this);
     this.handleSendClick = this.handleSendClick.bind(this);
     this.handleDiceSettingClick = this.handleDiceSettingClick.bind(this);
     this.handleCharListClick = this.handleCharListClick.bind(this);
@@ -58,10 +58,13 @@ class Bottom extends Component {
   }
 
   handleFocus (e){
+    document.addEventListener('click', this.handleOnFocusClick);
     this.setState({inputFocus: true});
   }
 
-  handleBlur (e){
+  handleOnFocusClick (e){
+    if (this.node.contains(e.target)) return;
+    document.removeEventListener('click', this.handleOnFocusClick);
     this.setState({inputFocus: false});
   }
 
@@ -70,6 +73,9 @@ class Bottom extends Component {
   }
 
   handleSendClick (e){
+    document.removeEventListener('click', this.handleOnFocusClick);
+    this.setState({inputFocus: false});
+
     const name = this.props.userList.find((user) => this.props.id === user.id).name;
 
     const now = new Date();
@@ -115,6 +121,9 @@ class Bottom extends Component {
 
   handleImageClick (e){
     e.preventDefault(e);
+    document.removeEventListener('click', this.handleOnFocusClick);
+    this.setState({inputFocus: false});
+
     this.props.showModal('uploadImg', {
       title: 'Upload an image',
       displayClose: true
@@ -124,26 +133,30 @@ class Bottom extends Component {
   render() {
     const isDisabled = this.state.chatText.trim().length === 0;
 
-    const toggleClass = this.state.inputFocus ? 'd-none' : '';
+    const hideOnFocusClass = this.state.inputFocus ? 'd-none' : '';
+    const showOnFocusClass = this.state.inputFocus ? '' : 'd-none';
 
     return (
-      <div className="room-bottom-cont">
+      <div className="room-bottom-cont" ref={node => this.node = node} onClick={this.handleOnFocusClick}>
         <div className="chat-cont">
-          <div className={`chat-bar-btn cursor-pointer align-center ${toggleClass}`} onClick={this.handleCharListClick}>
+          <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleCharListClick}>
             <FontAwesomeIcon icon="address-card"/>
           </div>
-          <div className={`chat-bar-btn cursor-pointer align-center ${toggleClass}`} onClick={this.handleEnemyListClick}>
+          <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleEnemyListClick}>
             <FontAwesomeIcon icon="dragon"/>
           </div>
-          <div className={`chat-bar-btn cursor-pointer align-center ${toggleClass}`} onClick={this.handleDiceSettingClick}>
+          <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleDiceSettingClick}>
             <FontAwesomeIcon icon="dice"/>
+          </div>
+          <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleDiceSettingClick}>
+            <FontAwesomeIcon icon="map-marked-alt"/>
           </div>
           <textarea className="chat-inp" placeholder="Enter text here" value={this.state.chatText} onChange={this.handleChange} onFocus={this.handleFocus} onBlur={this.handleBlur}></textarea>
           <button className="chat-bar-btn btn-hot cursor-pointer" disabled={isDisabled} onClick={this.handleSendClick}>
             <FontAwesomeIcon icon="paper-plane"/>
           </button>
-          <div className="chat-bar-btn cursor-pointer align-center" onClick={this.handleImageClick}>
-            <FontAwesomeIcon icon="file-image"/>
+          <div className={`chat-bar-btn cursor-pointer align-center ${showOnFocusClass}`} onClick={this.handleImageClick}>
+            <FontAwesomeIcon icon="paperclip"/>
           </div>
         </div>
       </div>
