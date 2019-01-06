@@ -1,0 +1,30 @@
+@import '../../../../../styles/partials/variables';
+@import '../../../../../styles/partials/mediaQueries';
+
+.map-cont{
+  background: $black-clr;
+  color: $white-clr;
+  overflow: hidden;
+  padding: 5px 10px;
+  position: relative;
+
+  @include lg{
+    padding: 5px 30px;
+  }
+}
+
+.map-toolbar{
+  background: rgba(255, 255, 255, 0.1);
+  bottom: 15px;
+  color: $white-clr;
+  position: absolute;
+}
+
+.map-toolbar-btn{
+  width: 50px;
+  font-size: $font-size-lg;
+
+  &:hover{
+    background: rgba(255, 255, 255, 0.3);
+  }
+}

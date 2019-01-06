@@ -28,7 +28,12 @@ import {
   faPaperclip,
   faUpload,
   faMapMarkedAlt,
-  faComments
+  faComments,
+  faStreetView,
+  faUserTimes,
+  faFileImage,
+  faRulerCombined,
+  faTh
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -57,5 +62,10 @@ library.add(
   faPaperclip,
   faUpload,
   faMapMarkedAlt,
-  faComments
+  faComments,
+  faStreetView,
+  faUserTimes,
+  faFileImage,
+  faRulerCombined,
+  faTh 
 );

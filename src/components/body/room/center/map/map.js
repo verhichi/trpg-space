@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 // import { connect } from 'react-redux';
 // import { showModal } from '../../../../../redux/actions/action';
 
+// Font Awesome Component
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 // Style
 import './map.scss';
 
@@ -21,8 +24,24 @@ import './map.scss';
 class Map extends Component {
   render() {
     return (
-      <div className="chat-log-cont f-grow-1">
-        MAP WORKS
+      <div className="map-cont f-grow-1">
+        <div className="map-toolbar d-inline-block">
+          <div className="map-toolbar-btn d-inline-block p-3 cursor-pointer">
+            <FontAwesomeIcon icon="street-view"/>
+          </div>
+          <div className="map-toolbar-btn d-inline-block p-3 cursor-pointer">
+            <FontAwesomeIcon icon="user-times"/>
+          </div>
+          <div className="map-toolbar-btn d-inline-block p-3 cursor-pointer">
+            <FontAwesomeIcon icon="file-image"/>
+          </div>
+          <div className="map-toolbar-btn d-inline-block p-3 cursor-pointer">
+            <FontAwesomeIcon icon="ruler-combined"/>
+          </div>
+          <div className="map-toolbar-btn d-inline-block p-3 cursor-pointer">
+            <FontAwesomeIcon icon="th"/>
+          </div>
+        </div>
       </div>
     );
   }
