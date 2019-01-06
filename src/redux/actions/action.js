@@ -22,7 +22,9 @@ import {
   EDIT_ENEMY,
   REMOVE_ENEMY,
   USER_CLEANUP,
-  NEW_HOST
+  NEW_HOST,
+  SHOW_CHAT,
+  SHOW_MAP
 } from '../constants/actionTypes';
 
 export const resetState = () => {
@@ -165,4 +167,12 @@ export const newHost = (id) => {
     type: NEW_HOST,
     id
   };
+};
+
+export const showChat = () => {
+  return { type: SHOW_CHAT};
+};
+
+export const showMap = () => {
+  return { type: SHOW_MAP };
 };

@@ -27,7 +27,8 @@ import {
   faDoorOpen,
   faPaperclip,
   faUpload,
-  faMapMarkedAlt
+  faMapMarkedAlt,
+  faComments
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -55,5 +56,6 @@ library.add(
   faDoorOpen,
   faPaperclip,
   faUpload,
-  faMapMarkedAlt
+  faMapMarkedAlt,
+  faComments
 );

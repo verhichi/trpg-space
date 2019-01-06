@@ -22,7 +22,9 @@ import {
   EDIT_ENEMY,
   REMOVE_ENEMY,
   USER_CLEANUP,
-  NEW_HOST
+  NEW_HOST,
+  SHOW_CHAT,
+  SHOW_MAP
 } from '../constants/actionTypes';
 
 export const initialState = {
@@ -39,6 +41,7 @@ export const initialState = {
     //   displayClose*: display the X button on the top-right to close modal
     // }
   },
+  centerMode: 'chat',
   displayCharList: false,
   displayDiceSetting: false,
   displayUserList: false,
@@ -262,7 +265,7 @@ const rootReducer = (state = initialState, action) => {
         userList: state.userList.filter((user) => user.id !== action.id),
         enemyList: state.enemyList.filter((enemy) => enemy.ownerId !== action.id),
         charList: state.charList.filter((char) => char.ownerId !== action.id)
-      }
+      };
 
     case NEW_HOST:
       return {
@@ -277,7 +280,19 @@ const rootReducer = (state = initialState, action) => {
             return user;
           }
         })
-      }
+      };
+
+    case SHOW_CHAT:
+      return {
+        ...state,
+        centerMode: 'chat'
+      };
+
+    case SHOW_MAP:
+      return {
+        ...state,
+        centerMode: 'map'
+      };
 
     default:
       return state;

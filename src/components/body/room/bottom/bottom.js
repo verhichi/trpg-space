@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addToChatLog, showCharList, hideCharList, toggleDiceBubble, showEnemyList, hideEnemyList, showModal } from '../../../../redux/actions/action';
+import { addToChatLog, showCharList, hideCharList, toggleDiceBubble, showEnemyList, hideEnemyList, showModal, showChat, showMap } from '../../../../redux/actions/action';
 import socket from '../../../../socket/socketClient';
 
 // Font Awesome Component
@@ -15,6 +15,7 @@ const mapStateToProps = (state) => {
     id: state.id,
     roomId: state.roomId,
     userList: state.userList,
+    centerMode: state.centerMode,
     displayCharList: state.displayCharList,
     displayEnemyList: state.displayEnemyList
   };
@@ -29,7 +30,9 @@ const mapDispatchToProps = (dispatch) => {
     showEnemyList: () => dispatch(showEnemyList()),
     hideEnemyList: () => dispatch(hideEnemyList()),
     toggleDiceBubble: () => dispatch(toggleDiceBubble()),
-    showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp))
+    showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
+    showChat: () => dispatch(showChat()),
+    showMap: () => dispatch(showMap())
   };
 };
 
@@ -46,6 +49,7 @@ class Bottom extends Component {
     this.handleOnFocusClick = this.handleOnFocusClick.bind(this);
     this.handleSendClick = this.handleSendClick.bind(this);
     this.handleDiceSettingClick = this.handleDiceSettingClick.bind(this);
+    this.handleCenterModeClick = this.handleCenterModeClick.bind(this);
     this.handleCharListClick = this.handleCharListClick.bind(this);
     this.handleEnemyListClick = this.handleEnemyListClick.bind(this);
     this.handleImageClick = this.handleImageClick.bind(this);
@@ -105,6 +109,12 @@ class Bottom extends Component {
     this.props.toggleDiceBubble();
   }
 
+  handleCenterModeClick (e){
+    this.props.centerMode === 'chat'
+      ? this.props.showMap()
+      : this.props.showChat();
+  }
+
   handleCharListClick (e){
     e.preventDefault();
     this.props.displayCharList
@@ -148,8 +158,10 @@ class Bottom extends Component {
           <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleDiceSettingClick}>
             <FontAwesomeIcon icon="dice"/>
           </div>
-          <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleDiceSettingClick}>
-            <FontAwesomeIcon icon="map-marked-alt"/>
+          <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleCenterModeClick}>
+            {this.props.centerMode === 'chat'
+              ? <FontAwesomeIcon icon="map-marked-alt"/>
+              : <FontAwesomeIcon icon="comments"/>}
           </div>
           <textarea className="chat-inp" placeholder="Enter text here" value={this.state.chatText} onChange={this.handleChange} onFocus={this.handleFocus} onBlur={this.handleBlur}></textarea>
           <button className="chat-bar-btn btn-hot cursor-pointer" disabled={isDisabled} onClick={this.handleSendClick}>
