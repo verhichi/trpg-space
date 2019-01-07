@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addToChatLog, hideModal } from '../../../redux/actions/action';
+import { addToChatLog, hideModal, editMapImage } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
 
@@ -24,7 +24,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     hideModal: () => dispatch(hideModal()),
-    addToChatLog: (content) => dispatch(addToChatLog(content))
+    addToChatLog: (content) => dispatch(addToChatLog(content)),
+    editMapImage: (src) => dispatch(editMapImage(src))
   };
 };
 
@@ -51,26 +52,33 @@ class UploadImg extends Component {
     reader.readAsDataURL(this.fileInput.current.files[0]);
 
     reader.onload = () => {
-      const name = this.props.userList.find((user) => this.props.id === user.id).name;
 
-      const now = new Date();
-      const hour = now.getHours().toString().padStart(2, '0');
-      const min = now.getMinutes().toString().padStart(2, '0');
-      const time = `${hour}:${min}`;
+      if (this.props.modalSetting.modalProp.type === 'chat'){
+        const name = this.props.userList.find((user) => this.props.id === user.id).name;
 
-      this.props.addToChatLog({
-        type: 'image',
-        src: reader.result,
-        name,
-        time
-      });
+        const now = new Date();
+        const hour = now.getHours().toString().padStart(2, '0');
+        const min = now.getMinutes().toString().padStart(2, '0');
+        const time = `${hour}:${min}`;
 
-      socket.emit('chat', this.props.roomId, {
-        type: 'image',
-        src: reader.result,
-        name,
-        time
-      });
+        this.props.addToChatLog({
+          type: 'image',
+          src: reader.result,
+          name,
+          time
+        });
+
+        socket.emit('chat', this.props.roomId, {
+          type: 'image',
+          src: reader.result,
+          name,
+          time
+        });
+      } else {
+        this.props.editMapImage(reader.result);
+
+        socket.emit('mapImage', this.props.roomId, reader.result);
+      }
 
       this.props.hideModal();
     };

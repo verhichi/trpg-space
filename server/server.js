@@ -137,4 +137,9 @@ io.on('connection', (socket) => {
     socket.broadcast.to(roomId).emit('leave', id);
   });
 
+  // Logic for when a user changes map's background
+  socket.on('mapImage', (roomId, src) => {
+    socket.broadcast.to(roomId).emit('mapImage', src);
+  });
+
 });

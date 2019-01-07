@@ -24,7 +24,8 @@ import {
   USER_CLEANUP,
   NEW_HOST,
   SHOW_CHAT,
-  SHOW_MAP
+  SHOW_MAP,
+  EDIT_MAP_IMAGE
 } from '../constants/actionTypes';
 
 export const initialState = {
@@ -42,6 +43,9 @@ export const initialState = {
     // }
   },
   centerMode: 'chat',
+  mapSetting: {
+    image: ''
+  },
   displayCharList: false,
   displayDiceSetting: false,
   displayUserList: false,
@@ -293,6 +297,15 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         centerMode: 'map'
       };
+
+    case EDIT_MAP_IMAGE:
+      return {
+        ...state,
+        mapSetting: {
+          ...state.mapSetting,
+          image: action.src
+        }
+      }
 
     default:
       return state;

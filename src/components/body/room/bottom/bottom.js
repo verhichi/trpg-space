@@ -136,7 +136,8 @@ class Bottom extends Component {
 
     this.props.showModal('uploadImg', {
       title: 'Upload an image',
-      displayClose: true
+      displayClose: true,
+      type: 'chat'
     });
   }
 

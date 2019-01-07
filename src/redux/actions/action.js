@@ -24,7 +24,8 @@ import {
   USER_CLEANUP,
   NEW_HOST,
   SHOW_CHAT,
-  SHOW_MAP
+  SHOW_MAP,
+  EDIT_MAP_IMAGE
 } from '../constants/actionTypes';
 
 export const resetState = () => {
@@ -175,4 +176,11 @@ export const showChat = () => {
 
 export const showMap = () => {
   return { type: SHOW_MAP };
+};
+
+export const editMapImage = (src) => {
+  return {
+    type: EDIT_MAP_IMAGE,
+    src
+  };
 };

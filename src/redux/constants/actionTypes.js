@@ -24,3 +24,4 @@ export const USER_CLEANUP = 'USER_CLEANUP';
 export const NEW_HOST = 'NEW_HOST';
 export const SHOW_CHAT = 'SHOW_CHAT';
 export const SHOW_MAP = 'SHOW_MAP';
+export const EDIT_MAP_IMAGE = 'EDIT_MAP_IMAGE'; 

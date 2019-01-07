@@ -5,19 +5,21 @@
   background: $black-clr;
   color: $white-clr;
   overflow: hidden;
-  padding: 5px 10px;
   position: relative;
+}
 
-  @include lg{
-    padding: 5px 30px;
-  }
+.map-img-cont{
+  overflow: scroll;
+  z-index: 50;
 }
 
 .map-toolbar{
-  background: rgba(255, 255, 255, 0.1);
-  bottom: 15px;
-  color: $white-clr;
+  background: rgba(255, 255, 255, 0.9);
+  bottom: 25px;
+  color: $black-clr;
+  left: 15px;
   position: absolute;
+  z-index: 65;
 }
 
 .map-toolbar-btn{
@@ -25,6 +27,6 @@
   font-size: $font-size-lg;
 
   &:hover{
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.3);
   }
 }
