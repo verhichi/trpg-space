@@ -36,12 +36,24 @@ class DiceBalloon extends Component {
       private: false
     };
 
+    this.handleOutsideClick = this.handleOutsideClick.bind(this);
     this.handleDiceNumberChange = this.handleDiceNumberChange.bind(this);
     this.handleDiceTypeChange = this.handleDiceTypeChange.bind(this);
     this.handleSymbolChange = this.handleSymbolChange.bind(this);
     this.handleModifierChange = this.handleModifierChange.bind(this);
     this.handlePrivateChange = this.handlePrivateChange.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
+  }
+
+  componentWillReceiveProps (nextProps){
+    this.props.displayDiceSetting
+      ? document.removeEventListener('click', this.handleOutsideClick)
+      : document.addEventListener('click', this.handleOutsideClick);
+  }
+
+  handleOutsideClick (e){
+    if (this.node.contains(e.target)) return;
+    this.props.toggleDiceBubble();
   }
 
   handleDiceNumberChange (e){
@@ -106,7 +118,7 @@ class DiceBalloon extends Component {
     const toggleClass = this.props.displayDiceSetting ? 'is-active' : '';
 
     return (
-      <div className={`dice-help-balloon font-weight-bold ${toggleClass}`}>
+      <div className={`dice-help-balloon font-weight-bold ${toggleClass}`} ref={node => this.node = node}>
         <div className="dice-setting">
           Dice:
           <div className="sel-cont">
