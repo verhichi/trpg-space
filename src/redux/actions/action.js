@@ -26,7 +26,10 @@ import {
   SHOW_CHAT,
   SHOW_MAP,
   EDIT_MAP_IMAGE,
-  SET_MAP_MODE
+  SET_MAP_MODE,
+  ADD_MAP_CHAR,
+  EDIT_MAP_CHAR,
+  REMOVE_MAP_CHAR
 } from '../constants/actionTypes';
 
 export const resetState = () => {
@@ -179,10 +182,10 @@ export const showMap = () => {
   return { type: SHOW_MAP };
 };
 
-export const editMapImage = (src) => {
+export const editMapImage = (imageData) => {
   return {
     type: EDIT_MAP_IMAGE,
-    src
+    imageData
   };
 };
 
@@ -190,5 +193,26 @@ export const setMapMode = (mode) => {
   return {
     type: SET_MAP_MODE,
     mode
+  };
+};
+
+export const addMapChar = (charData) => {
+  return {
+    type: ADD_MAP_CHAR,
+    charData
+  };
+};
+
+export const editMapChar = (charData) => {
+  return {
+    type: EDIT_MAP_CHAR,
+    charData
+  };
+};
+
+export const removeMapChar = (charId) => {
+  return {
+    type: REMOVE_MAP_CHAR,
+    charId
   };
 };

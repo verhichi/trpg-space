@@ -138,8 +138,13 @@ io.on('connection', (socket) => {
   });
 
   // Logic for when a user changes map's background
-  socket.on('mapImage', (roomId, src) => {
-    socket.broadcast.to(roomId).emit('mapImage', src);
+  socket.on('mapImage', (roomId, imageData) => {
+    socket.broadcast.to(roomId).emit('mapImage', imageData);
+  });
+
+  // Logic for when a user adds or edits a
+  socket.on('mapChar', (roomId, charData) => {
+    socket.broadcast.to(roomId).emit('mapChar', charData);
   });
 
 });

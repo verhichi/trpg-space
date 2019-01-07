@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addUser, editUser, removeUser, setRoomId, setUserId, userCleanup, addToChatLog, newHost, editMapImage } from '../../../redux/actions/action';
+import { addUser, editUser, removeUser, setRoomId, setUserId, userCleanup, addToChatLog, newHost, editMapImage, addMapChar, editMapChar } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
 // Style
@@ -15,11 +15,12 @@ import DiceBalloon from './diceBalloon/diceBalloon';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id:       state.id,
-    roomId:   state.roomId,
-    userList: state.userList,
-    enemyList: state.enemyList,
-    charList: state.charList
+    id:         state.id,
+    roomId:     state.roomId,
+    userList:   state.userList,
+    enemyList:  state.enemyList,
+    charList:   state.charList,
+    mapSetting: state.mapSetting
   };
 };
 
@@ -34,7 +35,9 @@ const mapDispatchToProps = (dispatch) => {
     userCleanup: (id) => dispatch(userCleanup(id)),
     addToChatLog: (content) => dispatch(addToChatLog(content)),
     newHost: (id) => dispatch(newHost(id)),
-    editMapImage: (src) => dispatch(editMapImage(src))
+    editMapImage: (src) => dispatch(editMapImage(src)),
+    addMapChar:  (charData) => dispatch(addMapChar(charData)),
+    editMapChar: (charData) => dispatch(editMapChar(charData))
   };
 };
 
@@ -83,6 +86,8 @@ class Room extends Component {
       this.props.addUser(content);
       socket.emit('user', this.props.roomId, this.props.userList.find((user) => user.id === this.props.id));
 
+      socket.emit('mapImage', this.props.roomId, this.props.mapSetting.image);
+
       this.props.charList.forEach((char) => {
         if (char.ownerId === this.props.id){
           socket.emit('char', this.props.roomId, char);
@@ -92,6 +97,12 @@ class Room extends Component {
       this.props.enemyList.forEach((enemy) => {
         if (enemy.ownerId === this.props.id){
           socket.emit('enemy', this.props.roomId, enemy)
+        }
+      });
+
+      this.props.mapSetting.charList.forEach((char) => {
+        if (char.ownerId === this.props.id){
+          socket.emit('mapChar', this.props.roomId, char);
         }
       });
     });
@@ -114,8 +125,18 @@ class Room extends Component {
       this.props.userCleanup(id);
     });
 
-    socket.on('mapImage', (src) => {
-      this.props.editMapImage(src);
+    socket.on('mapImage', (imageData) => {
+      if (this.props.mapSetting.image.id !== imageData.id){
+        this.props.editMapImage(imageData);
+      }
+    });
+
+    socket.on('mapChar', (charData) => {
+      if (this.props.mapSetting.charList.some((char) => char.charId === charData.charId)){
+        this.props.editMapChar(charData);
+      } else {
+        this.props.addMapChar(charData);
+      }
     });
 
     socket.emit('join', this.props.match.params.roomId, this.props.userList.find((user) => user.id === this.props.id))

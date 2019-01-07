@@ -26,7 +26,10 @@ import {
   SHOW_CHAT,
   SHOW_MAP,
   EDIT_MAP_IMAGE,
-  SET_MAP_MODE
+  SET_MAP_MODE,
+  ADD_MAP_CHAR,
+  EDIT_MAP_CHAR,
+  REMOVE_MAP_CHAR
 } from '../constants/actionTypes';
 
 export const initialState = {
@@ -45,8 +48,19 @@ export const initialState = {
   },
   centerMode: 'chat',
   mapSetting: {
-    image: '',
-    mode: ''
+    image: {
+      src: '',
+      id: ''
+    },
+    mode: '',
+    charList: [
+      // {
+      //   ownerId: ownerId,
+      //   charId: userID,
+      //   x: x coordinate of char dot,
+      //   y: y coordinate of char dot
+      // }
+    ]
   },
   displayCharList: false,
   displayDiceSetting: false,
@@ -305,7 +319,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         mapSetting: {
           ...state.mapSetting,
-          image: action.src
+          image: action.imageData
         }
       };
 
@@ -315,6 +329,41 @@ const rootReducer = (state = initialState, action) => {
         mapSetting: {
           ...state.mapSetting,
           mode: action.mode
+        }
+      };
+
+    case ADD_MAP_CHAR:
+      return {
+        ...state,
+        mapSetting: {
+          ...state.mapSetting,
+          charList: [...state.mapSetting.charList, action.charData]
+        }
+      };
+
+    case EDIT_MAP_CHAR:
+      return {
+        ...state,
+        mapSetting: {
+          ...state.mapSetting,
+          charList: state.mapSetting.charList.map((char) => {
+            if (char.id === action.charData.id){
+              return action.charData;
+            } else {
+              return char;
+            }
+          })
+        }
+      };
+
+    case REMOVE_MAP_CHAR:
+      return {
+        ...state,
+        mapSetting: {
+          ...state.mapSetting,
+          charList: state.mapSetting.charList.filter((char) => {
+            return char.id !== action.charId;
+          })
         }
       };
 

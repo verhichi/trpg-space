@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import uuid from 'uuid';
 import { addToChatLog, hideModal, editMapImage } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
@@ -75,9 +76,17 @@ class UploadImg extends Component {
           time
         });
       } else {
-        this.props.editMapImage(reader.result);
+        const imgId = uuid.v4();
 
-        socket.emit('mapImage', this.props.roomId, reader.result);
+        this.props.editMapImage({
+          id: imgId,
+          src: reader.result
+        });
+
+        socket.emit('mapImage', this.props.roomId, {
+          id: imgId,
+          src: reader.result
+        });
       }
 
       this.props.hideModal();
