@@ -25,7 +25,8 @@ import {
   NEW_HOST,
   SHOW_CHAT,
   SHOW_MAP,
-  EDIT_MAP_IMAGE
+  EDIT_MAP_IMAGE,
+  SET_MAP_MODE
 } from '../constants/actionTypes';
 
 export const initialState = {
@@ -44,7 +45,8 @@ export const initialState = {
   },
   centerMode: 'chat',
   mapSetting: {
-    image: ''
+    image: '',
+    mode: ''
   },
   displayCharList: false,
   displayDiceSetting: false,
@@ -305,7 +307,16 @@ const rootReducer = (state = initialState, action) => {
           ...state.mapSetting,
           image: action.src
         }
-      }
+      };
+
+    case SET_MAP_MODE:
+      return {
+        ...state,
+        mapSetting: {
+          ...state.mapSetting,
+          mode: action.mode
+        }
+      };
 
     default:
       return state;

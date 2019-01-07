@@ -25,7 +25,8 @@ import {
   NEW_HOST,
   SHOW_CHAT,
   SHOW_MAP,
-  EDIT_MAP_IMAGE
+  EDIT_MAP_IMAGE,
+  SET_MAP_MODE
 } from '../constants/actionTypes';
 
 export const resetState = () => {
@@ -182,5 +183,12 @@ export const editMapImage = (src) => {
   return {
     type: EDIT_MAP_IMAGE,
     src
+  };
+};
+
+export const setMapMode = (mode) => {
+  return {
+    type: SET_MAP_MODE,
+    mode
   };
 };
