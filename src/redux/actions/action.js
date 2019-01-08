@@ -29,7 +29,8 @@ import {
   SET_MAP_MODE,
   ADD_MAP_CHAR,
   EDIT_MAP_CHAR,
-  REMOVE_MAP_CHAR
+  REMOVE_MAP_CHAR,
+  TOGGLE_PLACE_CHAR
 } from '../constants/actionTypes';
 
 export const resetState = () => {
@@ -215,4 +216,8 @@ export const removeMapChar = (charId) => {
     type: REMOVE_MAP_CHAR,
     charId
   };
+};
+
+export const togglePlaceChar = () => {
+  return { type: TOGGLE_PLACE_CHAR };
 };

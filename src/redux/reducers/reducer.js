@@ -29,7 +29,8 @@ import {
   SET_MAP_MODE,
   ADD_MAP_CHAR,
   EDIT_MAP_CHAR,
-  REMOVE_MAP_CHAR
+  REMOVE_MAP_CHAR,
+  TOGGLE_PLACE_CHAR
 } from '../constants/actionTypes';
 
 export const initialState = {
@@ -66,6 +67,7 @@ export const initialState = {
   displayDiceSetting: false,
   displayUserList: false,
   displayEnemyList: false,
+  displayPlaceChar: false,
   userList: [
   //   {
   //   id: '123457',
@@ -365,6 +367,12 @@ const rootReducer = (state = initialState, action) => {
             return char.id !== action.charId;
           })
         }
+      };
+
+    case TOGGLE_PLACE_CHAR:
+      return {
+        ...state,
+        displayPlaceChar: !state.displayPlaceChar
       };
 
     default:
