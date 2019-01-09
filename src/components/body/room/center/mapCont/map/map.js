@@ -76,10 +76,6 @@ class Map extends Component {
       return (<div className="map-char" style={{left: char.x, top: char.y}}></div>);
     });
 
-    const charOpt = this.props.charList.filter((char) => this.props.id === char.ownerId).map((char) => {
-      return (<option key={char.charId} value={char.charId}>{char.name}</option>);
-    });
-
     return (
       <div className="map-img-cont h-100 align-center p-2">
         {this.props.mapSetting.image.src.length === 0

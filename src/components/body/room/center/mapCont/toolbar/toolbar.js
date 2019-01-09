@@ -54,21 +54,31 @@ class Toolbar extends Component {
   render() {
     return (
       <div className="map-toolbar d-inline-block">
-        <div className="map-toolbar-btn d-inline-block p-3 cursor-pointer" onClick={this.handleToolbarPlaceCharClick}>
+        <div className="p-relative d-inline-block">
           <PlaceCharBalloon/>
-          <FontAwesomeIcon icon="street-view"/>
+          <div className="map-toolbar-btn p-3 cursor-pointer" onClick={this.handleToolbarPlaceCharClick}>
+            <FontAwesomeIcon icon="street-view"/>
+          </div>
         </div>
-        <div className="map-toolbar-btn d-inline-block p-3 cursor-pointer">
-          <FontAwesomeIcon icon="user-times"/>
+        <div className="p-relative d-inline-block">
+          <div className="map-toolbar-btn p-3 cursor-pointer">
+            <FontAwesomeIcon icon="user-times"/>
+          </div>
         </div>
-        <div className="map-toolbar-btn d-inline-block p-3 cursor-pointer" onClick={this.handleImageUploadClick}>
-          <FontAwesomeIcon icon="file-image"/>
+        <div className="p-relative d-inline-block">
+          <div className="map-toolbar-btn p-3 cursor-pointer" onClick={this.handleImageUploadClick}>
+            <FontAwesomeIcon icon="file-image"/>
+          </div>
         </div>
-        <div className="map-toolbar-btn d-inline-block p-3 cursor-pointer">
-          <FontAwesomeIcon icon="ruler-combined"/>
+        <div className="p-relative d-inline-block">
+          <div className="map-toolbar-btn p-3 cursor-pointer">
+            <FontAwesomeIcon icon="ruler-combined"/>
+          </div>
         </div>
-        <div className="map-toolbar-btn d-inline-block p-3 cursor-pointer">
-          <FontAwesomeIcon icon="th"/>
+        <div className="p-relative d-inline-block">
+          <div className="map-toolbar-btn p-3 cursor-pointer">
+            <FontAwesomeIcon icon="th"/>
+          </div>
         </div>
       </div>
     );
