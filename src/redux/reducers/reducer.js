@@ -31,6 +31,7 @@ import {
   EDIT_MAP_CHAR,
   REMOVE_MAP_CHAR,
   TOGGLE_PLACE_CHAR,
+  TOGGLE_REMOVE_CHAR,
   SET_CHAR_TO_PLACE
 } from '../constants/actionTypes';
 
@@ -70,6 +71,7 @@ export const initialState = {
   displayUserList: false,
   displayEnemyList: false,
   displayPlaceChar: false,
+  displayRemoveChar: false,
   userList: [
   //   {
   //   id: '123457',
@@ -375,6 +377,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         displayPlaceChar: !state.displayPlaceChar
+      };
+
+    case TOGGLE_REMOVE_CHAR:
+      return {
+        ...state,
+        displayRemoveChar: !state.displayRemoveChar
       };
 
     case SET_CHAR_TO_PLACE:

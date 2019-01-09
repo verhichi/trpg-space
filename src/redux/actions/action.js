@@ -31,6 +31,7 @@ import {
   EDIT_MAP_CHAR,
   REMOVE_MAP_CHAR,
   TOGGLE_PLACE_CHAR,
+  TOGGLE_REMOVE_CHAR,
   SET_CHAR_TO_PLACE
 } from '../constants/actionTypes';
 
@@ -221,6 +222,10 @@ export const removeMapChar = (charId) => {
 
 export const togglePlaceChar = () => {
   return { type: TOGGLE_PLACE_CHAR };
+};
+
+export const toggleRemoveChar = () => {
+  return { type: TOGGLE_REMOVE_CHAR };
 };
 
 export const setCharToPlace = (charId) => {

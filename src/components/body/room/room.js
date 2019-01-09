@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addUser, editUser, removeUser, setRoomId, setUserId, userCleanup, addToChatLog, newHost, editMapImage, addMapChar, editMapChar } from '../../../redux/actions/action';
+import { addUser, editUser, removeUser, setRoomId, setUserId, userCleanup, addToChatLog, newHost, editMapImage, addMapChar, editMapChar, removeMapChar } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
 // Style
@@ -37,7 +37,8 @@ const mapDispatchToProps = (dispatch) => {
     newHost: (id) => dispatch(newHost(id)),
     editMapImage: (src) => dispatch(editMapImage(src)),
     addMapChar:  (charData) => dispatch(addMapChar(charData)),
-    editMapChar: (charData) => dispatch(editMapChar(charData))
+    editMapChar: (charData) => dispatch(editMapChar(charData)),
+    removeMapChar: (charId) => dispatch(removeMapChar(charId))
   };
 };
 
@@ -139,6 +140,10 @@ class Room extends Component {
       }
     });
 
+    socket.on('removeMapChar', (charId) => {
+      this.props.removeMapChar(charId);
+    });
+
     socket.emit('join', this.props.match.params.roomId, this.props.userList.find((user) => user.id === this.props.id))
       .then(() => {
         socket.emit('chat', this.props.roomId, {
@@ -146,6 +151,7 @@ class Room extends Component {
           name: this.props.userList.find((user) => user.id === this.props.id).name
         });
       });
+
 
   }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { showModal, togglePlaceChar } from '../../../../../../redux/actions/action';
+import { showModal, togglePlaceChar, toggleRemoveChar } from '../../../../../../redux/actions/action';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,6 +10,7 @@ import './toolbar.scss';
 
 // Component
 import PlaceCharBalloon from './placeCharBalloon/placeCharBalloon';
+import RemoveCharBalloon from './removeCharBalloon/removeCharBalloon';
 
 // // Redux Map State To Prop
 // const mapStateToProps = (state) => {
@@ -27,7 +28,8 @@ import PlaceCharBalloon from './placeCharBalloon/placeCharBalloon';
 const mapDispatchToProps = (dispatch) => {
   return {
     showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
-    togglePlaceChar: () => dispatch(togglePlaceChar())
+    togglePlaceChar: () => dispatch(togglePlaceChar()),
+    toggleRemoveChar: () => dispatch(toggleRemoveChar())
   };
 };
 
@@ -36,7 +38,8 @@ class Toolbar extends Component {
     super(props);
 
     this.handleImageUploadClick = this.handleImageUploadClick.bind(this);
-    this.handleToolbarPlaceCharClick  = this.handleToolbarPlaceCharClick.bind(this);
+    this.handleToolbarPlaceCharClick = this.handleToolbarPlaceCharClick.bind(this);
+    this.handleToolbarRemoveCharClick = this.handleToolbarRemoveCharClick.bind(this);
   }
 
   handleImageUploadClick (e){
@@ -51,6 +54,10 @@ class Toolbar extends Component {
     this.props.togglePlaceChar();
   }
 
+  handleToolbarRemoveCharClick (e){
+    this.props.toggleRemoveChar();
+  }
+
   render() {
     return (
       <div className="map-toolbar d-inline-block">
@@ -61,7 +68,8 @@ class Toolbar extends Component {
           </div>
         </div>
         <div className="p-relative d-inline-block">
-          <div className="map-toolbar-btn p-3 cursor-pointer">
+          <RemoveCharBalloon/>
+          <div className="map-toolbar-btn p-3 cursor-pointer" onClick={this.handleToolbarRemoveCharClick}>
             <FontAwesomeIcon icon="user-times"/>
           </div>
         </div>
