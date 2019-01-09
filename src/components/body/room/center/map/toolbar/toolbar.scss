@@ -1,0 +1,20 @@
+@import '../../../../../../styles/partials/variables';
+@import '../../../../../../styles/partials/mediaQueries';
+
+.map-toolbar{
+  background: $secondary-clr;
+  bottom: 25px;
+  color: $white-clr;
+  left: 15px;
+  position: absolute;
+  z-index: 65;
+}
+
+.map-toolbar-btn{
+  width: 50px;
+  font-size: $font-size-lg;
+
+  &:hover{
+    background: rgba(255, 255, 255, 0.1);;
+  }
+}

@@ -1,0 +1,66 @@
+@import '../../../../../../../styles/partials/mediaQueries';
+@import '../../../../../../../styles/partials/variables';
+
+.place-char-balloon{
+  background: $tertiary-clr;
+  bottom: calc(100% + 15px);
+  color: $white-clr;
+  display: none;
+  left: 0;
+  padding: 15px;
+  position: absolute;
+  z-index: 100;
+
+  &.is-active{
+    display: block;
+  }
+
+  &::before{
+    border: 15px solid transparent;
+    border-top: 15px solid $tertiary-clr;
+    content: "";
+    left: 11px;
+    position: absolute;
+    top: 100%;
+  }
+}
+
+.char-sel-cont{
+  display: inline-block;
+  height: 30px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+
+  &::after{
+    bottom: 0;
+    color: #000;
+    content: '\25BC';
+    font-size: 10px;
+    padding: 9px 3px;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  select{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    background: #FFF;
+    border: none;
+    border-radius: 0;
+    height: 100%;
+    left: 0;
+    outline: none;
+    padding: 3px 15px 3px 3px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

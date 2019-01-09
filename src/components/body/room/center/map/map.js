@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { showModal, setMapMode, addMapChar, editMapChar, togglePlaceChar } from '../../../../../redux/actions/action';
+import { setMapMode, addMapChar, editMapChar } from '../../../../../redux/actions/action';
 import socket from '../../../../../socket/socketClient';
 
 
@@ -9,6 +9,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Style
 import './map.scss';
+
+// Component
+import Toolbar from './toolbar/toolbar';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -25,11 +28,9 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
     setMapMode: (mode) => dispatch(setMapMode(mode)),
     addMapChar: (charData) => dispatch(addMapChar(charData)),
     editMapChar: (charData) => dispatch(editMapChar(charData)),
-    togglePlaceChar: () => dispatch(togglePlaceChar())
   };
 };
 
@@ -42,19 +43,19 @@ class Map extends Component {
     };
 
     this.handleImageClick = this.handleImageClick.bind(this);
-    this.handleImageUploadClick = this.handleImageUploadClick.bind(this);
-    this.handleToolbarPlaceCharClick  = this.handleToolbarPlaceCharClick.bind(this);
+    // this.handleImageUploadClick = this.handleImageUploadClick.bind(this);
+    // this.handleToolbarPlaceCharClick  = this.handleToolbarPlaceCharClick.bind(this);
     this.handlePlaceCharButtonClick = this.handlePlaceCharButtonClick.bind(this);
     this.handlePlaceCharChange = this.handlePlaceCharChange.bind(this);
   }
 
-  handleImageUploadClick (e){
-    this.props.showModal('uploadImg', {
-      title: 'Upload an image',
-      displayClose: true,
-      type: 'map'
-    });
-  }
+  // handleImageUploadClick (e){
+  //   this.props.showModal('uploadImg', {
+  //     title: 'Upload an image',
+  //     displayClose: true,
+  //     type: 'map'
+  //   });
+  // }
 
   handleImageClick (e){
     console.log('--------------------');
@@ -81,9 +82,9 @@ class Map extends Component {
     this.props.setMapMode('');
   }
 
-  handleToolbarPlaceCharClick (e){
-    this.props.togglePlaceChar();
-  }
+  // handleToolbarPlaceCharClick (e){
+  //   this.props.togglePlaceChar();
+  // }
 
   handlePlaceCharButtonClick (e){
     this.props.togglePlaceChar();
@@ -95,8 +96,6 @@ class Map extends Component {
   }
 
   render() {
-
-    const togglePlaceChar = this.props.displayPlaceChar ? 'is-active' : '';
 
     const mapChar = this.props.mapSetting.charList.map((char, idx) => {
       return (<div className="map-char" style={{left: char.x, top: char.y}}></div>);
@@ -117,35 +116,7 @@ class Map extends Component {
                </div>)}
         </div>
 
-        <div className={`place-char-balloon ${togglePlaceChar}`}>
-          <div className="char-sel-cont">
-            <select value={this.state.charIdToPlace} onChange={this.handlePlaceCharChange}>
-              <option value="">Select a Character</option>
-              {charOpt}
-            </select>
-          </div>
-          <button className="btn btn-hot w-100 cursor-pointer" onClick={this.handlePlaceCharButtonClick}>
-            <div className="btn-text font-weight-bold">Place Character on Map</div>
-          </button>
-        </div>
-
-        <div className="map-toolbar d-inline-block">
-          <div className="map-toolbar-btn d-inline-block p-3 cursor-pointer" onClick={this.handleToolbarPlaceCharClick}>
-            <FontAwesomeIcon icon="street-view"/>
-          </div>
-          <div className="map-toolbar-btn d-inline-block p-3 cursor-pointer">
-            <FontAwesomeIcon icon="user-times"/>
-          </div>
-          <div className="map-toolbar-btn d-inline-block p-3 cursor-pointer" onClick={this.handleImageUploadClick}>
-            <FontAwesomeIcon icon="file-image"/>
-          </div>
-          <div className="map-toolbar-btn d-inline-block p-3 cursor-pointer">
-            <FontAwesomeIcon icon="ruler-combined"/>
-          </div>
-          <div className="map-toolbar-btn d-inline-block p-3 cursor-pointer">
-            <FontAwesomeIcon icon="th"/>
-          </div>
-        </div>
+        <Toolbar/>
       </div>
     );
   }

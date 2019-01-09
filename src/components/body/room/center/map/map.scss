@@ -13,26 +13,6 @@
   z-index: 50;
 }
 
-.map-toolbar{
-  // background: rgba(255, 255, 255, 0.9);
-  background: $secondary-clr;
-  bottom: 25px;
-  // color: $black-clr;
-  color: $white-clr;
-  left: 15px;
-  position: absolute;
-  z-index: 65;
-}
-
-.map-toolbar-btn{
-  width: 50px;
-  font-size: $font-size-lg;
-
-  &:hover{
-    background: rgba(255, 255, 255, 0.1);;
-  }
-}
-
 .map-char{
   background: #F00;
   border: 3px solid #FFF;
@@ -41,68 +21,4 @@
   position: absolute;
   width: 25px;
   z-index: 55;
-}
-
-.place-char-balloon{
-  background: $tertiary-clr;
-  bottom: 95px;
-  color: $white-clr;
-  display: none;
-  left: 10px;
-  padding: 15px;
-  position: absolute;
-  z-index: 100;
-
-  &.is-active{
-    display: block;
-  }
-
-  &::before{
-    border: 15px solid transparent;
-    border-top: 15px solid $tertiary-clr;
-    content: "";
-    left: 6.5%;
-    position: absolute;
-    top: 100%;
-  }
-}
-
-.char-sel-cont{
-  display: inline-block;
-  height: 30px;
-  overflow: hidden;
-  position: relative;
-  width: 100%;
-
-  &::after{
-    bottom: 0;
-    color: #000;
-    content: '\25BC';
-    font-size: 10px;
-    padding: 9px 3px;
-    pointer-events: none;
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-
-  select{
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    -o-appearance: none;
-    appearance: none;
-    background: #FFF;
-    border: none;
-    border-radius: 0;
-    height: 100%;
-    left: 0;
-    outline: none;
-    padding: 3px 15px 3px 3px;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
 }
