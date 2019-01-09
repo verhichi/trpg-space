@@ -8,7 +8,7 @@ import './center.scss';
 import CharList from './charList/charList';
 import ChatLog from './chatLog/chatLog';
 import EnemyList from './enemyList/enemyList';
-import Map from './map/map';
+import MapCont from './mapCont/mapCont';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -23,7 +23,7 @@ class Center extends Component {
           <CharList/>
           {this.props.centerMode === 'chat'
             ? (<ChatLog/>)
-            : (<Map/>)}
+            : (<MapCont/>)}
           <EnemyList/>
         </div>
     );

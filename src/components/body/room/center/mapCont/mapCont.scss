@@ -7,18 +7,3 @@
   overflow: hidden;
   position: relative;
 }
-
-.map-img-cont{
-  overflow: scroll;
-  z-index: 50;
-}
-
-.map-char{
-  background: #F00;
-  border: 3px solid #FFF;
-  border-radius: 50%;
-  height: 25px;
-  position: absolute;
-  width: 25px;
-  z-index: 55;
-}

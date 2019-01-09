@@ -52,6 +52,7 @@ class PlaceCharBalloon extends Component {
     return (
       <div className={`place-char-balloon ${togglePlaceChar}`}>
         <div className="char-sel-cont">
+          Select character to place onto map:
           <select value={this.state.charIdToPlace} onChange={this.handlePlaceCharChange}>
             <option value="">Select a Character</option>
             {charOpt}

@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setMapMode, addMapChar, editMapChar } from '../../../../../redux/actions/action';
-import socket from '../../../../../socket/socketClient';
-
+import { setMapMode, addMapChar, editMapChar } from '../../../../../../redux/actions/action';
+import socket from '../../../../../../socket/socketClient';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Style
 import './map.scss';
-
-// Component
-import Toolbar from './toolbar/toolbar';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -37,25 +33,8 @@ const mapDispatchToProps = (dispatch) => {
 class Map extends Component {
   constructor (props){
     super(props);
-
-    this.state = {
-      charIdToPlace: ''
-    };
-
     this.handleImageClick = this.handleImageClick.bind(this);
-    // this.handleImageUploadClick = this.handleImageUploadClick.bind(this);
-    // this.handleToolbarPlaceCharClick  = this.handleToolbarPlaceCharClick.bind(this);
-    this.handlePlaceCharButtonClick = this.handlePlaceCharButtonClick.bind(this);
-    this.handlePlaceCharChange = this.handlePlaceCharChange.bind(this);
   }
-
-  // handleImageUploadClick (e){
-  //   this.props.showModal('uploadImg', {
-  //     title: 'Upload an image',
-  //     displayClose: true,
-  //     type: 'map'
-  //   });
-  // }
 
   handleImageClick (e){
     console.log('--------------------');
@@ -82,10 +61,6 @@ class Map extends Component {
     this.props.setMapMode('');
   }
 
-  // handleToolbarPlaceCharClick (e){
-  //   this.props.togglePlaceChar();
-  // }
-
   handlePlaceCharButtonClick (e){
     this.props.togglePlaceChar();
     this.props.setMapMode('placeChar');
@@ -106,17 +81,13 @@ class Map extends Component {
     });
 
     return (
-      <div className="map-cont f-grow-1">
-        <div className="map-img-cont h-100 align-center p-2">
-          {this.props.mapSetting.image.src.length === 0
-            ? null
-            : (<div className="d-inline-block p-relative">
-                 {mapChar}
-                 <img className="map-img" src={this.props.mapSetting.image.src} onClick={this.handleImageClick}/>
-               </div>)}
-        </div>
-
-        <Toolbar/>
+      <div className="map-img-cont h-100 align-center p-2">
+        {this.props.mapSetting.image.src.length === 0
+          ? null
+          : (<div className="d-inline-block p-relative">
+               {mapChar}
+               <img className="map-img" src={this.props.mapSetting.image.src} onClick={this.handleImageClick}/>
+             </div>)}
       </div>
     );
   }
