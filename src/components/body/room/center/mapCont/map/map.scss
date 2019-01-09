@@ -15,3 +15,16 @@
   width: 25px;
   z-index: 55;
 }
+
+.map-img-overlay.is-active{
+  &::before{
+    background: rgba(0, 0, 0, 0.5);
+    content: "Click to place Character";
+    color: $white-clr;
+    height: 100%;
+    padding-top: 50%;
+    position: absolute;
+    width: 100%;
+    z-index: 65;
+  }
+}

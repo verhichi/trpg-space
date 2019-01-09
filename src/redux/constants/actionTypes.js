@@ -30,3 +30,4 @@ export const ADD_MAP_CHAR = 'ADD_MAP_CHAR';
 export const EDIT_MAP_CHAR = 'EDIT_MAP_CHAR';
 export const REMOVE_MAP_CHAR = 'REMOVE_MAP_CHAR';
 export const TOGGLE_PLACE_CHAR = 'TOGGLE_PLACE_CHAR';
+export const SET_CHAR_TO_PLACE = 'SET_CHAR_TO_PLACE';

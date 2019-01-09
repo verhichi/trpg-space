@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { togglePlaceChar, setMapMode } from '../../../../../../../redux/actions/action';
+import { togglePlaceChar, setMapMode, setCharToPlace } from '../../../../../../../redux/actions/action';
 
 // Style
 import './placeCharBalloon.scss';
@@ -19,7 +19,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setMapMode: (mode) => dispatch(setMapMode(mode)),
-    togglePlaceChar: () => dispatch(togglePlaceChar())
+    togglePlaceChar: () => dispatch(togglePlaceChar()),
+    setCharToPlace: (charId) => dispatch(setCharToPlace(charId))
   };
 };
 
@@ -34,8 +35,9 @@ class PlaceCharBalloon extends Component {
   }
 
   handlePlaceCharButtonClick (e){
-    this.props.togglePlaceChar();
     this.props.setMapMode('placeChar');
+    this.props.setCharToPlace(this.state.charIdToPlace);
+    this.props.togglePlaceChar();
   }
 
   handlePlaceCharChange (e){
@@ -43,6 +45,7 @@ class PlaceCharBalloon extends Component {
   }
 
   render() {
+    const isDisabled = this.state.charIdToPlace.length === 0;
     const togglePlaceChar = this.props.displayPlaceChar ? 'is-active' : '';
 
     const charOpt = this.props.charList.filter((char) => this.props.id === char.ownerId).map((char) => {
@@ -58,7 +61,7 @@ class PlaceCharBalloon extends Component {
             {charOpt}
           </select>
         </div>
-        <button className="btn btn-hot w-100 cursor-pointer" onClick={this.handlePlaceCharButtonClick}>
+        <button className="btn btn-hot w-100 cursor-pointer" disabled={isDisabled} onClick={this.handlePlaceCharButtonClick}>
           <div className="btn-text font-weight-bold">Place Character on Map</div>
         </button>
       </div>

@@ -30,7 +30,8 @@ import {
   ADD_MAP_CHAR,
   EDIT_MAP_CHAR,
   REMOVE_MAP_CHAR,
-  TOGGLE_PLACE_CHAR
+  TOGGLE_PLACE_CHAR,
+  SET_CHAR_TO_PLACE
 } from '../constants/actionTypes';
 
 export const initialState = {
@@ -54,6 +55,7 @@ export const initialState = {
       id: ''
     },
     mode: '',
+    charToPlace: '',
     charList: [
       // {
       //   ownerId: ownerId,
@@ -349,7 +351,7 @@ const rootReducer = (state = initialState, action) => {
         mapSetting: {
           ...state.mapSetting,
           charList: state.mapSetting.charList.map((char) => {
-            if (char.id === action.charData.id){
+            if (char.charId === action.charData.charId){
               return action.charData;
             } else {
               return char;
@@ -364,7 +366,7 @@ const rootReducer = (state = initialState, action) => {
         mapSetting: {
           ...state.mapSetting,
           charList: state.mapSetting.charList.filter((char) => {
-            return char.id !== action.charId;
+            return char.charId !== action.charId;
           })
         }
       };
@@ -373,6 +375,15 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         displayPlaceChar: !state.displayPlaceChar
+      };
+
+    case SET_CHAR_TO_PLACE:
+      return {
+        ...state,
+        mapSetting: {
+          ...state.mapSetting,
+          charToPlace: action.charId
+        }
       };
 
     default:

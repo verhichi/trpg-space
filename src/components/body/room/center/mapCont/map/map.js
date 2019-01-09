@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setMapMode, addMapChar, editMapChar } from '../../../../../../redux/actions/action';
+import { setMapMode, addMapChar, editMapChar, setCharToPlace } from '../../../../../../redux/actions/action';
 import socket from '../../../../../../socket/socketClient';
 
 // Font Awesome Component
@@ -27,6 +27,7 @@ const mapDispatchToProps = (dispatch) => {
     setMapMode: (mode) => dispatch(setMapMode(mode)),
     addMapChar: (charData) => dispatch(addMapChar(charData)),
     editMapChar: (charData) => dispatch(editMapChar(charData)),
+    setCharToPlace: (charId) => dispatch(setCharToPlace(charId))
   };
 };
 
@@ -37,13 +38,10 @@ class Map extends Component {
   }
 
   handleImageClick (e){
-    console.log('--------------------');
-    console.log('e.nativeEvent.offsetX:', e.nativeEvent.offsetX);
-    console.log('e.nativeEvent.offsetY:', e.nativeEvent.offsetY);
 
     const charData = {
       ownerId: this.props.id,
-      charId: this.state.charIdToPlace,
+      charId: this.props.mapSetting.charToPlace,
       x: e.nativeEvent.offsetX - 12.5, // character dot is 25px, -12.5px to place dot in center of click.
       y: e.nativeEvent.offsetY - 12.5  // character dot is 25px, -12.5px to place dot in center of click.
     };
@@ -58,19 +56,15 @@ class Map extends Component {
       socket.emit('mapChar', this.props.roomId, charData);
     }
 
+    this.props.setCharToPlace('');
     this.props.setMapMode('');
   }
 
-  handlePlaceCharButtonClick (e){
-    this.props.togglePlaceChar();
-    this.props.setMapMode('placeChar');
-  }
-
-  handlePlaceCharChange (e){
-    this.setState({charIdToPlace: e.target.value});
-  }
-
   render() {
+
+    const toggleClass = this.props.mapSetting.mode === 'placeChar'
+      ? 'is-active'
+      : '';
 
     const mapChar = this.props.mapSetting.charList.map((char, idx) => {
       return (<div className="map-char" style={{left: char.x, top: char.y}}></div>);
@@ -80,9 +74,9 @@ class Map extends Component {
       <div className="map-img-cont h-100 align-center p-2">
         {this.props.mapSetting.image.src.length === 0
           ? null
-          : (<div className="d-inline-block p-relative">
+          : (<div className={`map-img-overlay font-size-lg font-weight-bold d-inline-block p-relative ${toggleClass}`}  onClick={this.handleImageClick}>
                {mapChar}
-               <img className="map-img" src={this.props.mapSetting.image.src} onClick={this.handleImageClick}/>
+               <img className="p-relative align-center" src={this.props.mapSetting.image.src}/>
              </div>)}
       </div>
     );
