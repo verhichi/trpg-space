@@ -32,6 +32,18 @@ class PlaceCharBalloon extends Component {
 
     this.handlePlaceCharButtonClick = this.handlePlaceCharButtonClick.bind(this);
     this.handlePlaceCharChange = this.handlePlaceCharChange.bind(this);
+    this.handleOutsideClick = this.handleOutsideClick.bind(this);
+  }
+
+  componentWillReceiveProps (nextProps){
+    this.props.displayPlaceChar
+      ? document.removeEventListener('click', this.handleOutsideClick)
+      : document.addEventListener('click', this.handleOutsideClick);
+  }
+
+  handleOutsideClick (e){
+    if (this.node.contains(e.target)) return;
+    this.props.togglePlaceChar();
   }
 
   handlePlaceCharButtonClick (e){
@@ -53,7 +65,7 @@ class PlaceCharBalloon extends Component {
     });
 
     return (
-      <div className={`place-char-balloon cursor-default ${togglePlaceChar}`}>
+      <div className={`place-char-balloon cursor-default ${togglePlaceChar}`} ref={node => this.node = node}>
         <div>Select character:</div>
         <div className="char-sel-cont">
           <select value={this.state.charIdToPlace} onChange={this.handlePlaceCharChange}>
