@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { showModal, hideModal, removeFromCharList } from '../../../../../../redux/actions/action';
+import { showModal, hideModal, removeFromCharList, removeMapChar } from '../../../../../../redux/actions/action';
 import socket from '../../../../../../socket/socketClient';
 
 // Font Awesome Component
@@ -22,7 +22,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
     hideModal: () => dispatch(hideModal()),
-    removeFromCharList: (charId) => dispatch(removeFromCharList(charId))
+    removeFromCharList: (charId) => dispatch(removeFromCharList(charId)),
+    removeMapChar: (charId) => dispatch(removeMapChar(charId))
   };
 };
 
@@ -40,6 +41,7 @@ class Char extends Component {
       confirmText: `Are you sure you want to delete ${this.props.charData.name}?`,
       accept: [
         this.props.removeFromCharList.bind(null, this.props.charData.charId),
+        this.props.removeMapChar.bind(null, this.props.charData.charId),
         socket.emit.bind(socket, 'delChar', this.props.roomId, this.props.charData.charId),
         this.props.hideModal
       ],

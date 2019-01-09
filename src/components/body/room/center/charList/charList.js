@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { showModal, editChar, addToCharList, removeFromCharList } from '../../../../../redux/actions/action';
+import { showModal, editChar, addToCharList, removeFromCharList, removeMapChar } from '../../../../../redux/actions/action';
 import socket from '../../../../../socket/socketClient';
 
 
@@ -29,7 +29,8 @@ const mapDispatchToProps = (dispatch) => {
     showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
     editChar: (charData) => dispatch(editChar(charData)),
     addToCharList: (charData) => dispatch(addToCharList(charData)),
-    removeFromCharList: (charId) => dispatch(removeFromCharList(charId))
+    removeFromCharList: (charId) => dispatch(removeFromCharList(charId)),
+    removeMapChar: (charId) => dispatch(removeMapChar(charId))
   };
 };
 
@@ -49,7 +50,8 @@ class CharList extends Component {
     });
 
     socket.on('delChar', (charId) => {
-      this.props.removeFromCharList(charId)
+      this.props.removeFromCharList(charId);
+      this.props.removeMapChar(charId);
     })
   }
 
