@@ -45,11 +45,13 @@ class DiceBalloon extends Component {
     this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
-  componentWillReceiveProps (nextProps){
-    this.props.displayDiceSetting
-      ? document.removeEventListener('click', this.handleOutsideClick)
-      : document.addEventListener('click', this.handleOutsideClick);
-  }
+  // componentWillReceiveProps (nextProps){
+  //   console.log('diceBalloon');
+  //
+  //   this.props.displayDiceSetting
+  //     ? document.removeEventListener('click', this.handleOutsideClick)
+  //     : document.addEventListener('click', this.handleOutsideClick);
+  // }
 
   handleOutsideClick (e){
     if (this.node.contains(e.target)) return;

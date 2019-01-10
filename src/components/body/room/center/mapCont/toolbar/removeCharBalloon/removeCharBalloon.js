@@ -38,11 +38,13 @@ class RemoveCharBalloon extends Component {
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
   }
 
-  componentWillReceiveProps (nextProps){
-    this.props.displayRemoveChar
-      ? document.removeEventListener('click', this.handleOutsideClick)
-      : document.addEventListener('click', this.handleOutsideClick);
-  }
+  // componentWillReceiveProps (nextProps){
+  //   console.log('removeCharBalloon');
+  // 
+  //   this.props.displayRemoveChar
+  //     ? document.removeEventListener('click', this.handleOutsideClick)
+  //     : document.addEventListener('click', this.handleOutsideClick);
+  // }
 
   handleOutsideClick (e){
     if (this.node.contains(e.target)) return;
