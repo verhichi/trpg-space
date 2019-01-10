@@ -85,11 +85,6 @@ class Toolbar extends Component {
           </div>
         </div>
         <div className="p-relative d-inline-block">
-          <div className="map-toolbar-btn p-3 cursor-pointer">
-            <FontAwesomeIcon icon="ruler-combined"/>
-          </div>
-        </div>
-        <div className="p-relative d-inline-block">
           <div className="map-toolbar-btn p-3 cursor-pointer"  onClick={this.handleToolbarMapGridClick}>
             <FontAwesomeIcon icon="th"/>
           </div>
