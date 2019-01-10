@@ -17,7 +17,8 @@ const mapStateToProps = (state) => {
     charList: state.charList,
     isMobile: state.isMobile,
     mapSetting: state.mapSetting,
-    displayPlaceChar: state.displayPlaceChar
+    displayPlaceChar: state.displayPlaceChar,
+    displayMapGrid: state.displayMapGrid
   };
 };
 
@@ -62,8 +63,12 @@ class Map extends Component {
 
   render() {
 
-    const toggleClass = this.props.mapSetting.mode === 'placeChar'
-      ? 'is-active'
+    const togglePlaceCharClass = this.props.mapSetting.mode === 'placeChar'
+      ? 'is-place-char-active'
+      : '';
+
+    const toggleMapGridClass = this.props.displayMapGrid
+      ? 'is-grid-active'
       : '';
 
     const mapChar = this.props.mapSetting.charList.map((char, idx) => {
@@ -74,7 +79,7 @@ class Map extends Component {
       <div className="map-img-cont h-100 align-center p-2">
         {this.props.mapSetting.image.src.length === 0
           ? null
-          : (<div className={`map-img-overlay font-size-lg font-weight-bold d-inline-block p-relative ${toggleClass}`}  onClick={this.handleImageClick}>
+          : (<div className={`map-img-overlay font-size-lg font-weight-bold d-inline-block p-relative ${togglePlaceCharClass} ${toggleMapGridClass}`}  onClick={this.handleImageClick}>
                {mapChar}
                <img className="p-relative align-center" src={this.props.mapSetting.image.src}/>
              </div>)}

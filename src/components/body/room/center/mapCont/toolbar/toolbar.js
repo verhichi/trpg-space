@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { showModal, togglePlaceChar, toggleRemoveChar } from '../../../../../../redux/actions/action';
+import { showModal, togglePlaceChar, toggleRemoveChar, toggleMapGrid } from '../../../../../../redux/actions/action';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -29,7 +29,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
     togglePlaceChar: () => dispatch(togglePlaceChar()),
-    toggleRemoveChar: () => dispatch(toggleRemoveChar())
+    toggleRemoveChar: () => dispatch(toggleRemoveChar()),
+    toggleMapGrid: () => dispatch(toggleMapGrid())
   };
 };
 
@@ -40,6 +41,7 @@ class Toolbar extends Component {
     this.handleImageUploadClick = this.handleImageUploadClick.bind(this);
     this.handleToolbarPlaceCharClick = this.handleToolbarPlaceCharClick.bind(this);
     this.handleToolbarRemoveCharClick = this.handleToolbarRemoveCharClick.bind(this);
+    this.handleToolbarMapGridClick = this.handleToolbarMapGridClick.bind(this);
   }
 
   handleImageUploadClick (e){
@@ -56,6 +58,10 @@ class Toolbar extends Component {
 
   handleToolbarRemoveCharClick (e){
     this.props.toggleRemoveChar();
+  }
+
+  handleToolbarMapGridClick (e){
+    this.props.toggleMapGrid();
   }
 
   render() {
@@ -84,7 +90,7 @@ class Toolbar extends Component {
           </div>
         </div>
         <div className="p-relative d-inline-block">
-          <div className="map-toolbar-btn p-3 cursor-pointer">
+          <div className="map-toolbar-btn p-3 cursor-pointer"  onClick={this.handleToolbarMapGridClick}>
             <FontAwesomeIcon icon="th"/>
           </div>
         </div>

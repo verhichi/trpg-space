@@ -13,11 +13,11 @@
   height: 25px;
   position: absolute;
   width: 25px;
-  z-index: 55;
+  z-index: 60;
 }
 
-.map-img-overlay.is-active{
-  &::before{
+.map-img-overlay{
+  &.is-place-char-active::before{
     background: rgba(0, 0, 0, 0.5);
     content: "Click to place Character";
     color: $white-clr;
@@ -26,5 +26,26 @@
     position: absolute;
     width: 100%;
     z-index: 65;
+  }
+
+  &.is-grid-active::after{
+    background-image:
+      linear-gradient(
+        transparent 95%,
+        rgba(255, 255, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0.6)),
+      linear-gradient(
+        90deg, transparent 95%,
+        rgba(255, 255, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0.6)
+      );
+    background-size: 20px 20px;
+    background-repeat: repeat;
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    z-index: 55;
   }
 }

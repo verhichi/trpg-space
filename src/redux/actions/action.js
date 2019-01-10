@@ -32,7 +32,8 @@ import {
   REMOVE_MAP_CHAR,
   TOGGLE_PLACE_CHAR,
   TOGGLE_REMOVE_CHAR,
-  SET_CHAR_TO_PLACE
+  SET_CHAR_TO_PLACE,
+  TOGGLE_MAP_GRID
 } from '../constants/actionTypes';
 
 export const resetState = () => {
@@ -232,5 +233,9 @@ export const setCharToPlace = (charId) => {
   return {
     type: SET_CHAR_TO_PLACE,
     charId
-  }
-}
+  };
+};
+
+export const toggleMapGrid = () => {
+  return { type: TOGGLE_MAP_GRID };
+};
