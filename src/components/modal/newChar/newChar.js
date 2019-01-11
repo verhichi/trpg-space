@@ -116,12 +116,14 @@ class NewChar extends Component {
     const charData = {
       charId: randomNum,
       ownerId: this.props.id,
-      name: this.state.charData.name.trim(),
       color: this.state.charData.color.trim(),
+      name:  this.state.charData.name.trim(),
       maxHp: this.state.charData.maxHp.trim(),
       curHp: this.state.charData.curHp.trim(),
       maxMp: this.state.charData.maxMp.trim(),
-      curMp: this.state.charData.curMp.trim()
+      curMp: this.state.charData.curMp.trim(),
+      onMap: false,
+      mapCoor: { x: '',  y: '' }
     };
 
     if (this.props.charType === 'char'){

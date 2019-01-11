@@ -119,7 +119,6 @@ class EditChar extends Component {
     e.preventDefault();
     const charData = {
       charId: this.props.modalSetting.modalProp.charId,
-      ownerId: this.props.id,
       name: this.state.charData.name.trim(),
       color: this.state.charData.color.trim(),
       maxHp: this.state.charData.maxHp.trim(),

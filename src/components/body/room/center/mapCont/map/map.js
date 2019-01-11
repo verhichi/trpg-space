@@ -38,17 +38,16 @@ class Map extends Component {
     this.handleImageClick = this.handleImageClick.bind(this);
   }
 
+
   handleImageClick (e){
-
-    const charData = {
-      ownerId: this.props.id,
-      charId: this.props.mapSetting.charToPlace,
-      x: e.nativeEvent.offsetX - 12.5, // character dot is 25px, -12.5px to place dot in center of click.
-      y: e.nativeEvent.offsetY - 12.5  // character dot is 25px, -12.5px to place dot in center of click.
-    };
-
     if (this.props.mapSetting.mode === 'placeChar'){
-      if (this.props.mapSetting.charList.some((char) => char.charId === charData.charId)){
+      const charData = {
+        charId: this.props.mapSetting.charToPlace,
+        x: e.nativeEvent.offsetX - 12.5, // character dot is 25px, -12.5px to place dot in center of click.
+        y: e.nativeEvent.offsetY - 12.5  // character dot is 25px, -12.5px to place dot in center of click.
+      };
+
+      if (this.props.charList.some(char => char.charId === charData.charId && char.onMap)){
         this.props.editMapChar(charData);
       } else {
         this.props.addMapChar(charData);
@@ -61,8 +60,8 @@ class Map extends Component {
     this.props.setMapMode('');
   }
 
-  render() {
 
+  render() {
     const togglePlaceCharClass = this.props.mapSetting.mode === 'placeChar'
       ? 'is-place-char-active'
       : '';
@@ -71,8 +70,8 @@ class Map extends Component {
       ? 'is-grid-active'
       : '';
 
-    const mapChar = this.props.mapSetting.charList.map((char, idx) => {
-      return (<div className="map-char" style={{left: char.x, top: char.y}}></div>);
+    const mapChar = this.props.charList.filter(char => char.onMap).map(char => {
+      return (<div className="map-char" key={char.charId} style={{backgroundColor: char.color, left: char.mapCoor.x, top: char.mapCoor.y}}></div>);
     });
 
     return (

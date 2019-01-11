@@ -40,7 +40,7 @@ class RemoveCharBalloon extends Component {
 
   // componentWillReceiveProps (nextProps){
   //   console.log('removeCharBalloon');
-  // 
+  //
   //   this.props.displayRemoveChar
   //     ? document.removeEventListener('click', this.handleOutsideClick)
   //     : document.addEventListener('click', this.handleOutsideClick);
@@ -65,7 +65,10 @@ class RemoveCharBalloon extends Component {
     const isDisabled = this.state.charIdToRemove.length === 0 || !this.props.charList.some(char => char.charId === this.state.charIdToRemove);
     const toggleRemoveChar = this.props.displayRemoveChar ? 'is-active' : '';
 
-    const charOpt = this.props.charList.filter((char) => this.props.id === char.ownerId && this.props.mapSetting.charList.some(placedChar => placedChar.charId === char.charId)).map((char) => {
+    // const charOpt = this.props.charList.filter((char) => this.props.id === char.ownerId && this.props.mapSetting.charList.some(placedChar => placedChar.charId === char.charId)).map((char) => {
+    //   return (<option key={char.charId} value={char.charId}>{char.name}</option>);
+    // });
+    const charOpt = this.props.charList.filter(char => char.onMap).map(char => {
       return (<option key={char.charId} value={char.charId}>{char.name}</option>);
     });
 

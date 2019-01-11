@@ -57,15 +57,7 @@ export const initialState = {
       id: ''
     },
     mode: '',
-    charToPlace: '',
-    charList: [
-      // {
-      //   ownerId: ownerId,
-      //   charId: userID,
-      //   x: x coordinate of char dot,
-      //   y: y coordinate of char dot
-      // }
-    ]
+    charToPlace: ''
   },
   displayCharList: false,
   displayDiceSetting: false,
@@ -85,12 +77,17 @@ export const initialState = {
   //   {
   //   charId: '23984743543',
   //   ownerId: '1234567',
-  //   name: 'Djakovich',
   //   color: '#AAA',
+  //   name: 'Djakovich',
   //   maxHp: '50',
   //   curHp: '15',
   //   maxMp: '60',
-  //   curMp: '45'
+  //   curMp: '45',
+  //   onMap: true/false,
+  //   mapCoor: {
+  //     x: x-coordinate,
+  //     y: y-coordinate
+  //   }
   // }
   ],
   enemyList: [
@@ -347,36 +344,57 @@ const rootReducer = (state = initialState, action) => {
     case ADD_MAP_CHAR:
       return {
         ...state,
-        mapSetting: {
-          ...state.mapSetting,
-          charList: [...state.mapSetting.charList, action.charData]
-        }
+        charList: state.charList.map((char) => {
+          if (char.charId === action.charData.charId){
+            return {
+              ...char,
+              onMap: true,
+              mapCoor: {
+                x: action.charData.x,
+                y: action.charData.y
+              }
+            };
+          } else {
+            return char;
+          }
+        })
       };
 
     case EDIT_MAP_CHAR:
       return {
         ...state,
-        mapSetting: {
-          ...state.mapSetting,
-          charList: state.mapSetting.charList.map((char) => {
-            if (char.charId === action.charData.charId){
-              return action.charData;
-            } else {
-              return char;
-            }
-          })
-        }
+        charList: state.charList.map((char) => {
+          if (char.charId === action.charData.charId){
+            return {
+              ...char,
+              mapCoor: {
+                x: action.charData.x,
+                y: action.charData.y
+              }
+            };
+          } else {
+            return char;
+          }
+        })
       };
 
     case REMOVE_MAP_CHAR:
       return {
         ...state,
-        mapSetting: {
-          ...state.mapSetting,
-          charList: state.mapSetting.charList.filter((char) => {
-            return char.charId !== action.charId;
-          })
-        }
+        charList: state.charList.map((char) => {
+          if (char.charId === action.charData.charId){
+            return {
+              ...char,
+              onMap: false,
+              mapCoor: {
+                x: '',
+                y: ''
+              }
+            };
+          } else {
+            return char;
+          }
+        })
       };
 
     case TOGGLE_PLACE_CHAR:

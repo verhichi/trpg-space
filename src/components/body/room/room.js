@@ -133,7 +133,7 @@ class Room extends Component {
     });
 
     socket.on('mapChar', (charData) => {
-      if (this.props.mapSetting.charList.some((char) => char.charId === charData.charId)){
+      if (this.props.charList.some(char => char.charId === charData.charId && char.onMap)){
         this.props.editMapChar(charData);
       } else {
         this.props.addMapChar(charData);

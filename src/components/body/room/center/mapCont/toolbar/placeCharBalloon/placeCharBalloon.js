@@ -61,7 +61,7 @@ class PlaceCharBalloon extends Component {
     const isDisabled = this.state.charIdToPlace.length === 0 || !this.props.charList.some(char => char.charId === this.state.charIdToPlace);
     const togglePlaceChar = this.props.displayPlaceChar ? 'is-active' : '';
 
-    const charOpt = this.props.charList.filter((char) => this.props.id === char.ownerId).map((char) => {
+    const charOpt = this.props.charList.filter(char => this.props.id === char.ownerId).map((char) => {
       return (<option key={char.charId} value={char.charId}>{char.name}</option>);
     });
 
