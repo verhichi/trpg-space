@@ -132,6 +132,7 @@ const rootReducer = (state = initialState, action) => {
             return {
               ...char,
               name: action.charData.name,
+              color: action.charData.color,
               maxHp: action.charData.maxHp,
               curHp: action.charData.curHp,
               maxMp: action.charData.maxMp,

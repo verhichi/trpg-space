@@ -148,12 +148,12 @@ class NewChar extends Component {
   }
 
   render() {
-    const isDisabled = this.state.charData.name.length  === 0 ||
-                       this.state.charData.color.length === 0 ||
-                       this.state.charData.maxHp.length === 0 ||
-                       this.state.charData.curHp.length === 0 ||
-                       this.state.charData.maxMp.length === 0 ||
-                       this.state.charData.curMp.length === 0;
+    const isDisabled = this.state.charData.name.trim().length  === 0 ||
+                       this.state.charData.color.trim().length === 0 ||
+                       this.state.charData.maxHp.trim().length === 0 ||
+                       this.state.charData.curHp.trim().length === 0 ||
+                       this.state.charData.maxMp.trim().length === 0 ||
+                       this.state.charData.curMp.trim().length === 0;
 
     const toggleColorPickerClass = this.state.displayColorPicker ? '' : 'd-none';
 
