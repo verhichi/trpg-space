@@ -56,7 +56,7 @@ class Enemy extends Component {
 
   render() {
     return(
-      <div className="char-cont w-100">
+      <div className="char-cont w-100" style={{background: `linear-gradient(135deg, #fff 85%, ${this.props.enemyData.color} 0)`}}>
         <div className="char-head d-flex mb-3">
           {this.props.enemyData.ownerId === this.props.id
             ? (<div className="pr-1 cursor-pointer" onClick={this.handleEditClick}>

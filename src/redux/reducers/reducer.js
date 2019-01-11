@@ -273,6 +273,7 @@ const rootReducer = (state = initialState, action) => {
             return {
               ...enemy,
               name: action.enemyData.name,
+              color: action.enemyData.color,
               maxHp: action.enemyData.maxHp,
               curHp: action.enemyData.curHp,
               maxMp: action.enemyData.maxMp,

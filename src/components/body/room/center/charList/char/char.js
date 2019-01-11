@@ -59,7 +59,7 @@ class Char extends Component {
 
   render() {
     return(
-      <div className="char-cont w-100" style={{background: `linear-gradient(160deg, #fff 70%, ${this.props.charData.color} 0)`}}>
+      <div className="char-cont w-100" style={{background: `linear-gradient(135deg, #fff 85%, ${this.props.charData.color} 0)`}}>
         <div className="char-head d-flex mb-3">
           {this.props.charData.ownerId === this.props.id
             ? (<div className="pr-1 cursor-pointer" onClick={this.handleEditClick}>
