@@ -117,16 +117,6 @@ io.on('connection', (socket) => {
     socket.broadcast.to(roomId).emit('delUser', content);
   });
 
-  // Logic for when a user creates a new enemy or edits an enemy
-  socket.on('enemy', (roomId, content) => {
-    socket.broadcast.to(roomId).emit('enemy', content);
-  });
-
-  // Logic for when a user deletes an enemy
-  socket.on('delEnemy', (roomId, content) => {
-    socket.broadcast.to(roomId).emit('delEnemy', content);
-  });
-
   // Logic for setting a user as a host
   socket.on('newHost', (roomId, id) => {
     socket.broadcast.to(roomId).emit('newHost', id);

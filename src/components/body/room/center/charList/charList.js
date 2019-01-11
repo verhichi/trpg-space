@@ -66,23 +66,41 @@ class CharList extends Component {
     const toggleActive = this.props.displayCharList ? 'is-active' : '';
     const toggleClass = this.props.isMobile ? '' : 'hideScroll';
 
-    const charList = this.props.charList.map((charData) => {
+    const charList = this.props.charList.filter(char => char.type === 'ally').map((charData) => {
+      return <Char key={charData.charId} charData={charData}/>;
+    });
+
+    const enemyList = this.props.charList.filter(char => char.type === 'enemy').map((charData) => {
       return <Char key={charData.charId} charData={charData}/>;
     });
 
     return (
-      <div className={`list-cont d-flex ${toggleActive}`}>
-        <div className="list-tool-bar d-flex mb-1">
-          <FontAwesomeIcon icon="address-card"/>
-          <div className="f-grow-1 align-center font-weight-bold text-dec-underline">Character List</div>
-          <div className="cursor-pointer" onClick={this.handleNewClick}>
-            <FontAwesomeIcon icon="user-plus"/>
-            <span className="d-none-sm"> New</span>
+      <div className={`list-cont f-dir-col f-shrink-0 d-flex ${toggleActive}`}>
+
+        <div className="f-dir-col mb-2">
+          <div className="list-tool-bar d-flex mb-1">
+            <div className="f-grow-1 align-center font-weight-bold text-dec-underline">Character List</div>
+            <div className="cursor-pointer" onClick={this.handleNewClick}>
+              <FontAwesomeIcon icon="user-plus"/>
+              <span className="d-none-sm"> New</span>
+            </div>
+          </div>
+          <div className={`list d-flex f-grow-1 ${toggleClass}`}>
+            {charList}
           </div>
         </div>
-        <div className={`list d-flex f-grow-1 ${toggleClass}`}>
-          {charList}
-        </div>
+
+        {enemyList.length === 0
+          ? null
+          : (<div className="f-dir-col">
+               <div className="list-tool-bar d-flex mb-1">
+                 <div className="f-grow-1 align-center font-weight-bold text-dec-underline">Enemy List</div>
+               </div>
+               <div className={`list d-flex f-grow-1 ${toggleClass}`}>
+                 {enemyList}
+               </div>
+             </div>)
+         }
       </div>
     );
   }

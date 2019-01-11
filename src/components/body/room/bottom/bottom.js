@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addToChatLog, showCharList, hideCharList, toggleDiceBubble, showEnemyList, hideEnemyList, showModal, showChat, showMap } from '../../../../redux/actions/action';
+import { addToChatLog, showCharList, hideCharList, toggleDiceBubble, showModal, showChat, showMap } from '../../../../redux/actions/action';
 import socket from '../../../../socket/socketClient';
 
 // Font Awesome Component
@@ -17,7 +17,6 @@ const mapStateToProps = (state) => {
     userList: state.userList,
     centerMode: state.centerMode,
     displayCharList: state.displayCharList,
-    displayEnemyList: state.displayEnemyList
   };
 };
 
@@ -27,8 +26,6 @@ const mapDispatchToProps = (dispatch) => {
     addToChatLog: content => dispatch(addToChatLog(content)),
     showCharList: () => dispatch(showCharList()),
     hideCharList: () => dispatch(hideCharList()),
-    showEnemyList: () => dispatch(showEnemyList()),
-    hideEnemyList: () => dispatch(hideEnemyList()),
     toggleDiceBubble: () => dispatch(toggleDiceBubble()),
     showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
     showChat: () => dispatch(showChat()),
@@ -51,7 +48,6 @@ class Bottom extends Component {
     this.handleDiceSettingClick = this.handleDiceSettingClick.bind(this);
     this.handleCenterModeClick = this.handleCenterModeClick.bind(this);
     this.handleCharListClick = this.handleCharListClick.bind(this);
-    this.handleEnemyListClick = this.handleEnemyListClick.bind(this);
     this.handleImageClick = this.handleImageClick.bind(this);
   }
 
@@ -122,13 +118,6 @@ class Bottom extends Component {
       : this.props.showCharList();
   }
 
-  handleEnemyListClick (e){
-    e.preventDefault();
-    this.props.displayEnemyList
-    ? this.props.hideEnemyList()
-    : this.props.showEnemyList();
-  }
-
   handleImageClick (e){
     e.preventDefault(e);
     document.removeEventListener('click', this.handleOnFocusClick);
@@ -152,9 +141,6 @@ class Bottom extends Component {
         <div className="chat-cont">
           <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleCharListClick}>
             <FontAwesomeIcon icon="address-card"/>
-          </div>
-          <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleEnemyListClick}>
-            <FontAwesomeIcon icon="dragon"/>
           </div>
           <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleDiceSettingClick}>
             <FontAwesomeIcon icon="dice"/>

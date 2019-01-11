@@ -1,0 +1,57 @@
+@import '../../../../../styles/partials/variables';
+@import '../../../../../styles/partials/mediaQueries';
+
+.list-cont{
+  background: $secondary-clr;
+  border-bottom: 1px solid $primary-clr;
+  border-top: 1px solid $primary-clr;
+  height: 100%;
+  overflow-x: hidden;
+  position: absolute;
+  width: 0;
+  z-index: 70;
+
+  @include md{
+    height: auto;
+    position: static;
+  }
+
+  &.is-active{
+    padding: 5px;
+    width: 100%;
+
+    @include md{
+      width: 250px;
+    }
+
+    @include lg{
+      width: 350px;
+    }
+  }
+}
+
+.list-tool-bar{
+  color: $white-clr;
+  height: 25px;
+  font-size: $font-size-lg;
+}
+
+.list{
+  flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+  padding: 5px;
+  overflow-y: scroll;
+
+  &.hideScroll{
+    width: calc(100% + 22px);
+  }
+}
+
+.char-cont{
+  color: $primary-clr;
+  font-size: $font-size-lg;
+  margin-bottom: 5px;
+  padding: 5px;
+}

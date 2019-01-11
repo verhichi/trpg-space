@@ -16,11 +16,6 @@ import {
   SHOW_MODAL,
   SHOW_USER_LIST,
   TOGGLE_DICE_BUBBLE,
-  SHOW_ENEMY_LIST,
-  HIDE_ENEMY_LIST,
-  ADD_ENEMY,
-  EDIT_ENEMY,
-  REMOVE_ENEMY,
   USER_CLEANUP,
   NEW_HOST,
   SHOW_CHAT,
@@ -114,27 +109,6 @@ export const editUser = (userData) => {
   };
 };
 
-export const addEnemy = (enemyData) => {
-  return {
-    type: ADD_ENEMY,
-    enemyData
-  };
-};
-
-export const editEnemy = (enemyData) => {
-  return {
-    type: EDIT_ENEMY,
-    enemyData
-  };
-};
-
-export const removeEnemy = (enemyId) => {
-  return {
-    type: REMOVE_ENEMY,
-    enemyId
-  };
-};
-
 export const removeUser = (userId) => {
   return {
     type: REMOVE_USER,
@@ -154,14 +128,6 @@ export const setUserId = (userId) => {
     type: SET_USER_ID,
     userId
   };
-};
-
-export const showEnemyList = () => {
-  return { type: SHOW_ENEMY_LIST };
-};
-
-export const hideEnemyList = () => {
-  return { type: HIDE_ENEMY_LIST };
 };
 
 export const userCleanup = (id) => {

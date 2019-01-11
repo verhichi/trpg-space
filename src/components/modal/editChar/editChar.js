@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ChromePicker } from 'react-color';
-import { editEnemy, editChar, hideModal } from '../../../redux/actions/action';
+import { editChar, hideModal } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
 // Font Awesome Component
@@ -16,7 +16,6 @@ const mapStateToProps = (state) => {
     id:           state.id,
     roomId:       state.roomId,
     charList:     state.charList,
-    enemyList:    state.enemyList,
     modalSetting: state.modalSetting
   };
 };
@@ -26,7 +25,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     hideModal: () => dispatch(hideModal()),
     editChar: (charData) => dispatch(editChar(charData)),
-    editEnemy: (enemyData) => dispatch(editEnemy(enemyData))
   };
 };
 
@@ -34,14 +32,14 @@ const mapDispatchToProps = (dispatch) => {
 class EditChar extends Component {
   constructor (props){
     super(props);
-    const char = this.props.charType === 'char'
-      ? this.props.charList.find((char) => char.charId === this.props.modalSetting.modalProp.charId)
-      : this.props.enemyList.find((enemy) => enemy.charId === this.props.modalSetting.modalProp.charId);
+
+    const char = this.props.charList.find((char) => char.charId === this.props.modalSetting.modalProp.charId);
 
     this.state = {
       displayColorPicker: false,
       charData: {
         name:  char.name,
+        type:  char.type,
         color: char.color,
         maxHp: char.maxHp,
         curHp: char.curHp,
@@ -59,6 +57,11 @@ class EditChar extends Component {
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handleColorClick = this.handleColorClick.bind(this);
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
+    this.handleTypeChange = this.handleTypeChange.bind(this);
+  }
+
+  componentWillUnmount (){
+    window.removeEventListener('click', this.handleOutsideClick, false);
   }
 
   handleNameChange (e){
@@ -67,6 +70,14 @@ class EditChar extends Component {
       name: e.target.value
     }});
   }
+
+  handleTypeChange (e){
+    this.setState({ charData: {
+      ...this.state.charData,
+      type: e.target.value
+    }});
+  }
+
 
   handleColorChange (color, e){
     this.setState({ charData: {
@@ -120,6 +131,7 @@ class EditChar extends Component {
     const charData = {
       charId: this.props.modalSetting.modalProp.charId,
       name: this.state.charData.name.trim(),
+      type: this.state.charData.type.trim(),
       color: this.state.charData.color.trim(),
       maxHp: this.state.charData.maxHp.trim(),
       curHp: this.state.charData.curHp.trim(),
@@ -127,18 +139,14 @@ class EditChar extends Component {
       curMp: this.state.charData.curMp.trim()
     };
 
-    if (this.props.charType === 'char'){
-      this.props.editChar(charData);
-      socket.emit('char', this.props.roomId, charData);
-    } else {
-      this.props.editEnemy(charData);
-      socket.emit('enemy', this.props.roomId, charData);
-    }
+    this.props.editChar(charData);
+    socket.emit('char', this.props.roomId, charData);
 
     this.setState({
       displayColorPicker: false,
       charData: {
         name: '',
+        type: 'ally',
         color: '#e0e0e0',
         maxHp: '',
         curHp: '',
@@ -152,6 +160,7 @@ class EditChar extends Component {
 
   render() {
     const isDisabled = this.state.charData.name.trim().length  === 0 ||
+                       this.state.charData.type.trim().length === 0  ||
                        this.state.charData.color.trim().length === 0 ||
                        this.state.charData.maxHp.trim().length === 0 ||
                        this.state.charData.curHp.trim().length === 0 ||
@@ -163,6 +172,13 @@ class EditChar extends Component {
     return (
       <div className="d-flex f-dir-col f-grow-1">
         <div className="f-grow-1 font-size-lg">
+          <div className="mb-2">
+            <div>Type:</div>
+            <div className="d-flex justify-content-around">
+              <label><input className="inp-radio" type="radio" value="ally" checked={this.state.charData.type === 'ally'} onChange={this.handleTypeChange}/>Ally</label>
+              <label><input className="inp-radio" type="radio" value="enemy" checked={this.state.charData.type === 'enemy'} onChange={this.handleTypeChange}/>Enemy</label>
+            </div>
+          </div>
           <div className="mb-2">
             <div>Name:</div>
             <input className="inp w-100" type="text" placeholder="Enter character name..." value={this.state.charData.name} onChange={this.handleNameChange}/>

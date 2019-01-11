@@ -18,7 +18,6 @@ const mapStateToProps = (state) => {
     id:         state.id,
     roomId:     state.roomId,
     userList:   state.userList,
-    enemyList:  state.enemyList,
     charList:   state.charList,
     mapSetting: state.mapSetting
   };
@@ -92,18 +91,6 @@ class Room extends Component {
       this.props.charList.forEach((char) => {
         if (char.ownerId === this.props.id){
           socket.emit('char', this.props.roomId, char);
-        }
-      });
-
-      this.props.enemyList.forEach((enemy) => {
-        if (enemy.ownerId === this.props.id){
-          socket.emit('enemy', this.props.roomId, enemy)
-        }
-      });
-
-      this.props.mapSetting.charList.forEach((char) => {
-        if (char.ownerId === this.props.id){
-          socket.emit('mapChar', this.props.roomId, char);
         }
       });
     });

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ChromePicker } from 'react-color';
 import uuid from 'uuid';
-import { addToCharList, addEnemy, hideModal } from '../../../redux/actions/action';
+import { addToCharList, hideModal } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
 // Font Awesome Component
@@ -24,7 +24,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addToCharList: (charData) => dispatch(addToCharList(charData)),
-    addEnemy: (enemyData) => dispatch(addEnemy(enemyData)),
     hideModal: () => dispatch(hideModal())
   };
 };
@@ -37,6 +36,7 @@ class NewChar extends Component {
       displayColorPicker: false,
       charData: {
         name: '',
+        type: 'ally',
         color: '#e0e0e0',
         maxHp: '',
         curHp: '',
@@ -54,12 +54,24 @@ class NewChar extends Component {
     this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handleColorClick = this.handleColorClick.bind(this);
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
+    this.handleTypeChange = this.handleTypeChange.bind(this);
+  }
+
+  componentWillUnmount (){
+    window.removeEventListener('click', this.handleOutsideClick, false);
   }
 
   handleNameChange (e){
     this.setState({ charData: {
       ...this.state.charData,
       name: e.target.value
+    }});
+  }
+
+  handleTypeChange (e){
+    this.setState({ charData: {
+      ...this.state.charData,
+      type: e.target.value
     }});
   }
 
@@ -116,6 +128,7 @@ class NewChar extends Component {
     const charData = {
       charId: randomNum,
       ownerId: this.props.id,
+      type: this.state.charData.type.trim(),
       color: this.state.charData.color.trim(),
       name:  this.state.charData.name.trim(),
       maxHp: this.state.charData.maxHp.trim(),
@@ -126,18 +139,14 @@ class NewChar extends Component {
       mapCoor: { x: '',  y: '' }
     };
 
-    if (this.props.charType === 'char'){
-      this.props.addToCharList(charData);
-      socket.emit('char', this.props.roomId, charData);
-    } else {
-      this.props.addEnemy(charData);
-      socket.emit('enemy', this.props.roomId, charData);
-    }
+    this.props.addToCharList(charData);
+    socket.emit('char', this.props.roomId, charData);
 
     this.setState({
       displayColorPicker: false,
       charData: {
         name: '',
+        type: 'ally',
         color: '#e0e0e0',
         maxHp: '',
         curHp: '',
@@ -151,6 +160,7 @@ class NewChar extends Component {
 
   render() {
     const isDisabled = this.state.charData.name.trim().length  === 0 ||
+                       this.state.charData.type.trim().length  === 0 ||
                        this.state.charData.color.trim().length === 0 ||
                        this.state.charData.maxHp.trim().length === 0 ||
                        this.state.charData.curHp.trim().length === 0 ||
@@ -162,6 +172,13 @@ class NewChar extends Component {
     return (
       <div className="d-flex f-dir-col f-grow-1">
         <div className="f-grow-1 font-size-lg">
+          <div className="mb-2">
+            <div>Type:</div>
+            <div className="d-flex justify-content-around">
+              <label><input className="inp-radio" type="radio" value="ally" checked={this.state.charData.type === 'ally'} onChange={this.handleTypeChange}/>Ally</label>
+              <label><input className="inp-radio" type="radio" value="enemy" checked={this.state.charData.type === 'enemy'} onChange={this.handleTypeChange}/>Enemy</label>
+            </div>
+          </div>
           <div className="mb-2">
             <div>Name:</div>
             <input className="inp w-100" type="text" placeholder="Enter character name..." value={this.state.charData.name} onChange={this.handleNameChange}/>

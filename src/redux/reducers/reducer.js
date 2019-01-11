@@ -16,11 +16,6 @@ import {
   SHOW_MODAL,
   SHOW_USER_LIST,
   TOGGLE_DICE_BUBBLE,
-  SHOW_ENEMY_LIST,
-  HIDE_ENEMY_LIST,
-  ADD_ENEMY,
-  EDIT_ENEMY,
-  REMOVE_ENEMY,
   USER_CLEANUP,
   NEW_HOST,
   SHOW_CHAT,
@@ -77,6 +72,7 @@ export const initialState = {
   //   {
   //   charId: '23984743543',
   //   ownerId: '1234567',
+  //   type: 'ally'/'enemy',
   //   color: '#AAA',
   //   name: 'Djakovich',
   //   maxHp: '50',
@@ -89,19 +85,7 @@ export const initialState = {
   //     y: y-coordinate
   //   }
   // }
-  ],
-  enemyList: [
-    //   {
-    //   charId: '23984743543',
-    //   ownerId: '1234567',
-    //   name: 'Djakovich',
-    //   color: '#123456',
-    //   maxHp: '50',
-    //   curHp: '15',
-    //   maxMp: '60',
-    //   curMp: '45'
-    // }
-  ],
+],
   chatLog: [],
 };
 
@@ -130,6 +114,7 @@ const rootReducer = (state = initialState, action) => {
             return {
               ...char,
               name: action.charData.name,
+              type: action.charData.type,
               color: action.charData.color,
               maxHp: action.charData.maxHp,
               curHp: action.charData.curHp,
@@ -243,56 +228,10 @@ const rootReducer = (state = initialState, action) => {
         id: action.userId
       };
 
-    case SHOW_ENEMY_LIST:
-      return {
-        ...state,
-        displayEnemyList: true
-      };
-
-
-    case HIDE_ENEMY_LIST:
-      return {
-        ...state,
-        displayEnemyList: false
-      };
-
-    case ADD_ENEMY:
-      return {
-        ...state,
-        enemyList: [...state.enemyList, action.enemyData]
-      };
-
-    case EDIT_ENEMY:
-      return {
-        ...state,
-        enemyList: state.enemyList.map((enemy) => {
-          if (enemy.charId === action.enemyData.charId){
-            return {
-              ...enemy,
-              name: action.enemyData.name,
-              color: action.enemyData.color,
-              maxHp: action.enemyData.maxHp,
-              curHp: action.enemyData.curHp,
-              maxMp: action.enemyData.maxMp,
-              curMp: action.enemyData.curMp
-            };
-          } else {
-            return enemy;
-          }
-        })
-      };
-
-    case REMOVE_ENEMY:
-      return {
-        ...state,
-        enemyList: state.enemyList.filter((enemy) => enemy.charId !== action.enemyId)
-      };
-
     case USER_CLEANUP:
       return {
         ...state,
         userList: state.userList.filter((user) => user.id !== action.id),
-        enemyList: state.enemyList.filter((enemy) => enemy.ownerId !== action.id),
         charList: state.charList.filter((char) => char.ownerId !== action.id)
       };
 
@@ -382,7 +321,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         charList: state.charList.map((char) => {
-          if (char.charId === action.charData.charId){
+          if (char.charId === action.charId){
             return {
               ...char,
               onMap: false,
