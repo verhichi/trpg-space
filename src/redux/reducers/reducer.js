@@ -98,6 +98,7 @@ export const initialState = {
     //   charId: '23984743543',
     //   ownerId: '1234567',
     //   name: 'Djakovich',
+    //   color: '#123456',
     //   maxHp: '50',
     //   curHp: '15',
     //   maxMp: '60',
