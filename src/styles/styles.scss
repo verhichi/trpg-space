@@ -208,6 +208,10 @@
       -ms-flex-positive: 1;
     }
 
+    .f-shrink-0{
+      flex-shrink: 0;
+    }
+
     .f-dir-col{
       flex-direction: column;
     }
@@ -244,7 +248,26 @@
       border-radius: 0;
       height: 40px;
       line-height: 30px;
+      min-width: 0;
       padding: 5px;
+    }
+
+  // Input-like container(NOT INPUT)
+    .pseudo-inp{
+      border: 1px solid $black-clr;
+      border-radius: 0;
+      height: 40px;
+      line-height: 30px;
+      min-width: 0;
+      padding: 5px;
+    }
+
+  // Color Circle to display current color
+    .inp-clr-circle{
+      border: 3px solid $white-clr;
+      border-radius: 50%;
+      height: 40px;
+      width: 40px;
     }
 
   // Button styling
@@ -291,4 +314,13 @@
   // Position
     .p-relative{
       position: relative;
+    }
+
+    .p-absolute{
+      position: absolute;
+    }
+
+  // top
+    .t-100{
+      top: 100%;
     }

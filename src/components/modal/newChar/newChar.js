@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { ChromePicker } from 'react-color';
 import uuid from 'uuid';
 import { addToCharList, addEnemy, hideModal } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
@@ -33,119 +34,153 @@ class NewChar extends Component {
   constructor (props){
     super(props);
     this.state = {
-      name: '',
-      maxHp: '',
-      curHp: '',
-      maxMp: '',
-      curMp: ''
+      displayColorPicker: false,
+      charData: {
+        name: '',
+        color: '#e0e0e0',
+        maxHp: '',
+        curHp: '',
+        maxMp: '',
+        curMp: ''
+      }
     };
 
     this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleColorChange = this.handleColorChange.bind(this);
     this.handleMaxHpChange = this.handleMaxHpChange.bind(this);
     this.handleCurHpChange = this.handleCurHpChange.bind(this);
     this.handleMaxMpChange = this.handleMaxMpChange.bind(this);
     this.handleCurMpChange = this.handleCurMpChange.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleColorClick = this.handleColorClick.bind(this);
+    this.handleOutsideClick = this.handleOutsideClick.bind(this);
   }
 
   handleNameChange (e){
-    this.setState({ name: e.target.value });
+    this.setState({ charData: {
+      ...this.state.charData,
+      name: e.target.value
+    }});
+  }
+
+  handleColorChange (color, e){
+    this.setState({ charData: {
+      ...this.state.charData,
+      color: color.hex
+    }});
+  }
+
+  handleColorClick (e){
+    this.setState({ displayColorPicker: !this.state.displayColorPicker });
+    window.addEventListener('click', this.handleOutsideClick, false)
+  }
+
+  handleOutsideClick (e){
+    if (this.colorNode.contains(e.target)) return;
+
+    this.setState({ displayColorPicker: false });
+    window.removeEventListener('click', this.handleOutsideClick, false);
   }
 
   handleMaxHpChange (e){
-    this.setState({ maxHp: e.target.value });
+    this.setState({ charData: {
+      ...this.state.charData,
+      maxHp: e.target.value
+    }});
   }
 
   handleCurHpChange (e){
-    this.setState({ curHp: e.target.value });
+    this.setState({ charData: {
+      ...this.state.charData,
+      curHp: e.target.value
+    }});
   }
 
   handleMaxMpChange (e){
-    this.setState({ maxMp: e.target.value });
+    this.setState({ charData: {
+      ...this.state.charData,
+      maxMp: e.target.value
+    }});
   }
 
   handleCurMpChange (e){
-    this.setState({ curMp: e.target.value });
+    this.setState({ charData: {
+      ...this.state.charData,
+      curMp: e.target.value
+    }});
   }
 
   handleButtonClick (e){
     e.preventDefault();
     const randomNum = uuid.v4();
+    const charData = {
+      charId: randomNum,
+      ownerId: this.props.id,
+      name: this.state.charData.name.trim(),
+      color: this.state.charData.color.trim(),
+      maxHp: this.state.charData.maxHp.trim(),
+      curHp: this.state.charData.curHp.trim(),
+      maxMp: this.state.charData.maxMp.trim(),
+      curMp: this.state.charData.curMp.trim()
+    };
 
     if (this.props.charType === 'char'){
-      this.props.addToCharList({
-        charId: randomNum,
-        ownerId: this.props.id,
-        name: this.state.name.trim(),
-        maxHp: this.state.maxHp.trim(),
-        curHp: this.state.curHp.trim(),
-        maxMp: this.state.maxMp.trim(),
-        curMp: this.state.curMp.trim()
-      });
-
-      socket.emit('char', this.props.roomId, {
-        charId: randomNum,
-        ownerId: this.props.id,
-        name: this.state.name.trim(),
-        maxHp: this.state.maxHp.trim(),
-        curHp: this.state.curHp.trim(),
-        maxMp: this.state.maxMp.trim(),
-        curMp: this.state.curMp.trim()
-      });
+      this.props.addToCharList(charData);
+      socket.emit('char', this.props.roomId, charData);
     } else {
-      this.props.addEnemy({
-        charId: randomNum,
-        ownerId: this.props.id,
-        name: this.state.name.trim(),
-        maxHp: this.state.maxHp.trim(),
-        curHp: this.state.curHp.trim(),
-        maxMp: this.state.maxMp.trim(),
-        curMp: this.state.curMp.trim()
-      });
-
-      socket.emit('enemy', this.props.roomId, {
-        charId: randomNum,
-        ownerId: this.props.id,
-        name: this.state.name.trim(),
-        maxHp: this.state.maxHp.trim(),
-        curHp: this.state.curHp.trim(),
-        maxMp: this.state.maxMp.trim(),
-        curMp: this.state.curMp.trim()
-      });
+      this.props.addEnemy(charData);
+      socket.emit('enemy', this.props.roomId, charData);
     }
 
     this.setState({
-      name: '',
-      maxHp: '',
-      curHp: '',
-      maxMp: '',
-      curMp: ''
+      displayColorPicker: false,
+      charData: {
+        name: '',
+        color: '#e0e0e0',
+        maxHp: '',
+        curHp: '',
+        maxMp: '',
+        curMp: ''
+      }
     });
 
     this.props.hideModal();
   }
 
   render() {
-    const isDisabled = this.state.name.length  === 0 ||
-                       this.state.maxHp.length === 0 ||
-                       this.state.curHp.length === 0 ||
-                       this.state.maxMp.length === 0 ||
-                       this.state.curMp.length === 0;
+    const isDisabled = this.state.charData.name.length  === 0 ||
+                       this.state.charData.color.length === 0 ||
+                       this.state.charData.maxHp.length === 0 ||
+                       this.state.charData.curHp.length === 0 ||
+                       this.state.charData.maxMp.length === 0 ||
+                       this.state.charData.curMp.length === 0;
+
+    const toggleColorPickerClass = this.state.displayColorPicker ? '' : 'd-none';
 
     return (
       <div className="d-flex f-dir-col f-grow-1">
         <div className="f-grow-1 font-size-lg">
           <div className="mb-2">
             <div>Name:</div>
-            <input className="inp w-100" type="text" placeholder="Enter character name..." value={this.state.name} onChange={this.handleNameChange}/>
+            <input className="inp w-100" type="text" placeholder="Enter character name..." value={this.state.charData.name} onChange={this.handleNameChange}/>
+          </div>
+          <div className="mb-2">
+            <div>Theme Color:</div>
+            <div className="d-flex p-relative w-100" onClick={this.handleColorClick} ref={node => this.colorNode = node}>
+              <div className="inp-clr-circle f-shrink-0" style={{background: this.state.charData.color}}></div>
+              <div className="pseudo-inp f-grow-1">{this.state.charData.color}</div>
+              <div className={`p-absolute t-100 ${toggleColorPickerClass}`}>
+                <ChromePicker color={this.state.charData.color} disableAlpha={true} onChange={this.handleColorChange}/>
+              </div>
+            </div>
           </div>
           <div className="mb-2">
             <div>HP:</div>
-            <input className="inp stat-inp" type="tel" value={this.state.curHp} onChange={this.handleCurHpChange}/> / <input className="inp stat-inp" type="tel" value={this.state.maxHp} onChange={this.handleMaxHpChange}/>
+            <input className="inp stat-inp" type="tel" value={this.state.charData.curHp} onChange={this.handleCurHpChange}/> / <input className="inp stat-inp" type="tel" value={this.state.charData.maxHp} onChange={this.handleMaxHpChange}/>
           </div>
           <div className="mb-2">
             <div>MP:</div>
-            <input className="inp stat-inp" type="tel" value={this.state.curMp} onChange={this.handleCurMpChange}/> / <input className="inp stat-inp" type="tel" value={this.state.maxMp} onChange={this.handleMaxMpChange}/>
+            <input className="inp stat-inp" type="tel" value={this.state.charData.curMp} onChange={this.handleCurMpChange}/> / <input className="inp stat-inp" type="tel" value={this.state.charData.maxMp} onChange={this.handleMaxMpChange}/>
           </div>
         </div>
         <button className="btn btn-hot cursor-pointer" disabled={isDisabled} onClick={this.handleButtonClick}>
