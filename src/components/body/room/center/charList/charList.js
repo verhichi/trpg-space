@@ -86,22 +86,24 @@ class CharList extends Component {
             </div>
           </div>
           <div className={`list d-flex f-grow-1 ${toggleClass}`}>
-            {charList}
+            {charList.length === 0
+              ? (<div className="empty-cont p-3 font-size-lg align-center font-weight-bold cursor-pointer" onClick={this.handleNewClick}>Create New Character</div>)
+              : charList}
           </div>
         </div>
 
-        {enemyList.length === 0
-          ? null
-          : (<div className="f-dir-col">
-               <div className="list-tool-bar d-flex mb-1">
-                 <div className="f-grow-1 align-center font-weight-bold text-dec-underline">Enemy List</div>
-               </div>
-               <div className={`list d-flex f-grow-1 ${toggleClass}`}>
-                 {enemyList}
-               </div>
-             </div>)
-         }
-      </div>
+        <div className="f-dir-col">
+           <div className="list-tool-bar d-flex mb-1">
+             <div className="f-grow-1 align-center font-weight-bold text-dec-underline">Enemy List</div>
+           </div>
+           <div className={`list d-flex f-grow-1 ${toggleClass}`}>
+             {enemyList.length === 0
+               ? (<div className="empty-cont p-3 font-size-lg align-center font-weight-bold cursor-pointer" onClick={this.handleNewClick}>Create New Enemy</div>)
+               : enemyList}
+           </div>
+         </div>
+
+       </div>
     );
   }
 }

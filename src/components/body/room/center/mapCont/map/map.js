@@ -9,6 +9,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Style
 import './map.scss';
 
+// Component
+import CharDot from './charDot/charDot';
+
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
@@ -70,8 +73,8 @@ class Map extends Component {
       ? 'is-grid-active'
       : '';
 
-    const mapChar = this.props.charList.filter(char => char.onMap).map(char => {
-      return (<div className="map-char" key={char.charId} style={{backgroundColor: char.color, left: char.mapCoor.x, top: char.mapCoor.y}}></div>);
+    const mapCharDots = this.props.charList.filter(char => char.onMap).map(char => {
+      return <CharDot charData={char}/>;
     });
 
     return (
@@ -79,7 +82,7 @@ class Map extends Component {
         {this.props.mapSetting.image.src.length === 0
           ? null
           : (<div className={`map-img-overlay font-size-lg font-weight-bold d-inline-block p-relative ${togglePlaceCharClass} ${toggleMapGridClass}`}  onClick={this.handleImageClick}>
-               {mapChar}
+               {mapCharDots}
                <img className="p-relative align-center" src={this.props.mapSetting.image.src}/>
              </div>)}
       </div>

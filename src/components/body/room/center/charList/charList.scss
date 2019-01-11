@@ -55,3 +55,8 @@
   margin-bottom: 5px;
   padding: 5px;
 }
+
+.empty-cont{
+  border: 5px dashed $disabled-clr;
+  color: $disabled-clr;
+}
