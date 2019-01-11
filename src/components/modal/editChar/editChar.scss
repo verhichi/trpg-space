@@ -1,0 +1,8 @@
+.char-modal{
+  overflow-y: scroll;
+
+  &.hide-scroll{
+    padding-right: 30px;
+    width: calc(100% + 40px);
+  }
+}

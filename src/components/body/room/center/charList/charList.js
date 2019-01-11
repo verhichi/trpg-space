@@ -64,7 +64,7 @@ class CharList extends Component {
 
   render() {
     const toggleActive = this.props.displayCharList ? 'is-active' : '';
-    const toggleClass = this.props.isMobile ? '' : 'hideScroll';
+    const toggleClass = this.props.isMobile ? '' : 'hide-scroll';
 
     const charList = this.props.charList.filter(char => char.type === 'ally').map((charData) => {
       return <Char key={charData.charId} charData={charData}/>;

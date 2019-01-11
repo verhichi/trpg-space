@@ -14,7 +14,7 @@
 .chat-log-wrap{
   overflow-y: scroll;
 
-  &.hideScroll{
+  &.hide-scroll{
     width: calc(100% + 47px);
   }
 }

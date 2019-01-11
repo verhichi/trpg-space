@@ -13,6 +13,7 @@ import './editChar.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
+    isMobile:     state.isMobile,
     id:           state.id,
     roomId:       state.roomId,
     charList:     state.charList,
@@ -167,10 +168,12 @@ class EditChar extends Component {
                        this.state.charData.maxMp.trim().length === 0 ||
                        this.state.charData.curMp.trim().length === 0;
 
+    const toggleClass = this.props.isMobile ? '' : 'hide-scroll';
+
     const toggleColorPickerClass = this.state.displayColorPicker ? '' : 'd-none';
 
     return (
-      <div className="d-flex f-dir-col f-grow-1">
+      <div className={`char-modal d-flex f-dir-col f-grow-1 ${toggleClass}`}>
         <div className="f-grow-1 font-size-lg">
           <div className="mb-2">
             <div>Type:</div>

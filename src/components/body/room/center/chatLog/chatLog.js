@@ -38,7 +38,7 @@ class ChatLog extends Component {
 
   render() {
 
-    const toggleClass = this.props.isMobile ? '' : 'hideScroll';
+    const toggleClass = this.props.isMobile ? '' : 'hide-scroll';
 
     // Choose component based on chat type
     const chatType = {
