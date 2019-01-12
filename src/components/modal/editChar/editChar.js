@@ -148,7 +148,7 @@ class EditChar extends Component {
       charData: {
         name: '',
         type: 'ally',
-        color: '#e0e0e0',
+        color: '#ff0000',
         maxHp: '',
         curHp: '',
         maxMp: '',
