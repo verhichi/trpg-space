@@ -1,0 +1,46 @@
+@import '../../../../../../styles/partials/variables';
+@import '../../../../../../styles/partials/mediaQueries';
+
+.mini-chat-cont{
+  animation: fadeout 10s ease-in;
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
+  bottom: 30px;
+  font-size: $font-size-md;
+  max-width: 100%;
+  opacity: 0;
+  visibility: hidden;
+
+  @include md{
+    font-size: $font-size-lg;
+  }
+}
+
+.mini-chat{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &:last-child{
+    color: $white-clr;
+  }
+
+  &:nth-last-child(2){
+    color: #DDD;
+  }
+
+  &:nth-last-child(3){
+    color: #BBB;
+  }
+}
+
+
+@keyframes fadeout{
+  0%{
+    visibility: visible;
+    opacity: 1;
+  }
+  100%{
+    visibility: hidden;
+    opacity: 0;
+  }
+}

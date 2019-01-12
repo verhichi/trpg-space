@@ -74,36 +74,18 @@ class DiceBalloon extends Component {
   handleButtonClick (e){
     const result = getDiceRollResult(this.state);
     const name = this.props.userList.find((user) => this.props.id === user.id).name;
+    const rollData = {
+      type: 'roll',
+      private: this.state.private,
+      diceSetting: this.state.diceNumber + 'd' + this.state.diceType,
+      name,
+      ...result
+    };
 
-    const now = new Date();
-    const hour = now.getHours().toString().padStart(2, '0');
-    const min = now.getMinutes().toString().padStart(2, '0');
-    const time = `${hour}:${min}`;
+    this.props.addToChatLog(rollData);
 
-    if (this.state.private){
-      this.props.addToChatLog({
-        type: 'roll',
-        private: this.state.private,
-        time,
-        name,
-        ...result
-      });
-    } else {
-      this.props.addToChatLog({
-        type: 'roll',
-        private: this.state.private,
-        time,
-        name,
-        ...result
-      });
-
-      socket.emit('chat', this.props.roomId, {
-        type: 'roll',
-        private: this.state.private,
-        time,
-        name,
-        ...result
-      });
+    if (!this.state.private){
+      socket.emit('chat', this.props.roomId, rollData);
     }
 
     this.props.hideDiceBubble();

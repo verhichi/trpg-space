@@ -1,3 +1,5 @@
+import uuid from 'uuid';
+
 import {
   ADD_USER,
   ADD_TO_CHAT_LOG,
@@ -87,7 +89,11 @@ export const initialState = {
   //   }
   // }
 ],
-  chatLog: [],
+  chatLog: [
+    // {
+    //
+    // }
+  ],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -96,9 +102,20 @@ const rootReducer = (state = initialState, action) => {
       return initialState;
 
     case ADD_TO_CHAT_LOG:
+      const id = uuid.v4();
+    
+      const now = new Date();
+      const hour = now.getHours().toString().padStart(2, '0');
+      const min = now.getMinutes().toString().padStart(2, '0');
+      const time = `${hour}:${min}`;
+
       return {
         ...state,
-        chatLog: [...state.chatLog, action.content]
+        chatLog: [...state.chatLog, {
+          ...action.content,
+          time,
+          id
+        }]
       };
 
     case ADD_TO_CHAR_LIST:

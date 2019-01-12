@@ -32,7 +32,8 @@ import {
   faStreetView,
   faUserTimes,
   faFileImage,
-  faTh
+  faTh,
+  faComment
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -65,5 +66,6 @@ library.add(
   faStreetView,
   faUserTimes,
   faFileImage,
-  faTh
+  faTh,
+  faComment
 );

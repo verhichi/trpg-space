@@ -16,6 +16,7 @@
 
   &.hide-scroll{
     width: calc(100% + 47px);
+    padding-right: 47px;
   }
 }
 
@@ -32,6 +33,7 @@
   display: inline-block;
   position: relative;
   white-space: pre-line;
+  word-break: break-all;
   z-index: 1;
 
   &::before{

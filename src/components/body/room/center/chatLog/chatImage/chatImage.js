@@ -28,8 +28,8 @@ class ChatImage extends Component {
     return(
       <div className="chat-log mb-3">
         <div className="chat-log-head">
-          <span className="chat-log-user">{this.props.chatData.name}</span>
-          <span className="chat-log-time">{this.props.chatData.time}</span>
+          <span className="font-size-lg font-weight-bold pr-2">{this.props.chatData.name}</span>
+          <span className="pr-2">{this.props.chatData.time}</span>
         </div>
         <div className="chat-log-body p-2 ml-3">
           <img className="chat-img cursor-pointer" src={this.props.chatData.src} onClick={this.handleImageClick}/>
