@@ -15,7 +15,8 @@ import {
   SHOW_CHAR_LIST,
   SHOW_MODAL,
   SHOW_USER_LIST,
-  TOGGLE_DICE_BUBBLE,
+  SHOW_DICE_BUBBLE,
+  HIDE_DICE_BUBBLE,
   USER_CLEANUP,
   NEW_HOST,
   SHOW_CHAT,
@@ -42,8 +43,12 @@ export const addToChatLog = (content) => {
   };
 };
 
-export const toggleDiceBubble = () => {
-  return { type: TOGGLE_DICE_BUBBLE };
+export const showDiceBubble = () => {
+  return { type: SHOW_DICE_BUBBLE };
+};
+
+export const hideDiceBubble = () => {
+  return { type: HIDE_DICE_BUBBLE };
 };
 
 export const showCharList = () => {

@@ -15,7 +15,8 @@ import {
   SHOW_CHAR_LIST,
   SHOW_MODAL,
   SHOW_USER_LIST,
-  TOGGLE_DICE_BUBBLE,
+  SHOW_DICE_BUBBLE,
+  HIDE_DICE_BUBBLE,
   USER_CLEANUP,
   NEW_HOST,
   SHOW_CHAT,
@@ -184,10 +185,16 @@ const rootReducer = (state = initialState, action) => {
         }
       };
 
-    case TOGGLE_DICE_BUBBLE:
+    case SHOW_DICE_BUBBLE:
       return {
         ...state,
-        displayDiceSetting: !state.displayDiceSetting
+        displayDiceSetting: true
+      };
+
+    case HIDE_DICE_BUBBLE:
+      return {
+        ...state,
+        displayDiceSetting: false
       };
 
     case SHOW_CHAR_LIST:

@@ -12,9 +12,9 @@
 .chat-bar-btn{
   border: none;
   border-radius: 0;
-  flex-basis: 50px;
   line-height: 44px;
   padding: 0 10px;
+  width: 50px;
 
   &:hover{
     background: rgba(255, 255, 255, 0.1);

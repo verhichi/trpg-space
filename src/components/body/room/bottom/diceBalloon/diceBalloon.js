@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addToChatLog, toggleDiceBubble } from '../../../../redux/actions/action';
-import socket from '../../../../socket/socketClient';
+import { addToChatLog, hideDiceBubble } from '../../../../../redux/actions/action';
+import socket from '../../../../../socket/socketClient';
 import { getDiceRollResult } from './roll';
 
 // Style
@@ -21,7 +21,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addToChatLog: content => dispatch(addToChatLog(content)),
-    toggleDiceBubble: () => dispatch(toggleDiceBubble())
+    hideDiceBubble: () => dispatch(hideDiceBubble())
   };
 };
 
@@ -45,17 +45,10 @@ class DiceBalloon extends Component {
     this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
-  // componentWillReceiveProps (nextProps){
-  //   console.log('diceBalloon');
-  //
-  //   this.props.displayDiceSetting
-  //     ? document.removeEventListener('click', this.handleOutsideClick)
-  //     : document.addEventListener('click', this.handleOutsideClick);
-  // }
 
   handleOutsideClick (e){
-    if (this.node.contains(e.target)) return;
-    this.props.toggleDiceBubble();
+    if (this.diceNode.contains(e.target)) return;
+    this.props.hideDiceBubble();
   }
 
   handleDiceNumberChange (e){
@@ -113,14 +106,15 @@ class DiceBalloon extends Component {
       });
     }
 
-    this.props.toggleDiceBubble();
+    this.props.hideDiceBubble();
   }
 
   render (){
-    const toggleClass = this.props.displayDiceSetting ? 'is-active' : '';
+
+    const toggleClass = this.props.displayDiceSetting ? '' : 'd-none';
 
     return (
-      <div className={`dice-help-balloon font-weight-bold ${toggleClass}`} ref={node => this.node = node}>
+      <div className={`dice-help-balloon font-weight-bold font-size-md ${toggleClass}`} ref={node => this.diceNode = node}>
         <div className="dice-setting">
           Dice:
           <div className="sel-cont">

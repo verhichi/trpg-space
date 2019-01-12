@@ -10,34 +10,33 @@ import './room.scss';
 import Top from './top/top';
 import Center from './center/center';
 import Bottom from './bottom/bottom';
-import DiceBalloon from './diceBalloon/diceBalloon';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id:         state.id,
-    roomId:     state.roomId,
-    userList:   state.userList,
-    charList:   state.charList,
-    mapSetting: state.mapSetting
+    id:                 state.id,
+    roomId:             state.roomId,
+    userList:           state.userList,
+    charList:           state.charList,
+    mapSetting:         state.mapSetting
   };
 };
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    addUser:  (user) => dispatch(addUser(user)),
-    editUser: (user) => dispatch(editUser(user)),
-    removeUser: (userId) => dispatch(removeUser(userId)),
-    setRoomId: (roomId) => dispatch(setRoomId(roomId)),
-    setUserId: (userId) => dispatch(setUserId(userId)),
-    userCleanup: (id) => dispatch(userCleanup(id)),
-    addToChatLog: (content) => dispatch(addToChatLog(content)),
-    newHost: (id) => dispatch(newHost(id)),
-    editMapImage: (src) => dispatch(editMapImage(src)),
-    addMapChar:  (charData) => dispatch(addMapChar(charData)),
-    editMapChar: (charData) => dispatch(editMapChar(charData)),
-    removeMapChar: (charId) => dispatch(removeMapChar(charId))
+    addUser:       (user)     => dispatch(addUser(user)),
+    editUser:      (user)     => dispatch(editUser(user)),
+    removeUser:    (userId)   => dispatch(removeUser(userId)),
+    setRoomId:     (roomId)   => dispatch(setRoomId(roomId)),
+    setUserId:     (userId)   => dispatch(setUserId(userId)),
+    userCleanup:   (id)       => dispatch(userCleanup(id)),
+    addToChatLog:  (content)  => dispatch(addToChatLog(content)),
+    newHost:       (id)       => dispatch(newHost(id)),
+    editMapImage:  (src)      => dispatch(editMapImage(src)),
+    addMapChar:    (charData) => dispatch(addMapChar(charData)),
+    editMapChar:   (charData) => dispatch(editMapChar(charData)),
+    removeMapChar: (charId)   => dispatch(removeMapChar(charId))
   };
 };
 
@@ -166,7 +165,6 @@ class Room extends Component {
         <Top redirect={this.props.history.push.bind(this, '/')}/>
         <Center/>
         <Bottom/>
-        <DiceBalloon/>
       </div>
     );
   }

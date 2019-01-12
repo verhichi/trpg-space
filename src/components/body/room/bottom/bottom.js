@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addToChatLog, showCharList, hideCharList, toggleDiceBubble, showModal, showChat, showMap } from '../../../../redux/actions/action';
+import { addToChatLog, showCharList, hideCharList, hideDiceBubble, showDiceBubble, showModal, showChat, showMap } from '../../../../redux/actions/action';
 import socket from '../../../../socket/socketClient';
 
 // Font Awesome Component
@@ -9,6 +9,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Style
 import './bottom.scss';
 
+// Component
+import DiceBalloon from './diceBalloon/diceBalloon';
+
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
@@ -16,6 +19,7 @@ const mapStateToProps = (state) => {
     roomId: state.roomId,
     userList: state.userList,
     centerMode: state.centerMode,
+    displayDiceSetting: state.displayDiceSetting,
     displayCharList: state.displayCharList,
   };
 };
@@ -26,7 +30,8 @@ const mapDispatchToProps = (dispatch) => {
     addToChatLog: content => dispatch(addToChatLog(content)),
     showCharList: () => dispatch(showCharList()),
     hideCharList: () => dispatch(hideCharList()),
-    toggleDiceBubble: () => dispatch(toggleDiceBubble()),
+    showDiceBubble: () => dispatch(showDiceBubble()),
+    hideDiceBubble: () => dispatch(hideDiceBubble()),
     showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
     showChat: () => dispatch(showChat()),
     showMap: () => dispatch(showMap())
@@ -101,8 +106,9 @@ class Bottom extends Component {
   }
 
   handleDiceSettingClick (e){
-    e.preventDefault();
-    this.props.toggleDiceBubble();
+    this.props.displayDiceSetting
+      ? this.props.hideDiceBubble()
+      : this.props.showDiceBubble();
   }
 
   handleCenterModeClick (e){
@@ -112,7 +118,6 @@ class Bottom extends Component {
   }
 
   handleCharListClick (e){
-    e.preventDefault();
     this.props.displayCharList
       ? this.props.hideCharList()
       : this.props.showCharList();
@@ -142,8 +147,11 @@ class Bottom extends Component {
           <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleCharListClick}>
             <FontAwesomeIcon icon="address-card"/>
           </div>
-          <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleDiceSettingClick}>
-            <FontAwesomeIcon icon="dice"/>
+          <div className="p-relative">
+            <DiceBalloon />
+            <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleDiceSettingClick}>
+              <FontAwesomeIcon icon="dice"/>
+            </div>
           </div>
           <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleCenterModeClick}>
             {this.props.centerMode === 'chat'
