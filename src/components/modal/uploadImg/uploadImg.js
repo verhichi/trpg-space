@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
-import { addToChatLog, hideModal, editMapImage } from '../../../redux/actions/action';
+import { addToChatLog, hideModal, editMapImage, removeAllMapChar } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
 
@@ -26,7 +26,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     hideModal: () => dispatch(hideModal()),
     addToChatLog: (content) => dispatch(addToChatLog(content)),
-    editMapImage: (src) => dispatch(editMapImage(src))
+    editMapImage: (src) => dispatch(editMapImage(src)),
+    removeAllMapChar: () => dispatch(removeAllMapChar())
   };
 };
 
@@ -56,37 +57,26 @@ class UploadImg extends Component {
 
       if (this.props.modalSetting.modalProp.type === 'chat'){
         const name = this.props.userList.find((user) => this.props.id === user.id).name;
-
-        const now = new Date();
-        const hour = now.getHours().toString().padStart(2, '0');
-        const min = now.getMinutes().toString().padStart(2, '0');
-        const time = `${hour}:${min}`;
-
-        this.props.addToChatLog({
+        const imgData = {
           type: 'image',
           src: reader.result,
-          name,
-          time
-        });
+          name
+        };
 
-        socket.emit('chat', this.props.roomId, {
-          type: 'image',
-          src: reader.result,
-          name,
-          time
-        });
+        this.props.addToChatLog(imgData);
+        socket.emit('chat', this.props.roomId, imgData);
       } else {
         const imgId = uuid.v4();
-
-        this.props.editMapImage({
+        const backgroundData = {
           id: imgId,
           src: reader.result
-        });
+        };
 
-        socket.emit('mapImage', this.props.roomId, {
-          id: imgId,
-          src: reader.result
-        });
+        this.props.editMapImage(backgroundData);
+        socket.emit('mapImage', this.props.roomId, backgroundData);
+
+        this.props.removeAllMapChar();
+        socket.emit('removeAllMapChar');
       }
 
       this.props.hideModal();

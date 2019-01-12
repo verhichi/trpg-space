@@ -142,4 +142,9 @@ io.on('connection', (socket) => {
     socket.broadcast.to(roomId).emit('removeMapChar', charId);
   });
 
+  // Logic for when a user adds or edits a character to place on the map
+  socket.on('removeAllMapChar', (roomId) => {
+    socket.broadcast.to(roomId).emit('removeAllMapChar');
+  });
+
 });

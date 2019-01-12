@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addUser, editUser, removeUser, setRoomId, setUserId, userCleanup, addToChatLog, newHost, editMapImage, addMapChar, editMapChar, removeMapChar } from '../../../redux/actions/action';
+import { addUser, editUser, removeUser, setRoomId, setUserId, userCleanup, addToChatLog, newHost, editMapImage, addMapChar, editMapChar, removeMapChar, removeAllMapChar } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
 // Style
@@ -25,18 +25,19 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    addUser:       (user)     => dispatch(addUser(user)),
-    editUser:      (user)     => dispatch(editUser(user)),
-    removeUser:    (userId)   => dispatch(removeUser(userId)),
-    setRoomId:     (roomId)   => dispatch(setRoomId(roomId)),
-    setUserId:     (userId)   => dispatch(setUserId(userId)),
-    userCleanup:   (id)       => dispatch(userCleanup(id)),
-    addToChatLog:  (content)  => dispatch(addToChatLog(content)),
-    newHost:       (id)       => dispatch(newHost(id)),
-    editMapImage:  (src)      => dispatch(editMapImage(src)),
-    addMapChar:    (charData) => dispatch(addMapChar(charData)),
-    editMapChar:   (charData) => dispatch(editMapChar(charData)),
-    removeMapChar: (charId)   => dispatch(removeMapChar(charId))
+    addUser:          (user)     => dispatch(addUser(user)),
+    editUser:         (user)     => dispatch(editUser(user)),
+    removeUser:       (userId)   => dispatch(removeUser(userId)),
+    setRoomId:        (roomId)   => dispatch(setRoomId(roomId)),
+    setUserId:        (userId)   => dispatch(setUserId(userId)),
+    userCleanup:      (id)       => dispatch(userCleanup(id)),
+    addToChatLog:     (content)  => dispatch(addToChatLog(content)),
+    newHost:          (id)       => dispatch(newHost(id)),
+    editMapImage:     (src)      => dispatch(editMapImage(src)),
+    addMapChar:       (charData) => dispatch(addMapChar(charData)),
+    editMapChar:      (charData) => dispatch(editMapChar(charData)),
+    removeMapChar:    (charId)   => dispatch(removeMapChar(charId)),
+    removeAllMapChar: ()         => dispatch(removeAllMapChar())
   };
 };
 
@@ -115,6 +116,7 @@ class Room extends Component {
     socket.on('mapImage', (imageData) => {
       if (this.props.mapSetting.image.id !== imageData.id){
         this.props.editMapImage(imageData);
+        this.props.removeAllMapChar();
       }
     });
 
