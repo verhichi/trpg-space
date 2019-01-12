@@ -1,3 +1,6 @@
+@import '../../../../../../../styles/partials/mediaQueries';
+@import '../../../../../../../styles/partials/variables';
+
 .map-char{
   border: 3px solid #FFF;
   border-radius: 50%;
@@ -5,4 +8,24 @@
   position: absolute;
   width: 25px;
   z-index: 60;
+
+  &:hover .map-char-balloon{
+    display: block;
+  }
+}
+
+.map-char-balloon{
+  background: rgba(0, 0, 0, 0.3);
+  bottom: calc(100% + 8px);
+  color: $white-clr;
+  display: none;
+  width: 100px;
+
+  &:before{
+    border: 5px solid transparent;
+    border-top: 5px solid rgba(0, 0, 0, 0.3);
+    content: "";
+    position: absolute;
+    top: 100%;
+  }
 }

@@ -324,3 +324,10 @@
     .t-100{
       top: 100%;
     }
+
+  // One line ellipsis
+    .one-line-ellipsis{
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
