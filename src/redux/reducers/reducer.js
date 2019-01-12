@@ -31,7 +31,8 @@ import {
   TOGGLE_PLACE_CHAR,
   TOGGLE_REMOVE_CHAR,
   SET_CHAR_TO_PLACE,
-  TOGGLE_MAP_GRID
+  TOGGLE_MAP_GRID,
+  REMOVE_ALL_MAP_CHAR
 } from '../constants/actionTypes';
 
 export const initialState = {
@@ -103,7 +104,7 @@ const rootReducer = (state = initialState, action) => {
 
     case ADD_TO_CHAT_LOG:
       const id = uuid.v4();
-    
+
       const now = new Date();
       const hour = now.getHours().toString().padStart(2, '0');
       const min = now.getMinutes().toString().padStart(2, '0');
@@ -385,6 +386,17 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         displayMapGrid: !state.displayMapGrid
+      };
+
+    case REMOVE_ALL_MAP_CHAR:
+      return {
+        ...state,
+        charList: state.charList.map(charData => {
+          return {
+            ...charData,
+            onMap: false
+          };
+        })
       };
 
     default:
