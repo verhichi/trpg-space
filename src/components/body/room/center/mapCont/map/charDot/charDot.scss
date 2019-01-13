@@ -2,6 +2,7 @@
 @import '../../../../../../../styles/partials/variables';
 
 .map-char{
+  animation: shadow-pulse 5s infinite;
   border: 3px solid #FFF;
   border-radius: 50%;
   height: 25px;
@@ -12,6 +13,15 @@
   &:hover .map-char-balloon{
     display: block;
   }
+
+  &:active .map-char-balloon{
+    display: none;
+  }
+}
+
+@keyframes shadow-pulse{
+  0%{ box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2); }
+  20%, 100% { box-shadow: 0 0 0 15px rgba(0, 0, 0, 0); }
 }
 
 .map-char-balloon{

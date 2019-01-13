@@ -100,7 +100,7 @@ class Map extends Component {
           ? null
           : (<div className={`map-img-overlay font-size-lg font-weight-bold d-inline-block p-relative ${togglePlaceCharClass} ${toggleMapGridClass}`}  onClick={this.handleImageClick} onDrop={this.handleDragDrop} onDragOver={this.handleDragOver}>
                {mapCharDots}
-               <img className="p-relative align-center" src={this.props.mapSetting.image.src}/>
+               <img className="map-img p-relative align-center" src={this.props.mapSetting.image.src}/>
              </div>)}
       </div>
     );

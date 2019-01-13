@@ -7,6 +7,8 @@
 }
 
 .map-img-overlay{
+  tap-highlight-color: rgba(0,0,0,0);
+
   &.is-place-char-active::before{
     background: rgba(0, 0, 0, 0.5);
     content: "Click to place Character";
@@ -29,7 +31,7 @@
         rgba(255, 255, 255, 0.6) 50%,
         rgba(255, 255, 255, 0.6)
       );
-    background-size: 20px 20px;
+    background-size: 30px 30px;
     background-repeat: repeat;
     content: "";
     height: 100%;
@@ -38,4 +40,11 @@
     width: 100%;
     z-index: 55;
   }
+}
+
+.map-img{
+  pointer-events: none;
+  tap-highlight-color: rgba(0,0,0,0);
+  touch-callout: none;
+  user-select: none;
 }
