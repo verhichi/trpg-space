@@ -42,6 +42,7 @@ const mapDispatchToProps = (dispatch) => {
 class Bottom extends Component {
   constructor (props){
     super(props);
+    this.diceRef = React.createRef();
     this.state = {
       chatText: '',
       inputFocus: false
@@ -55,6 +56,7 @@ class Bottom extends Component {
     this.handleCenterModeClick = this.handleCenterModeClick.bind(this);
     this.handleCharListClick = this.handleCharListClick.bind(this);
     this.handleImageClick = this.handleImageClick.bind(this);
+    this.handleOutsideClick = this.handleOutsideClick.bind(this);
   }
 
   componentDidMount (){
@@ -102,9 +104,19 @@ class Bottom extends Component {
   }
 
   handleDiceSettingClick (e){
-    this.props.displayDiceSetting
-      ? this.props.hideDiceBubble()
-      : this.props.showDiceBubble();
+    if (this.props.displayDiceSetting){
+      window.removeEventListener('click', this.handleOutsideClick, false);
+      this.props.hideDiceBubble();
+    } else {
+      window.addEventListener('click', this.handleOutsideClick, false);
+      this.props.showDiceBubble();
+    }
+  }
+
+  handleOutsideClick (e){
+    if (this.diceRef.current.contains(e.target)) return;
+    window.removeEventListener('click', this.handleOutsideClick, false);
+    this.props.hideDiceBubble();
   }
 
   handleCenterModeClick (e){
@@ -143,7 +155,7 @@ class Bottom extends Component {
           <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleCharListClick}>
             <FontAwesomeIcon icon="address-card"/>
           </div>
-          <div className="p-relative">
+          <div className="p-relative" ref={this.diceRef}>
             <DiceBalloon />
             <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleDiceSettingClick}>
               <FontAwesomeIcon icon="dice"/>
