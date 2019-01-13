@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { toggleRemoveChar, setMapMode, removeMapChar } from '../../../../../../../redux/actions/action';
-import socket from '../../../../../../../socket/socketClient';
-
+import { hideRemoveChar, setMapMode, removeMapChar } from '../../../../../../../../redux/actions/action';
+import socket from '../../../../../../../../socket/socketClient';
 
 // Style
 import './removeCharBalloon.scss';
@@ -22,7 +21,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setMapMode: (mode) => dispatch(setMapMode(mode)),
-    toggleRemoveChar: () => dispatch(toggleRemoveChar()),
+    hideRemoveChar: () => dispatch(hideRemoveChar()),
     removeMapChar: (charId) => dispatch(removeMapChar(charId))
   };
 };
@@ -30,31 +29,16 @@ const mapDispatchToProps = (dispatch) => {
 class RemoveCharBalloon extends Component {
   constructor (props){
     super(props);
-
     this.state = { charIdToRemove: '' };
 
     this.handleRemoveCharButtonClick = this.handleRemoveCharButtonClick.bind(this);
     this.handleRemoveCharChange = this.handleRemoveCharChange.bind(this);
-    this.handleOutsideClick = this.handleOutsideClick.bind(this);
-  }
-
-  // componentWillReceiveProps (nextProps){
-  //   console.log('removeCharBalloon');
-  //
-  //   this.props.displayRemoveChar
-  //     ? document.removeEventListener('click', this.handleOutsideClick)
-  //     : document.addEventListener('click', this.handleOutsideClick);
-  // }
-
-  handleOutsideClick (e){
-    if (this.node.contains(e.target)) return;
-    this.props.toggleRemoveChar();
   }
 
   handleRemoveCharButtonClick (e){
     this.props.removeMapChar(this.state.charIdToRemove);
     socket.emit('removeMapChar', this.props.roomId, this.state.charIdToRemove);
-    this.props.toggleRemoveChar();
+    this.props.hideRemoveChar();
   }
 
   handleRemoveCharChange (e){
@@ -69,8 +53,9 @@ class RemoveCharBalloon extends Component {
       return (<option key={char.charId} value={char.charId}>{char.name}</option>);
     });
 
+
     return (
-      <div className={`place-char-balloon cursor-default ${toggleRemoveChar}`} ref={node => this.node = node}>
+      <div className={`place-char-balloon cursor-default ${toggleRemoveChar}`}>
         <div>Select character:</div>
         <div className="char-sel-cont">
           <select value={this.state.charIdToRemove} onChange={this.handleRemoveCharChange}>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { togglePlaceChar, setMapMode, setCharToPlace } from '../../../../../../../redux/actions/action';
+import { hidePlaceChar, setMapMode, setCharToPlace } from '../../../../../../../../redux/actions/action';
 
 // Style
 import './placeCharBalloon.scss';
@@ -18,8 +18,8 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    setMapMode: (mode) => dispatch(setMapMode(mode)),
-    togglePlaceChar: () => dispatch(togglePlaceChar()),
+    hidePlaceChar:  ()       => dispatch(hidePlaceChar()),
+    setMapMode:     (mode)   => dispatch(setMapMode(mode)),
     setCharToPlace: (charId) => dispatch(setCharToPlace(charId))
   };
 };
@@ -27,30 +27,16 @@ const mapDispatchToProps = (dispatch) => {
 class PlaceCharBalloon extends Component {
   constructor (props){
     super(props);
-
     this.state = { charIdToPlace: '' };
 
     this.handlePlaceCharButtonClick = this.handlePlaceCharButtonClick.bind(this);
     this.handlePlaceCharChange = this.handlePlaceCharChange.bind(this);
-    this.handleOutsideClick = this.handleOutsideClick.bind(this);
-  }
-
-  // componentWillReceiveProps (nextProps){
-  //   console.log('placeCharBalloon');
-  //   this.props.displayPlaceChar
-  //     ? document.removeEventListener('click', this.handleOutsideClick)
-  //     : document.addEventListener('click', this.handleOutsideClick);
-  // }
-
-  handleOutsideClick (e){
-    if (this.node.contains(e.target)) return;
-    this.props.togglePlaceChar();
   }
 
   handlePlaceCharButtonClick (e){
     this.props.setMapMode('placeChar');
     this.props.setCharToPlace(this.state.charIdToPlace);
-    this.props.togglePlaceChar();
+    this.props.hidePlaceChar();
   }
 
   handlePlaceCharChange (e){
@@ -59,14 +45,14 @@ class PlaceCharBalloon extends Component {
 
   render() {
     const isDisabled = this.state.charIdToPlace.length === 0 || !this.props.charList.some(char => char.charId === this.state.charIdToPlace);
-    const togglePlaceChar = this.props.displayPlaceChar ? 'is-active' : '';
+    const toggleClass = this.props.displayPlaceChar ? 'is-active' : '';
 
     const charOpt = this.props.charList.filter(char => this.props.id === char.ownerId).map((char) => {
       return (<option key={char.charId} value={char.charId}>{char.name}</option>);
     });
 
     return (
-      <div className={`place-char-balloon cursor-default ${togglePlaceChar}`} ref={node => this.node = node}>
+      <div className={`place-char-balloon cursor-default ${toggleClass}`}>
         <div>Select character:</div>
         <div className="char-sel-cont">
           <select value={this.state.charIdToPlace} onChange={this.handlePlaceCharChange}>

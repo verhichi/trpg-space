@@ -26,8 +26,10 @@ import {
   ADD_MAP_CHAR,
   EDIT_MAP_CHAR,
   REMOVE_MAP_CHAR,
-  TOGGLE_PLACE_CHAR,
-  TOGGLE_REMOVE_CHAR,
+  SHOW_PLACE_CHAR,
+  HIDE_PLACE_CHAR,
+  SHOW_REMOVE_CHAR,
+  HIDE_REMOVE_CHAR,
   SET_CHAR_TO_PLACE,
   TOGGLE_MAP_GRID,
   REMOVE_ALL_MAP_CHAR
@@ -193,12 +195,20 @@ export const removeMapChar = (charId) => {
   };
 };
 
-export const togglePlaceChar = () => {
-  return { type: TOGGLE_PLACE_CHAR };
+export const showPlaceChar = () => {
+  return { type: SHOW_PLACE_CHAR };
 };
 
-export const toggleRemoveChar = () => {
-  return { type: TOGGLE_REMOVE_CHAR };
+export const hidePlaceChar = () => {
+  return { type: HIDE_PLACE_CHAR };
+};
+
+export const showRemoveChar = () => {
+  return { type: SHOW_REMOVE_CHAR };
+};
+
+export const hideRemoveChar = () => {
+  return { type: HIDE_REMOVE_CHAR };
 };
 
 export const setCharToPlace = (charId) => {

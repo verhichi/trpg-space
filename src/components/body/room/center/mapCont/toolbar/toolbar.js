@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { showModal, togglePlaceChar, toggleRemoveChar, toggleMapGrid } from '../../../../../../redux/actions/action';
+import { showModal, showRemoveChar, hideRemoveChar, toggleMapGrid, showPlaceChar, hidePlaceChar } from '../../../../../../redux/actions/action';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,27 +9,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './toolbar.scss';
 
 // Component
-import PlaceCharBalloon from './placeCharBalloon/placeCharBalloon';
-import RemoveCharBalloon from './removeCharBalloon/removeCharBalloon';
+import PlaceCharButton from './placeCharButton/placeCharButton';
+import RemoveCharButton from './removeCharButton/removeCharButton';
 
-// // Redux Map State To Prop
-// const mapStateToProps = (state) => {
-//   return {
-//     id: state.id,
-//     roomId: state.roomId,
-//     charList: state.charList,
-//     isMobile: state.isMobile,
-//     mapSetting: state.mapSetting,
-//     displayPlaceChar: state.displayPlaceChar
-//   };
-// };
+// Redux Map State To Prop
+const mapStateToProps = (state) => {
+  return {
+    displayPlaceChar: state.displayPlaceChar,
+    displayRemoveChar: state.displayRemoveChar
+  };
+};
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
     showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
-    togglePlaceChar: () => dispatch(togglePlaceChar()),
-    toggleRemoveChar: () => dispatch(toggleRemoveChar()),
+    showPlaceChar: () => dispatch(showPlaceChar()),
+    hidePlaceChar: () => dispatch(hidePlaceChar()),
+    showRemoveChar: () => dispatch(showRemoveChar()),
+    hideRemoveChar: () => dispatch(hideRemoveChar()),
     toggleMapGrid: () => dispatch(toggleMapGrid())
   };
 };
@@ -39,10 +37,12 @@ class Toolbar extends Component {
     super(props);
 
     this.handleImageUploadClick = this.handleImageUploadClick.bind(this);
-    this.handleToolbarPlaceCharClick = this.handleToolbarPlaceCharClick.bind(this);
-    this.handleToolbarRemoveCharClick = this.handleToolbarRemoveCharClick.bind(this);
+    // this.handleToolbarPlaceCharClick = this.handleToolbarPlaceCharClick.bind(this);
+    // this.handleToolbarRemoveCharClick = this.handleToolbarRemoveCharClick.bind(this);
     this.handleToolbarMapGridClick = this.handleToolbarMapGridClick.bind(this);
+    // this.handlePlaceCharOutsideClick = this.handlePlaceCharOutsideClick.bind(this);
   }
+
 
   handleImageUploadClick (e){
     this.props.showModal('uploadImg', {
@@ -52,33 +52,55 @@ class Toolbar extends Component {
     });
   }
 
-  handleToolbarPlaceCharClick (e){
-    this.props.togglePlaceChar();
-  }
 
-  handleToolbarRemoveCharClick (e){
-    this.props.toggleRemoveChar();
-  }
+  // handleToolbarPlaceCharClick (e){
+  //   if (this.props.displayPlaceChar){
+  //     window.removeEventListener('click', this.handlePlaceCharOutsideClick, false);
+  //     this.props.hidePlaceChar();
+  //   } else {
+  //     window.addEventListener('click', this.handlePlaceCharOutsideClick, false);
+  //     this.props.showPlaceChar();
+  //   }
+  // }
+  //
+  //
+  // handlePlaceCharOutsideClick (e){
+  //   if (this.placeCharNode.contains(e.target)) return;
+  //
+  //   window.removeEventListener('click', this.handlePlaceCharOutsideClick, false);
+  //   this.props.hidePlaceChar();
+  // }
+  //
+  //
+  // handleToolbarRemoveCharClick (e){
+  //   if (this.props.displayRemoveChar){
+  //     window.removeEventListener('click', this.handleRemoveCharOutsideClick, false);
+  //     this.props.hideRemoveChar();
+  //   } else {
+  //     window.addEventListener('click', this.handleRemoveCharOutsideClick, false);
+  //     this.props.showRemoveChar();
+  //   }
+  // }
+  //
+  //
+  // handleRemoveCharOutsideClick (e){
+  //   if (this.removeCharNode.contains(e.target)) return;
+  //
+  //   window.removeEventListener('click', this.handleRemoveCharOutsideClick, false);
+  //   this.props.hideRemoveChar();
+  // }
+
 
   handleToolbarMapGridClick (e){
     this.props.toggleMapGrid();
   }
 
+
   render() {
     return (
       <div className="map-toolbar d-inline-block">
-        <div className="p-relative d-inline-block">
-          <PlaceCharBalloon/>
-          <div className="map-toolbar-btn p-3 cursor-pointer" onClick={this.handleToolbarPlaceCharClick}>
-            <FontAwesomeIcon icon="street-view"/>
-          </div>
-        </div>
-        <div className="p-relative d-inline-block">
-          <RemoveCharBalloon/>
-          <div className="map-toolbar-btn p-3 cursor-pointer" onClick={this.handleToolbarRemoveCharClick}>
-            <FontAwesomeIcon icon="user-times"/>
-          </div>
-        </div>
+        <PlaceCharButton/>
+        <RemoveCharButton/>
         <div className="p-relative d-inline-block">
           <div className="map-toolbar-btn p-3 cursor-pointer" onClick={this.handleImageUploadClick}>
             <FontAwesomeIcon icon="file-image"/>
@@ -94,4 +116,4 @@ class Toolbar extends Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Toolbar);
+export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);

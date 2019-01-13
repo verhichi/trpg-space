@@ -28,8 +28,10 @@ import {
   ADD_MAP_CHAR,
   EDIT_MAP_CHAR,
   REMOVE_MAP_CHAR,
-  TOGGLE_PLACE_CHAR,
-  TOGGLE_REMOVE_CHAR,
+  SHOW_PLACE_CHAR,
+  HIDE_PLACE_CHAR,
+  SHOW_REMOVE_CHAR,
+  HIDE_REMOVE_CHAR,
   SET_CHAR_TO_PLACE,
   TOGGLE_MAP_GRID,
   REMOVE_ALL_MAP_CHAR
@@ -361,16 +363,28 @@ const rootReducer = (state = initialState, action) => {
         })
       };
 
-    case TOGGLE_PLACE_CHAR:
+    case SHOW_PLACE_CHAR:
       return {
         ...state,
-        displayPlaceChar: !state.displayPlaceChar
+        displayPlaceChar: true
       };
 
-    case TOGGLE_REMOVE_CHAR:
+    case HIDE_PLACE_CHAR:
       return {
         ...state,
-        displayRemoveChar: !state.displayRemoveChar
+        displayPlaceChar: false
+      };
+
+    case SHOW_REMOVE_CHAR:
+      return {
+        ...state,
+        displayRemoveChar: true
+      };
+
+    case HIDE_REMOVE_CHAR:
+      return {
+        ...state,
+        displayRemoveChar: false
       };
 
     case SET_CHAR_TO_PLACE:
