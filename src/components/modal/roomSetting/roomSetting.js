@@ -24,11 +24,14 @@ class RoomSetting extends Component {
       return ( <User key={user.id} userData={user}/> );
     });
 
+    const hostName = this.props.userList.find(user => user.host).name;
+
     return (
       <div className="d-flex f-dir-col f-grow-1">
         <div className="mb-3">
           <div className="setting-title font-weight-bold mb-1">Room Setting:</div>
           <div className="setting-detail">Room ID: {this.props.roomId}</div>
+          <div className="setting-detail">Room Host: {hostName}</div>
         </div>
         <div>
           <div className="setting-title font-weight-bold mb-2">Users in Room:</div>
