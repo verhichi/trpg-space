@@ -29,7 +29,6 @@ class RoomSetting extends Component {
         <div className="mb-3">
           <div className="setting-title font-weight-bold mb-1">Room Setting:</div>
           <div className="setting-detail">Room ID: {this.props.roomId}</div>
-          <div className="setting-detail">Room Name: ROOM NAME</div>
         </div>
         <div>
           <div className="setting-title font-weight-bold mb-2">Users in Room:</div>
