@@ -57,6 +57,7 @@ class Bottom extends Component {
     this.handleCharListClick = this.handleCharListClick.bind(this);
     this.handleImageClick = this.handleImageClick.bind(this);
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   componentDidMount (){
@@ -81,26 +82,36 @@ class Bottom extends Component {
   }
 
   handleSendClick (e){
+    e.preventDefault();
+
     document.removeEventListener('click', this.handleOnFocusClick);
     this.setState({inputFocus: false});
-
     const name = this.props.userList.find((user) => this.props.id === user.id).name;
-
-    this.props.addToChatLog({
+    const chatData = {
       type: 'text',
       text: this.state.chatText.trim(),
-      self: true,
       name
-    });
+    };
 
-    socket.emit('chat', this.props.roomId, {
-      type: 'text',
-      text: this.state.chatText.trim(),
-      self: false,
-      name
-    });
-
+    this.props.addToChatLog({ ...chatData, self: true });
+    socket.emit('chat', this.props.roomId, { ...chatData, self: false });
     this.setState({ chatText: '' });
+  }
+
+  handleKeyDown (e){
+    if (e.which === 13 && !e.shiftKey && this.state.chatText.length !== 0){
+      e.preventDefault();
+      const name = this.props.userList.find((user) => this.props.id === user.id).name;
+      const chatData = {
+        type: 'text',
+        text: this.state.chatText.trim(),
+        name
+      };
+
+      this.props.addToChatLog({ ...chatData, self: true });
+      socket.emit('chat', this.props.roomId, { ...chatData, self: false });
+      this.setState({ chatText: '' });
+    }
   }
 
   handleDiceSettingClick (e){
@@ -166,7 +177,7 @@ class Bottom extends Component {
               ? <FontAwesomeIcon icon="map-marked-alt"/>
               : <FontAwesomeIcon icon="comments"/>}
           </div>
-          <textarea className="chat-inp" placeholder="Enter text here" value={this.state.chatText} onChange={this.handleChange} onFocus={this.handleFocus} onBlur={this.handleBlur}></textarea>
+          <textarea className="chat-inp" placeholder="Enter text here" value={this.state.chatText} onChange={this.handleChange} onFocus={this.handleFocus} onBlur={this.handleBlur} onKeyDown={this.handleKeyDown} ></textarea>
           <button className="chat-bar-btn btn-hot cursor-pointer" disabled={isDisabled} onClick={this.handleSendClick}>
             <FontAwesomeIcon icon="paper-plane"/>
           </button>
