@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setMapMode, addMapChar, editMapChar, setCharToPlace } from '../../../../../../../redux/actions/action';
-import socket from '../../../../../../../socket/socketClient';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
