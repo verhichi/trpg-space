@@ -20,7 +20,6 @@ class CharDot extends Component {
   }
 
   handleDragStart (charId, e){
-    console.log('Drag Start');
     e.dataTransfer.setData('charId', charId);
   }
 
