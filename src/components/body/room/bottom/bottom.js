@@ -87,12 +87,14 @@ class Bottom extends Component {
     this.props.addToChatLog({
       type: 'text',
       text: this.state.chatText.trim(),
+      self: true,
       name
     });
 
     socket.emit('chat', this.props.roomId, {
       type: 'text',
       text: this.state.chatText.trim(),
+      self: false,
       name
     });
 

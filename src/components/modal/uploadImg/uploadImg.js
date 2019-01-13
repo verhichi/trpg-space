@@ -63,8 +63,8 @@ class UploadImg extends Component {
           name
         };
 
-        this.props.addToChatLog(imgData);
-        socket.emit('chat', this.props.roomId, imgData);
+        this.props.addToChatLog({ ...imgData, self: true });
+        socket.emit('chat', this.props.roomId, { ...imgData, self: false });
       } else {
         const imgId = uuid.v4();
         const backgroundData = {

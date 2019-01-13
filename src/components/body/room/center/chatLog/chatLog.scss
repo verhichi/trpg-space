@@ -11,6 +11,7 @@
   }
 }
 
+
 .chat-log-wrap{
   overflow-y: scroll;
 
@@ -20,15 +21,39 @@
   }
 }
 
+
 .chat-log-user{
   font-size: $font-size-lg;
   font-weight: bold;
   padding-right: 10px;
 }
 
+
+.chat-log{
+  &.other-chat .chat-log-body{
+    background: $tertiary-clr;
+    margin-left: 15px;
+
+    &::before{
+      border-top: 15px solid $tertiary-clr;
+      left: -15px;
+    }
+  }
+
+  &.self-chat{
+    .chat-log-body{
+      background: $white-clr;
+      color: $tertiary-clr;
+
+      &::before{
+        border-top: 15px solid $white-clr;
+      }
+    }
+  }
+}
+
 .chat-log-body{
-  animation: slidein 0.5s ease-out;
-  background: $tertiary-clr;
+  animation: slide-in-left 0.5s ease-out;
   border-radius: 1px;
   display: inline-block;
   position: relative;
@@ -38,7 +63,6 @@
 
   &::before{
     border: 15px solid transparent;
-    border-top: 15px solid $tertiary-clr;
     content: "";
     left: -15px;
     position: absolute;
@@ -46,7 +70,7 @@
   }
 }
 
-@keyframes slidein{
+@keyframes slide-in-left{
   0%{ left: -100%; }
   100%{ left: 0; }
 }

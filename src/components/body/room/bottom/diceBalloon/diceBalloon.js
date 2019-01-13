@@ -82,10 +82,10 @@ class DiceBalloon extends Component {
       ...result
     };
 
-    this.props.addToChatLog(rollData);
+    this.props.addToChatLog({ ...rollData, self: true });
 
     if (!this.state.private){
-      socket.emit('chat', this.props.roomId, rollData);
+      socket.emit('chat', this.props.roomId, { ...rollData, self: false});
     }
 
     this.props.hideDiceBubble();

@@ -25,8 +25,10 @@ class ChatImage extends Component {
   }
 
   render() {
+    const selfClass = this.props.chatData.self ? 'self-chat' : 'other-chat';
+
     return(
-      <div className="chat-log mb-3">
+      <div className={`chat-log mb-3 ${selfClass}`}>
         <div className="chat-log-head">
           <span className="font-size-lg font-weight-bold pr-2">{this.props.chatData.name}</span>
           <span className="pr-2">{this.props.chatData.time}</span>
