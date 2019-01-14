@@ -58,6 +58,15 @@ class Char extends Component {
   }
 
   render() {
+    const showName = this.props.charData.privacy <= 1 || this.props.charData.ownerId === this.props.id;
+    const showStat = this.props.charData.privacy <= 0 || this.props.charData.ownerId === this.props.id;
+
+    const charName = showName ? this.props.charData.name : 'UNKNOWN';
+    const charMaxHp = showStat ? this.props.charData.maxHp : '???';
+    const charCurHp = showStat ? this.props.charData.curHp : '???';
+    const charMaxMp = showStat ? this.props.charData.maxMp : '???';
+    const charCurMp = showStat ? this.props.charData.curHp : '???';
+
     return(
       <div className="char-cont w-100" style={{background: `linear-gradient(135deg, #fff 85%, ${this.props.charData.color} 0)`}}>
         <div className="char-head d-flex mb-3">
@@ -67,7 +76,7 @@ class Char extends Component {
                </div>)
             : null
           }
-          <div className="char-name f-grow-1 font-weight-bold">{this.props.charData.name}</div>
+          <div className="char-name f-grow-1 font-weight-bold">{charName}</div>
           {this.props.charData.ownerId === this.props.id
             ? (<div className="cursor-pointer" onClick={this.handleRemoveClick}>
                  <FontAwesomeIcon icon="window-close"/>
@@ -77,10 +86,10 @@ class Char extends Component {
         </div>
         <div className="char-body">
           <div>
-            <FontAwesomeIcon icon="heart"/> {this.props.charData.curHp} /  {this.props.charData.maxHp}
+            <FontAwesomeIcon icon="heart"/> {charCurHp} / {charMaxHp}
           </div>
           <div>
-            <FontAwesomeIcon icon="flask"/> {this.props.charData.curMp} / {this.props.charData.maxMp}
+            <FontAwesomeIcon icon="flask"/> {charCurMp} / {charMaxMp}
           </div>
         </div>
       </div>
