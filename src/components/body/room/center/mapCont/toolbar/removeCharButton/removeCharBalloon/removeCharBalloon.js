@@ -29,7 +29,7 @@ const mapDispatchToProps = (dispatch) => {
 class RemoveCharBalloon extends Component {
   constructor (props){
     super(props);
-    this.state = { charIdToRemove: '' };
+    this.state = { charIdToRemove: '-' };
 
     this.handleRemoveCharButtonClick = this.handleRemoveCharButtonClick.bind(this);
     this.handleRemoveCharChange = this.handleRemoveCharChange.bind(this);
@@ -38,6 +38,7 @@ class RemoveCharBalloon extends Component {
   handleRemoveCharButtonClick (e){
     this.props.removeMapChar(this.state.charIdToRemove);
     socket.emit('removeMapChar', this.props.roomId, this.state.charIdToRemove);
+    this.setState({ charIdToRemove: '-' });
     this.props.hideRemoveChar();
   }
 
@@ -59,7 +60,7 @@ class RemoveCharBalloon extends Component {
         <div>Select character:</div>
         <div className="balloon-sel sel-cont w-100">
           <select value={this.state.charIdToRemove} onChange={this.handleRemoveCharChange}>
-            <option value="">Select a Character</option>
+            <option value="-">---</option>
             {charOpt}
           </select>
         </div>

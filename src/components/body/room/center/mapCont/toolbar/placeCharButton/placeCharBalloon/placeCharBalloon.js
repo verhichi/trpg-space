@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch) => {
 class PlaceCharBalloon extends Component {
   constructor (props){
     super(props);
-    this.state = { charIdToPlace: '' };
+    this.state = { charIdToPlace: '-' };
 
     this.handlePlaceCharButtonClick = this.handlePlaceCharButtonClick.bind(this);
     this.handlePlaceCharChange = this.handlePlaceCharChange.bind(this);
@@ -36,6 +36,7 @@ class PlaceCharBalloon extends Component {
   handlePlaceCharButtonClick (e){
     this.props.setMapMode('placeChar');
     this.props.setCharToPlace(this.state.charIdToPlace);
+    this.setState({ charIdToPlace: '-' });
     this.props.hidePlaceChar();
   }
 
@@ -56,7 +57,7 @@ class PlaceCharBalloon extends Component {
         <div>Select character:</div>
         <div className="balloon-sel sel-cont w-100">
           <select value={this.state.charIdToPlace} onChange={this.handlePlaceCharChange}>
-            <option value="">Select a Character</option>
+            <option value="-">---</option>
             {charOpt}
           </select>
         </div>
