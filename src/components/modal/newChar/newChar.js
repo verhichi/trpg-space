@@ -52,10 +52,10 @@ class NewChar extends Component {
     this.handleCurHpChange = this.handleCurHpChange.bind(this);
     this.handleMaxMpChange = this.handleMaxMpChange.bind(this);
     this.handleCurMpChange = this.handleCurMpChange.bind(this);
-    this.handleButtonClick = this.handleButtonClick.bind(this);
     this.handleColorClick = this.handleColorClick.bind(this);
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
     this.handleTypeChange = this.handleTypeChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentWillUnmount (){
@@ -123,7 +123,7 @@ class NewChar extends Component {
     }});
   }
 
-  handleButtonClick (e){
+  handleSubmit (e){
     e.preventDefault();
     const randomNum = uuid.v4();
     const charData = {
@@ -172,7 +172,7 @@ class NewChar extends Component {
     const toggleColorPickerClass = this.state.displayColorPicker ? '' : 'd-none';
 
     return (
-      <div className={`char-modal d-flex f-dir-col f-grow-1 ${toggleClass}`}>
+      <form className={`char-modal d-flex f-dir-col f-grow-1 ${toggleClass}`} onSubmit={this.handleSubmit}>
         <div className="f-grow-1 font-size-lg">
           <div className="mb-2">
             <div>Type:</div>
@@ -204,11 +204,11 @@ class NewChar extends Component {
             <input className="inp stat-inp" type="tel" value={this.state.charData.curMp} onChange={this.handleCurMpChange}/> / <input className="inp stat-inp" type="tel" value={this.state.charData.maxMp} onChange={this.handleMaxMpChange}/>
           </div>
         </div>
-        <button className="btn btn-hot cursor-pointer" disabled={isDisabled} onClick={this.handleButtonClick}>
+        <button type="submit" className="btn btn-hot cursor-pointer" disabled={isDisabled}>
           <FontAwesomeIcon icon="check"/>
           <div className="btn-text">Submit</div>
         </button>
-      </div>
+      </form>
     );
   }
 }

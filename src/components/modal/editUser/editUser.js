@@ -36,14 +36,14 @@ class EditUser extends Component {
     this.state = { name: user.name };
 
     this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleNameChange (e){
     this.setState({ name: e.target.value });
   }
 
-  handleButtonClick (e){
+  handleSubmit (e){
     e.preventDefault();
 
     this.props.editUser({
@@ -64,16 +64,16 @@ class EditUser extends Component {
     const isDisabled = this.state.name.trim().length === 0;
 
     return (
-      <div className="d-flex f-dir-col f-grow-1">
+      <form className="d-flex f-dir-col f-grow-1" onSubmit={this.handleSubmit}>
         <div className="f-grow-1 font-size-lg">
           <div>Name:</div>
           <input className="inp w-100" type="text" placeholder="Enter username..." value={this.state.name} onChange={this.handleNameChange}/>
         </div>
-        <button className="btn btn-hot cursor-pointer" disabled={isDisabled} onClick={this.handleButtonClick}>
+        <button type="submit" className="btn btn-hot cursor-pointer" disabled={isDisabled}>
           <FontAwesomeIcon icon="check"/>
           <div className="btn-text">Submit</div>
         </button>
-      </div>
+      </form>
     );
   }
 }

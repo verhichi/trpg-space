@@ -99,18 +99,22 @@ class Bottom extends Component {
   }
 
   handleKeyDown (e){
-    if (e.which === 13 && !e.shiftKey && this.state.chatText.length !== 0){
+    const text = this.state.chatText.trim();
+    if (e.which === 13 && !e.shiftKey){
       e.preventDefault();
-      const name = this.props.userList.find((user) => this.props.id === user.id).name;
-      const chatData = {
-        type: 'text',
-        text: this.state.chatText.trim(),
-        name
-      };
 
-      this.props.addToChatLog({ ...chatData, self: true });
-      socket.emit('chat', this.props.roomId, { ...chatData, self: false });
-      this.setState({ chatText: '' });
+      if (text.length !== 0){
+        const name = this.props.userList.find((user) => this.props.id === user.id).name;
+        const chatData = {
+          type: 'text',
+          text: this.state.chatText.trim(),
+          name
+        };
+
+        this.props.addToChatLog({ ...chatData, self: true });
+        socket.emit('chat', this.props.roomId, { ...chatData, self: false });
+        this.setState({ chatText: '' });
+      }
     }
   }
 
