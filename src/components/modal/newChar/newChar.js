@@ -177,7 +177,7 @@ class NewChar extends Component {
     const toggleColorPickerClass = this.state.displayColorPicker ? '' : 'd-none';
 
     return (
-      <form className={`char-modal d-flex f-dir-col f-grow-1 ${toggleClass}`} onSubmit={this.handleSubmit}>
+      <form className={`char-modal ${toggleClass}`} onSubmit={this.handleSubmit}>
         <div className="f-grow-1 font-size-lg">
           <div className="mb-2">
             <div>Type:</div>
@@ -209,7 +209,7 @@ class NewChar extends Component {
             <input className="inp stat-inp" type="tel" value={this.state.charData.curMp} onChange={this.handleCurMpChange}/> / <input className="inp stat-inp" type="tel" value={this.state.charData.maxMp} onChange={this.handleMaxMpChange}/>
           </div>
         </div>
-        <button type="submit" className="btn btn-hot cursor-pointer" disabled={isDisabled}>
+        <button type="submit" className="btn btn-hot w-100 cursor-pointer" disabled={isDisabled}>
           <FontAwesomeIcon icon="check"/>
           <div className="btn-text">Submit</div>
         </button>
