@@ -54,7 +54,7 @@ class PlaceCharBalloon extends Component {
     return (
       <div className={`place-char-balloon cursor-default ${toggleClass}`}>
         <div>Select character:</div>
-        <div className="char-sel-cont">
+        <div className="balloon-sel sel-cont w-100">
           <select value={this.state.charIdToPlace} onChange={this.handlePlaceCharChange}>
             <option value="">Select a Character</option>
             {charOpt}

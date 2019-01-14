@@ -24,41 +24,8 @@
   line-height: 30px;
 }
 
-// SELECT
-  .sel-cont{
-    display: inline-block;
-    height: 30px;
-    margin: 0 5px;
-    overflow: hidden;
-    position: relative;
-    width: 50px;
-
-    &::after{
-      bottom: 0;
-      color: #000;
-      content: '\25BC';
-      font-size: 10px;
-      padding: 0 3px;
-      pointer-events: none;
-      position: absolute;
-      right: 0;
-      top: 0;
-    }
-
-    select{
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      -o-appearance: none;
-      appearance: none;
-      background: #FFF;
-      border: none;
-      border-radius: 0;
-      height: 100%;
-      left: 0;
-      outline: none;
-      padding: 3px;
-      position: absolute;
-      top: 0;
-      width: 100%;
-    }
-  }
+.dice-sel{
+  height: 30px;
+  margin: 0 5px;
+  width: 50px;
+}

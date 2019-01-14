@@ -33,15 +33,15 @@ const mapDispatchToProps = (dispatch) => {
 class EditChar extends Component {
   constructor (props){
     super(props);
-    this.nameRef = React.createRef();
     const char = this.props.charList.find((char) => char.charId === this.props.modalSetting.modalProp.charId);
 
     this.state = {
       displayColorPicker: false,
       charData: {
-        name:  char.name,
         type:  char.type,
         color: char.color,
+        name:  char.name,
+        privacy: char.privacy,
         maxHp: char.maxHp,
         curHp: char.curHp,
         maxMp: char.maxMp,
@@ -59,10 +59,7 @@ class EditChar extends Component {
     this.handleColorClick = this.handleColorClick.bind(this);
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
     this.handleTypeChange = this.handleTypeChange.bind(this);
-  }
-
-  componentDidMount (){
-    this.nameRef.current.focus();
+    this.handlePrivacyChange = this.handlePrivacyChange.bind(this);
   }
 
   componentWillUnmount (){
@@ -103,6 +100,13 @@ class EditChar extends Component {
     window.removeEventListener('click', this.handleOutsideClick, false);
   }
 
+  handlePrivacyChange (e){
+    this.setState({ charData: {
+      ...this.state.charData,
+      privacy: e.target.value
+    }});
+  }
+
   handleMaxHpChange (e){
     this.setState({ charData: {
       ...this.state.charData,
@@ -134,18 +138,24 @@ class EditChar extends Component {
   handleSubmit (e){
     e.preventDefault();
     const charData = {
-      charId: this.props.modalSetting.modalProp.charId,
-      name: this.state.charData.name.trim(),
-      type: this.state.charData.type.trim(),
-      color: this.state.charData.color.trim(),
-      maxHp: this.state.charData.maxHp.trim(),
-      curHp: this.state.charData.curHp.trim(),
-      maxMp: this.state.charData.maxMp.trim(),
-      curMp: this.state.charData.curMp.trim()
+      charId:  this.props.modalSetting.modalProp.charId,
+      name:    this.state.charData.name.trim(),
+      type:    this.state.charData.type.trim(),
+      privacy: this.state.charData.privacy.trim(),
+      color:   this.state.charData.color.trim(),
+      maxHp:   this.state.charData.maxHp.trim(),
+      curHp:   this.state.charData.curHp.trim(),
+      maxMp:   this.state.charData.maxMp.trim(),
+      curMp:   this.state.charData.curMp.trim()
     };
 
     this.props.editChar(charData);
-    socket.emit('char', this.props.roomId, charData);
+
+    if (this.state.charData.privacy !== '3'){
+      socket.emit('char', this.props.roomId, charData);
+    } else {
+      socket.emit('delChar', this.props.roomId, this.props.modalSetting.modalProp.charId);
+    }
 
     this.setState({
       displayColorPicker: false,
@@ -153,6 +163,7 @@ class EditChar extends Component {
         name: '',
         type: 'ally',
         color: '#ff0000',
+        privacy: '0',
         maxHp: '',
         curHp: '',
         maxMp: '',
@@ -166,6 +177,7 @@ class EditChar extends Component {
   render() {
     const isDisabled = this.state.charData.name.trim().length  === 0 ||
                        this.state.charData.type.trim().length === 0  ||
+                       this.state.charData.privacy.trim().length === 0 ||
                        this.state.charData.color.trim().length === 0 ||
                        this.state.charData.maxHp.trim().length === 0 ||
                        this.state.charData.curHp.trim().length === 0 ||
@@ -187,10 +199,6 @@ class EditChar extends Component {
             </div>
           </div>
           <div className="mb-2">
-            <div>Name:</div>
-            <input className="inp w-100" type="text" placeholder="Enter character name..." value={this.state.charData.name} onChange={this.handleNameChange} ref={this.nameRef}/>
-          </div>
-          <div className="mb-2">
             <div>Theme Color:</div>
             <div className="d-flex p-relative w-100" onClick={this.handleColorClick} ref={node => this.colorNode = node}>
               <div className="inp-clr-circle f-shrink-0" style={{background: this.state.charData.color}}></div>
@@ -199,6 +207,21 @@ class EditChar extends Component {
                 <ChromePicker color={this.state.charData.color} disableAlpha={true} onChange={this.handleColorChange}/>
               </div>
             </div>
+          </div>
+          <div className="mb-2">
+            <div>Privacy Level:</div>
+            <div className="sel-cont char-sel w-100">
+              <select value={this.state.charData.privacy} onChange={this.handlePrivacyChange}>
+                <option value="0">Display all data</option>
+                <option value="1">Only display name</option>
+                <option value="2">Hide all data</option>
+                <option value="3">Do not share character</option>
+              </select>
+            </div>
+          </div>
+          <div className="mb-2">
+            <div>Name:</div>
+            <input className="inp w-100" type="text" placeholder="Enter character name..." value={this.state.charData.name} onChange={this.handleNameChange}/>
           </div>
           <div className="mb-2">
             <div>HP:</div>

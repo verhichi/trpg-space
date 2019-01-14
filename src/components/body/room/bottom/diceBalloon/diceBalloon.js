@@ -99,7 +99,7 @@ class DiceBalloon extends Component {
       <div className={`dice-help-balloon font-weight-bold font-size-md ${toggleClass}`} ref={node => this.diceNode = node}>
         <div className="dice-setting">
           Dice:
-          <div className="sel-cont">
+          <div className="sel-cont dice-sel">
             <select name="dice-number" value={this.state.diceNumber} onChange={this.handleDiceNumberChange}>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -109,7 +109,7 @@ class DiceBalloon extends Component {
             </select>
           </div>
           d
-          <div className="sel-cont">
+          <div className="sel-cont dice-sel">
             <select name="dice-type" value={this.state.diceType} onChange={this.handleDiceTypeChange}>
               <option value="4">4</option>
               <option value="6">6</option>
@@ -123,13 +123,13 @@ class DiceBalloon extends Component {
         </div>
         <div className="dice-setting">
           Bonus:
-          <div className="sel-cont">
+          <div className="sel-cont dice-sel">
             <select name="symbol" value={this.state.symbol} onChange={this.handleSymbolChange}>
               <option value="+">+</option>
               <option value="-">-</option>
             </select>
           </div>
-          <div className="sel-cont">
+          <div className="sel-cont dice-sel">
             <select name="modifier" value={this.state.modifier} onChange={this.handleModifierChange}>
               <option value="0">0</option>
               <option value="1">1</option>

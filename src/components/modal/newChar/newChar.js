@@ -33,13 +33,13 @@ const mapDispatchToProps = (dispatch) => {
 class NewChar extends Component {
   constructor (props){
     super(props);
-    this.nameRef = React.createRef();
     this.state = {
       displayColorPicker: false,
       charData: {
-        name: '',
         type: 'ally',
         color: '#ff0000',
+        privacy: '0',
+        name: '',
         maxHp: '',
         curHp: '',
         maxMp: '',
@@ -56,11 +56,8 @@ class NewChar extends Component {
     this.handleColorClick = this.handleColorClick.bind(this);
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
     this.handleTypeChange = this.handleTypeChange.bind(this);
+    this.handlePrivacyChange = this.handlePrivacyChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentDidMount (){
-    this.nameRef.current.focus();
   }
 
   componentWillUnmount (){
@@ -100,6 +97,13 @@ class NewChar extends Component {
     window.removeEventListener('click', this.handleOutsideClick, false);
   }
 
+  handlePrivacyChange (e){
+    this.setState({ charData: {
+      ...this.state.charData,
+      privacy: e.target.value
+    }});
+  }
+
   handleMaxHpChange (e){
     this.setState({ charData: {
       ...this.state.charData,
@@ -136,6 +140,7 @@ class NewChar extends Component {
       ownerId: this.props.id,
       type: this.state.charData.type.trim(),
       color: this.state.charData.color.trim(),
+      privacy: this.state.charData.privacy.trim(),
       name:  this.state.charData.name.trim(),
       maxHp: this.state.charData.maxHp.trim(),
       curHp: this.state.charData.curHp.trim(),
@@ -146,7 +151,10 @@ class NewChar extends Component {
     };
 
     this.props.addToCharList(charData);
-    socket.emit('char', this.props.roomId, charData);
+
+    if (this.state.charData.privacy !== '3'){
+      socket.emit('char', this.props.roomId, charData);
+    }
 
     this.setState({
       displayColorPicker: false,
@@ -154,6 +162,7 @@ class NewChar extends Component {
         name: '',
         type: 'ally',
         color: '#ff0000',
+        privacy: '0',
         maxHp: '',
         curHp: '',
         maxMp: '',
@@ -165,13 +174,14 @@ class NewChar extends Component {
   }
 
   render() {
-    const isDisabled = this.state.charData.name.trim().length  === 0 ||
-                       this.state.charData.type.trim().length  === 0 ||
-                       this.state.charData.color.trim().length === 0 ||
-                       this.state.charData.maxHp.trim().length === 0 ||
-                       this.state.charData.curHp.trim().length === 0 ||
-                       this.state.charData.maxMp.trim().length === 0 ||
-                       this.state.charData.curMp.trim().length === 0;
+    const isDisabled = this.state.charData.name.trim().length    === 0 ||
+                       this.state.charData.type.trim().length    === 0 ||
+                       this.state.charData.privacy.trim().length === 0 ||
+                       this.state.charData.color.trim().length   === 0 ||
+                       this.state.charData.maxHp.trim().length   === 0 ||
+                       this.state.charData.curHp.trim().length   === 0 ||
+                       this.state.charData.maxMp.trim().length   === 0 ||
+                       this.state.charData.curMp.trim().length   === 0;
 
     const toggleClass = this.props.isMobile ? '' : 'hide-scroll';
     const toggleColorPickerClass = this.state.displayColorPicker ? '' : 'd-none';
@@ -187,10 +197,6 @@ class NewChar extends Component {
             </div>
           </div>
           <div className="mb-2">
-            <div>Name:</div>
-            <input className="inp w-100" type="text" placeholder="Enter character name..." value={this.state.charData.name} onChange={this.handleNameChange} ref={this.nameRef}/>
-          </div>
-          <div className="mb-2">
             <div>Theme Color:</div>
             <div className="d-flex p-relative w-100" onClick={this.handleColorClick} ref={node => this.colorNode = node}>
               <div className="inp-clr-circle f-shrink-0" style={{background: this.state.charData.color}}></div>
@@ -199,6 +205,21 @@ class NewChar extends Component {
                 <ChromePicker color={this.state.charData.color} disableAlpha={true} onChange={this.handleColorChange}/>
               </div>
             </div>
+          </div>
+          <div className="mb-2">
+            <div>Privacy Level:</div>
+            <div className="sel-cont char-sel w-100">
+              <select value={this.state.charData.privacy} onChange={this.handlePrivacyChange}>
+                <option value="0">Display all data</option>
+                <option value="1">Only display name</option>
+                <option value="2">Hide all data</option>
+                <option value="3">Do not share character</option>
+              </select>
+            </div>
+          </div>
+          <div className="mb-2">
+            <div>Name:</div>
+            <input className="inp w-100" type="text" placeholder="Enter character name..." value={this.state.charData.name} onChange={this.handleNameChange}/>
           </div>
           <div className="mb-2">
             <div>HP:</div>

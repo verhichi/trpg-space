@@ -37,3 +37,12 @@
 .stat-inp{
   width: 100px;
 }
+
+.char-sel{
+  border: 1px solid black;
+  height: 40px;
+
+  &:after{
+    top: 30%;
+  }
+}

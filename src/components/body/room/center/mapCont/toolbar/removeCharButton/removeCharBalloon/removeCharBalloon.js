@@ -57,7 +57,7 @@ class RemoveCharBalloon extends Component {
     return (
       <div className={`place-char-balloon cursor-default ${toggleRemoveChar}`}>
         <div>Select character:</div>
-        <div className="char-sel-cont">
+        <div className="balloon-sel sel-cont w-100">
           <select value={this.state.charIdToRemove} onChange={this.handleRemoveCharChange}>
             <option value="">Select a Character</option>
             {charOpt}

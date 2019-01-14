@@ -278,6 +278,39 @@
       width: 40px;
     }
 
+  // Select
+    .sel-cont{
+      display: inline-block;
+      overflow: hidden;
+      position: relative;
+
+      &::after{
+        bottom: 0;
+        color: #000;
+        content: '\25BC';
+        font-size: 10px;
+        padding: 0 3px;
+        pointer-events: none;
+        position: absolute;
+        right: 0;
+        // top: 0;
+      }
+
+      select{
+        appearance: none;
+        background: #FFF;
+        border: none;
+        border-radius: 0;
+        height: 100%;
+        left: 0;
+        outline: none;
+        padding: 3px;
+        position: absolute;
+        top: 0;
+        width: 100%;
+      }
+    }
+
   // Button styling
     .btn{
       border: none;
@@ -338,4 +371,9 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+    }
+
+  // Color Picker
+    .chrome-picker > div{
+      z-index: 1;
     }

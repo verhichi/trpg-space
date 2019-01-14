@@ -22,3 +22,11 @@
     background: rgba(255, 255, 255, 0.1);;
   }
 }
+
+.balloon-sel{
+  height: 30px;
+
+  &:after{
+    top: 10px;
+  }
+}
