@@ -6,6 +6,7 @@ import { showModal } from '../../../../../redux/actions/action';
 import './chatLog.scss';
 
 // Components
+import ChatHelp from './chatHelp/chatHelp';
 import ChatHost from './chatHost/chatHost';
 import ChatImage from './chatImage/chatImage';
 import ChatJoin from './chatJoin/chatJoin';
@@ -57,6 +58,7 @@ class ChatLog extends Component {
     return (
       <div className="chat-log-cont f-grow-1">
         <div className={`chat-log-wrap d-flex f-dir-col h-100 ${toggleClass}`} ref={this.myRef}>
+          <ChatHelp/>
           {chatLog}
         </div>
       </div>

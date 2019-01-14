@@ -39,7 +39,7 @@ class Top extends Component {
     this.props.showModal('confirm', {
       title: 'Leave Room',
       displayClose: false,
-      confirmText: 'Are you sure you want to leave the Room?',
+      confirmText: 'Are you sure you want to leave this room?',
       accept: this.props.redirect,
       decline: this.props.hideModal
     });
