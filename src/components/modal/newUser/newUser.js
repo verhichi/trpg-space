@@ -32,10 +32,15 @@ const mapDispatchToProps = (dispatch) => {
 class NewUser extends Component {
   constructor (props){
     super(props);
+    this.nameRef = React.createRef();
     this.state = { name: '' };
 
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount (){
+    this.nameRef.current.focus();
   }
 
   handleNameChange (e){
@@ -103,7 +108,7 @@ class NewUser extends Component {
       <form className="d-flex f-dir-col f-grow-1" onSubmit={this.handleSubmit}>
         <div className="f-grow-1 font-size-lg">
           <div>Name:</div>
-          <input className="inp w-100" type="text" placeholder="Enter username..." value={this.state.name} onChange={this.handleNameChange}/>
+          <input className="inp w-100" type="text" placeholder="Enter username..." value={this.state.name} onChange={this.handleNameChange} ref={this.nameRef}/>
         </div>
         <button type="submit" className="btn btn-hot cursor-pointer" disabled={isDisabled}>
           <FontAwesomeIcon icon="check"/>

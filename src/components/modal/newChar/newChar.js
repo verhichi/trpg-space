@@ -33,6 +33,7 @@ const mapDispatchToProps = (dispatch) => {
 class NewChar extends Component {
   constructor (props){
     super(props);
+    this.nameRef = React.createRef();
     this.state = {
       displayColorPicker: false,
       charData: {
@@ -56,6 +57,10 @@ class NewChar extends Component {
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
     this.handleTypeChange = this.handleTypeChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount (){
+    this.nameRef.current.focus();
   }
 
   componentWillUnmount (){
@@ -183,7 +188,7 @@ class NewChar extends Component {
           </div>
           <div className="mb-2">
             <div>Name:</div>
-            <input className="inp w-100" type="text" placeholder="Enter character name..." value={this.state.charData.name} onChange={this.handleNameChange}/>
+            <input className="inp w-100" type="text" placeholder="Enter character name..." value={this.state.charData.name} onChange={this.handleNameChange} ref={this.nameRef}/>
           </div>
           <div className="mb-2">
             <div>Theme Color:</div>
