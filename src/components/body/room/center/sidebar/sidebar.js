@@ -12,6 +12,7 @@ import './sidebar.scss';
 
 // // Component
 import CharList from './charList/charList';
+import Notes from './notes/notes';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -62,7 +63,7 @@ class Sidebar extends Component {
         <div className={`sidebar-body p-1 d-flex f-grow-1 f-dir-col ${toggleClass}`}>
           {this.props.sidebarTabMode === 'char'
             ? <CharList/>
-            : null}
+            : <Notes/>}
         </div>
 
       </div>

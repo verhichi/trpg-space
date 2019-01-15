@@ -35,7 +35,8 @@ import {
   faTh,
   faComment,
   faStickyNote,
-  faColumns
+  faColumns,
+  faLock
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -71,5 +72,6 @@ library.add(
   faTh,
   faComment,
   faStickyNote,
-  faColumns
+  faColumns,
+  faLock
 );

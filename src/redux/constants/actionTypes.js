@@ -34,3 +34,5 @@ export const SET_CHAR_TO_PLACE = 'SET_CHAR_TO_PLACE';
 export const TOGGLE_MAP_GRID = 'TOGGLE_MAP_GRID';
 export const REMOVE_ALL_MAP_CHAR = 'REMOVE_ALL_MAP_CHAR';
 export const SET_SIDEBAR_TAB_MODE = 'SET_SIDEBAR_TAB_MODE';
+export const LOCK_NOTE = 'LOCK_NOTE';
+export const UNLOCK_NOTE = 'UNLOCK_NOTE';

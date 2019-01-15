@@ -35,7 +35,9 @@ import {
   SET_CHAR_TO_PLACE,
   TOGGLE_MAP_GRID,
   REMOVE_ALL_MAP_CHAR,
-  SET_SIDEBAR_TAB_MODE
+  SET_SIDEBAR_TAB_MODE,
+  LOCK_NOTE,
+  UNLOCK_NOTE
 } from '../constants/actionTypes';
 
 export const initialState = {
@@ -98,7 +100,11 @@ export const initialState = {
     //
     // }
   ],
-  sidebarTabMode: 'char'
+  sidebarTabMode: 'char',
+  notes: `jsdfljsadlfjslakdsadfsafdsafsafdsafsf
+  jsdfljsadlfjslakdsadfsafdsafsafdsafsfdfsadfsadfsdf
+  sdfsfjslkfjdlk`,
+  isNoteLocked: ''
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -419,6 +425,18 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         sidebarTabMode: action.sidebarTabMode
+      };
+
+    case LOCK_NOTE:
+      return {
+        ...state,
+        isNoteLocked: action.userId
+      };
+
+    case UNLOCK_NOTE:
+      return {
+        ...state,
+        isNoteLocked: ''
       };
 
     default:

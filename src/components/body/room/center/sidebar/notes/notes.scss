@@ -1,0 +1,12 @@
+@import '../../../../../../styles/partials/variables';
+@import '../../../../../../styles/partials/mediaQueries';
+
+.notes-label{
+  color: $white-clr;
+}
+
+.notes-cont{
+  color: $white-clr;
+  white-space: pre-line;
+  word-break: break-all;
+}
