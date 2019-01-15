@@ -15,7 +15,7 @@ class ChatHelp extends Component {
           <div><FontAwesomeIcon icon="cog"/> to display room setting.</div>
           <div><FontAwesomeIcon icon="map-marked-alt"/> / <FontAwesomeIcon icon="comments"/> to toggle between chat and map view.</div>
           <div><FontAwesomeIcon icon="dice"/> to roll dice.</div>
-          <div><FontAwesomeIcon icon="address-card"/> to toggle character side-bar.</div>
+          <div><FontAwesomeIcon icon="columns"/> to toggle sidebar.</div>
           <div><FontAwesomeIcon icon="door-open"/> to leave this room.</div>
         </div>
       </div>

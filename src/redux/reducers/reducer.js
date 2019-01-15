@@ -129,10 +129,11 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case ADD_TO_CHAR_LIST:
-      return {
-        ...state,
-        charList: [...state.charList, action.charData]
-      };
+      if (state.charList.some(char => char.charId === action.charData.charId)){
+        return { ...state, charList: [...state.charList, action.charData] };
+      } else {
+        return state;
+      }
 
     case EDIT_CHAR:
       return {
@@ -160,10 +161,7 @@ const rootReducer = (state = initialState, action) => {
         if (state.userList.some(user => user.id === action.userData.id)){
           return state;
         } else {
-          return {
-            ...state,
-            userList: [...state.userList, action.userData]
-          };
+          return { ...state, userList: [...state.userList, action.userData] };
         }
 
       case EDIT_USER:
@@ -171,10 +169,7 @@ const rootReducer = (state = initialState, action) => {
           ...state,
           userList: state.userList.map((user) => {
             if (user.id === action.userData.id){
-              return {
-                ...user,
-                name: action.userData.name
-              };
+              return { ...user, name: action.userData.name };
             } else {
               return user;
             }
