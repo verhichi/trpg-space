@@ -32,7 +32,8 @@ import {
   HIDE_REMOVE_CHAR,
   SET_CHAR_TO_PLACE,
   TOGGLE_MAP_GRID,
-  REMOVE_ALL_MAP_CHAR
+  REMOVE_ALL_MAP_CHAR,
+  SET_SIDEBAR_TAB_MODE
 } from '../constants/actionTypes';
 
 export const resetState = () => {
@@ -225,3 +226,10 @@ export const toggleMapGrid = () => {
 export const removeAllMapChar = () => {
   return { type: REMOVE_ALL_MAP_CHAR };
 };
+
+export const setSidebarTabMode = (sidebarTabMode) => {
+  return {
+    type: SET_SIDEBAR_TAB_MODE,
+    sidebarTabMode
+  }
+}

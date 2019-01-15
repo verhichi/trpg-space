@@ -34,7 +34,8 @@ import {
   HIDE_REMOVE_CHAR,
   SET_CHAR_TO_PLACE,
   TOGGLE_MAP_GRID,
-  REMOVE_ALL_MAP_CHAR
+  REMOVE_ALL_MAP_CHAR,
+  SET_SIDEBAR_TAB_MODE
 } from '../constants/actionTypes';
 
 export const initialState = {
@@ -91,12 +92,13 @@ export const initialState = {
   //     y: y-coordinate
   //   }
   // }
-],
+  ],
   chatLog: [
     // {
     //
     // }
   ],
+  sidebarTabMode: 'char'
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -411,6 +413,12 @@ const rootReducer = (state = initialState, action) => {
             onMap: false
           };
         })
+      };
+
+    case SET_SIDEBAR_TAB_MODE:
+      return {
+        ...state,
+        sidebarTabMode: action.sidebarTabMode
       };
 
     default:
