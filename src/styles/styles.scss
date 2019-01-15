@@ -324,6 +324,16 @@
       }
     }
 
+    .btn-slim{
+      border: none;
+      display: flex;
+      font-size: $font-size-lg;
+
+      &[disabled]{
+        background: #555;
+      }
+    }
+
     .btn-hot{
       background: $hot-clr;
       color: $white-clr;

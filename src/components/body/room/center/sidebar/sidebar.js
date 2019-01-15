@@ -11,14 +11,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './sidebar.scss';
 
 // // Component
-// import Char from './char/char';
+import CharList from './charList/charList';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
     isMobile: state.isMobile,
     id: state.id,
-    displayCharList: state.displayCharList,
+    displaySidebar: state.displaySidebar,
     charList: state.charList
   };
 };
@@ -37,7 +37,8 @@ const mapDispatchToProps = (dispatch) => {
 class Sidebar extends Component {
 
   render() {
-    const toggleActive = this.props.displayCharList ? 'is-active' : '';
+    const toggleClass = this.props.isMobile ? '' : 'hide-scroll';
+    const toggleActive = this.props.displaySidebar ? 'is-active' : '';
 
     return (
       <div className={`list-cont f-dir-col f-shrink-0 d-flex ${toggleActive}`}>
@@ -53,8 +54,8 @@ class Sidebar extends Component {
           </div>
         </div>
 
-        <div className="p-1 f-grow-1 f-dir-col f-shrink-0">
-
+        <div className={`sidebar-body p-1 d-flex f-grow-1 f-dir-col ${toggleClass}`}>
+          <CharList/>
         </div>
 
       </div>

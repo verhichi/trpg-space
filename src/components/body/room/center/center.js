@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import './center.scss';
 
 // Components
-import CharList from './charList/charList';
 import ChatLog from './chatLog/chatLog';
 import MapCont from './mapCont/mapCont';
 import Sidebar from './sidebar/sidebar';
@@ -17,7 +16,6 @@ const mapStateToProps = (state) => {
 
 
 class Center extends Component {
-  // <CharList/>
 
   render() {
     return (

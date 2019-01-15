@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { showModal, editChar, addToCharList, removeFromCharList, removeMapChar } from '../../../../../redux/actions/action';
-import socket from '../../../../../socket/socketClient';
+import { showModal, editChar, addToCharList, removeFromCharList, removeMapChar } from '../../../../../../redux/actions/action';
+import socket from '../../../../../../socket/socketClient';
 
 
 // Font Awesome Component
@@ -16,7 +16,6 @@ import Char from './char/char';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    isMobile: state.isMobile,
     id: state.id,
     displayCharList: state.displayCharList,
     charList: state.charList
@@ -63,9 +62,6 @@ class CharList extends Component {
   }
 
   render() {
-    const toggleActive = this.props.displayCharList ? 'is-active' : '';
-    const toggleClass = this.props.isMobile ? '' : 'hide-scroll';
-
     const charList = this.props.charList.filter(char => char.type === 'ally').map((charData) => {
       return <Char key={charData.charId} charData={charData}/>;
     });
@@ -75,35 +71,34 @@ class CharList extends Component {
     });
 
     return (
-      <div className={`list-cont f-dir-col f-shrink-0 d-flex ${toggleActive}`}>
+      <Fragment>
 
-        <div className="f-dir-col mb-2">
-          <div className="list-tool-bar d-flex mb-1">
-            <div className="f-grow-1 align-center font-weight-bold text-dec-underline">Character List</div>
-            <div className="cursor-pointer" onClick={this.handleNewClick}>
-              <FontAwesomeIcon icon="user-plus"/>
-              <span className="d-none-sm"> New</span>
-            </div>
+        <button className="btn-slim btn-hot cursor-pointer align-center mb-2 mt-2 p-2 f-shrink-0" onClick={this.handleNewClick}>
+          <div>
+            <FontAwesomeIcon icon="user-plus"/>
           </div>
-          <div className={`list d-flex f-grow-1 ${toggleClass}`}>
+          <div className="btn-text">New Character</div>
+        </button>
+
+        <div className="mb-2">
+          <div className="char-list-label align-center font-weight-bold text-dec-underline pb-1">Character List</div>
+          <div className="d-flex f-grow-1 f-dir-col">
             {charList.length === 0
               ? (<div className="empty-cont p-3 font-size-lg align-center font-weight-bold cursor-pointer" onClick={this.handleNewClick}>Create New Character</div>)
               : charList}
           </div>
         </div>
 
-        <div className="f-dir-col">
-           <div className="list-tool-bar d-flex mb-1">
-             <div className="f-grow-1 align-center font-weight-bold text-dec-underline">Enemy List</div>
-           </div>
-           <div className={`list d-flex f-grow-1 ${toggleClass}`}>
+        <div>
+           <div className="char-list-label align-center font-weight-bold text-dec-underline pb-1">Enemy List</div>
+           <div className="d-flex f-grow-1 f-dir-col">
              {enemyList.length === 0
                ? (<div className="empty-cont p-3 font-size-lg align-center font-weight-bold cursor-pointer" onClick={this.handleNewClick}>Create New Enemy</div>)
                : enemyList}
            </div>
          </div>
 
-       </div>
+       </Fragment>
     );
   }
 }

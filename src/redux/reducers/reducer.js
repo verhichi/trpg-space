@@ -6,7 +6,7 @@ import {
   ADD_TO_CHAR_LIST,
   EDIT_CHAR,
   EDIT_USER,
-  HIDE_CHAR_LIST,
+  HIDE_SIDEBAR,
   HIDE_MODAL,
   HIDE_USER_LIST,
   REMOVE_FROM_CHAR_LIST,
@@ -14,7 +14,7 @@ import {
   RESET_STATE,
   SET_ROOM_ID,
   SET_USER_ID,
-  SHOW_CHAR_LIST,
+  SHOW_SIDEBAR,
   SHOW_MODAL,
   SHOW_USER_LIST,
   SHOW_DICE_BUBBLE,
@@ -60,7 +60,7 @@ export const initialState = {
     mode: '',
     charToPlace: ''
   },
-  displayCharList: false,
+  displaySidebar: false,
   displayDiceSetting: false,
   displayUserList: false,
   displayEnemyList: false,
@@ -218,17 +218,16 @@ const rootReducer = (state = initialState, action) => {
         displayDiceSetting: false
       };
 
-    case SHOW_CHAR_LIST:
+    case SHOW_SIDEBAR:
       return {
         ...state,
-        displayCharList: true,
-        displayUserList: false
+        displaySidebar: true
       };
 
-    case HIDE_CHAR_LIST:
+    case HIDE_SIDEBAR:
       return {
         ...state,
-        displayCharList: false
+        displaySidebar: false
       };
 
     case SHOW_USER_LIST:

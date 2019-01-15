@@ -6,7 +6,7 @@
   border-bottom: 1px solid $primary-clr;
   border-top: 1px solid $primary-clr;
   height: 100%;
-  overflow-x: hidden;
+  overflow: hidden;
   position: absolute;
   width: 0;
   z-index: 70;
@@ -37,5 +37,14 @@
   &.is-active{
     background: $secondary-clr;
     color: $white-clr;
+  }
+}
+
+.sidebar-body{
+  overflow-y: scroll;
+
+  &.hide-scroll{
+    width: calc(100% + 22px);
+    padding-right: 15px;
   }
 }

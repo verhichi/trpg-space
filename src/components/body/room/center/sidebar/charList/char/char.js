@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { showModal, hideModal, removeFromCharList, removeMapChar } from '../../../../../../redux/actions/action';
-import socket from '../../../../../../socket/socketClient';
+import { showModal, hideModal, removeFromCharList, removeMapChar } from '../../../../../../../redux/actions/action';
+import socket from '../../../../../../../socket/socketClient';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

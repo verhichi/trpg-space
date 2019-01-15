@@ -4,7 +4,7 @@ import {
   ADD_TO_CHAR_LIST,
   EDIT_CHAR,
   EDIT_USER,
-  HIDE_CHAR_LIST,
+  HIDE_SIDEBAR,
   HIDE_MODAL,
   HIDE_USER_LIST,
   REMOVE_FROM_CHAR_LIST,
@@ -12,7 +12,7 @@ import {
   RESET_STATE,
   SET_ROOM_ID,
   SET_USER_ID,
-  SHOW_CHAR_LIST,
+  SHOW_SIDEBAR,
   SHOW_MODAL,
   SHOW_USER_LIST,
   SHOW_DICE_BUBBLE,
@@ -54,12 +54,12 @@ export const hideDiceBubble = () => {
   return { type: HIDE_DICE_BUBBLE };
 };
 
-export const showCharList = () => {
-  return { type: SHOW_CHAR_LIST };
+export const showSidebar = () => {
+  return { type: SHOW_SIDEBAR };
 };
 
-export const hideCharList = () => {
-  return { type: HIDE_CHAR_LIST };
+export const hideSidebar = () => {
+  return { type: HIDE_SIDEBAR };
 };
 
 export const showUserList = () => {

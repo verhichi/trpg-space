@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
-import { addToChatLog, showCharList, hideCharList, hideDiceBubble, showDiceBubble, showModal, showChat, showMap } from '../../../../redux/actions/action';
+import { addToChatLog, showSidebar, hideSidebar, hideDiceBubble, showDiceBubble, showModal, showChat, showMap } from '../../../../redux/actions/action';
 import socket from '../../../../socket/socketClient';
 
 // Font Awesome Component
@@ -21,7 +21,7 @@ const mapStateToProps = (state) => {
     userList: state.userList,
     centerMode: state.centerMode,
     displayDiceSetting: state.displayDiceSetting,
-    displayCharList: state.displayCharList,
+    displaySidebar: state.displaySidebar,
   };
 };
 
@@ -29,8 +29,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addToChatLog: content => dispatch(addToChatLog(content)),
-    showCharList: () => dispatch(showCharList()),
-    hideCharList: () => dispatch(hideCharList()),
+    showSidebar: () => dispatch(showSidebar()),
+    hideSidebar: () => dispatch(hideSidebar()),
     showDiceBubble: () => dispatch(showDiceBubble()),
     hideDiceBubble: () => dispatch(hideDiceBubble()),
     showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
@@ -54,7 +54,7 @@ class Bottom extends Component {
     this.handleSendClick = this.handleSendClick.bind(this);
     this.handleDiceSettingClick = this.handleDiceSettingClick.bind(this);
     this.handleCenterModeClick = this.handleCenterModeClick.bind(this);
-    this.handleCharListClick = this.handleCharListClick.bind(this);
+    this.handleSidebarClick = this.handleSidebarClick.bind(this);
     this.handleImageClick = this.handleImageClick.bind(this);
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -140,10 +140,10 @@ class Bottom extends Component {
       : this.props.showChat();
   }
 
-  handleCharListClick (e){
-    this.props.displayCharList
-      ? this.props.hideCharList()
-      : this.props.showCharList();
+  handleSidebarClick (e){
+    this.props.displaySidebar
+      ? this.props.hideSidebar()
+      : this.props.showSidebar();
   }
 
   handleImageClick (e){
@@ -167,7 +167,7 @@ class Bottom extends Component {
     return (
       <div className="room-bottom-cont" ref={node => this.node = node} onClick={this.handleOnFocusClick}>
         <div className="chat-cont">
-          <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleCharListClick}>
+          <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleSidebarClick}>
             <FontAwesomeIcon icon="columns"/>
           </div>
           <div className="p-relative" ref={this.diceRef}>
