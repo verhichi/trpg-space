@@ -14,6 +14,7 @@ import './notes.scss';
 const mapStateToProps = (state) => {
   return {
     id: state.id,
+    roomId: state.roomId,
     notes: state.notes,
     isNoteLocked: state.isNoteLocked
   };
@@ -35,11 +36,16 @@ class Notes extends Component {
 
   handleEditClick (userId, e){
     this.props.lockNote(userId);
+    socket.emit('lockNote', this.props.roomId, this.props.id);
+
+    this.props.showModal('notes', {
+      title: 'Edit Shared Notes',
+      displayClose: false
+    });
   }
 
   render() {
     const isLocked = this.props.isNoteLocked.length !== 0;
-
 
     return (
       <Fragment>

@@ -37,7 +37,8 @@ import {
   REMOVE_ALL_MAP_CHAR,
   SET_SIDEBAR_TAB_MODE,
   LOCK_NOTE,
-  UNLOCK_NOTE
+  UNLOCK_NOTE,
+  EDIT_NOTE
 } from '../constants/actionTypes';
 
 export const initialState = {
@@ -101,9 +102,7 @@ export const initialState = {
     // }
   ],
   sidebarTabMode: 'char',
-  notes: `jsdfljsadlfjslakdsadfsafdsafsafdsafsf
-  jsdfljsadlfjslakdsadfsafdsafsafdsafsfdfsadfsadfsdf
-  sdfsfjslkfjdlk`,
+  notes: '',
   isNoteLocked: ''
 };
 
@@ -437,6 +436,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         isNoteLocked: ''
+      };
+
+    case EDIT_NOTE:
+      return {
+        ...state,
+        notes: action.notes
       };
 
     default:

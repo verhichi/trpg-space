@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addUser, editUser, removeUser, setRoomId, setUserId, userCleanup, addToChatLog, newHost, editMapImage, addMapChar, editMapChar, removeMapChar, removeAllMapChar } from '../../../redux/actions/action';
+import { addUser, editUser, removeUser, setRoomId, setUserId, userCleanup, addToChatLog, newHost, editMapImage, addMapChar, editMapChar, removeMapChar, removeAllMapChar, lockNote, unlockNote, editNote } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
 // Style
@@ -14,11 +14,13 @@ import Bottom from './bottom/bottom';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id:                 state.id,
-    roomId:             state.roomId,
-    userList:           state.userList,
-    charList:           state.charList,
-    mapSetting:         state.mapSetting
+    id:            state.id,
+    roomId:        state.roomId,
+    userList:      state.userList,
+    charList:      state.charList,
+    mapSetting:    state.mapSetting,
+    isNoteLocked:  state.isNoteLocked,
+    notes:         state.notes
   };
 };
 
@@ -37,7 +39,10 @@ const mapDispatchToProps = (dispatch) => {
     addMapChar:       (charData) => dispatch(addMapChar(charData)),
     editMapChar:      (charData) => dispatch(editMapChar(charData)),
     removeMapChar:    (charId)   => dispatch(removeMapChar(charId)),
-    removeAllMapChar: ()         => dispatch(removeAllMapChar())
+    removeAllMapChar: ()         => dispatch(removeAllMapChar()),
+    editNote:         (notes)    => dispatch(editNote(notes)),
+    lockNote:         (userId)   => dispatch(lockNote(userId)),
+    unlockNote:       ()         => dispatch(unlockNote())
   };
 };
 
@@ -87,6 +92,7 @@ class Room extends Component {
       socket.emit('user', this.props.roomId, this.props.userList.find((user) => user.id === this.props.id));
 
       socket.emit('mapImage', this.props.roomId, this.props.mapSetting.image);
+      socket.emit('editNote', this.props.roomId, this.props.notes);
 
       this.props.charList.forEach((char) => {
         if (char.ownerId === this.props.id){
@@ -110,6 +116,10 @@ class Room extends Component {
         name: this.props.userList.find((user) => user.id === id).name
       });
 
+      if (id === this.props.isNoteLocked){
+        this.props.unlockNote();
+      }
+
       this.props.userCleanup(id);
     });
 
@@ -130,6 +140,18 @@ class Room extends Component {
 
     socket.on('removeMapChar', (charId) => {
       this.props.removeMapChar(charId);
+    });
+
+    socket.on('lockNote', (userId) => {
+      this.props.lockNote(userId);
+    });
+
+    socket.on('unlockNote', () => {
+      this.props.unlockNote();
+    });
+
+    socket.on('editNote', (notes) => {
+      this.props.editNote(notes);
     });
 
     socket.emit('join', this.props.match.params.roomId, this.props.userList.find((user) => user.id === this.props.id))

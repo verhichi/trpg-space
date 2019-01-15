@@ -35,7 +35,8 @@ import {
   REMOVE_ALL_MAP_CHAR,
   SET_SIDEBAR_TAB_MODE,
   LOCK_NOTE,
-  UNLOCK_NOTE
+  UNLOCK_NOTE,
+  EDIT_NOTE
 } from '../constants/actionTypes';
 
 export const resetState = () => {
@@ -246,3 +247,10 @@ export const lockNote = (userId) => {
 export const unlockNote = () => {
   return { type: UNLOCK_NOTE };
 };
+
+export const editNote = (notes) => {
+  return {
+    type: EDIT_NOTE,
+    notes
+  }
+}

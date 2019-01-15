@@ -16,6 +16,7 @@ import EditUser    from './editUser/editUser';
 import Image       from './image/image';
 import NewChar     from './newChar/newChar';
 import NewUser     from './NewUser/NewUser';
+import Notes       from './notes/notes';
 import Requesting  from './requesting/requesting';
 import RoomSetting from './roomSetting/roomSetting';
 import UploadImg   from './uploadImg/uploadImg';
@@ -54,6 +55,7 @@ class Modal extends Component {
       image: <Image />,
       newChar: <NewChar />,
       newUser: <NewUser />,
+      notes:   <Notes />,
       requesting: <Requesting />,
       roomSetting: <RoomSetting />,
       uploadImg: <UploadImg />,

@@ -1,0 +1,24 @@
+@import '../../../styles/partials/variables';
+@import '../../../styles/partials/mediaQueries';
+
+.notes-textarea{
+  resize: none;
+  flex-grow: 1;
+
+  @include md{
+    flex-basis: 500px;
+  }
+
+  @include lg{
+    flex-basis: 600px;
+  }
+
+  @include xl{
+    flex-basis: 700px;
+  }
+}
+
+.notes-btn{
+  border: none;
+  flex-basis: 35%;
+}
