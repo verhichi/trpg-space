@@ -95,10 +95,45 @@ export const initialState = {
   //     y: y-coordinate
   //   }
   // }
+  //
+    //   {
+    //   charId: '23984743543',
+    //   ownerId: '1234567',
+    //   general: {
+    //     name: 'Daichi',
+    //     type: 'ally/enemy',
+    //     color: '#010101',
+    //     image: 'image-src',
+    //     privacy: '0/1/2/3'
+    //   },
+    //   stat: [
+    //     {
+    //        id: 'statId',
+    //        type: 'value/param',
+    //        label: 'labelName',
+    //        value: 'currentValue',
+    //        maxValue: 'maximumValue'(only if type is param)
+    //     }
+    //   ],
+    //   detail: [
+    //     {
+    //        id: 'statId',
+    //        type: 'value/param',
+    //        label: 'labelName',
+    //        value: 'currentValue',
+    //        maxValue: 'maximumValue'(only if type is param)
+    //     }
+    //   ],
+    //   map: {
+    //     onMap: true/false,
+    //     x: x-coordinate,
+    //     y: y-coordinate
+    //   }
+    // }
   ],
   chatLog: [
     // {
-    //
+    //   type: 'text'
     // }
   ],
   sidebarTabMode: 'char',
