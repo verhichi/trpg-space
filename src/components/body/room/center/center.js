@@ -8,6 +8,7 @@ import './center.scss';
 import CharList from './charList/charList';
 import ChatLog from './chatLog/chatLog';
 import MapCont from './mapCont/mapCont';
+import Sidebar from './sidebar/sidebar';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -16,10 +17,12 @@ const mapStateToProps = (state) => {
 
 
 class Center extends Component {
+  // <CharList/>
+
   render() {
     return (
         <div className="room-center-cont d-flex f-grow-1">
-          <CharList/>
+          <Sidebar/>
           {this.props.centerMode === 'chat'
             ? (<ChatLog/>)
             : (<MapCont/>)}

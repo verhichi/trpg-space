@@ -33,7 +33,8 @@ import {
   faUserTimes,
   faFileImage,
   faTh,
-  faComment
+  faComment,
+  faStickyNote
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -67,5 +68,6 @@ library.add(
   faUserTimes,
   faFileImage,
   faTh,
-  faComment
+  faComment,
+  faStickyNote
 );
