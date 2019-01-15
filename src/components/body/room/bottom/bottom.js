@@ -168,7 +168,7 @@ class Bottom extends Component {
       <div className="room-bottom-cont" ref={node => this.node = node} onClick={this.handleOnFocusClick}>
         <div className="chat-cont">
           <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleCharListClick}>
-            <FontAwesomeIcon icon="address-card"/>
+            <FontAwesomeIcon icon="columns"/>
           </div>
           <div className="p-relative" ref={this.diceRef}>
             <DiceBalloon />

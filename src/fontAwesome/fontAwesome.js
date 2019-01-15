@@ -34,7 +34,8 @@ import {
   faFileImage,
   faTh,
   faComment,
-  faStickyNote
+  faStickyNote,
+  faColumns
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -69,5 +70,6 @@ library.add(
   faFileImage,
   faTh,
   faComment,
-  faStickyNote
+  faStickyNote,
+  faColumns
 );
