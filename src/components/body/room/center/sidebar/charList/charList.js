@@ -62,11 +62,11 @@ class CharList extends Component {
   }
 
   render() {
-    const charList = this.props.charList.filter(char => char.type === 'ally').map((charData) => {
+    const charList = this.props.charList.filter(char => char.general.type === 'ally').map((charData) => {
       return <Char key={charData.charId} charData={charData}/>;
     });
 
-    const enemyList = this.props.charList.filter(char => char.type === 'enemy').map((charData) => {
+    const enemyList = this.props.charList.filter(char => char.general.type === 'enemy').map((charData) => {
       return <Char key={charData.charId} charData={charData}/>;
     });
 

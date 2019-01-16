@@ -61,14 +61,18 @@ class Char extends Component {
     const showName = this.props.charData.privacy <= 1 || this.props.charData.ownerId === this.props.id;
     const showStat = this.props.charData.privacy <= 0 || this.props.charData.ownerId === this.props.id;
 
-    const charName = showName ? this.props.charData.name : 'UNKNOWN';
-    const charMaxHp = showStat ? this.props.charData.maxHp : '???';
-    const charCurHp = showStat ? this.props.charData.curHp : '???';
-    const charMaxMp = showStat ? this.props.charData.maxMp : '???';
-    const charCurMp = showStat ? this.props.charData.curHp : '???';
+    const charName = showName ? this.props.charData.general.name : 'UNKNOWN';
+
+    const statList = this.props.charData.status.map(status => {
+      if (status.type === 'value'){
+        return(<div>{status.label}: {showStat ? status.value : '???'}</div>);
+      } else {
+        return(<div>{status.label}: {showStat ? status.value : '???'} / {showStat ? status.maxValue : '???'}</div>);
+      }
+    });
 
     return(
-      <div className="char-cont w-100" style={{background: `linear-gradient(135deg, #fff 85%, ${this.props.charData.color} 0)`}}>
+      <div className="char-cont w-100" style={{background: `linear-gradient(135deg, #fff 85%, ${this.props.charData.general.color} 0)`}}>
         <div className="char-head d-flex mb-3">
           {this.props.charData.ownerId === this.props.id
             ? (<div className="pr-1 cursor-pointer" onClick={this.handleEditClick}>
@@ -85,12 +89,7 @@ class Char extends Component {
           }
         </div>
         <div className="char-body">
-          <div>
-            <FontAwesomeIcon icon="heart"/> {charCurHp} / {charMaxHp}
-          </div>
-          <div>
-            <FontAwesomeIcon icon="flask"/> {charCurMp} / {charMaxMp}
-          </div>
+          {statList}
         </div>
       </div>
     );

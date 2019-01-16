@@ -164,7 +164,7 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case ADD_TO_CHAR_LIST:
-      if (state.charList.some(char => char.charId === action.charData.charId)){
+      if (!state.charList.some(char => char.charId === action.charData.charId)){
         return { ...state, charList: [...state.charList, action.charData] };
       } else {
         return state;
