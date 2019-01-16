@@ -346,8 +346,8 @@ const rootReducer = (state = initialState, action) => {
           if (char.charId === action.charData.charId){
             return {
               ...char,
-              onMap: true,
-              mapCoor: {
+              map: {
+                onMap: true,
                 x: action.charData.x,
                 y: action.charData.y
               }
@@ -365,7 +365,8 @@ const rootReducer = (state = initialState, action) => {
           if (char.charId === action.charData.charId){
             return {
               ...char,
-              mapCoor: {
+              map: {
+                ...char.map,
                 x: action.charData.x,
                 y: action.charData.y
               }
@@ -383,8 +384,8 @@ const rootReducer = (state = initialState, action) => {
           if (char.charId === action.charId){
             return {
               ...char,
-              onMap: false,
-              mapCoor: {
+              map: {
+                onMap: false,
                 x: '',
                 y: ''
               }
@@ -440,7 +441,11 @@ const rootReducer = (state = initialState, action) => {
         charList: state.charList.map(charData => {
           return {
             ...charData,
-            onMap: false
+            map: {
+              onMap: false,
+              x: '',
+              y: ''
+            }
           };
         })
       };

@@ -43,15 +43,15 @@ class RemoveCharBalloon extends Component {
   }
 
   handleRemoveCharChange (e){
-    this.setState({charIdToRemove: e.target.value});
+    this.setState({ charIdToRemove: e.target.value });
   }
 
   render() {
     const isDisabled = this.state.charIdToRemove.length === 0 || !this.props.charList.some(char => char.charId === this.state.charIdToRemove);
     const toggleRemoveChar = this.props.displayRemoveChar ? 'is-active' : '';
 
-    const charOpt = this.props.charList.filter(char => char.onMap && this.props.id === char.ownerId).map(char => {
-      return (<option key={char.charId} value={char.charId}>{char.name}</option>);
+    const charOpt = this.props.charList.filter(char => char.map.onMap && this.props.id === char.ownerId).map(char => {
+      return (<option key={char.charId} value={char.charId}>{char.general.name}</option>);
     });
 
 

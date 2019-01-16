@@ -58,16 +58,16 @@ class Char extends Component {
   }
 
   render() {
-    const showName = this.props.charData.privacy <= 1 || this.props.charData.ownerId === this.props.id;
-    const showStat = this.props.charData.privacy <= 0 || this.props.charData.ownerId === this.props.id;
+    const showName = this.props.charData.general.privacy <= 1 || this.props.charData.ownerId === this.props.id;
+    const showStat = this.props.charData.general.privacy <= 0 || this.props.charData.ownerId === this.props.id;
 
     const charName = showName ? this.props.charData.general.name : 'UNKNOWN';
 
     const statList = this.props.charData.status.map(status => {
       if (status.type === 'value'){
-        return(<div>{status.label}: {showStat ? status.value : '???'}</div>);
+        return(<div><span className="font-weight-bold">{status.label}</span>: {showStat ? status.value : '???'}</div>);
       } else {
-        return(<div>{status.label}: {showStat ? status.value : '???'} / {showStat ? status.maxValue : '???'}</div>);
+        return(<div><span className="font-weight-bold">{status.label}</span>: {showStat ? status.value : '???'} / {showStat ? status.maxValue : '???'}</div>);
       }
     });
 

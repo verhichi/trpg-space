@@ -41,7 +41,7 @@ class PlaceCharBalloon extends Component {
   }
 
   handlePlaceCharChange (e){
-    this.setState({charIdToPlace: e.target.value});
+    this.setState({ charIdToPlace: e.target.value });
   }
 
   render() {
@@ -49,7 +49,7 @@ class PlaceCharBalloon extends Component {
     const toggleClass = this.props.displayPlaceChar ? 'is-active' : '';
 
     const charOpt = this.props.charList.filter(char => this.props.id === char.ownerId).map((char) => {
-      return (<option key={char.charId} value={char.charId}>{char.name}</option>);
+      return (<option key={char.charId} value={char.charId}>{char.general.name}</option>);
     });
 
     return (

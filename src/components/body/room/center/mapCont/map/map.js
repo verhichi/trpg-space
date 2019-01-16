@@ -90,7 +90,7 @@ class Map extends Component {
       ? 'is-grid-active'
       : '';
 
-    const mapCharDots = this.props.charList.filter(char => char.onMap).map(char => {
+    const mapCharDots = this.props.charList.filter(char => char.map.onMap).map(char => {
       return <CharDot key={char.charId} charData={char}/>;
     });
 

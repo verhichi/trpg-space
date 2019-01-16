@@ -27,21 +27,24 @@ class CharDot extends Component {
     const isOwnCharacter = this.props.id === this.props.charData.ownerId;
     const toggleGrabClass = isOwnCharacter ? 'cursor-grabbable' : '';
 
-    const showName = this.props.charData.privacy <= 1 || this.props.charData.ownerId === this.props.id;
-    const showStat = this.props.charData.privacy <= 0 || this.props.charData.ownerId === this.props.id;
+    const showName = this.props.charData.general.privacy <= 1 || this.props.charData.ownerId === this.props.id;
+    const showStat = this.props.charData.general.privacy <= 0 || this.props.charData.ownerId === this.props.id;
 
-    const charName = showName ? this.props.charData.name : 'UNKNOWN';
-    const charMaxHp = showStat ? this.props.charData.maxHp : '???';
-    const charCurHp = showStat ? this.props.charData.curHp : '???';
-    const charMaxMp = showStat ? this.props.charData.maxMp : '???';
-    const charCurMp = showStat ? this.props.charData.curHp : '???';
+    const charName = showName ? this.props.charData.general.name : 'UNKNOWN';
+
+    const statList = this.props.charData.status.map(status => {
+      if (status.type === 'value'){
+        return(<div className="font-size-sm one-line-ellipsis">{status.label}: {showStat ? status.value : '???'}</div>);
+      } else {
+        return(<div className="font-size-sm one-line-ellipsis">{status.label}: {showStat ? status.value : '???'} / {showStat ? status.maxValue : '???'}</div>);
+      }
+    });
 
     return (
-      <div className={`map-char p-relative ${toggleGrabClass}`} draggable={isOwnCharacter} onDragStart={this.handleDragStart} style={{backgroundColor: this.props.charData.color, left: this.props.charData.mapCoor.x, top: this.props.charData.mapCoor.y}}>
+      <div className={`map-char p-relative ${toggleGrabClass}`} draggable={isOwnCharacter} onDragStart={this.handleDragStart} style={{backgroundColor: this.props.charData.general.color, left: this.props.charData.map.x, top: this.props.charData.map.y}}>
         <div className="map-char-balloon p-absolute p-1 align-left cursor-default">
           <div className="font-size-md font-weight-bold pb-1 one-line-ellipsis">{charName}</div>
-          <div className="font-size-sm one-line-ellipsis"><FontAwesomeIcon icon="heart"/> {charCurHp} / {charMaxHp}</div>
-          <div className="font-size-sm one-line-ellipsis"><FontAwesomeIcon icon="flask"/> {charCurMp} / {charMaxMp}</div>
+          { statList }
         </div>
       </div>
     );
