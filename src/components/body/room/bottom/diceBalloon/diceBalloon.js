@@ -36,7 +36,7 @@ class DiceBalloon extends Component {
       private: false
     };
 
-    this.handleOutsideClick = this.handleOutsideClick.bind(this);
+    // this.handleOutsideClick = this.handleOutsideClick.bind(this);
     this.handleDiceNumberChange = this.handleDiceNumberChange.bind(this);
     this.handleDiceTypeChange = this.handleDiceTypeChange.bind(this);
     this.handleSymbolChange = this.handleSymbolChange.bind(this);
@@ -46,10 +46,10 @@ class DiceBalloon extends Component {
   }
 
 
-  handleOutsideClick (e){
-    if (this.diceNode.contains(e.target)) return;
-    this.props.hideDiceBubble();
-  }
+  // handleOutsideClick (e){
+  //   if (this.diceNode.contains(e.target)) return;
+  //   this.props.hideDiceBubble();
+  // }
 
   handleDiceNumberChange (e){
     this.setState({ diceNumber: e.target.value });

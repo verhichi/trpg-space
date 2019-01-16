@@ -64,7 +64,7 @@ class Modal extends Component {
     return (
       <div className={`modal-background w-100 h-100 ${toggleClass}`}>
         <div className="modal-cont d-flex f-dir-col">
-          <div className="d-flex font-size-xl mb-3">
+          <div className="d-flex font-size-xl pb-3">
             <div className="f-grow-1 align-center">
               {this.props.modalSetting.modalProp.title}
             </div>

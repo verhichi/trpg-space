@@ -27,9 +27,13 @@
   padding: 15px 20px;
 
   @include md{
-    height: auto;
+    height: 75%;
     width:  75%;
-    max-height: 90%;
+  }
+
+  @include lg{
+    height: 50%;
+    width:  50%;
   }
 }
 
@@ -44,4 +48,49 @@
   &:after{
     top: 30%;
   }
+}
+
+.char-tab-cont{
+  border-bottom: 1px solid $tertiary-clr;
+  flex-basis: 40px;
+}
+
+.char-tab{
+  background: $white-clr;
+  color: $disabled-clr;
+
+  &.is-active{
+    border: 1px solid $tertiary-clr;
+    border-bottom: none;
+    color: $black-clr;
+    font-weight: bold;
+    margin-bottom: -1px;
+  }
+}
+
+.status-close{
+  flex-basis: 30px;
+}
+
+.char-modal{
+  display: none;
+  flex-basis: 1px;
+  overflow-y: scroll;
+
+  &.is-active{
+    display: block;
+  }
+
+  &.hide-scroll{
+    padding-right: 30px;
+    width: calc(100% + 40px);
+  }
+}
+
+.stat-inp-cont{
+  line-height: 40px;
+}
+
+.stat-label{
+  flex-basis: 60px;
 }

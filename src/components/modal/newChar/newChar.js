@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { ChromePicker } from 'react-color';
 import uuid from 'uuid';
 import { addToCharList, hideModal } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
@@ -10,6 +9,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Style
 import './newChar.scss';
+
+// Component
+import Detail from './detail/detail';
+import General from './general/general';
+import Status from './status/status';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -34,207 +38,154 @@ class NewChar extends Component {
   constructor (props){
     super(props);
     this.state = {
-      displayColorPicker: false,
-      charData: {
+      tabMode: 'general',
+      general: {
+        name: '',
         type: 'ally',
         color: '#ff0000',
-        privacy: '0',
-        name: '',
-        maxHp: '',
-        curHp: '',
-        maxMp: '',
-        curMp: ''
-      }
+        image: '',
+        privacy: '0'
+      },
+      status: [],
+      detail: []
     };
 
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleColorChange = this.handleColorChange.bind(this);
-    this.handleMaxHpChange = this.handleMaxHpChange.bind(this);
-    this.handleCurHpChange = this.handleCurHpChange.bind(this);
-    this.handleMaxMpChange = this.handleMaxMpChange.bind(this);
-    this.handleCurMpChange = this.handleCurMpChange.bind(this);
-    this.handleColorClick = this.handleColorClick.bind(this);
-    this.handleOutsideClick = this.handleOutsideClick.bind(this);
-    this.handleTypeChange = this.handleTypeChange.bind(this);
-    this.handlePrivacyChange = this.handlePrivacyChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.returnStatusValue = this.returnStatusValue.bind(this);
+    this.returnDetailValue = this.returnDetailValue.bind(this);
+    this.returnGeneralValue = this.returnGeneralValue.bind(this);
+
+    this.handleGeneralTabClick = this.handleTabClick.bind(this, 'general');
+    this.handleStatusTabClick = this.handleTabClick.bind(this, 'status');
+    this.handleDetailTabClick = this.handleTabClick.bind(this, 'detail');
+
+    this.handleSubmitClick = this.handleSubmitClick.bind(this);
   }
 
-  componentWillUnmount (){
-    window.removeEventListener('click', this.handleOutsideClick, false);
+  returnStatusValue (status){
+    const trimmedData = status.map(status => {
+      if (status.type === 'value'){
+        return {
+          ...status,
+          label: status.label.trim(),
+          value: status.value.trim()
+        };
+      } else {
+        return {
+          ...status,
+          label: status.label.trim(),
+          value: status.value.trim(),
+          maxValue: status.maxValue.trim()
+        };
+      }
+    });
+    this.setState({ status: trimmedData });
   }
 
-  handleNameChange (e){
-    this.setState({ charData: {
-      ...this.state.charData,
-      name: e.target.value
-    }});
+  returnDetailValue (detail){
+    const trimmedData = detail.map(status => {
+      if (status.type === 'value'){
+        return {
+          ...status,
+          label: status.label.trim(),
+          value: status.value.trim()
+        };
+      } else {
+        return {
+          ...status,
+          label: status.label.trim(),
+          value: status.value.trim(),
+          maxValue: status.maxValue.trim()
+        };
+      }
+    });
+    this.setState({ detail: trimmedData });
   }
 
-  handleTypeChange (e){
-    this.setState({ charData: {
-      ...this.state.charData,
-      type: e.target.value
-    }});
+  returnGeneralValue (general){
+    const trimmedData = {
+      ...general,
+      name: general.name.trim(),
+      color: general.color.trim(),
+      image: general.image.trim()
+    }
+    this.setState({ general: trimmedData });
   }
 
-  handleColorChange (color, e){
-    this.setState({ charData: {
-      ...this.state.charData,
-      color: color.hex
-    }});
+  handleTabClick (tabMode, e){
+    this.setState({ tabMode: tabMode });
   }
 
-  handleColorClick (e){
-    this.setState({ displayColorPicker: !this.state.displayColorPicker });
-    window.addEventListener('click', this.handleOutsideClick, false)
-  }
-
-  handleOutsideClick (e){
-    if (this.colorNode.contains(e.target)) return;
-
-    this.setState({ displayColorPicker: false });
-    window.removeEventListener('click', this.handleOutsideClick, false);
-  }
-
-  handlePrivacyChange (e){
-    this.setState({ charData: {
-      ...this.state.charData,
-      privacy: e.target.value
-    }});
-  }
-
-  handleMaxHpChange (e){
-    this.setState({ charData: {
-      ...this.state.charData,
-      maxHp: e.target.value
-    }});
-  }
-
-  handleCurHpChange (e){
-    this.setState({ charData: {
-      ...this.state.charData,
-      curHp: e.target.value
-    }});
-  }
-
-  handleMaxMpChange (e){
-    this.setState({ charData: {
-      ...this.state.charData,
-      maxMp: e.target.value
-    }});
-  }
-
-  handleCurMpChange (e){
-    this.setState({ charData: {
-      ...this.state.charData,
-      curMp: e.target.value
-    }});
-  }
-
-  handleSubmit (e){
-    e.preventDefault();
-    const randomNum = uuid.v4();
+  handleSubmitClick (e){
     const charData = {
-      charId: randomNum,
+      charId: uuid.v4(),
       ownerId: this.props.id,
-      type: this.state.charData.type.trim(),
-      color: this.state.charData.color.trim(),
-      privacy: this.state.charData.privacy.trim(),
-      name:  this.state.charData.name.trim(),
-      maxHp: this.state.charData.maxHp.trim(),
-      curHp: this.state.charData.curHp.trim(),
-      maxMp: this.state.charData.maxMp.trim(),
-      curMp: this.state.charData.curMp.trim(),
-      onMap: false,
-      mapCoor: { x: '',  y: '' }
+      general: this.state.general,
+      status: this.state.status,
+      detail: this.state.detail,
+      map: {
+        onMap: false,
+        x: '',
+        y: ''
+      }
     };
 
     this.props.addToCharList(charData);
 
-    if (this.state.charData.privacy !== '3'){
+    if (this.state.general.privacy !== '3'){
       socket.emit('char', this.props.roomId, charData);
     }
-
-    this.setState({
-      displayColorPicker: false,
-      charData: {
-        name: '',
-        type: 'ally',
-        color: '#ff0000',
-        privacy: '0',
-        maxHp: '',
-        curHp: '',
-        maxMp: '',
-        curMp: ''
-      }
-    });
 
     this.props.hideModal();
   }
 
   render() {
-    const isDisabled = this.state.charData.name.trim().length    === 0 ||
-                       this.state.charData.type.trim().length    === 0 ||
-                       this.state.charData.privacy.trim().length === 0 ||
-                       this.state.charData.color.trim().length   === 0 ||
-                       this.state.charData.maxHp.trim().length   === 0 ||
-                       this.state.charData.curHp.trim().length   === 0 ||
-                       this.state.charData.maxMp.trim().length   === 0 ||
-                       this.state.charData.curMp.trim().length   === 0;
+    const toggleGeneralTabClass = this.state.tabMode === 'general' ? 'is-active' : '';
+    const toggleStatusTabClass =  this.state.tabMode === 'status' ? 'is-active' : '';
+    const toggleDetailTabClass =  this.state.tabMode === 'detail' ? 'is-active' : '';
 
-    const toggleClass = this.props.isMobile ? '' : 'hide-scroll';
-    const toggleColorPickerClass = this.state.displayColorPicker ? '' : 'd-none';
+    const hasErrorGeneral = this.state.general.name.length === 0;
+    const hasErrorStatus  = this.state.status.some(status => {
+      if (status.type === 'value'){
+        return status.label.length === 0 ||
+               status.value.length === 0
+      } else {
+        return status.label.length    === 0 ||
+               status.value.length    === 0 ||
+               status.maxValue.length === 0;
+      }
+    });
+    const hasErrorDetail  = this.state.detail.some(status => {
+      if (status.type === 'value'){
+        return status.label.length === 0 ||
+               status.value.length === 0
+      } else {
+        return status.label.length    === 0 ||
+               status.value.length    === 0 ||
+               status.maxValue.length === 0;
+      }
+    });
+
+    const isDisabled = hasErrorGeneral || hasErrorStatus || hasErrorDetail;
 
     return (
-      <form className={`char-modal ${toggleClass}`} onSubmit={this.handleSubmit}>
-        <div className="f-grow-1 font-size-lg">
-          <div className="mb-2">
-            <div>Type:</div>
-            <div className="d-flex justify-content-around">
-              <label><input className="inp-radio" type="radio" value="ally" checked={this.state.charData.type === 'ally'} onChange={this.handleTypeChange}/>Ally</label>
-              <label><input className="inp-radio" type="radio" value="enemy" checked={this.state.charData.type === 'enemy'} onChange={this.handleTypeChange}/>Enemy</label>
-            </div>
-          </div>
-          <div className="mb-2">
-            <div>Theme Color:</div>
-            <div className="d-flex p-relative w-100" onClick={this.handleColorClick} ref={node => this.colorNode = node}>
-              <div className="inp-clr-circle f-shrink-0" style={{background: this.state.charData.color}}></div>
-              <div className="pseudo-inp f-grow-1">{this.state.charData.color}</div>
-              <div className={`p-absolute t-100 ${toggleColorPickerClass}`}>
-                <ChromePicker color={this.state.charData.color} disableAlpha={true} onChange={this.handleColorChange}/>
-              </div>
-            </div>
-          </div>
-          <div className="mb-2">
-            <div>Privacy Level:</div>
-            <div className="sel-cont char-sel w-100">
-              <select value={this.state.charData.privacy} onChange={this.handlePrivacyChange}>
-                <option value="0">Display all data</option>
-                <option value="1">Only display name</option>
-                <option value="2">Hide all data</option>
-                <option value="3">Do not share character</option>
-              </select>
-            </div>
-          </div>
-          <div className="mb-2">
-            <div>Name:</div>
-            <input className="inp w-100" type="text" placeholder="Enter character name..." value={this.state.charData.name} onChange={this.handleNameChange}/>
-          </div>
-          <div className="mb-2">
-            <div>HP:</div>
-            <input className="inp stat-inp" type="tel" value={this.state.charData.curHp} onChange={this.handleCurHpChange}/> / <input className="inp stat-inp" type="tel" value={this.state.charData.maxHp} onChange={this.handleMaxHpChange}/>
-          </div>
-          <div className="mb-2">
-            <div>MP:</div>
-            <input className="inp stat-inp" type="tel" value={this.state.charData.curMp} onChange={this.handleCurMpChange}/> / <input className="inp stat-inp" type="tel" value={this.state.charData.maxMp} onChange={this.handleMaxMpChange}/>
-          </div>
+      <div className="d-flex f-dir-col f-grow-1">
+
+        <div className="char-tab-cont f-shrink-0 d-flex mb-1">
+          <div className={`char-tab cursor-pointer p-2 ${toggleGeneralTabClass}`} onClick={this.handleGeneralTabClick}>General</div>
+          <div className={`char-tab cursor-pointer p-2 ${toggleStatusTabClass}`} onClick={this.handleStatusTabClick}>Status</div>
+          <div className={`char-tab cursor-pointer p-2 ${toggleDetailTabClass}`} onClick={this.handleDetailTabClick}>Detail</div>
         </div>
-        <button type="submit" className="btn btn-hot w-100 cursor-pointer" disabled={isDisabled}>
+
+        <General isActive={this.state.tabMode === 'general'} returnGeneralValue={this.returnGeneralValue}/>
+        <Status  isActive={this.state.tabMode === 'status'} returnStatusValue={this.returnStatusValue}/>
+        <Detail  isActive={this.state.tabMode === 'detail'} returnDetailValue={this.returnDetailValue}/>
+
+        <button type="button" className="btn btn-hot w-100 cursor-pointer f-shrink-0 f-align-self-end" disabled={isDisabled} onClick={this.handleSubmitClick}>
           <FontAwesomeIcon icon="check"/>
           <div className="btn-text">Submit</div>
         </button>
-      </form>
+
+      </div>
     );
   }
 }
