@@ -20,6 +20,7 @@ import Notes       from './notes/notes';
 import Requesting  from './requesting/requesting';
 import RoomSetting from './roomSetting/roomSetting';
 import UploadImg   from './uploadImg/uploadImg';
+import ViewChar    from './viewChar/viewChar';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -59,6 +60,7 @@ class Modal extends Component {
       requesting: <Requesting />,
       roomSetting: <RoomSetting />,
       uploadImg: <UploadImg />,
+      viewChar: <ViewChar />
     };
 
     return (
