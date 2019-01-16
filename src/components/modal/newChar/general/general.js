@@ -15,14 +15,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-// // Redux Map Dispatch To Props
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     addToCharList: (charData) => dispatch(addToCharList(charData)),
-//     hideModal: () => dispatch(hideModal())
-//   };
-// };
-
 
 class General extends Component {
   constructor (props){
@@ -36,7 +28,8 @@ class General extends Component {
         name: '',
         color: '#ff0000',
         privacy: '0',
-        image: ''
+        image: '',
+        link: ''
       },
       file: {
         fileSizeError: false,
@@ -51,6 +44,7 @@ class General extends Component {
     this.handleTypeChange = this.handleTypeChange.bind(this);
     this.handlePrivacyChange = this.handlePrivacyChange.bind(this);
     this.handleFileChange = this.handleFileChange.bind(this);
+    this.handleLinkChange = this.handleLinkChange.bind(this);
   }
 
   componentDidMount (){
@@ -96,6 +90,12 @@ class General extends Component {
     });
   }
 
+  handleLinkChange (e){
+    this.setState({ charData: {...this.state.charData, link: e.target.value} }, () => {
+      this.props.returnGeneralValue(this.state.charData);
+    });
+  }
+
   handleFileChange (e){
     e.preventDefault();
     const imagePattern = /\.(jpg|jpeg|png|gif)$/i;
@@ -126,7 +126,7 @@ class General extends Component {
     return (
       <div className={`char-modal f-grow-1 ${toggleActiveClass} ${toggleScrollClass}`}>
         <div className="mb-2">
-          <div>Type:</div>
+          <div>Type <span className="font-size-sm text-danger">(required)</span>:</div>
           <div className="d-flex justify-content-around">
             <label><input className="inp-radio" type="radio" value="ally" checked={this.state.charData.type === 'ally'} onChange={this.handleTypeChange}/>Ally</label>
             <label><input className="inp-radio" type="radio" value="enemy" checked={this.state.charData.type === 'enemy'} onChange={this.handleTypeChange}/>Enemy</label>
@@ -134,12 +134,12 @@ class General extends Component {
         </div>
 
         <div className="mb-2">
-          <div>Name:</div>
+          <div>Name <span className="font-size-sm text-danger">(required)</span>:</div>
           <input className="inp w-100" type="text" placeholder="Enter character name..." value={this.state.charData.name} onChange={this.handleNameChange}/>
         </div>
 
         <div className="mb-2">
-          <div>Theme Color:</div>
+          <div>Theme Color <span className="font-size-sm text-danger">(required)</span>:</div>
           <div className="d-flex p-relative w-100" onClick={this.handleColorClick} ref={ this.colorRef }>
             <div className="inp-clr-circle f-shrink-0" style={{background: this.state.charData.color}}></div>
             <div className="pseudo-inp f-grow-1">{this.state.charData.color}</div>
@@ -150,7 +150,7 @@ class General extends Component {
         </div>
 
         <div className="mb-2">
-          <div>Privacy Level:</div>
+          <div>Privacy Level <span className="font-size-sm text-danger">(required)</span>:</div>
           <div className="sel-cont char-sel w-100">
             <select value={this.state.charData.privacy} onChange={this.handlePrivacyChange}>
               <option value="0">Display all data</option>
@@ -162,7 +162,7 @@ class General extends Component {
         </div>
 
         <div className="mb-2">
-          <div>Profile Image:</div>
+          <div>Profile Image <span className="font-size-sm text-optional">(optional)</span>:</div>
           <label class="inp-file-cont d-flex w-100 cursor-pointer">
             <FontAwesomeIcon icon="upload"/>
             <div className="inp-file-text f-grow-1 pl-3">Choose an image...</div>
@@ -173,6 +173,14 @@ class General extends Component {
             : null}
           {this.state.file.fileSizeError
             ? (<div className="text-danger">File must be smaller than 1MB</div>)
+            : null}
+        </div>
+
+        <div className="mb-2">
+          <div>External Character sheet link <span className="font-size-sm text-optional">(optional)</span>:</div>
+          <input className="inp w-100" type="text" placeholder="http(s)://..." value={this.state.charData.link} onChange={this.handleLinkChange}/>
+          {this.state.charData.link.trim().length !== 0 && !/^http(s)?:\/\/.+/.test(this.state.charData.link.trim())
+            ? (<div className="text-danger">Link must start with "http(s)://""</div>)
             : null}
         </div>
       </div>

@@ -38,7 +38,8 @@ import {
   faColumns,
   faLock,
   faPercent,
-  faEye
+  faEye,
+  faLink
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -77,5 +78,6 @@ library.add(
   faColumns,
   faLock,
   faPercent,
-  faEye
+  faEye,
+  faLink
 );

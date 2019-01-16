@@ -58,6 +58,13 @@ class General extends Component {
             <div className="inp-file-text f-grow-1 pl-3">Choose an image...</div>
           </label>
         </div>
+
+        <div className="mb-2 font-size-lg">
+          <div>External Character Sheet Link:</div>
+          { this.props.general.link.length === 0 
+              ? (<div>-</div>)
+              : (<a href={this.props.general.link} target="_blank" rel='noreferrer noopener'>{this.props.general.link}</a>)}
+        </div>
       </div>
     );
   }

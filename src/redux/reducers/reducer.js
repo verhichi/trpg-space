@@ -79,23 +79,6 @@ export const initialState = {
   // }
   ],
   charList: [
-  //   {
-  //   charId: '23984743543',
-  //   ownerId: '1234567',
-  //   type: 'ally'/'enemy',
-  //   color: '#AAA',
-  //   name: 'Djakovich',
-  //   maxHp: '50',
-  //   curHp: '15',
-  //   maxMp: '60',
-  //   curMp: '45',
-  //   onMap: true/false,
-  //   mapCoor: {
-  //     x: x-coordinate,
-  //     y: y-coordinate
-  //   }
-  // }
-  //
     //   {
     //   charId: '23984743543',
     //   ownerId: '1234567',
@@ -104,7 +87,8 @@ export const initialState = {
     //     type: 'ally/enemy',
     //     color: '#010101',
     //     image: 'image-src',
-    //     privacy: '0/1/2/3'
+    //     privacy: '0/1/2/3',
+    //     link: 'link to an external character sheet link'
     //   },
     //   status: [
     //     {

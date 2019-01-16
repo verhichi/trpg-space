@@ -99,6 +99,10 @@
       text-decoration: underline;
     }
 
+    .text-dec-none{
+      text-decoration: none;
+    }
+
   // Padding
     .p-1{
       padding: 5px;
@@ -274,6 +278,17 @@
       }
     }
 
+  // link color
+    .remove-link-dec{
+      &:link{
+        color: inherit;
+      }
+
+      &:visited{
+        color: inherit;
+      }
+    }
+
   // Input
     .inp{
       border: 1px solid $black-clr;
@@ -375,6 +390,10 @@
   // Text Color
     .text-danger{
       color: $danger-clr;
+    }
+
+    .text-optional{
+      color: $disabled-clr;
     }
 
   // Display None for smartphone screens

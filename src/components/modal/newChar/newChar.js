@@ -44,7 +44,8 @@ class NewChar extends Component {
         type: 'ally',
         color: '#ff0000',
         image: '',
-        privacy: '0'
+        privacy: '0',
+        link: ''
       },
       status: [],
       detail: []
@@ -106,7 +107,8 @@ class NewChar extends Component {
       ...general,
       name: general.name.trim(),
       color: general.color.trim(),
-      image: general.image.trim()
+      image: general.image.trim(),
+      link: general.link.trim()
     }
     this.setState({ general: trimmedData });
   }
@@ -143,7 +145,9 @@ class NewChar extends Component {
     const toggleStatusTabClass =  this.state.tabMode === 'status' ? 'is-active' : '';
     const toggleDetailTabClass =  this.state.tabMode === 'detail' ? 'is-active' : '';
 
-    const hasErrorGeneral = this.state.general.name.length === 0;
+    const hasErrorGeneral = this.state.general.name.length === 0 ||
+                            (this.state.general.link.length !== 0 && !/^http(s)?:\/\/.+/.test(this.state.general.link));
+
     const hasErrorStatus  = this.state.status.some(status => {
       if (status.type === 'value'){
         return status.label.length === 0 ||
@@ -154,6 +158,7 @@ class NewChar extends Component {
                status.maxValue.length === 0;
       }
     });
+
     const hasErrorDetail  = this.state.detail.some(status => {
       if (status.type === 'value'){
         return status.label.length === 0 ||

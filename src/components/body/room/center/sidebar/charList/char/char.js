@@ -84,15 +84,20 @@ class Char extends Component {
       <div className="char-cont w-100" style={{background: `linear-gradient(135deg, #fff 85%, ${this.props.charData.general.color} 0)`}}>
         <div className="char-head d-flex mb-3">
           {this.props.charData.ownerId === this.props.id
-            ? (<div className="pr-1 cursor-pointer" onClick={this.handleEditClick}>
+            ? (<div className="pr-1 cursor-pointer char-btn align-center f-shrink-0" onClick={this.handleEditClick}>
                  <FontAwesomeIcon icon="pen-square"/>
                </div>)
-            : (<div className="cursor-pointer" onClick={this.handleViewClick}>
+            : (<div className="cursor-pointer char-btn align-center f-shrink-0" onClick={this.handleViewClick}>
                  <FontAwesomeIcon icon="eye"/>
                </div>)}
           <div className="char-name f-grow-1 font-weight-bold">{charName}</div>
+          {this.props.charData.general.link.length !== 0
+            ? (<a className="char-btn text-dec-none align-center f-shrink-0 remove-link-dec" href={this.props.charData.general.link} target="_blank" rel='noreferrer noopener'>
+                 <div className="cursor-pointer"><FontAwesomeIcon icon="link"/></div>
+               </a>)
+            : null}
           {this.props.charData.ownerId === this.props.id
-            ? (<div className="cursor-pointer" onClick={this.handleRemoveClick}>
+            ? (<div className="cursor-pointer char-btn align-center f-shrink-0" onClick={this.handleRemoveClick}>
                  <FontAwesomeIcon icon="window-close"/>
                </div>)
             : null}

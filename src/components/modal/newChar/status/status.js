@@ -166,7 +166,7 @@ class Status extends Component {
           </div>
 
           {statusList.length === 0
-            ? (<div className="align-center p-2">No Status</div>)
+            ? (<div className="align-center p-2">No Statuses</div>)
             : statusList }
 
         </div>
