@@ -32,13 +32,14 @@ class Char extends Component {
     super(props);
     this.handleRemoveClick = this.handleRemoveClick.bind(this);
     this.handleEditClick = this.handleEditClick.bind(this);
+    this.handleViewClick = this.handleViewClick.bind(this);
   }
 
   handleRemoveClick (charId, e){
     this.props.showModal('confirm', {
       title: 'Delete Character',
       displayClose: false,
-      confirmText: `Are you sure you want to delete ${this.props.charData.name}?`,
+      confirmText: `Are you sure you want to delete ${this.props.charData.general.name}?`,
       accept: [
         this.props.removeFromCharList.bind(null, this.props.charData.charId),
         this.props.removeMapChar.bind(null, this.props.charData.charId),
@@ -52,6 +53,14 @@ class Char extends Component {
   handleEditClick (e){
     this.props.showModal('editChar', {
       title: 'Edit Character',
+      displayClose: true,
+      charId: this.props.charData.charId
+    });
+  }
+
+  handleViewClick (e){
+    this.props.showModal('viewChar', {
+      title: 'View Character',
       displayClose: true,
       charId: this.props.charData.charId
     });
@@ -76,17 +85,17 @@ class Char extends Component {
         <div className="char-head d-flex mb-3">
           {this.props.charData.ownerId === this.props.id
             ? (<div className="pr-1 cursor-pointer" onClick={this.handleEditClick}>
-                 <FontAwesomeIcon icon="user-cog"/>
+                 <FontAwesomeIcon icon="pen-square"/>
                </div>)
-            : null
-          }
+            : (<div className="cursor-pointer" onClick={this.handleViewClick}>
+                 <FontAwesomeIcon icon="eye"/>
+               </div>)}
           <div className="char-name f-grow-1 font-weight-bold">{charName}</div>
           {this.props.charData.ownerId === this.props.id
             ? (<div className="cursor-pointer" onClick={this.handleRemoveClick}>
                  <FontAwesomeIcon icon="window-close"/>
                </div>)
-            : null
-          }
+            : null}
         </div>
         <div className="char-body">
           {statList}

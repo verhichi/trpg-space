@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-// Font Awesome Component
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-// Style
-import './editChar.scss';
-
 // Component
 import Detail from './detail/detail';
 import General from './general/general';
