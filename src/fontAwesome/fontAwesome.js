@@ -39,7 +39,8 @@ import {
   faLock,
   faPercent,
   faEye,
-  faLink
+  faLink,
+  faExclamationCircle
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -79,5 +80,6 @@ library.add(
   faLock,
   faPercent,
   faEye,
-  faLink
+  faLink,
+  faExclamationCircle
 );

@@ -261,6 +261,19 @@
       display: none;
     }
 
+    .d-none-sm{
+      display: none;
+
+      @include md{
+        display: inline;
+      }
+    }
+
+  // Visibility
+    .v-hidden{
+      visibility: hidden;
+    }
+
   // Cursor
     .cursor-default{
       cursor: default;
@@ -396,14 +409,6 @@
       color: $disabled-clr;
     }
 
-  // Display None for smartphone screens
-    .d-none-sm{
-      display: none;
-
-      @include md{
-        display: inline;
-      }
-    }
 
   // Position
     .p-relative{

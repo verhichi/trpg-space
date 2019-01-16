@@ -128,7 +128,7 @@ class General extends Component {
 
         <div className="mb-2">
           <div>Name <span className="font-size-sm text-danger">(required)</span>:</div>
-          <input className="inp w-100" type="text" placeholder="Enter character name..." value={this.state.charData.name} onChange={this.handleNameChange}/>
+          <input className="inp w-100" type="text" value={this.state.charData.name} onChange={this.handleNameChange}/>
         </div>
 
         <div className="mb-2">
