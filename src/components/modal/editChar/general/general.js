@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
     isMobile:     state.isMobile,
     id:           state.id,
     roomId:       state.roomId,
+    charList:     state.charList,
     modalSetting: state.modalSetting
   };
 };
@@ -31,13 +32,7 @@ class General extends Component {
     this.colorRef = React.createRef();
     this.state = {
       displayColorPicker: false,
-      charData: {
-        type: 'ally',
-        name: '',
-        color: '#ff0000',
-        privacy: '0',
-        image: ''
-      },
+      charData: this.props.charList.find((char) => char.charId === this.props.charId).general,
       file: {
         fileSizeError: false,
         fileTypeError: false
@@ -53,12 +48,12 @@ class General extends Component {
     this.handleFileChange = this.handleFileChange.bind(this);
   }
 
-  componentDidMount (){
-    this.props.returnGeneralValue(this.state.charData);
+  componentWillUnmount (){
+    document.removeEventListener('click', this.handleOutsideClick);
   }
 
-  componentWillUnmount (){
-    window.removeEventListener('click', this.handleOutsideClick, false);
+  componentDidMount (){
+    this.props.returnGeneralValue(this.state.charData);
   }
 
   handleOutsideClick (e){

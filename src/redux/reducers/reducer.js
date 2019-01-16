@@ -106,7 +106,7 @@ export const initialState = {
     //     image: 'image-src',
     //     privacy: '0/1/2/3'
     //   },
-    //   stat: [
+    //   status: [
     //     {
     //        id: 'statId',
     //        type: 'value/param',
@@ -177,14 +177,9 @@ const rootReducer = (state = initialState, action) => {
           if (char.charId === action.charData.charId){
             return {
               ...char,
-              name: action.charData.name,
-              type: action.charData.type,
-              privacy: action.charData.privacy,
-              color: action.charData.color,
-              maxHp: action.charData.maxHp,
-              curHp: action.charData.curHp,
-              maxMp: action.charData.maxMp,
-              curMp: action.charData.curMp
+              general: action.charData.general,
+              status: action.charData.status,
+              detail: action.charData.detail
             };
           } else {
             return char;
