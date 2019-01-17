@@ -33,6 +33,10 @@ class ChatLog extends Component {
     this.myRef = React.createRef();
   }
 
+  componentDidMount (){
+    this.myRef.current.scrollTop = this.myRef.current.scrollHeight;
+  }
+
   componentDidUpdate (){
     this.myRef.current.scrollTop = this.myRef.current.scrollHeight;
   }

@@ -45,7 +45,9 @@ class Bottom extends Component {
     this.diceRef = React.createRef();
     this.state = {
       chatText: '',
-      inputFocus: false
+      inputFocus: false,
+      checkedUsers: [],
+      checkedAll: true
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -58,6 +60,8 @@ class Bottom extends Component {
     this.handleImageClick = this.handleImageClick.bind(this);
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleUserCheckChange = this.handleUserCheckChange.bind(this);
+    this.handleAllCheckChange = this.handleAllCheckChange.bind(this);
   }
 
   componentDidMount (){
@@ -87,9 +91,12 @@ class Bottom extends Component {
     document.removeEventListener('click', this.handleOnFocusClick);
     this.setState({inputFocus: false});
     const name = this.props.userList.find((user) => this.props.id === user.id).name;
+
     const chatData = {
       type: 'text',
       text: this.state.chatText.trim(),
+      private: !this.state.checkedAll,
+      sendTo: this.state.checkedUsers,
       name
     };
 
@@ -108,6 +115,8 @@ class Bottom extends Component {
         const chatData = {
           type: 'text',
           text: this.state.chatText.trim(),
+          private: !this.state.checkedAll,
+          sendTo: this.state.checkedUsers,
           name
         };
 
@@ -158,11 +167,25 @@ class Bottom extends Component {
     });
   }
 
+  handleUserCheckChange (e, userId){
+    this.state.checkedUsers.includes(userId)
+      ? this.setState( { checkedUsers: this.state.checkedUsers.filter(id => id !== userId) })
+      : this.setState( { checkedUsers: [ ...this.state.checkedUsers, userId] });
+  }
+
+  handleAllCheckChange (e){
+    this.setState({ checkedAll: !this.state.checkedAll });
+  }
+
   render() {
     const isDisabled = this.state.chatText.trim().length === 0;
 
     const hideOnFocusClass = this.state.inputFocus ? 'd-none' : '';
     const showOnFocusClass = this.state.inputFocus ? '' : 'd-none';
+
+    const userCheckList = this.props.userList.map(user => {
+      return (<div className="one-line-ellipsis"><label><input className="p-1" type="checkbox" value={user.id} checked={this.state.checkedUsers.includes(user.id)} onChange={(e) => this.handleUserCheckChange(e, user.id)}/>{user.name}</label></div>);
+    });
 
     return (
       <div className="room-bottom-cont" ref={node => this.node = node} onClick={this.handleOnFocusClick}>
@@ -181,7 +204,18 @@ class Bottom extends Component {
               ? <FontAwesomeIcon icon="map-marked-alt"/>
               : <FontAwesomeIcon icon="comments"/>}
           </div>
-          <textarea className="chat-inp" placeholder="Enter text here" value={this.state.chatText} onChange={this.handleChange} onFocus={this.handleFocus} onBlur={this.handleBlur} onKeyDown={this.handleKeyDown} ></textarea>
+          <div className="private-chat-btn f-shrink-0 p-relative cursor-pointer align-center">
+            <div className="private-chat-balloon p-2 p-absolute align-left">
+              <div>Send message to:</div>
+              <div style={{ borderBottom: this.state.checkedAll ? 'none' : '1px solid #ccc' }}><label><input type="checkbox" checked={this.state.checkedAll} onChange={this.handleAllCheckChange}/>Everyone</label></div>
+              { this.state.checkedAll
+                  ? null
+                  : userCheckList}
+            </div>
+            <span className={this.state.checkedAll ? '' : 'd-none'}><FontAwesomeIcon icon="users"/></span>
+            <span className={this.state.checkedAll ? 'd-none' : ''}><FontAwesomeIcon icon="user-secret"/></span>
+          </div>
+          <textarea className="chat-inp f-grow-1 pr-2" placeholder="Enter text here" value={this.state.chatText} onChange={this.handleChange} onFocus={this.handleFocus} onBlur={this.handleBlur} onKeyDown={this.handleKeyDown} ></textarea>
           <button className="chat-bar-btn btn-hot cursor-pointer" disabled={isDisabled} onClick={this.handleSendClick}>
             <FontAwesomeIcon icon="paper-plane"/>
           </button>
@@ -193,5 +227,31 @@ class Bottom extends Component {
     );
   }
 }
+
+// <div className="room-bottom-cont" ref={node => this.node = node} onClick={this.handleOnFocusClick}>
+//   <div className="chat-cont">
+//     <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleSidebarClick}>
+//       <FontAwesomeIcon icon="columns"/>
+//     </div>
+//     <div className="p-relative" ref={this.diceRef}>
+//       <DiceBalloon />
+//       <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleDiceSettingClick}>
+//         <FontAwesomeIcon icon="dice"/>
+//       </div>
+//     </div>
+//     <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleCenterModeClick}>
+//       {this.props.centerMode === 'chat'
+//         ? <FontAwesomeIcon icon="map-marked-alt"/>
+//         : <FontAwesomeIcon icon="comments"/>}
+//     </div>
+//     <textarea className="chat-inp" placeholder="Enter text here" value={this.state.chatText} onChange={this.handleChange} onFocus={this.handleFocus} onBlur={this.handleBlur} onKeyDown={this.handleKeyDown} ></textarea>
+//     <button className="chat-bar-btn btn-hot cursor-pointer" disabled={isDisabled} onClick={this.handleSendClick}>
+//       <FontAwesomeIcon icon="paper-plane"/>
+//     </button>
+//     <div className={`chat-bar-btn cursor-pointer align-center ${showOnFocusClass}`} onClick={this.handleImageClick}>
+//       <FontAwesomeIcon icon="paperclip"/>
+//     </div>
+//   </div>
+// </div>
 
 export default connect(mapStateToProps, mapDispatchToProps)(Bottom);
