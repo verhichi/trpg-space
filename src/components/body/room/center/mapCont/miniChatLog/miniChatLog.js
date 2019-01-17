@@ -12,11 +12,12 @@ class MiniChatLog extends Component {
     const contKey = uuid.v4();
 
     const miniChatType = {
-      text:  (chatData) => <div className="mini-chat" key={chatData.id}><FontAwesomeIcon icon="comment"/> [{chatData.name}] {chatData.text}</div>,
-      roll:  (chatData) => <div className="mini-chat" key={chatData.id}><FontAwesomeIcon icon="dice"/>[{chatData.name}] [{chatData.diceSetting}] {chatData.result} - {chatData.total}</div>,
-      image: (chatData) => <div className="mini-chat" key={chatData.id}><FontAwesomeIcon icon="file-image"/>[{chatData.name}] -Check chat to view image-</div>,
-      join:  (chatData) => <div className="mini-chat" key={chatData.id}>{chatData.name} has joined the room</div>,
-      leave: (chatData) => <div className="mini-chat" key={chatData.id}>{chatData.name} has left the room</div>
+      text:    (chatData) => <div className="mini-chat" key={chatData.id}><FontAwesomeIcon icon="comment"/> [{chatData.name}] {chatData.text}</div>,
+      roll:    (chatData) => <div className="mini-chat" key={chatData.id}><FontAwesomeIcon icon="dice"/>[{chatData.name}] [{chatData.diceSetting}] {chatData.result} - {chatData.total}</div>,
+      image:   (chatData) => <div className="mini-chat" key={chatData.id}><FontAwesomeIcon icon="file-image"/>[{chatData.name}] -Check chat to view image-</div>,
+      join:    (chatData) => <div className="mini-chat" key={chatData.id}>{chatData.name} has joined the room</div>,
+      leave:   (chatData) => <div className="mini-chat" key={chatData.id}>{chatData.name} has left the room</div>,
+      newHost: (chatData) => <div className="mini-chat" key={chatData.id}>{chatData.name} is now the new host</div>
     };
 
     const miniChatLog = this.props.miniChatLog.map(chatData => {

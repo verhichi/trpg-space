@@ -1,6 +1,27 @@
 @import '../../../../../../../styles/partials/variables';
 @import '../../../../../../../styles/partials/mediaQueries';
 
+
+.char-cont{
+  color: $primary-clr;
+  font-size: $font-size-lg;
+  margin-bottom: 5px;
+}
+
+.empty-cont{
+  border: 5px dashed $disabled-clr;
+  color: $disabled-clr;
+}
+
+.char-data-cont{
+  overflow: hidden;
+}
+
+.char-data{
+  white-space: pre-line;
+  word-break: break-all;
+}
+
 .char-name{
   overflow: hidden;
   text-overflow: ellipsis;
@@ -18,7 +39,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  width: 100px;
   height: 100px;
+  flex-basis: 100px;
   z-index: 90;
 }

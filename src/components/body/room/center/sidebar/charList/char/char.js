@@ -74,9 +74,9 @@ class Char extends Component {
 
     const statList = this.props.charData.status.map(status => {
       if (status.type === 'value'){
-        return(<div><span className="font-weight-bold">{status.label}</span>: {showStat ? status.value : '???'}</div>);
+        return(<div className="char-data"><span className="font-weight-bold">{status.label}</span>: {showStat ? status.value : '???'}</div>);
       } else {
-        return(<div><span className="font-weight-bold">{status.label}</span>: {showStat ? status.value : '???'} / {showStat ? status.maxValue : '???'}</div>);
+        return(<div className="char-data"><span className="font-weight-bold">{status.label}</span>: {showStat ? status.value : '???'} / {showStat ? status.maxValue : '???'}</div>);
       }
     });
 
@@ -85,9 +85,9 @@ class Char extends Component {
                          : { backgroundImage: `url(${this.props.charData.general.image})`};
 
     return(
-      <div className="char-cont d-flex w-100" style={{background: `linear-gradient(135deg, ${this.props.charData.general.color} 10%, #fff 0)`}}>
+      <div className="char-cont d-flex" style={{background: `linear-gradient(135deg, ${this.props.charData.general.color} 10%, #fff 0)`}}>
         <div className="char-profile-circle f-shrink-0" style={imageStyle}></div>
-        <div className="d-flex f-dir-col f-grow-1 pl-1 pt-1 pb-1">
+        <div className="char-data-cont d-flex f-dir-col f-grow-1 pl-1 pt-1 pb-1">
           <div className="char-name font-weight-bold pb-1">{charName}</div>
           { statList }
         </div>
