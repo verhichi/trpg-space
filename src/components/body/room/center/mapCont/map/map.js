@@ -68,8 +68,8 @@ class Map extends Component {
   handleDragDrop (e){
     const charData = {
       charId: e.dataTransfer.getData('charId'),
-      x: e.nativeEvent.offsetX - 12.5, // character dot is 25px, -12.5px to place dot in center of click.
-      y: e.nativeEvent.offsetY - 12.5  // character dot is 25px, -12.5px to place dot in center of click.
+      x: e.nativeEvent.offsetX,
+      y: e.nativeEvent.offsetY
     };
 
     this.props.editMapChar(charData);

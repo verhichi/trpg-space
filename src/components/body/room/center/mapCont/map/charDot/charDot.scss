@@ -5,10 +5,43 @@
   animation: shadow-pulse 5s infinite;
   border: 3px solid #FFF;
   border-radius: 50%;
+  display: block;
   height: 25px;
   position: absolute;
   width: 25px;
   z-index: 60;
+
+  @include md{
+    display: none;
+  }
+
+  &:hover .map-char-balloon{
+    display: block;
+  }
+
+  &:active .map-char-balloon{
+    display: none;
+  }
+}
+
+.map-char-profile{
+  animation: shadow-pulse 5s infinite;
+  background-color: $white-clr;
+  background-image: url('../../../../../../../styles/images/user_icon.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 3px solid #FFF;
+  border-radius: 50%;
+  display: none;
+  height: 60px;
+  position: absolute;
+  width: 60px;
+  z-index: 60;
+
+  @include md{
+    display: block;
+  }
 
   &:hover .map-char-balloon{
     display: block;

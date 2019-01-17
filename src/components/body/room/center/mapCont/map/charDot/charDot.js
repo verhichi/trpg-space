@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
 // Font Awesome Component
@@ -41,12 +41,20 @@ class CharDot extends Component {
     });
 
     return (
-      <div className={`map-char p-relative ${toggleGrabClass}`} draggable={isOwnCharacter} onDragStart={this.handleDragStart} style={{backgroundColor: this.props.charData.general.color, left: this.props.charData.map.x, top: this.props.charData.map.y}}>
-        <div className="map-char-balloon p-absolute p-1 align-left cursor-default">
-          <div className="font-size-md font-weight-bold pb-1 one-line-ellipsis">{charName}</div>
-          { statList }
+      <Fragment>
+        <div className={`map-char ${toggleGrabClass}`} draggable={isOwnCharacter} onDragStart={this.handleDragStart} style={{backgroundColor: this.props.charData.general.color, left: this.props.charData.map.x - 12.5, top: this.props.charData.map.y - 12.5}}>
+          <div className="map-char-balloon p-absolute p-1 align-left cursor-default">
+            <div className="font-size-md font-weight-bold pb-1 one-line-ellipsis">{charName}</div>
+            { statList }
+          </div>
         </div>
-      </div>
+        <div className={`map-char-profile ${toggleGrabClass}`} draggable={isOwnCharacter} onDragStart={this.handleDragStart} style={{borderColor: this.props.charData.general.color, backgroundImage: `url(${this.props.charData.general.image})`, left: this.props.charData.map.x - 30, top: this.props.charData.map.y - 30}}>
+          <div className="map-char-balloon p-absolute p-1 align-left cursor-default">
+            <div className="font-size-md font-weight-bold pb-1 one-line-ellipsis">{charName}</div>
+            { statList }
+          </div>
+        </div>
+      </Fragment>
     );
   }
 }
