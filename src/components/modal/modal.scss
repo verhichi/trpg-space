@@ -93,8 +93,9 @@
 .profile-circle{
   border: 5px solid $disabled-clr;
   border-radius: 50%;
-  background-size: cover;
+  background-image: url('../../styles/images/user_icon.jpg');
   background-repeat: no-repeat;
+  background-size: cover;
   width: 100px;
   height: 100px;
   z-index: 90;

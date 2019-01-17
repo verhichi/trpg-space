@@ -136,13 +136,17 @@ class General extends Component {
     const toggleScrollClass = this.props.isMobile ? '' : 'hide-scroll';
     const toggleColorPickerClass = this.state.displayColorPicker ? '' : 'd-none';
 
+    const imageStyle = this.state.charData.image.length === 0
+                         ? null
+                         : { backgroundImage: `url(${this.state.charData.image})`};
+
     return (
       <div className={`char-modal f-grow-1 ${toggleActiveClass} ${toggleScrollClass}`}>
 
         <div className="mb-2">
           <div>Profile Image <span className="font-size-sm text-optional">(optional)</span>:</div>
           <div className="d-flex p-relative">
-            <label className="profile-circle cursor-pointer p-relative" style={{ backgroundImage: `url(${this.state.charData.image})` }}>
+            <label className="profile-circle cursor-pointer p-relative" style={imageStyle}>
               <div className="profile-side-btn align-center p-absolute"><FontAwesomeIcon icon="camera"/></div>
               <input id="imageInput" className="d-none" type="file" accept="image/*" ref={this.fileInput} onChange={this.handleFileChange}/>
             </label>
@@ -199,7 +203,7 @@ class General extends Component {
             ? (<div className="text-danger">Link must start with "http(s)://""</div>)
             : null}
         </div>
-        
+
       </div>
     );
   }

@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-// Font Awesome Component
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
@@ -26,12 +23,16 @@ class General extends Component {
       '2': 'Hide all data',
     };
 
+    const imageStyle = this.props.general.image.length === 0
+                         ? null
+                         : { backgroundImage: `url(${this.props.general.image})`};
+
     return (
       <div className={`char-modal f-grow-1 ${toggleActiveClass} ${toggleScrollClass}`}>
 
         <div className="mb-2">
           <div>Profile Image <span className="font-size-sm text-optional">(optional)</span>:</div>
-          <div className="profile-circle d-inline-block" style={{ backgroundImage: `url(${this.props.general.image})` }}></div>
+          <div className="profile-circle d-inline-block" style={imageStyle}></div>
         </div>
 
         <div className="mb-2 font-size-lg">
