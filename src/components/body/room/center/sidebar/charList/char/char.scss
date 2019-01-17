@@ -1,3 +1,6 @@
+@import '../../../../../../../styles/partials/variables';
+@import '../../../../../../../styles/partials/mediaQueries';
+
 .char-name{
   overflow: hidden;
   text-overflow: ellipsis;
@@ -6,4 +9,16 @@
 
 .char-btn{
   flex-basis: 30px;
+}
+
+.char-profile-circle{
+  border: none;
+  border-radius: 50%;
+  background-image: url('../../../../../../../styles/images/user_icon.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100px;
+  height: 100px;
+  z-index: 90;
 }

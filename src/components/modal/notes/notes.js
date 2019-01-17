@@ -3,10 +3,6 @@ import { connect } from 'react-redux';
 import { hideModal, unlockNote, editNote } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
-
-// Font Awesome Component
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 // Style
 import './notes.scss';
 
@@ -55,7 +51,7 @@ class Notes extends Component {
 
     this.props.editNote(notes);
     socket.emit('editNote', this.props.roomId, notes);
-    
+
     this.props.hideModal();
   }
 
@@ -63,8 +59,8 @@ class Notes extends Component {
     return (
       <div className="d-flex f-dir-col f-grow-1">
         <div>Shared notes:</div>
-        <textarea className="notes-textarea f-grow-1" value={this.state.notes} onChange={this.handleChange}></textarea>
-        <div className="d-flex justify-content-around pt-2">
+        <textarea className="notes-textarea f-grow-1 p-1" value={this.state.notes} onChange={this.handleChange}></textarea>
+        <div className="d-flex justify-content-around pt-2 f-shrink-0">
           <button className="notes-btn p-2 btn-danger align-center" onClick={this.handleCloseClick} >Close</button>
           <button className="notes-btn p-2 btn-hot align-center" onClick={this.handleSubmitClick}>Submit</button>
         </div>

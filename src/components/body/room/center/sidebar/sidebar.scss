@@ -20,10 +20,6 @@
     width: 100%;
 
     @include md{
-      width: 250px;
-    }
-
-    @include lg{
       width: 350px;
     }
   }

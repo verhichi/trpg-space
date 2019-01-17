@@ -2,20 +2,22 @@
 @import '../../../styles/partials/mediaQueries';
 
 .notes-textarea{
-  resize: none;
+  border: 1px solid black;
+  border-radius: 0;
   flex-grow: 1;
-
-  @include md{
-    flex-basis: 500px;
-  }
-
-  @include lg{
-    flex-basis: 600px;
-  }
-
-  @include xl{
-    flex-basis: 700px;
-  }
+  resize: none;
+  //
+  // @include md{
+  //   flex-basis: 500px;
+  // }
+  //
+  // @include lg{
+  //   flex-basis: 600px;
+  // }
+  //
+  // @include xl{
+  //   flex-basis: 700px;
+  // }
 }
 
 .notes-btn{
