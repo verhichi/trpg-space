@@ -40,7 +40,9 @@ import {
   faPercent,
   faEye,
   faLink,
-  faExclamationCircle
+  faExclamationCircle,
+  faTrash,
+  faCamera
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -81,5 +83,7 @@ library.add(
   faPercent,
   faEye,
   faLink,
-  faExclamationCircle
+  faExclamationCircle,
+  faTrash,
+  faCamera
 );

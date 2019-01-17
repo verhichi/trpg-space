@@ -21,13 +21,13 @@ class Status extends Component {
 
       if (status.type === 'value'){
         return (
-          <div className="stat-inp-cont d-flex mb-2 font-size-lg">
+          <div className="stat-inp-cont mb-1 font-size-lg">
             <span className="font-weight-bold">{status.label}</span>: {showStat ? status.value : '???'}
           </div>
         );
       } else {
         return (
-          <div className="stat-inp-cont d-flex mb-2 font-size-lg">
+          <div className="stat-inp-cont mb-1 font-size-lg">
             <span className="font-weight-bold">{status.label}</span>: {showStat ? status.value : '???'} / {showStat ? status.maxValue : '???'}
           </div>
         );

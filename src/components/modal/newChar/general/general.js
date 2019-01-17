@@ -45,6 +45,7 @@ class General extends Component {
     this.handlePrivacyChange = this.handlePrivacyChange.bind(this);
     this.handleFileChange = this.handleFileChange.bind(this);
     this.handleLinkChange = this.handleLinkChange.bind(this);
+    this.handleFileRemoveClick = this.handleFileRemoveClick.bind(this);
   }
 
   componentDidMount (){
@@ -109,11 +110,23 @@ class General extends Component {
         reader.readAsDataURL(this.fileInput.current.files[0]);
 
         reader.onload = () => {
-          this.setState({ image: reader.result }, () => {
+          this.setState({ charData: { ...this.state.charData, image: reader.result } }, () => {
             this.props.returnGeneralValue(this.state.charData);
           });
         };
       }
+    });
+  }
+
+  handleFileRemoveClick (e){
+    this.setState({
+      charData: { ...this.state.charData, image: '' },
+      file: {
+        fileTypeError: false,
+        fileSizeError: false
+      }
+    }, () => {
+      this.props.returnGeneralValue(this.state.charData);
     });
   }
 
@@ -125,6 +138,24 @@ class General extends Component {
 
     return (
       <div className={`char-modal f-grow-1 ${toggleActiveClass} ${toggleScrollClass}`}>
+
+        <div className="mb-2">
+          <div>Profile Image <span className="font-size-sm text-optional">(optional)</span>:</div>
+          <div className="d-flex p-relative">
+            <label className="profile-circle cursor-pointer p-relative" style={{ backgroundImage: `url(${this.state.charData.image})` }}>
+              <div className="profile-side-btn align-center p-absolute"><FontAwesomeIcon icon="camera"/></div>
+              <input id="imageInput" className="d-none" type="file" accept="image/*" ref={this.fileInput} onChange={this.handleFileChange}/>
+            </label>
+            <div className="profile-remove-btn p-absolute align-center cursor-pointer" onClick={this.handleFileRemoveClick}><FontAwesomeIcon icon="trash"/></div>
+          </div>
+          {this.state.file.fileTypeError
+            ? (<div className="text-danger">File must be in jpg/png/gif format</div>)
+            : null}
+          {this.state.file.fileSizeError
+            ? (<div className="text-danger">File must be smaller than 1MB</div>)
+            : null}
+        </div>
+
         <div className="mb-2">
           <div>Type <span className="font-size-sm text-danger">(required)</span>:</div>
           <div className="d-flex justify-content-around">
@@ -162,27 +193,13 @@ class General extends Component {
         </div>
 
         <div className="mb-2">
-          <div>Profile Image <span className="font-size-sm text-optional">(optional)</span>:</div>
-          <label class="inp-file-cont d-flex w-100 cursor-pointer">
-            <FontAwesomeIcon icon="upload"/>
-            <div className="inp-file-text f-grow-1 pl-3">Choose an image...</div>
-            <input id="imageInput" className="d-none" type="file" accept="image/*" ref={this.fileInput} onChange={this.handleFileChange}/>
-          </label>
-          {this.state.file.fileTypeError
-            ? (<div className="text-danger">File must be in jpg/png/gif format</div>)
-            : null}
-          {this.state.file.fileSizeError
-            ? (<div className="text-danger">File must be smaller than 1MB</div>)
-            : null}
-        </div>
-
-        <div className="mb-2">
           <div>External Character sheet link <span className="font-size-sm text-optional">(optional)</span>:</div>
           <input className="inp w-100" type="text" placeholder="http(s)://..." value={this.state.charData.link} onChange={this.handleLinkChange}/>
           {this.state.charData.link.trim().length !== 0 && !/^http(s)?:\/\/.+/.test(this.state.charData.link.trim())
             ? (<div className="text-danger">Link must start with "http(s)://""</div>)
             : null}
         </div>
+        
       </div>
     );
   }

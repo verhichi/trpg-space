@@ -21,13 +21,13 @@ class Detail extends Component {
 
       if (detail.type === 'value'){
         return (
-          <div className="stat-inp-cont d-flex mb-2 font-size-lg">
+          <div className="stat-inp-cont mb-1 font-size-lg">
             <span className="font-weight-bold">{detail.label}</span>: {showStat ? detail.value : '???'}
           </div>
         );
       } else {
         return (
-          <div className="stat-inp-cont d-flex mb-2 font-size-lg">
+          <div className="stat-inp-cont mb-1 font-size-lg">
             <span className="font-weight-bold">{detail.label}</span>: {showStat ? detail.value : '???'} / {showStat ? detail.maxValue : '???'}
           </div>
         );

@@ -89,3 +89,39 @@
 .stat-label{
   flex-basis: 60px;
 }
+
+.profile-circle{
+  border: 5px solid $disabled-clr;
+  border-radius: 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100px;
+  height: 100px;
+  z-index: 90;
+}
+
+.profile-side-btn{
+  background: $disabled-clr;
+  border: none;
+  border-radius: 50%;
+  bottom: -5px;
+  color: $white-clr;
+  height: 30px;
+  line-height: 30px;
+  right: -5px;
+  width: 30px;
+  z-index: 100;
+}
+
+.profile-remove-btn{
+  background: $disabled-clr;
+  border: none;
+  border-radius: 50%;
+  bottom: 0;
+  color: $white-clr;
+  height: 30px;
+  line-height: 30px;
+  left: 0;
+  width: 30px;
+  z-index: 100;
+}
