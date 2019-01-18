@@ -116,6 +116,7 @@ export const initialState = {
     // }
   ],
   chatLog: [
+    { type: 'help', id: 'abc' }
     // {
     //   type: 'text'
     // }

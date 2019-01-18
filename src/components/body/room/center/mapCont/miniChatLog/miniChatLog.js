@@ -26,7 +26,11 @@ class MiniChatLog extends Component {
     };
 
     const miniChatLog = this.props.miniChatLog.map(chatData => {
-      return miniChatType[chatData.type](chatData);
+      if (chatData.type === 'help'){
+        return null;
+      } else {
+        return miniChatType[chatData.type](chatData);
+      }
     });
 
     return (

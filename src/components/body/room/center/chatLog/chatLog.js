@@ -53,16 +53,16 @@ class ChatLog extends Component {
       join:    (chatData) => <ChatJoin  chatData={chatData} key={chatData.id}/>,
       leave:   (chatData) => <ChatLeave chatData={chatData} key={chatData.id}/>,
       newHost: (chatData) => <ChatHost  chatData={chatData} key={chatData.id}/>,
+      help:    (chatData) => <ChatHelp                      key={chatData.id}/>
     };
 
-    const chatLog = this.props.chatLog.map((chatData, idx) => {
+    const chatLog = this.props.chatLog.slice(-30).map((chatData, idx) => {
       return chatType[chatData.type](chatData, idx);
     });
 
     return (
       <div className="chat-log-cont f-grow-1">
         <div className={`chat-log-wrap d-flex f-dir-col h-100 ${toggleClass}`} ref={this.myRef}>
-          <ChatHelp/>
           {chatLog}
         </div>
       </div>
