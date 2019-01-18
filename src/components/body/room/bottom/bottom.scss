@@ -17,19 +17,6 @@
   position: relative;
   width: 50px;
 
-  &:hover::after{
-    background: rgba(0, 0, 0, 0.1);
-    bottom: 0;
-    content: "";
-    display: block;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 100%;
-  }
-
   &[disabled]{
     background: #555;
   }

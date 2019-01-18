@@ -1,26 +1,61 @@
 @import '../../../../../styles/partials/variables';
 @import '../../../../../styles/partials/mediaQueries';
 
+// // SIDE BAR(NO ANIMATION)
+// .list-cont{
+//   background: $secondary-clr;
+//   border-bottom: 1px solid $primary-clr;
+//   border-top: 1px solid $primary-clr;
+//   height: 100%;
+//   overflow: hidden;
+//   position: absolute;
+//   width: 0;
+//   z-index: 70;
+//
+//   @include md{
+//     height: auto;
+//     position: static;
+//   }
+//
+//   &.is-active{
+//     width: 100%;
+//
+//     @include md{
+//       width: 350px;
+//     }
+//   }
+// }
+
+// SIDE BAR (WITH SLIDEIN ANIMATION)
 .list-cont{
   background: $secondary-clr;
   border-bottom: 1px solid $primary-clr;
   border-top: 1px solid $primary-clr;
   height: 100%;
+  left: -100%;
   overflow: hidden;
   position: absolute;
-  width: 0;
+  transition: left 0.3s;
+  width: 100%;
   z-index: 70;
 
+  & + div{
+    transition: margin-left 0.3s;
+  }
+
   @include md{
-    height: auto;
-    position: static;
+    left: -350px;
+    position: absolute;
+    width: 350px;
   }
 
   &.is-active{
-    width: 100%;
+    left: 0;
 
-    @include md{
-      width: 350px;
+    & + div{
+      @include md{
+        margin-left: 350px;
+      }
     }
   }
 }
