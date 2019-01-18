@@ -68,6 +68,12 @@ class Bottom extends Component {
     socket.on('chat', (content) => {
       this.props.addToChatLog(content);
     });
+
+    socket.on('leave', (userId) => {
+      this.setState({ checkedUsers: this.state.checkedUsers.filter(id => id !== userId) }, () => {
+        if (this.state.checkedUsers.length === 0) this.setState({ checkedAll: true });
+      });
+    });
   }
 
   handleFocus (e){
@@ -169,7 +175,7 @@ class Bottom extends Component {
 
   handleUserCheckChange (e, userId){
     this.state.checkedUsers.includes(userId)
-      ? this.setState( { checkedUsers: this.state.checkedUsers.filter(id => id !== userId) })
+      ? this.setState( { checkedUsers: this.state.checkedUsers.filter(id => id !== userId ) })
       : this.setState( { checkedUsers: [ ...this.state.checkedUsers, userId] });
   }
 
@@ -183,7 +189,7 @@ class Bottom extends Component {
     const hideOnFocusClass = this.state.inputFocus ? 'd-none' : '';
     const showOnFocusClass = this.state.inputFocus ? '' : 'd-none';
 
-    const userCheckList = this.props.userList.map(user => {
+    const userCheckList = this.props.userList.filter(user => user.id !== this.props.id).map(user => {
       return (<div className="one-line-ellipsis"><label><input className="p-1" type="checkbox" value={user.id} checked={this.state.checkedUsers.includes(user.id)} onChange={(e) => this.handleUserCheckChange(e, user.id)}/>{user.name}</label></div>);
     });
 
