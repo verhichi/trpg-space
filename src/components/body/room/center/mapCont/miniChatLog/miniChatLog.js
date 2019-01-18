@@ -4,20 +4,25 @@ import uuid from 'uuid';
 // Style
 import './miniChatLog.scss';
 
-// Font Awesome Component
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// Components
+import ChatHost from './chatHost/chatHost';
+import ChatImage from './chatImage/chatImage';
+import ChatJoin from './chatJoin/chatJoin';
+import ChatLeave from './chatLeave/chatLeave';
+import ChatRoll from './chatRoll/chatRoll';
+import ChatText from './chatText/chatText';
 
 class MiniChatLog extends Component {
   render() {
     const contKey = uuid.v4();
 
     const miniChatType = {
-      text:    (chatData) => <div className="mini-chat" key={chatData.id}><FontAwesomeIcon icon="comment"/> [{chatData.name}] {chatData.text}</div>,
-      roll:    (chatData) => <div className="mini-chat" key={chatData.id}><FontAwesomeIcon icon="dice"/>[{chatData.name}] [{chatData.diceSetting}] {chatData.result} - {chatData.total}</div>,
-      image:   (chatData) => <div className="mini-chat" key={chatData.id}><FontAwesomeIcon icon="file-image"/>[{chatData.name}] -Check chat to view image-</div>,
-      join:    (chatData) => <div className="mini-chat" key={chatData.id}>{chatData.name} has joined the room</div>,
-      leave:   (chatData) => <div className="mini-chat" key={chatData.id}>{chatData.name} has left the room</div>,
-      newHost: (chatData) => <div className="mini-chat" key={chatData.id}>{chatData.name} is now the new host</div>
+      text:    (chatData) => <ChatText  chatData={chatData} key={chatData.id}/>,
+      roll:    (chatData) => <ChatRoll  chatData={chatData} key={chatData.id}/>,
+      image:   (chatData) => <ChatImage chatData={chatData} key={chatData.id}/>,
+      join:    (chatData) => <ChatJoin  chatData={chatData} key={chatData.id}/>,
+      leave:   (chatData) => <ChatLeave chatData={chatData} key={chatData.id}/>,
+      newHost: (chatData) => <ChatHost  chatData={chatData} key={chatData.id}/>,
     };
 
     const miniChatLog = this.props.miniChatLog.map(chatData => {
