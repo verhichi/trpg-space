@@ -228,30 +228,4 @@ class Bottom extends Component {
   }
 }
 
-// <div className="room-bottom-cont" ref={node => this.node = node} onClick={this.handleOnFocusClick}>
-//   <div className="chat-cont">
-//     <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleSidebarClick}>
-//       <FontAwesomeIcon icon="columns"/>
-//     </div>
-//     <div className="p-relative" ref={this.diceRef}>
-//       <DiceBalloon />
-//       <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleDiceSettingClick}>
-//         <FontAwesomeIcon icon="dice"/>
-//       </div>
-//     </div>
-//     <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleCenterModeClick}>
-//       {this.props.centerMode === 'chat'
-//         ? <FontAwesomeIcon icon="map-marked-alt"/>
-//         : <FontAwesomeIcon icon="comments"/>}
-//     </div>
-//     <textarea className="chat-inp" placeholder="Enter text here" value={this.state.chatText} onChange={this.handleChange} onFocus={this.handleFocus} onBlur={this.handleBlur} onKeyDown={this.handleKeyDown} ></textarea>
-//     <button className="chat-bar-btn btn-hot cursor-pointer" disabled={isDisabled} onClick={this.handleSendClick}>
-//       <FontAwesomeIcon icon="paper-plane"/>
-//     </button>
-//     <div className={`chat-bar-btn cursor-pointer align-center ${showOnFocusClass}`} onClick={this.handleImageClick}>
-//       <FontAwesomeIcon icon="paperclip"/>
-//     </div>
-//   </div>
-// </div>
-
 export default connect(mapStateToProps, mapDispatchToProps)(Bottom);
