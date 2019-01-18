@@ -103,6 +103,7 @@ class Bottom extends Component {
       text: this.state.chatText.trim(),
       private: !this.state.checkedAll,
       sendTo: this.state.checkedUsers,
+      sendToNames: this.state.checkedUsers.map(id => this.props.userList.find(user => user.id === id).name).join(', '),
       name
     };
 
@@ -123,6 +124,7 @@ class Bottom extends Component {
           text: this.state.chatText.trim(),
           private: !this.state.checkedAll,
           sendTo: this.state.checkedUsers,
+          sendToNames: this.state.checkedUsers.map(id => this.props.userList.find(user => user.id === id).name).join(', '),
           name
         };
 
@@ -190,7 +192,7 @@ class Bottom extends Component {
     const showOnFocusClass = this.state.inputFocus ? '' : 'd-none';
 
     const userCheckList = this.props.userList.filter(user => user.id !== this.props.id).map(user => {
-      return (<div className="one-line-ellipsis"><label><input className="p-1" type="checkbox" value={user.id} checked={this.state.checkedUsers.includes(user.id)} onChange={(e) => this.handleUserCheckChange(e, user.id)}/>{user.name}</label></div>);
+      return (<div className="private-chat-user one-line-ellipsis"><label><input className="p-1" type="checkbox" value={user.id} checked={this.state.checkedUsers.includes(user.id)} onChange={(e) => this.handleUserCheckChange(e, user.id)}/>{user.name}</label></div>);
     });
 
     return (
@@ -213,7 +215,7 @@ class Bottom extends Component {
           <div className="private-chat-btn f-shrink-0 p-relative cursor-pointer align-center">
             <div className="private-chat-balloon p-2 p-absolute align-left">
               <div>Send message to:</div>
-              <div style={{ borderBottom: this.state.checkedAll ? 'none' : '1px solid #ccc' }}><label><input type="checkbox" checked={this.state.checkedAll} onChange={this.handleAllCheckChange}/>Everyone</label></div>
+              <div><label><input type="checkbox" checked={this.state.checkedAll} onChange={this.handleAllCheckChange}/>Everyone</label></div>
               { this.state.checkedAll
                   ? null
                   : userCheckList}

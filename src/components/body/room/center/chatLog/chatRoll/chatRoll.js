@@ -10,12 +10,12 @@ class ChatRoll extends Component {
     return(
       <div className={`chat-log mb-3 ${selfClass}`}>
         <div className="chat-log-head">
-          <span className="font-size-lg font-weight-bold pr-2">{this.props.chatData.name}</span>
-          <span className="pr-2">{this.props.chatData.time}</span>
-          <span>[{this.props.chatData.diceSetting}]</span>
           {this.props.chatData.private
-            ? (<span className="chat-log-private ml-2 p-1 font-size-xs">PRIVATE</span>)
+            ? (<span className="chat-log-private">[PRIVATE] </span>)
             : null}
+          <span className="chat-log-user">{this.props.chatData.name}</span>
+          <span className="chat-log-time">{this.props.chatData.time}</span>
+          <span>[{this.props.chatData.diceSetting}]</span>
         </div>
         <div className="chat-log-body p-2 ml-3">
           <div className="d-flex">

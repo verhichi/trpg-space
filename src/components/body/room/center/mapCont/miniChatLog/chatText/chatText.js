@@ -21,11 +21,10 @@ class ChatText extends Component {
       return (
         <div className="mini-chat">
           <FontAwesomeIcon icon="comment"/>
-          [{this.props.chatData.name}]
           {this.props.chatData.private
             ? <span>[PRIVATE]</span>
             : null}
-           {this.props.chatData.text}
+           [{this.props.chatData.name}] {this.props.chatData.text}
         </div>
       );
     } else {

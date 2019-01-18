@@ -11,7 +11,6 @@
   }
 }
 
-
 .chat-log-wrap{
   overflow-y: scroll;
 
@@ -20,14 +19,6 @@
     padding-right: 47px;
   }
 }
-
-
-.chat-log-user{
-  font-size: $font-size-lg;
-  font-weight: bold;
-  padding-right: 10px;
-}
-
 
 .chat-log{
   &.other-chat .chat-log-body{
@@ -75,6 +66,16 @@
   100%{ left: 0; }
 }
 
+.chat-log-user{
+  font-size: $font-size-md;
+  font-weight: bold;
+  padding-right: 5px;
+}
+
+.chat-log-time{
+  padding-right: 10px;
+}
+
 .chat-log-system{
   background: $secondary-clr;
   border-radius: 1px;
@@ -83,8 +84,5 @@
 }
 
 .chat-log-private{
-  background: $tertiary-clr;
-  border-radius: 1px;
   color: $white-clr;
-  display: inline-block;
 }

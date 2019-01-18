@@ -19,14 +19,18 @@ class ChatText extends Component {
     if (this.props.chatData.self || !this.props.chatData.private || (this.props.chatData.private && this.props.chatData.sendTo.includes(this.props.id))){
       return (<div className={`chat-log mb-3 ${selfClass}`}>
                  <div className="chat-log-head">
+                   {this.props.chatData.private
+                     ? (<span className="chat-log-private">[PRIVATE] </span>)
+                     : null}
                    <span className="chat-log-user">{this.props.chatData.name}</span>
                    { this.props.chatData.private && !this.props.chatData.self
                        ? <span className="chat-log-user"> > {this.props.userList.find(user => user.id === this.props.id).name}</span>
                        : null }
+                   { this.props.chatData.private && this.props.chatData.self
+                       ? <span className="chat-log-user"> > {this.props.chatData.sendToNames}</span>
+                       : null }
                    <span className="chat-log-time">{this.props.chatData.time}</span>
-                   {this.props.chatData.private
-                     ? (<span className="chat-log-private ml-2 p-1 font-size-xs">PRIVATE</span>)
-                     : null}
+
                  </div>
                  <div className="chat-log-body p-2 ml-3">
                    {this.props.chatData.text}
