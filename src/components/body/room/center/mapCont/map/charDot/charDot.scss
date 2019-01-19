@@ -54,6 +54,9 @@
   bottom: calc(100% + 8px);
   color: $white-clr;
   display: none;
+  pointer-events: none;
+  touch-callout: none;
+  user-select: none;
   width: 100px;
 
   &:before{

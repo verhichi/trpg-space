@@ -28,12 +28,16 @@ class CharDot extends Component {
     };
 
     this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handleTouchStart = this.handleTouchStart.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
+    this.handleTouchEnd = this.handleTouchEnd.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
+    this.handleTouchMove = this.handleTouchMove.bind(this);
   }
 
   componentWillUnmount (){
     document.querySelector('.map-img-overlay').removeEventListener('mousemove', this.handleMouseMove);
+    document.querySelector('.map-img-overlay').removeEventListener('touchmove', this.handleMouseMove);
   }
 
   handleMouseDown (e){
@@ -48,6 +52,18 @@ class CharDot extends Component {
     }
   }
 
+  handleTouchStart (e){
+    e.stopPropagation();
+    if (this.props.id === this.props.charData.ownerId){
+      this.setState({
+        isCharMoveMode: true,
+        offsetX: Math.floor(e.target.offsetWidth / 2),
+        offsetY: Math.floor(e.target.offsetHeight / 2)
+      });
+      document.querySelector('.map-img-overlay').addEventListener('touchmove', this.handleTouchMove);
+    }
+  }
+
   handleMouseMove (e){
     e.stopPropagation();
     if (this.state.isCharMoveMode){
@@ -55,6 +71,18 @@ class CharDot extends Component {
         charId: this.props.charData.charId,
         x: e.pageX - document.querySelector('.map-img-overlay').getBoundingClientRect().left - this.state.offsetX,
         y: e.pageY - document.querySelector('.map-img-overlay').getBoundingClientRect().top - this.state.offsetY
+      });
+    }
+  }
+
+  handleTouchMove (e){
+    e.stopPropagation();
+
+    if (this.state.isCharMoveMode){
+      this.props.editMapChar({
+        charId: this.props.charData.charId,
+        x: e.touches[0].pageX - document.querySelector('.map-img-overlay').getBoundingClientRect().left - this.state.offsetX,
+        y: e.touches[0].pageY - document.querySelector('.map-img-overlay').getBoundingClientRect().top - this.state.offsetY
       });
     }
   }
@@ -69,6 +97,21 @@ class CharDot extends Component {
       });
     }
     document.querySelector('.map-img-overlay').removeEventListener('mousemove', this.handleMouseMove);
+    this.setState({ isCharMoveMode: false });
+  }
+
+  handleTouchEnd (e){
+    e.stopPropagation();
+    console.log('touch End!');
+
+    if (this.state.isCharMoveMode){
+      socket.emit('mapChar', this.props.roomId, {
+        charId: this.props.charData.charId,
+        x: this.props.charData.map.x,
+        y: this.props.charData.map.y
+      });
+    }
+    document.querySelector('.map-img-overlay').removeEventListener('touchmove', this.handleMouseMove);
     this.setState({ isCharMoveMode: false });
   }
 
@@ -92,7 +135,7 @@ class CharDot extends Component {
     });
 
     return (
-      <div className={`map-char-profile ${toggleGrabClass}`} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} onMouseMove={this.handleMouseMove} style={{borderColor: this.props.charData.general.color, backgroundImage: `url(${this.props.charData.general.image})`, left: this.props.charData.map.x, top: this.props.charData.map.y}}>
+      <div className={`map-char-profile ${toggleGrabClass}`} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} onTouchStart={this.handleTouchStart} onTouchEnd={this.handleTouchEnd} style={{borderColor: this.props.charData.general.color, backgroundImage: `url(${this.props.charData.general.image})`, left: this.props.charData.map.x, top: this.props.charData.map.y}}>
         <div className="map-char-balloon p-absolute p-1 align-left cursor-default">
           <div className="font-size-md font-weight-bold pb-1 one-line-ellipsis">{charName}</div>
           { statList }
