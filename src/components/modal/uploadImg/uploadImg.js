@@ -136,35 +136,4 @@ class UploadImg extends Component {
 
 
 
-// const reader = new FileReader();
-// reader.readAsDataURL(this.fileInput.current.files[0]);
-//
-// reader.onload = () => {
-//   if (this.props.modalSetting.modalProp.type === 'chat'){
-//     const name = this.props.userList.find((user) => this.props.id === user.id).name;
-//     const imgData = {
-//       type: 'image',
-//       src: reader.result,
-//       name
-//     };
-//
-//     this.props.addToChatLog({ ...imgData, self: true });
-//     socket.emit('chat', this.props.roomId, { ...imgData, self: false });
-//   } else {
-//     const imgId = uuid.v4();
-//     const backgroundData = {
-//       id: imgId,
-//       src: reader.result
-//     };
-//
-//     this.props.editMapImage(backgroundData);
-//     socket.emit('mapImage', this.props.roomId, backgroundData);
-//
-//     this.props.removeAllMapChar();
-//     socket.emit('removeAllMapChar');
-//   }
-//
-//   this.props.hideModal();
-// };
-
 export default connect(mapStateToProps, mapDispatchToProps)(UploadImg);
