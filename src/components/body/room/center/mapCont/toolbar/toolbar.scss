@@ -3,16 +3,19 @@
 
 .map-toolbar{
   background: $secondary-clr;
-  top: 25px;
+  border: 1px solid $black-clr;
   color: $white-clr;
   left: 15px;
-  position: absolute;
   z-index: 65;
 }
 
-.map-toolbar-btn-cont{
-  position: relative;
+.map-toolbar > div{
+  border-right: 1px solid $black-clr;
 }
+
+// .map-toolbar-btn-cont{
+//   position: relative;
+// }
 
 .map-toolbar-btn{
   width: 50px;

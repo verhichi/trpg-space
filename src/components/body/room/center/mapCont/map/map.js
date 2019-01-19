@@ -95,7 +95,7 @@ class Map extends Component {
     });
 
     return (
-      <div className="map-img-cont h-100 align-center p-2">
+      <div className="map-img-cont f-grow-1 p-1">
         {this.props.mapSetting.image.src.length === 0
           ? null
           : (<div className={`map-img-overlay font-size-lg font-weight-bold d-inline-block p-relative ${togglePlaceCharClass} ${toggleMapGridClass}`}  onClick={this.handleImageClick} onDrop={this.handleDragDrop} onDragOver={this.handleDragOver}>

@@ -19,23 +19,14 @@ const mapStateToProps = (state) => {
   return { chatLog: state.chatLog };
 };
 
-// // Redux Map Dispatch To Props
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     setMapMode: (mode) => dispatch(setMapMode(mode)),
-//     addMapChar: (charData) => dispatch(addMapChar(charData)),
-//     editMapChar: (charData) => dispatch(editMapChar(charData)),
-//   };
-// };
-
 class MapCont extends Component {
   render() {
     const miniChatLog = this.props.chatLog.slice(-3);
 
     return (
-      <div className="map-cont f-grow-1">
-        <Map/>
+      <div className="map-cont d-flex f-dir-col f-grow-1">
         <Toolbar/>
+        <Map/>
         { miniChatLog.length === 0
             ? null
             : <MiniChatLog miniChatLog={miniChatLog}/>}
@@ -45,4 +36,3 @@ class MapCont extends Component {
 }
 
 export default connect(mapStateToProps)(MapCont);
-// export default MapCont;
