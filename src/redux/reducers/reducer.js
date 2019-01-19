@@ -118,7 +118,7 @@ export const initialState = {
   chatLog: [
     { type: 'help', id: 'abc' }
     // {
-    //   type: 'text'
+    //   type: 'text/help/image/join/leave/newHost/help,'
     // }
   ],
   sidebarTabMode: 'char',

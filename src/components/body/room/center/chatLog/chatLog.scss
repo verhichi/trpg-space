@@ -86,3 +86,16 @@
 .chat-log-private{
   color: $white-clr;
 }
+
+.chat-log-scroll-down{
+  background: rgba(100, 100, 100, 0.5);
+  bottom: 0;
+  border-bottom: 1px solid $black-clr;
+  color: $white-clr;
+  font-size: $font-size-lg;
+  height: 50px;
+  line-height: 50px;
+  right: 0;
+  width: 50px;
+  z-index: 2;
+}

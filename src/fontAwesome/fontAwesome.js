@@ -43,7 +43,8 @@ import {
   faExclamationCircle,
   faTrash,
   faCamera,
-  faUserSecret
+  faUserSecret,
+  faArrowDown
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -87,5 +88,6 @@ library.add(
   faExclamationCircle,
   faTrash,
   faCamera,
-  faUserSecret
+  faUserSecret,
+  faArrowDown
 );

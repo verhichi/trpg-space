@@ -224,10 +224,10 @@ class Bottom extends Component {
             <span className={this.state.checkedAll ? 'd-none' : ''}><FontAwesomeIcon icon="user-secret"/></span>
           </div>
           <textarea className="chat-inp f-grow-1 pr-2" placeholder="Enter text here" value={this.state.chatText} onChange={this.handleChange} onFocus={this.handleFocus} onBlur={this.handleBlur} onKeyDown={this.handleKeyDown} ></textarea>
-          <button className="chat-bar-btn btn-hot cursor-pointer" disabled={isDisabled} onClick={this.handleSendClick}>
+          <button className="chat-bar-btn btn-hot cursor-pointer f-shrink-0" disabled={isDisabled} onClick={this.handleSendClick}>
             <FontAwesomeIcon icon="paper-plane"/>
           </button>
-          <div className={`chat-bar-btn cursor-pointer align-center ${showOnFocusClass}`} onClick={this.handleImageClick}>
+          <div className={`chat-bar-btn cursor-pointer align-center f-shrink-0 ${showOnFocusClass}`} onClick={this.handleImageClick}>
             <FontAwesomeIcon icon="paperclip"/>
           </div>
         </div>
