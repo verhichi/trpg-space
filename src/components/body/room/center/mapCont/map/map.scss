@@ -2,14 +2,13 @@
 @import '../../../../../../styles/partials/mediaQueries';
 
 .map-img-cont{
-  overflow: scroll;
   z-index: 50;
 }
 
 .map-img-overlay{
+  left: 0;
   tap-highlight-color: rgba(0,0,0,0);
   top: 0;
-  left: 0;
 
   &.is-place-char-active::before{
     background: rgba(0, 0, 0, 0.5);
