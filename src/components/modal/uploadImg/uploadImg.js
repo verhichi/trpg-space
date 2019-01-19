@@ -39,7 +39,10 @@ class UploadImg extends Component {
     this.state = {
       fileExist: false,
       fileSizeError: false,
-      fileTypeError: false
+      fileTypeError: false,
+      src: '',
+      height: 0,
+      width: 0
     };
 
     this.fileInput = React.createRef();
@@ -48,50 +51,59 @@ class UploadImg extends Component {
   }
 
   handleButtonClick (e){
-    e.preventDefault();
 
-    const reader = new FileReader();
-    reader.readAsDataURL(this.fileInput.current.files[0]);
+    if (this.props.modalSetting.modalProp.type === 'chat'){
+      const name = this.props.userList.find((user) => this.props.id === user.id).name;
+      const imgData = {
+        type: 'image',
+        src: this.state.src,
+        height: this.state.height,
+        width: this.state.width,
+        name
+      };
 
-    reader.onload = () => {
+      this.props.addToChatLog({ ...imgData, self: true });
+      socket.emit('chat', this.props.roomId, { ...imgData, self: false });
+    } else {
+      const backgroundData = {
+        id: uuid.v4(),
+        src: this.state.src,
+        height: this.state.height,
+        width: this.state.width,
+      };
 
-      if (this.props.modalSetting.modalProp.type === 'chat'){
-        const name = this.props.userList.find((user) => this.props.id === user.id).name;
-        const imgData = {
-          type: 'image',
-          src: reader.result,
-          name
-        };
+      this.props.editMapImage(backgroundData);
+      socket.emit('mapImage', this.props.roomId, backgroundData);
 
-        this.props.addToChatLog({ ...imgData, self: true });
-        socket.emit('chat', this.props.roomId, { ...imgData, self: false });
-      } else {
-        const imgId = uuid.v4();
-        const backgroundData = {
-          id: imgId,
-          src: reader.result
-        };
+      this.props.removeAllMapChar();
+      socket.emit('removeAllMapChar');
+    }
 
-        this.props.editMapImage(backgroundData);
-        socket.emit('mapImage', this.props.roomId, backgroundData);
-
-        this.props.removeAllMapChar();
-        socket.emit('removeAllMapChar');
-      }
-
-      this.props.hideModal();
-    };
+    this.props.hideModal();
   }
 
   handleFileChange (e){
     e.preventDefault();
     const imagePattern = /\.(jpg|jpeg|png|gif)$/i;
     const file = this.fileInput.current.files[0];
-    this.setState({
-      fileExist: file.name.length !== 0,
-      fileTypeError: !imagePattern.test(file.name),
-      fileSizeError: file.size > 1000000
-    });
+
+    const reader = new FileReader();
+    reader.readAsDataURL(this.fileInput.current.files[0]);
+
+    reader.onload = () => {
+      const image = new Image();
+      image.onload = () => {
+        this.setState({
+          fileExist: file.name.length !== 0,
+          fileTypeError: !imagePattern.test(file.name),
+          fileSizeError: file.size > 1000000,
+          src: reader.result,
+          height: image.height,
+          width: image.width,
+        });
+      };
+      image.src = reader.result;
+    }
   }
 
   render() {
@@ -121,5 +133,38 @@ class UploadImg extends Component {
     );
   }
 }
+
+
+
+// const reader = new FileReader();
+// reader.readAsDataURL(this.fileInput.current.files[0]);
+//
+// reader.onload = () => {
+//   if (this.props.modalSetting.modalProp.type === 'chat'){
+//     const name = this.props.userList.find((user) => this.props.id === user.id).name;
+//     const imgData = {
+//       type: 'image',
+//       src: reader.result,
+//       name
+//     };
+//
+//     this.props.addToChatLog({ ...imgData, self: true });
+//     socket.emit('chat', this.props.roomId, { ...imgData, self: false });
+//   } else {
+//     const imgId = uuid.v4();
+//     const backgroundData = {
+//       id: imgId,
+//       src: reader.result
+//     };
+//
+//     this.props.editMapImage(backgroundData);
+//     socket.emit('mapImage', this.props.roomId, backgroundData);
+//
+//     this.props.removeAllMapChar();
+//     socket.emit('removeAllMapChar');
+//   }
+//
+//   this.props.hideModal();
+// };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UploadImg);

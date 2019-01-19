@@ -13,7 +13,27 @@ const mapDispatchToProps = (dispatch) => {
 class ChatImage extends Component {
   constructor (props){
     super(props);
+    this.state = {
+      height: 0,
+      width: 0
+    };
     this.handleImageClick = this.handleImageClick.bind(this);
+  }
+
+  componentWillMount (){
+    const isImgWide = this.props.chatData.width - this.props.chatData.height >= 0;
+
+    if (isImgWide){
+      this.setState({
+        height: Math.floor(200 * this.props.chatData.height/this.props.chatData.width),
+        width: 200
+      });
+    } else {
+      this.setState({
+        height: 300,
+        width: Math.floor(300 * this.props.chatData.width/this.props.chatData.height)
+      });
+    }
   }
 
   handleImageClick (e){
@@ -34,7 +54,7 @@ class ChatImage extends Component {
           <span className="pr-2">{this.props.chatData.time}</span>
         </div>
         <div className="chat-log-body p-2 ml-3">
-          <img className="chat-img cursor-pointer" src={this.props.chatData.src} onClick={this.handleImageClick}/>
+          <img className="chat-img cursor-pointer" src={this.props.chatData.src} onClick={this.handleImageClick} style={this.state}/>
         </div>
       </div>
     );
