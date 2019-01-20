@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ChromePicker } from 'react-color';
+import { TwitterPicker } from 'react-color';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -179,7 +179,7 @@ class General extends Component {
             <div className="inp-clr-circle f-shrink-0" style={{background: this.state.charData.color}}></div>
             <div className="pseudo-inp f-grow-1">{this.state.charData.color}</div>
             <div className={`p-absolute t-100 ${toggleColorPickerClass}`}>
-              <ChromePicker color={this.state.charData.color} disableAlpha={true} onChange={this.handleColorChange}/>
+              <TwitterPicker color={this.state.charData.color} onChange={this.handleColorChange}/>
             </div>
           </div>
         </div>

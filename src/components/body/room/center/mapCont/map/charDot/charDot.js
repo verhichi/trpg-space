@@ -56,7 +56,6 @@ class CharDot extends Component {
 
   handleTouchStart (e){
     e.stopPropagation();
-    e.preventDefault();
 
     if (this.props.id === this.props.charData.ownerId){
       this.setState({
@@ -111,8 +110,7 @@ class CharDot extends Component {
 
   handleTouchEnd (e){
     e.stopPropagation();
-    e.preventDefault();
-    
+
     if (this.state.isCharMoveMode){
       socket.emit('mapChar', this.props.roomId, {
         charId: this.props.charData.charId,
