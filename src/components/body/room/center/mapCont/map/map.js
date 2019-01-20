@@ -63,8 +63,8 @@ class Map extends Component {
     this.setState({
       isMapMoveMode: true,
       mouseOffset: {
-        offsetX: e.nativeEvent.offsetX,
-        offsetY: e.nativeEvent.offsetY
+        offsetX: Math.floor(e.nativeEvent.offsetX * this.props.mapSetting.image.scale),
+        offsetY: Math.floor(e.nativeEvent.offsetY * this.props.mapSetting.image.scale)
       }
     });
     document.querySelector('.map-img-cont').addEventListener('mousemove', this.handleMouseMove);
@@ -76,7 +76,7 @@ class Map extends Component {
       isMapMoveMode: true,
       mouseOffset: {
         offsetX: e.touches[0].pageX - parseInt(e.target.style.left) - sidebarWidth,
-        offsetY: e.touches[0].pageY - (parseInt(e.target.style.top) + 140)
+        offsetY: e.touches[0].pageY - parseInt(e.target.style.top) - 140
       }
     });
     document.querySelector('.map-img-cont').addEventListener('touchmove', this.handleTouchMove);
@@ -84,6 +84,7 @@ class Map extends Component {
 
   handleMouseMove (e){
     if (this.state.isMapMoveMode){
+
       this.props.editMapPosition(
         e.pageX - document.querySelector('.map-img-cont').getBoundingClientRect().left - this.state.mouseOffset.offsetX,
         e.pageY - document.querySelector('.map-img-cont').getBoundingClientRect().top - this.state.mouseOffset.offsetY
@@ -148,7 +149,7 @@ class Map extends Component {
 
     return (
       <div className="map-img-cont p-relative f-grow-1 p-1">
-        <div className={`map-img-overlay font-size-lg font-weight-bold d-inline-block p-absolute align-center ${togglePlaceCharClass} ${toggleMapGridClass}`}  onClick={this.handleImageClick} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} onTouchStart={this.handleTouchStart} onTouchEnd={this.handleTouchEnd} style={{ left: this.props.mapSetting.image.left, top: this.props.mapSetting.image.top}}>
+        <div className={`map-img-overlay font-size-lg font-weight-bold d-inline-block p-absolute align-center ${togglePlaceCharClass} ${toggleMapGridClass}`}  onClick={this.handleImageClick} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} onTouchStart={this.handleTouchStart} onTouchEnd={this.handleTouchEnd} style={{ left: this.props.mapSetting.image.left, top: this.props.mapSetting.image.top, transform: `scale(${this.props.mapSetting.image.scale})`}}>
            {mapCharDots}
            <img className="map-img p-relative align-center" src={this.props.mapSetting.image.src}/>
          </div>
