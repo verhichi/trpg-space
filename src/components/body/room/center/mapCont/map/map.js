@@ -49,15 +49,17 @@ class Map extends Component {
 
     this.handleImageClick = this.handleImageClick.bind(this);
     this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handleTouchStart = this.handleTouchStart.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
+    this.handleTouchEnd = this.handleTouchEnd.bind(this);
     this.handleMouseMove = this.handleMouseMove.bind(this);
+    this.handleTouchMove = this.handleTouchMove.bind(this);
   }
 
   componentWillUnmount (){
     document.querySelector('.map-img-cont').removeEventListener('mousemove', this.handleMouseMove);
+    document.querySelector('.map-img-cont').removeEventListener('touchmove', this.handleTouchMove);
   }
-
-
 
   handleMouseDown (e){
     this.setState({
@@ -68,6 +70,17 @@ class Map extends Component {
       }
     });
     document.querySelector('.map-img-cont').addEventListener('mousemove', this.handleMouseMove);
+  }
+
+  handleTouchStart (e){
+    this.setState({
+      isMapMoveMode: true,
+      mouseOffset: {
+        offsetX: e.touches[0].pageX - parseInt(e.target.style.left),
+        offsetY: e.touches[0].pageY - (parseInt(e.target.style.top) + 140)
+      }
+    });
+    document.querySelector('.map-img-cont').addEventListener('touchmove', this.handleTouchMove);
   }
 
   handleMouseMove (e){
@@ -81,8 +94,25 @@ class Map extends Component {
     }
   }
 
+  handleTouchMove (e){
+    if (this.state.isMapMoveMode){
+      this.setState({
+        mapStyle: {
+          left: e.touches[0].pageX - document.querySelector('.map-img-cont').getBoundingClientRect().left - this.state.mouseOffset.offsetX,
+          top: e.touches[0].pageY - document.querySelector('.map-img-cont').getBoundingClientRect().top - this.state.mouseOffset.offsetY
+        }
+      });
+    }
+  }
+
   handleMouseUp (e){
     this.setState({ isMapMoveMode: false });
+    document.querySelector('.map-img-cont').removeEventListener('mousemove', this.handleMouseMove);
+  }
+
+  handleTouchEnd (e){
+    this.setState({ isMapMoveMode: false });
+    document.querySelector('.map-img-cont').removeEventListener('touchmove', this.handleTouchMove);
   }
 
 
@@ -123,7 +153,7 @@ class Map extends Component {
 
     return (
       <div className="map-img-cont p-relative f-grow-1 p-1">
-        <div className={`map-img-overlay font-size-lg font-weight-bold d-inline-block p-absolute align-center ${togglePlaceCharClass} ${toggleMapGridClass}`}  onClick={this.handleImageClick} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} onMouseMove={this.handleMouseMove} style={this.state.mapStyle}>
+        <div className={`map-img-overlay font-size-lg font-weight-bold d-inline-block p-absolute align-center ${togglePlaceCharClass} ${toggleMapGridClass}`}  onClick={this.handleImageClick} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} onTouchStart={this.handleTouchStart} onTouchEnd={this.handleTouchEnd} style={this.state.mapStyle}>
            {mapCharDots}
            <img className="map-img p-relative align-center" src={this.props.mapSetting.image.src}/>
          </div>

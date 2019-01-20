@@ -102,7 +102,6 @@ class CharDot extends Component {
 
   handleTouchEnd (e){
     e.stopPropagation();
-    console.log('touch End!');
 
     if (this.state.isCharMoveMode){
       socket.emit('mapChar', this.props.roomId, {
@@ -111,7 +110,7 @@ class CharDot extends Component {
         y: this.props.charData.map.y
       });
     }
-    document.querySelector('.map-img-overlay').removeEventListener('touchmove', this.handleMouseMove);
+    document.querySelector('.map-img-overlay').removeEventListener('touchmove', this.handleTouchMove);
     this.setState({ isCharMoveMode: false });
   }
 
