@@ -9,6 +9,7 @@
   max-width: 100%;
   opacity: 0;
   visibility: hidden;
+  z-index: 51;
 
   @include md{
     font-size: $font-size-lg;
