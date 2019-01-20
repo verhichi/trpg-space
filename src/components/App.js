@@ -13,6 +13,17 @@ import Body from './body/body';
 import Modal from './modal/modal';
 
 class App extends Component {
+  constructor (props){
+    super(props);
+    window.addEventListener('touchmove', function(e){
+      e.preventDefault();
+    }, {passive: false} );
+
+    document.querySelector('#root').addEventListener('touchmove', function (e){
+      e.stopPropagation();
+    });
+  }
+
   render() {
     return (
       <Fragment>

@@ -43,6 +43,7 @@ class CharDot extends Component {
 
   handleMouseDown (e){
     e.stopPropagation();
+    e.preventDefault();
     if (this.props.id === this.props.charData.ownerId){
       this.setState({
         isCharMoveMode: true,
@@ -55,6 +56,8 @@ class CharDot extends Component {
 
   handleTouchStart (e){
     e.stopPropagation();
+    e.preventDefault();
+
     if (this.props.id === this.props.charData.ownerId){
       this.setState({
         isCharMoveMode: true,
@@ -67,6 +70,8 @@ class CharDot extends Component {
 
   handleMouseMove (e){
     e.stopPropagation();
+    e.preventDefault();
+
     if (this.state.isCharMoveMode){
       this.props.editMapChar({
         charId: this.props.charData.charId,
@@ -78,6 +83,7 @@ class CharDot extends Component {
 
   handleTouchMove (e){
     e.stopPropagation();
+    e.preventDefault();
 
     if (this.state.isCharMoveMode){
       this.props.editMapChar({
@@ -90,6 +96,8 @@ class CharDot extends Component {
 
   handleMouseUp (e){
     e.stopPropagation();
+    e.preventDefault();
+
     if (this.state.isCharMoveMode){
       socket.emit('mapChar', this.props.roomId, {
         charId: this.props.charData.charId,
@@ -103,7 +111,8 @@ class CharDot extends Component {
 
   handleTouchEnd (e){
     e.stopPropagation();
-
+    e.preventDefault();
+    
     if (this.state.isCharMoveMode){
       socket.emit('mapChar', this.props.roomId, {
         charId: this.props.charData.charId,

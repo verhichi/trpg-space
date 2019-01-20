@@ -319,7 +319,10 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         mapSetting: {
           ...state.mapSetting,
-          image: action.imageData
+          image: {
+            ...state.mapSetting.image,
+            src: action.imageData.src
+          }
         }
       };
 

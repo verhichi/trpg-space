@@ -60,6 +60,8 @@ class Map extends Component {
   }
 
   handleMouseDown (e){
+    e.stopPropagation();
+    e.preventDefault();
     this.setState({
       isMapMoveMode: true,
       mouseOffset: {
@@ -71,18 +73,22 @@ class Map extends Component {
   }
 
   handleTouchStart (e){
-    const sidebarWidth = this.props.displaySidebar ? 350 : 0;
-    this.setState({
-      isMapMoveMode: true,
-      mouseOffset: {
-        offsetX: e.touches[0].pageX - parseInt(e.target.style.left) - sidebarWidth,
-        offsetY: e.touches[0].pageY - parseInt(e.target.style.top) - 140
-      }
-    });
-    document.querySelector('.map-img-cont').addEventListener('touchmove', this.handleTouchMove);
+    if (this.props.mapSetting.mode === ''){
+      const sidebarWidth = this.props.displaySidebar ? 350 : 0;
+      this.setState({
+        isMapMoveMode: true,
+        mouseOffset: {
+          offsetX: e.touches[0].pageX - parseInt(e.target.style.left) - sidebarWidth,
+          offsetY: e.touches[0].pageY - parseInt(e.target.style.top) - 140
+        }
+      });
+      document.querySelector('.map-img-cont').addEventListener('touchmove', this.handleTouchMove);
+    }
   }
 
   handleMouseMove (e){
+    e.stopPropagation();
+    e.preventDefault();
     if (this.state.isMapMoveMode){
 
       this.props.editMapPosition(
@@ -93,6 +99,8 @@ class Map extends Component {
   }
 
   handleTouchMove (e){
+    e.stopPropagation();
+    e.preventDefault();
     if (this.state.isMapMoveMode){
       this.props.editMapPosition(
         e.touches[0].pageX - document.querySelector('.map-img-cont').getBoundingClientRect().left - this.state.mouseOffset.offsetX,
@@ -102,6 +110,8 @@ class Map extends Component {
   }
 
   handleMouseUp (e){
+    e.stopPropagation();
+    e.preventDefault();
     this.setState({ isMapMoveMode: false });
     document.querySelector('.map-img-cont').removeEventListener('mousemove', this.handleMouseMove);
   }

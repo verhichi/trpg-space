@@ -52,11 +52,11 @@ class ChatLog extends Component {
     }
   }
 
-  handleScrollDownClick (){
+  handleScrollDownClick (e){
     this.myRef.current.scrollTop = Math.floor(this.myRef.current.scrollHeight);
   }
 
-  handleChatLogScroll (){
+  handleChatLogScroll (e){
     const scrollTop = Math.floor(this.myRef.current.scrollTop);
     const offsetHeight = Math.floor(this.myRef.current.offsetHeight);
     const scrollHeight =  Math.floor(this.myRef.current.scrollHeight);

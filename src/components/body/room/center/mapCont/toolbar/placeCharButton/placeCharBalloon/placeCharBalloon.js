@@ -11,7 +11,8 @@ const mapStateToProps = (state) => {
     id: state.id,
     roomId: state.roomId,
     charList: state.charList,
-    displayPlaceChar: state.displayPlaceChar
+    displayPlaceChar: state.displayPlaceChar,
+    mapSetting: state.mapSetting
   };
 };
 
@@ -45,7 +46,7 @@ class PlaceCharBalloon extends Component {
   }
 
   render() {
-    const isDisabled = this.state.charIdToPlace.length === 0 || !this.props.charList.some(char => char.charId === this.state.charIdToPlace);
+    const isDisabled = this.state.charIdToPlace.length === 0 || this.props.mapSetting.image.src.length === 0 || !this.props.charList.some(char => char.charId === this.state.charIdToPlace);
     const toggleClass = this.props.displayPlaceChar ? 'is-active' : '';
 
     const charOpt = this.props.charList.filter(char => this.props.id === char.ownerId).map((char) => {
