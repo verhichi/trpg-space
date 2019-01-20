@@ -93,7 +93,6 @@ class Map extends Component {
 
   handleTouchMove (e){
     if (this.state.isMapMoveMode){
-      const sidebarWidth = this.props.displaySidebar ? 350 : 0;
       this.props.editMapPosition(
         e.touches[0].pageX - document.querySelector('.map-img-cont').getBoundingClientRect().left - this.state.mouseOffset.offsetX,
         e.touches[0].pageY - document.querySelector('.map-img-cont').getBoundingClientRect().top - this.state.mouseOffset.offsetY

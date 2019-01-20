@@ -39,7 +39,10 @@ import {
   LOCK_NOTE,
   UNLOCK_NOTE,
   EDIT_NOTE,
-  EDIT_MAP_POSITION
+  EDIT_MAP_POSITION,
+  EDIT_MAP_SCALE,
+  SHOW_MAP_SCALE,
+  HIDE_MAP_SCALE
 } from '../constants/actionTypes';
 
 export const initialState = {
@@ -62,7 +65,8 @@ export const initialState = {
       src: '',
       id: '',
       left: 0,
-      top: 0
+      top: 0,
+      scale: 1
     },
     mode: '',
     charToPlace: ''
@@ -74,6 +78,7 @@ export const initialState = {
   displayPlaceChar: false,
   displayRemoveChar: false,
   displayMapGrid: false,
+  displayMapScale: false,
   userList: [
   //   {
   //   id: '123457',
@@ -473,6 +478,30 @@ const rootReducer = (state = initialState, action) => {
             top: action.top
           }
         }
+      };
+
+    case EDIT_MAP_SCALE:
+      return {
+        ...state,
+        mapSetting: {
+          ...state.mapSetting,
+          image: {
+            ...state.mapSetting.image,
+            scale: action.scale
+          }
+        }
+      };
+
+    case SHOW_MAP_SCALE:
+      return {
+        ...state,
+        displayMapScale: true
+      };
+
+    case HIDE_MAP_SCALE:
+      return {
+        ...state,
+        displayMapScale: false
       };
 
     default:

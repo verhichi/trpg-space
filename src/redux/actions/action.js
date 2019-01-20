@@ -37,7 +37,10 @@ import {
   LOCK_NOTE,
   UNLOCK_NOTE,
   EDIT_NOTE,
-  EDIT_MAP_POSITION
+  EDIT_MAP_POSITION,
+  EDIT_MAP_SCALE,
+  SHOW_MAP_SCALE,
+  HIDE_MAP_SCALE
 } from '../constants/actionTypes';
 
 export const resetState = () => {
@@ -262,4 +265,19 @@ export const editMapPosition = (left, top) => {
     left,
     top
   };
+};
+
+export const editMapScale = (scale) => {
+  return {
+    type: EDIT_MAP_SCALE,
+    scale
+  }
+};
+
+export const showMapScale = () => {
+  return { type: SHOW_MAP_SCALE };
+};
+
+export const hideMapScale = () => {
+  return { type: HIDE_MAP_SCALE };
 };

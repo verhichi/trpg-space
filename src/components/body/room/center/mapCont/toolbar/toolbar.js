@@ -11,6 +11,7 @@ import './toolbar.scss';
 // Component
 import PlaceCharButton from './placeCharButton/placeCharButton';
 import RemoveCharButton from './removeCharButton/removeCharButton';
+import ScaleMapButton from './scaleMapButton/scaleMapButton';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -78,6 +79,7 @@ class Toolbar extends Component {
             <FontAwesomeIcon icon="arrow-down" transform={{ rotate: 135 }}/>
           </div>
         </div>
+        <ScaleMapButton/>
       </div>
     );
   }

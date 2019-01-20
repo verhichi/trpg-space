@@ -72,7 +72,8 @@ class UploadImg extends Component {
         height: this.state.height,
         width: this.state.width,
         left: 0,
-        top: 0
+        top: 0,
+        scale: 1
       };
 
       this.props.editMapImage(backgroundData);
