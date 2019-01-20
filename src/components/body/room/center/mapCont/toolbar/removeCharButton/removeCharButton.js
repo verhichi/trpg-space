@@ -52,8 +52,11 @@ class RemoveCharButton extends Component {
     return (
       <div className="p-relative d-inline-block" ref= {this.removeCharRef}>
         <RemoveCharBalloon/>
-        <div className="map-toolbar-btn p-3 cursor-pointer" onClick={this.handleButtonClick}>
-          <FontAwesomeIcon icon="user-times"/>
+        <div className="map-toolbar-btn p-3 cursor-pointer align-center" onClick={this.handleButtonClick}>
+          <span className="fa-layers fa-fw">
+            <FontAwesomeIcon icon="times" transform="shrink-9 up-8"/>
+            <FontAwesomeIcon icon="street-view" transform="shrink-3 down-3"/>
+          </span>
         </div>
       </div>
     );
