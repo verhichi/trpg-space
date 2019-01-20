@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { showModal, showRemoveChar, hideRemoveChar, toggleMapGrid, showPlaceChar, hidePlaceChar } from '../../../../../../redux/actions/action';
+import { showModal, showRemoveChar, hideRemoveChar, toggleMapGrid, showPlaceChar, hidePlaceChar, editMapPosition } from '../../../../../../redux/actions/action';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -28,7 +28,8 @@ const mapDispatchToProps = (dispatch) => {
     hidePlaceChar: () => dispatch(hidePlaceChar()),
     showRemoveChar: () => dispatch(showRemoveChar()),
     hideRemoveChar: () => dispatch(hideRemoveChar()),
-    toggleMapGrid: () => dispatch(toggleMapGrid())
+    toggleMapGrid: () => dispatch(toggleMapGrid()),
+    editMapPosition: (left, top) => dispatch(editMapPosition(left, top))
   };
 };
 
@@ -38,8 +39,8 @@ class Toolbar extends Component {
 
     this.handleImageUploadClick = this.handleImageUploadClick.bind(this);
     this.handleToolbarMapGridClick = this.handleToolbarMapGridClick.bind(this);
+    this.handleToolbarMapPositionClick = this.handleToolbarMapPositionClick.bind(this);
   }
-
 
   handleImageUploadClick (e){
     this.props.showModal('uploadImg', {
@@ -47,6 +48,10 @@ class Toolbar extends Component {
       displayClose: true,
       type: 'map'
     });
+  }
+
+  handleToolbarMapPositionClick (e){
+    this.props.editMapPosition(0 ,0);
   }
 
   handleToolbarMapGridClick (e){
@@ -66,6 +71,11 @@ class Toolbar extends Component {
         <div className="p-relative d-inline-block">
           <div className="map-toolbar-btn p-3 cursor-pointer"  onClick={this.handleToolbarMapGridClick}>
             <FontAwesomeIcon icon="th"/>
+          </div>
+        </div>
+        <div className="p-relative d-inline-block">
+          <div className="map-toolbar-btn p-3 cursor-pointer"  onClick={this.handleToolbarMapPositionClick}>
+            <FontAwesomeIcon icon="arrow-down" transform={{ rotate: 135 }}/>
           </div>
         </div>
       </div>

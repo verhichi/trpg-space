@@ -18,7 +18,8 @@ const mapStateToProps = (state) => {
     isMobile: state.isMobile,
     mapSetting: state.mapSetting,
     displayPlaceChar: state.displayPlaceChar,
-    displayMapGrid: state.displayMapGrid
+    displayMapGrid: state.displayMapGrid,
+    displaySidebar: state.displaySidebar
   };
 };
 
@@ -70,10 +71,11 @@ class Map extends Component {
   }
 
   handleTouchStart (e){
+    const sidebarWidth = this.props.displaySidebar ? 350 : 0;
     this.setState({
       isMapMoveMode: true,
       mouseOffset: {
-        offsetX: e.touches[0].pageX - parseInt(e.target.style.left),
+        offsetX: e.touches[0].pageX - parseInt(e.target.style.left) - sidebarWidth,
         offsetY: e.touches[0].pageY - (parseInt(e.target.style.top) + 140)
       }
     });
@@ -91,6 +93,7 @@ class Map extends Component {
 
   handleTouchMove (e){
     if (this.state.isMapMoveMode){
+      const sidebarWidth = this.props.displaySidebar ? 350 : 0;
       this.props.editMapPosition(
         e.touches[0].pageX - document.querySelector('.map-img-cont').getBoundingClientRect().left - this.state.mouseOffset.offsetX,
         e.touches[0].pageY - document.querySelector('.map-img-cont').getBoundingClientRect().top - this.state.mouseOffset.offsetY
