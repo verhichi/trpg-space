@@ -82,8 +82,8 @@ class CharDot extends Component {
     if (this.state.isCharMoveMode){
       this.props.editMapChar({
         charId: this.props.charData.charId,
-        x: e.touches[0].pageX - document.querySelector('.map-img-overlay').getBoundingClientRect().left - this.state.offsetX,
-        y: e.touches[0].pageY - document.querySelector('.map-img-overlay').getBoundingClientRect().top - this.state.offsetY
+        x: Math.floor((e.touches[0].pageX - document.querySelector('.map-img-overlay').getBoundingClientRect().left - this.state.offsetX) / this.props.mapSetting.image.scale),
+        y: Math.floor((e.touches[0].pageY - document.querySelector('.map-img-overlay').getBoundingClientRect().top - this.state.offsetY) / this.props.mapSetting.image.scale)
       });
     }
   }
