@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setMapMode, addMapChar, editMapChar, setCharToPlace } from '../../../../../../redux/actions/action';
+import { setMapMode, addMapChar, editMapChar, setCharToPlace, editMapPosition } from '../../../../../../redux/actions/action';
 import socket from '../../../../../../socket/socketClient';
 
 // Style
@@ -28,7 +28,8 @@ const mapDispatchToProps = (dispatch) => {
     setMapMode: (mode) => dispatch(setMapMode(mode)),
     addMapChar: (charData) => dispatch(addMapChar(charData)),
     editMapChar: (charData) => dispatch(editMapChar(charData)),
-    setCharToPlace: (charId) => dispatch(setCharToPlace(charId))
+    setCharToPlace: (charId) => dispatch(setCharToPlace(charId)),
+    editMapPosition: (left, top) => dispatch(editMapPosition(left, top))
   };
 };
 
@@ -37,10 +38,6 @@ class Map extends Component {
     super(props);
     this.state = {
       isMapMoveMode: false,
-      mapStyle: {
-        left: 0,
-        top: 0
-      },
       mouseOffset: {
         offsetX: 0,
         offsetY: 0
@@ -85,23 +82,19 @@ class Map extends Component {
 
   handleMouseMove (e){
     if (this.state.isMapMoveMode){
-      this.setState({
-        mapStyle: {
-          left: e.pageX - document.querySelector('.map-img-cont').getBoundingClientRect().left - this.state.mouseOffset.offsetX,
-          top: e.pageY - document.querySelector('.map-img-cont').getBoundingClientRect().top - this.state.mouseOffset.offsetY
-        }
-      });
+      this.props.editMapPosition(
+        e.pageX - document.querySelector('.map-img-cont').getBoundingClientRect().left - this.state.mouseOffset.offsetX,
+        e.pageY - document.querySelector('.map-img-cont').getBoundingClientRect().top - this.state.mouseOffset.offsetY
+      );
     }
   }
 
   handleTouchMove (e){
     if (this.state.isMapMoveMode){
-      this.setState({
-        mapStyle: {
-          left: e.touches[0].pageX - document.querySelector('.map-img-cont').getBoundingClientRect().left - this.state.mouseOffset.offsetX,
-          top: e.touches[0].pageY - document.querySelector('.map-img-cont').getBoundingClientRect().top - this.state.mouseOffset.offsetY
-        }
-      });
+      this.props.editMapPosition(
+        e.touches[0].pageX - document.querySelector('.map-img-cont').getBoundingClientRect().left - this.state.mouseOffset.offsetX,
+        e.touches[0].pageY - document.querySelector('.map-img-cont').getBoundingClientRect().top - this.state.mouseOffset.offsetY
+      );
     }
   }
 
@@ -153,7 +146,7 @@ class Map extends Component {
 
     return (
       <div className="map-img-cont p-relative f-grow-1 p-1">
-        <div className={`map-img-overlay font-size-lg font-weight-bold d-inline-block p-absolute align-center ${togglePlaceCharClass} ${toggleMapGridClass}`}  onClick={this.handleImageClick} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} onTouchStart={this.handleTouchStart} onTouchEnd={this.handleTouchEnd} style={this.state.mapStyle}>
+        <div className={`map-img-overlay font-size-lg font-weight-bold d-inline-block p-absolute align-center ${togglePlaceCharClass} ${toggleMapGridClass}`}  onClick={this.handleImageClick} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} onTouchStart={this.handleTouchStart} onTouchEnd={this.handleTouchEnd} style={{ left: this.props.mapSetting.image.left, top: this.props.mapSetting.image.top}}>
            {mapCharDots}
            <img className="map-img p-relative align-center" src={this.props.mapSetting.image.src}/>
          </div>

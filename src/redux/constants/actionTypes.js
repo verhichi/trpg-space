@@ -37,3 +37,4 @@ export const SET_SIDEBAR_TAB_MODE = 'SET_SIDEBAR_TAB_MODE';
 export const LOCK_NOTE = 'LOCK_NOTE';
 export const UNLOCK_NOTE = 'UNLOCK_NOTE';
 export const EDIT_NOTE = 'EDIT_NOTE';
+export const EDIT_MAP_POSITION = 'EDIT_MAP_POSITION';

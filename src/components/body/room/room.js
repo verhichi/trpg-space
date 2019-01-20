@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addUser, editUser, removeUser, setRoomId, setUserId, userCleanup, addToChatLog, newHost, editMapImage, addMapChar, editMapChar, removeMapChar, removeAllMapChar, lockNote, unlockNote, editNote } from '../../../redux/actions/action';
+import { addUser, editUser, removeUser, setRoomId, setUserId, userCleanup, addToChatLog, newHost, editMapImage, addMapChar, editMapChar, removeMapChar, removeAllMapChar, lockNote, unlockNote, editNote, editMapPosition } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
 // Style
@@ -42,7 +42,8 @@ const mapDispatchToProps = (dispatch) => {
     removeAllMapChar: ()         => dispatch(removeAllMapChar()),
     editNote:         (notes)    => dispatch(editNote(notes)),
     lockNote:         (userId)   => dispatch(lockNote(userId)),
-    unlockNote:       ()         => dispatch(unlockNote())
+    unlockNote:       ()         => dispatch(unlockNote()),
+    editMapPosition:  (left, top)=> dispatch(editMapPosition(left, top))
   };
 };
 

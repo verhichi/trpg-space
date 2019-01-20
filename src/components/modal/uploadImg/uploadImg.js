@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
-import { addToChatLog, hideModal, editMapImage, removeAllMapChar } from '../../../redux/actions/action';
+import { addToChatLog, hideModal, editMapImage, editMapPosition, removeAllMapChar } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
 
@@ -27,6 +27,7 @@ const mapDispatchToProps = (dispatch) => {
     hideModal: () => dispatch(hideModal()),
     addToChatLog: (content) => dispatch(addToChatLog(content)),
     editMapImage: (src) => dispatch(editMapImage(src)),
+    editMapPosition: (left, top) => dispatch(editMapPosition(left, top)),
     removeAllMapChar: () => dispatch(removeAllMapChar())
   };
 };
@@ -70,6 +71,8 @@ class UploadImg extends Component {
         src: this.state.src,
         height: this.state.height,
         width: this.state.width,
+        left: 0,
+        top: 0
       };
 
       this.props.editMapImage(backgroundData);

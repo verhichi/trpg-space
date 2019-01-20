@@ -38,7 +38,8 @@ import {
   SET_SIDEBAR_TAB_MODE,
   LOCK_NOTE,
   UNLOCK_NOTE,
-  EDIT_NOTE
+  EDIT_NOTE,
+  EDIT_MAP_POSITION
 } from '../constants/actionTypes';
 
 export const initialState = {
@@ -59,7 +60,9 @@ export const initialState = {
   mapSetting: {
     image: {
       src: '',
-      id: ''
+      id: '',
+      left: 0,
+      top: 0
     },
     mode: '',
     charToPlace: ''
@@ -457,6 +460,19 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         notes: action.notes
+      };
+
+    case EDIT_MAP_POSITION:
+      return {
+        ...state,
+        mapSetting: {
+          ...state.mapSetting,
+          image: {
+            ...state.mapSetting.image,
+            left: action.left,
+            top: action.top
+          }
+        }
       };
 
     default:

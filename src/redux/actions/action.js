@@ -36,7 +36,8 @@ import {
   SET_SIDEBAR_TAB_MODE,
   LOCK_NOTE,
   UNLOCK_NOTE,
-  EDIT_NOTE
+  EDIT_NOTE,
+  EDIT_MAP_POSITION
 } from '../constants/actionTypes';
 
 export const resetState = () => {
@@ -252,5 +253,13 @@ export const editNote = (notes) => {
   return {
     type: EDIT_NOTE,
     notes
-  }
-}
+  };
+};
+
+export const editMapPosition = (left, top) => {
+  return {
+    type: EDIT_MAP_POSITION,
+    left,
+    top
+  };
+};
