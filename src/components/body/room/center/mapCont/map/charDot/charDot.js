@@ -9,8 +9,9 @@ import './charDot.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id:     state.id,
-    roomId: state.roomId
+    id:         state.id,
+    roomId:     state.roomId,
+    mapSetting: state.mapSetting
   };
 };
 
@@ -45,8 +46,8 @@ class CharDot extends Component {
     if (this.props.id === this.props.charData.ownerId){
       this.setState({
         isCharMoveMode: true,
-        offsetX: e.nativeEvent.offsetX,
-        offsetY: e.nativeEvent.offsetY
+        offsetX: Math.floor(e.nativeEvent.offsetX * this.props.mapSetting.image.scale),
+        offsetY: Math.floor(e.nativeEvent.offsetY * this.props.mapSetting.image.scale)
       });
       document.querySelector('.map-img-overlay').addEventListener('mousemove', this.handleMouseMove);
     }
@@ -69,8 +70,8 @@ class CharDot extends Component {
     if (this.state.isCharMoveMode){
       this.props.editMapChar({
         charId: this.props.charData.charId,
-        x: e.pageX - document.querySelector('.map-img-overlay').getBoundingClientRect().left - this.state.offsetX,
-        y: e.pageY - document.querySelector('.map-img-overlay').getBoundingClientRect().top - this.state.offsetY
+        x: Math.floor((e.pageX - document.querySelector('.map-img-overlay').getBoundingClientRect().left - this.state.offsetX) / this.props.mapSetting.image.scale),
+        y: Math.floor((e.pageY - document.querySelector('.map-img-overlay').getBoundingClientRect().top - this.state.offsetY) / this.props.mapSetting.image.scale)
       });
     }
   }
