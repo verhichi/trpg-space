@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { TwitterPicker } from 'react-color';
+import { GithubPicker } from 'react-color';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -29,6 +29,13 @@ class General extends Component {
         fileTypeError: false
       }
     };
+
+    this.colorList = [
+      '#FFFFFF', '#E4E4E4', '#C0C0C0', '#A0A0A0', '#808080', '#606060', '#404040', '#202020', '#000000',
+      '#7F0000', '#7F5000', '#7F7F00', '#007F00', '#007F50', '#007F7F', '#00007F', '#50007F', '#7F007F',
+      '#FF0000', '#FFA000', '#FFFF00', '#00FF00', '#00FFA0', '#00FFFF', '#0000FF', '#A000FF', '#FF00FF',
+      '#FF7F7F', '#FFCF7F', '#FFFF7F', '#7FFF7F', '#7FFFCF', '#7FFFFF', '#7F7FFF', '#CF7FFF', '#FF7FFF',
+    ];
 
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleColorChange = this.handleColorChange.bind(this);
@@ -172,7 +179,7 @@ class General extends Component {
             <div className="inp-clr-circle f-shrink-0" style={{background: this.state.charData.color}}></div>
             <div className="pseudo-inp f-grow-1">{this.state.charData.color}</div>
             <div className={`p-absolute t-100 ${toggleColorPickerClass}`}>
-              <TwitterPicker color={this.state.charData.color} onChange={this.handleColorChange}/>
+              <GithubPicker color={this.state.charData.color} colors={this.colorList} onChange={this.handleColorChange} triangle={'hide'} width={240}/>
             </div>
           </div>
         </div>
