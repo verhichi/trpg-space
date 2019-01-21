@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ChromePicker } from 'react-color';
 import { editChar, hideModal } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 

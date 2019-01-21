@@ -96,7 +96,7 @@ class Room extends Component {
       socket.emit('editNote', this.props.roomId, this.props.notes);
 
       this.props.charList.forEach((char) => {
-        if (char.ownerId === this.props.id){
+        if (char.ownerId === this.props.id && char.general.privacy !== '3'){
           socket.emit('char', this.props.roomId, char);
         }
       });

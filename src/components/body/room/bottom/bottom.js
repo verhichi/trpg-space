@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import uuid from 'uuid';
 import { addToChatLog, showSidebar, hideSidebar, hideDiceBubble, showDiceBubble, showModal, showChat, showMap } from '../../../../redux/actions/action';
 import socket from '../../../../socket/socketClient';
 
