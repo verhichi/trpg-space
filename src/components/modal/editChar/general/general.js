@@ -143,66 +143,67 @@ class General extends Component {
     return (
       <div className={`char-modal f-grow-1 ${toggleActiveClass} ${toggleScrollClass}`}>
 
-        <div className="mb-2">
-          <div>Profile Image <span className="font-size-sm text-optional">(optional)</span>:</div>
-          <div className="d-flex p-relative">
-            <label className="profile-circle cursor-pointer p-relative" style={imageStyle}>
-              <div className="profile-side-btn align-center p-absolute"><FontAwesomeIcon icon="camera"/></div>
-              <input id="imageInput" className="d-none" type="file" accept="image/*" ref={this.fileInput} onChange={this.handleFileChange}/>
-            </label>
-            <div className="profile-remove-btn p-absolute align-center cursor-pointer" onClick={this.handleFileRemoveClick}><FontAwesomeIcon icon="trash"/></div>
-          </div>
-          {this.state.file.fileTypeError
-            ? (<div className="text-danger">File must be in jpg/png/gif format</div>)
-            : null}
-          {this.state.file.fileSizeError
-            ? (<div className="text-danger">File must be smaller than 1MB</div>)
-            : null}
+      <div className="mb-2">
+        <div>Profile Image <span className="font-size-sm text-optional">(optional)</span>:</div>
+        <div className="d-flex p-relative">
+          <label className="profile-circle cursor-pointer p-relative" style={imageStyle}>
+            <div className="profile-side-btn align-center p-absolute"><FontAwesomeIcon icon="camera"/></div>
+            <input id="imageInput" className="d-none" type="file" accept="image/*" ref={this.fileInput} onChange={this.handleFileChange}/>
+          </label>
+          <div className="profile-remove-btn p-absolute align-center cursor-pointer" onClick={this.handleFileRemoveClick}><FontAwesomeIcon icon="trash"/></div>
         </div>
+        {this.state.file.fileTypeError
+          ? (<div className="text-danger">File must be in jpg/png/gif format</div>)
+          : null}
+        {this.state.file.fileSizeError
+          ? (<div className="text-danger">File must be smaller than 1MB</div>)
+          : null}
+      </div>
 
-        <div className="mb-2">
-          <div>Type <span className="font-size-sm text-danger">(required)</span>:</div>
-          <div className="d-flex justify-content-around">
-            <label><input className="inp-radio" type="radio" value="ally" checked={this.state.charData.type === 'ally'} onChange={this.handleTypeChange}/>Ally</label>
-            <label><input className="inp-radio" type="radio" value="enemy" checked={this.state.charData.type === 'enemy'} onChange={this.handleTypeChange}/>Enemy</label>
-          </div>
-        </div>
+      <div className="mb-2 d-flex">
+        <div className="char-inp-label pr-1">Name:</div>
+        <input className="inp f-grow-1" type="text" value={this.state.charData.name} onChange={this.handleNameChange}/>
+      </div>
 
-        <div className="mb-2">
-          <div>Name <span className="font-size-sm text-danger">(required)</span>:</div>
-          <input className="inp w-100" type="text" value={this.state.charData.name} onChange={this.handleNameChange}/>
-        </div>
+      <div className="mb-2 d-flex">
+        <div className="char-inp-label pr-1">Type:</div>
+        <label className="char-inp-radio pr-1"><input className="inp-radio" type="radio" value="ally" checked={this.state.charData.type === 'ally'} onChange={this.handleTypeChange}/>Ally</label>
+        <label className="char-inp-radio"><input className="inp-radio" type="radio" value="enemy" checked={this.state.charData.type === 'enemy'} onChange={this.handleTypeChange}/>Enemy</label>
+      </div>
 
-        <div className="mb-2">
-          <div>Theme Color <span className="font-size-sm text-danger">(required)</span>:</div>
-          <div className="d-flex p-relative w-100" onClick={this.handleColorClick} ref={ this.colorRef }>
-            <div className="inp-clr-circle f-shrink-0" style={{background: this.state.charData.color}}></div>
-            <div className="pseudo-inp f-grow-1">{this.state.charData.color}</div>
-            <div className={`p-absolute t-100 ${toggleColorPickerClass}`}>
-              <GithubPicker color={this.state.charData.color} colors={this.colorList} onChange={this.handleColorChange} triangle={'hide'} width={240}/>
-            </div>
+      <div className="mb-2 d-flex">
+        <div className="char-inp-label pr-1">Theme Color:</div>
+        <div className="d-flex p-relative f-grow-1" onClick={this.handleColorClick} ref={ this.colorRef }>
+          <div className="inp-clr-circle f-shrink-0" style={{background: this.state.charData.color}}></div>
+          <div className="pseudo-inp f-grow-1">{this.state.charData.color}</div>
+          <div className={`p-absolute t-100 ${toggleColorPickerClass}`}>
+            <GithubPicker color={this.state.charData.color} colors={this.colorList} onChange={this.handleColorChange} triangle={'hide'} width={240}/>
           </div>
         </div>
+      </div>
 
-        <div className="mb-2">
-          <div>Privacy Level <span className="font-size-sm text-danger">(required)</span>:</div>
-          <div className="sel-cont char-sel w-100">
-            <select value={this.state.charData.privacy} onChange={this.handlePrivacyChange}>
-              <option value="0">Display all data</option>
-              <option value="1">Only display name</option>
-              <option value="2">Hide all data</option>
-              <option value="3">Do not share character</option>
-            </select>
-          </div>
+      <div className="mb-2 d-flex">
+        <div className="char-inp-label pr-1">Privacy Level:</div>
+        <div className="sel-cont char-sel f-grow-1">
+          <select value={this.state.charData.privacy} onChange={this.handlePrivacyChange}>
+            <option value="0">Display all data</option>
+            <option value="1">Only display name</option>
+            <option value="2">Hide all data</option>
+            <option value="3">Do not share character</option>
+          </select>
         </div>
+      </div>
 
-        <div className="mb-2">
-          <div>External Character sheet link <span className="font-size-sm text-optional">(optional)</span>:</div>
-          <input className="inp w-100" type="text" placeholder="http(s)://..." value={this.state.charData.link} onChange={this.handleLinkChange}/>
-          {this.state.charData.link.trim().length !== 0 && !/^http(s)?:\/\/.+/.test(this.state.charData.link.trim())
-            ? (<div className="text-danger">Link must start with "http(s)://""</div>)
-            : null}
+      <div className="mb-2 d-flex">
+        <div className="char-inp-link-label pr-1">
+          <div>Char-Sheet Link:</div>
+          <span className="font-size-sm text-optional">(optional)</span>
         </div>
+        <input className="inp f-grow-1" type="text" placeholder="http(s)://..." value={this.state.charData.link} onChange={this.handleLinkChange}/>
+      </div>
+      {this.state.charData.link.trim().length !== 0 && !/^http(s)?:\/\/.+/.test(this.state.charData.link.trim())
+        ? (<div className="text-danger">Link must start with "http(s)://""</div>)
+        : null}
 
       </div>
     );

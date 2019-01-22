@@ -21,10 +21,11 @@
 .modal-cont{
   background: $white-clr;
   border: none;
-  height: 90%;
-  width: 90%;
+  height: 100%;
+  width: 100%;
   overflow: hidden;
-  padding: 15px 20px;
+  // padding: 15px 20px;
+  padding: 10px;
 
   @include md{
     height: 75%;
@@ -126,4 +127,16 @@
   left: 0;
   width: 30px;
   z-index: 100;
+}
+
+.char-inp-label{
+  line-height: 40px;
+}
+
+.char-inp-radio{
+  line-height: 40px;
+}
+
+.char-inp-link-label{
+  height: 40px;  
 }

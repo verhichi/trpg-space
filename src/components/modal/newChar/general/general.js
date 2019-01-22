@@ -167,22 +167,20 @@ class General extends Component {
             : null}
         </div>
 
-        <div className="mb-2">
-          <div>Type <span className="font-size-sm text-danger">(required)</span>:</div>
-          <div className="d-flex justify-content-around">
-            <label><input className="inp-radio" type="radio" value="ally" checked={this.state.charData.type === 'ally'} onChange={this.handleTypeChange}/>Ally</label>
-            <label><input className="inp-radio" type="radio" value="enemy" checked={this.state.charData.type === 'enemy'} onChange={this.handleTypeChange}/>Enemy</label>
-          </div>
+        <div className="mb-2 d-flex">
+          <div className="char-inp-label pr-1">Name:</div>
+          <input className="inp f-grow-1" type="text" value={this.state.charData.name} onChange={this.handleNameChange}/>
         </div>
 
-        <div className="mb-2">
-          <div>Name <span className="font-size-sm text-danger">(required)</span>:</div>
-          <input className="inp w-100" type="text" value={this.state.charData.name} onChange={this.handleNameChange}/>
+        <div className="mb-2 d-flex">
+          <div className="char-inp-label pr-1">Type:</div>
+          <label className="char-inp-radio pr-1"><input className="inp-radio" type="radio" value="ally" checked={this.state.charData.type === 'ally'} onChange={this.handleTypeChange}/>Ally</label>
+          <label className="char-inp-radio"><input className="inp-radio" type="radio" value="enemy" checked={this.state.charData.type === 'enemy'} onChange={this.handleTypeChange}/>Enemy</label>
         </div>
 
-        <div className="mb-2">
-          <div>Theme Color <span className="font-size-sm text-danger">(required)</span>:</div>
-          <div className="d-flex p-relative w-100" onClick={this.handleColorClick} ref={ this.colorRef }>
+        <div className="mb-2 d-flex">
+          <div className="char-inp-label pr-1">Theme Color:</div>
+          <div className="d-flex p-relative f-grow-1" onClick={this.handleColorClick} ref={ this.colorRef }>
             <div className="inp-clr-circle f-shrink-0" style={{background: this.state.charData.color}}></div>
             <div className="pseudo-inp f-grow-1">{this.state.charData.color}</div>
             <div className={`p-absolute t-100 ${toggleColorPickerClass}`}>
@@ -191,9 +189,9 @@ class General extends Component {
           </div>
         </div>
 
-        <div className="mb-2">
-          <div>Privacy Level <span className="font-size-sm text-danger">(required)</span>:</div>
-          <div className="sel-cont char-sel w-100">
+        <div className="mb-2 d-flex">
+          <div className="char-inp-label pr-1">Privacy Level:</div>
+          <div className="sel-cont char-sel f-grow-1">
             <select value={this.state.charData.privacy} onChange={this.handlePrivacyChange}>
               <option value="0">Display all data</option>
               <option value="1">Only display name</option>
@@ -203,13 +201,16 @@ class General extends Component {
           </div>
         </div>
 
-        <div className="mb-2">
-          <div>External Character sheet link <span className="font-size-sm text-optional">(optional)</span>:</div>
-          <input className="inp w-100" type="text" placeholder="http(s)://..." value={this.state.charData.link} onChange={this.handleLinkChange}/>
-          {this.state.charData.link.trim().length !== 0 && !/^http(s)?:\/\/.+/.test(this.state.charData.link.trim())
-            ? (<div className="text-danger">Link must start with "http(s)://""</div>)
-            : null}
+        <div className="mb-2 d-flex">
+          <div className="char-inp-link-label pr-1">
+            <div>Char-Sheet Link:</div>
+            <span className="font-size-sm text-optional">(optional)</span>
+          </div>
+          <input className="inp f-grow-1" type="text" placeholder="http(s)://..." value={this.state.charData.link} onChange={this.handleLinkChange}/>
         </div>
+        {this.state.charData.link.trim().length !== 0 && !/^http(s)?:\/\/.+/.test(this.state.charData.link.trim())
+          ? (<div className="text-danger">Link must start with "http(s)://""</div>)
+          : null}
 
       </div>
     );
