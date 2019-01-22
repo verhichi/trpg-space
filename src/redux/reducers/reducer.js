@@ -66,7 +66,7 @@ export const initialState = {
       id: '',
       left: 0,
       top: 0,
-      scale: 1
+      scale: 1.0
     },
     mode: '',
     charToPlace: ''
