@@ -55,13 +55,13 @@ class Top extends Component {
   render() {
     return (
       <div className="room-top-cont">
-        <div className="tool-bar d-flex">
-          <div className="tool-bar-btn cursor-pointer" onClick={this.handleLeaveClick}>
+        <div className="room-toolbar d-flex">
+          <div className="toolbar-btn cursor-pointer" onClick={this.handleLeaveClick}>
             <FontAwesomeIcon icon="door-open"/>
             <span className="d-none-sm"> Leave</span>
           </div>
           <div className="f-grow-1 align-center">({this.props.userList.length})Room ID: {this.props.roomId}</div>
-          <div className="tool-bar-btn cursor-pointer" onClick={this.handleSettingClick}>
+          <div className="toolbar-btn cursor-pointer" onClick={this.handleSettingClick}>
             <FontAwesomeIcon icon="cog"/>
             <span className="d-none-sm"> Settings</span>
           </div>

@@ -76,12 +76,20 @@ class Map extends Component {
 
   handleTouchStart (e){
     if (this.props.mapSetting.mode === ''){
-      const sidebarWidth = this.props.displaySidebar ? 350 : 0;
+      const sidebar = document.querySelector('.list-cont');
+      const sidebarWidth = this.props.displaySidebar ? sidebar.offsetWidth : 0;
+
+      const header = document.querySelector('header');
+      const roomTopCont = document.querySelector('.room-top-cont');
+      const mapToolbar = document.querySelector('.map-toolbar');
+
+      const mapOffsetHeight = header.offsetHeight + roomTopCont.offsetHeight + mapToolbar.offsetHeight;
+
       this.setState({
         isMapMoveMode: true,
         mouseOffset: {
           offsetX: e.touches[0].pageX - parseInt(e.target.style.left) - sidebarWidth,
-          offsetY: e.touches[0].pageY - parseInt(e.target.style.top) - 140
+          offsetY: e.touches[0].pageY - parseInt(e.target.style.top) - mapOffsetHeight
         }
       });
       document.querySelector('.map-img-cont').addEventListener('touchmove', this.handleTouchMove);
