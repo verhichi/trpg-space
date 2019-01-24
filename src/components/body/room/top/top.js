@@ -56,12 +56,12 @@ class Top extends Component {
     return (
       <div className="room-top-cont">
         <div className="room-toolbar d-flex">
-          <div className="toolbar-btn cursor-pointer" onClick={this.handleLeaveClick}>
+          <div className="toolbar-btn cursor-pointer p-2" onClick={this.handleLeaveClick}>
             <FontAwesomeIcon icon="door-open"/>
             <span className="d-none-sm"> Leave</span>
           </div>
-          <div className="f-grow-1 align-center">({this.props.userList.length})Room ID: {this.props.roomId}</div>
-          <div className="toolbar-btn cursor-pointer" onClick={this.handleSettingClick}>
+          <div className="f-grow-1 align-center p-2">({this.props.userList.length})Room ID: {this.props.roomId}</div>
+          <div className="toolbar-btn cursor-pointer p-2" onClick={this.handleSettingClick}>
             <FontAwesomeIcon icon="cog"/>
             <span className="d-none-sm"> Settings</span>
           </div>
