@@ -22,10 +22,8 @@
   word-break: break-all;
 }
 
-.char-name{
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.char-owner{
+  color: $disabled-clr;
 }
 
 .char-btn{
