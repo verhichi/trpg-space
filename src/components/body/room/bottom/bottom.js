@@ -226,13 +226,39 @@ class Bottom extends Component {
           <button className="chat-bar-btn btn-hot cursor-pointer f-shrink-0" disabled={isDisabled} onClick={this.handleSendClick}>
             <FontAwesomeIcon icon="paper-plane"/>
           </button>
-          <div className={`chat-bar-btn cursor-pointer align-center f-shrink-0 ${showOnFocusClass}`} onClick={this.handleImageClick}>
-            <FontAwesomeIcon icon="paperclip"/>
+          <div className="chat-bar-btn cursor-pointer align-center f-shrink-0">
+            <FontAwesomeIcon icon="cog" mask="comment" transform="shrink-7 up-0.5"/>
+            <div className="chat-opt-toolbar p-absolute d-flex f-dir-col">
+              <div className="chat-opt-btn">
+                <FontAwesomeIcon icon="user-secret"/>
+              </div>
+              <div className="chat-opt-btn">
+                <span className="fa-layers fa-fw">
+                  <FontAwesomeIcon icon="user" transform="shrink-3 left-3 down-3"/>
+                  <FontAwesomeIcon icon="comment" transform="shrink-7 up-5 right-6"/>
+                </span>
+              </div>
+              <div className="chat-opt-btn">
+                <FontAwesomeIcon icon="palette"/>
+              </div>
+              <div className="chat-opt-btn">
+                <FontAwesomeIcon icon="paperclip"/>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     );
   }
 }
+
+// <div className={`chat-bar-btn cursor-pointer align-center f-shrink-0 ${showOnFocusClass}`} onClick={this.handleImageClick}>
+//   <FontAwesomeIcon icon="paperclip"/>
+// </div>
+//
+//             <span className="fa-layers fa-fw">
+            //   <FontAwesomeIcon icon="cog" transform="shrink-3 up-8" color={'black'}/>
+            //   <FontAwesomeIcon icon="comment" mask="cog"/>
+            // </span>
 
 export default connect(mapStateToProps, mapDispatchToProps)(Bottom);

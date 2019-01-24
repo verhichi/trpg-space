@@ -46,7 +46,9 @@ import {
   faUserSecret,
   faArrowDown,
   faSearch,
-  faExternalLinkSquareAlt
+  faExternalLinkSquareAlt,
+  faPalette,
+  faQuestion
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -93,5 +95,7 @@ library.add(
   faUserSecret,
   faArrowDown,
   faSearch,
-  faExternalLinkSquareAlt
+  faExternalLinkSquareAlt,
+  faPalette,
+  faQuestion
 );

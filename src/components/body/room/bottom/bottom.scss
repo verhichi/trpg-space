@@ -20,6 +20,10 @@
   &[disabled]{
     background: #555;
   }
+
+  &:hover .chat-opt-toolbar{
+    display: block;
+  }
 }
 
 .chat-inp-cont{
@@ -64,4 +68,24 @@
 
 .private-chat-user:nth-child(3){
   border-top: 1px solid #ccc;
+}
+
+
+
+.chat-opt-toolbar{
+  background: $secondary-clr;
+  border: none;
+  border-bottom: 1px solid black;
+  border-radius: 0;
+  bottom: 100%;
+  color: $white-clr;
+  display: none;
+  right: 0;
+  z-index: 51;
+}
+
+.chat-opt-btn{
+  height: 50px;
+  padding: 5px;
+  width: 50px;
 }
