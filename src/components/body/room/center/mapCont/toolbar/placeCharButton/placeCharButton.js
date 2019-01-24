@@ -51,15 +51,15 @@ class PlaceCharButton extends Component {
 
   render() {
     return (
-        <div className="p-relative d-inline-block" ref={ this.placeCharRef }>
-          <PlaceCharBalloon/>
-          <div className="map-toolbar-btn p-3 cursor-pointer align-center" onClick={this.handleButtonClick}>
-            <span className="fa-layers fa-fw">
-              <FontAwesomeIcon icon="arrow-down" transform="shrink-9 up-8"/>
-              <FontAwesomeIcon icon="street-view" transform="shrink-3 down-3"/>
-            </span>
-          </div>
+      <div className="map-toolbar-btn p-relative d-inline-block" ref={ this.placeCharRef }>
+        <PlaceCharBalloon/>
+        <div className="p-3 cursor-pointer align-center" onClick={this.handleButtonClick}>
+          <span className="fa-layers fa-fw">
+            <FontAwesomeIcon icon="arrow-down" transform="shrink-9 up-8"/>
+            <FontAwesomeIcon icon="street-view" transform="shrink-3 down-3"/>
+          </span>
         </div>
+      </div>
     );
   }
 }

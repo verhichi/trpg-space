@@ -61,21 +61,21 @@ class Toolbar extends Component {
 
   render() {
     return (
-      <div className="map-toolbar">
+      <div className="map-toolbar d-flex">
         <PlaceCharButton/>
         <RemoveCharButton/>
-        <div className="p-relative d-inline-block">
-          <div className="map-toolbar-btn p-3 cursor-pointer" onClick={this.handleImageUploadClick}>
+        <div className="map-toolbar-btn p-relative d-inline-block">
+          <div className="p-3 cursor-pointer" onClick={this.handleImageUploadClick}>
             <FontAwesomeIcon icon="file-image"/>
           </div>
         </div>
-        <div className="p-relative d-inline-block">
-          <div className="map-toolbar-btn p-3 cursor-pointer"  onClick={this.handleToolbarMapGridClick}>
+        <div className="map-toolbar-btn p-relative d-inline-block">
+          <div className="p-3 cursor-pointer"  onClick={this.handleToolbarMapGridClick}>
             <FontAwesomeIcon icon="th"/>
           </div>
         </div>
-        <div className="p-relative d-inline-block">
-          <div className="map-toolbar-btn p-3 cursor-pointer"  onClick={this.handleToolbarMapPositionClick}>
+        <div className="map-toolbar-btn p-relative d-inline-block">
+          <div className="p-3 cursor-pointer"  onClick={this.handleToolbarMapPositionClick}>
             <FontAwesomeIcon icon="arrow-down" transform={{ rotate: 135 }}/>
           </div>
         </div>

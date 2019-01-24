@@ -18,12 +18,8 @@
 // }
 
 .map-toolbar-btn{
-  width: 50px;
+  flex-basis: 50px;
   font-size: $font-size-lg;
-
-  &:hover{
-    background: rgba(255, 255, 255, 0.1);;
-  }
 }
 
 .balloon-sel{
