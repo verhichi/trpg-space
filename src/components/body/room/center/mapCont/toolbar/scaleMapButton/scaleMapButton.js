@@ -52,7 +52,7 @@ class ScaleMapButton extends Component {
     return (
       <div className="map-toolbar-btn p-relative d-inline-block" ref={this.scaleMapRef}>
         <ScaleMapBalloon/>
-        <div className="p-3 cursor-pointer" onClick={this.handleButtonClick}>
+        <div className="p-2 cursor-pointer align-center" onClick={this.handleButtonClick}>
           <FontAwesomeIcon icon="search"/>
         </div>
       </div>

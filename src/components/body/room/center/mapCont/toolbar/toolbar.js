@@ -65,17 +65,17 @@ class Toolbar extends Component {
         <PlaceCharButton/>
         <RemoveCharButton/>
         <div className="map-toolbar-btn p-relative d-inline-block">
-          <div className="p-3 cursor-pointer" onClick={this.handleImageUploadClick}>
+          <div className="p-2 cursor-pointer align-center" onClick={this.handleImageUploadClick}>
             <FontAwesomeIcon icon="file-image"/>
           </div>
         </div>
         <div className="map-toolbar-btn p-relative d-inline-block">
-          <div className="p-3 cursor-pointer"  onClick={this.handleToolbarMapGridClick}>
+          <div className="p-2 cursor-pointer align-center"  onClick={this.handleToolbarMapGridClick}>
             <FontAwesomeIcon icon="th"/>
           </div>
         </div>
         <div className="map-toolbar-btn p-relative d-inline-block">
-          <div className="p-3 cursor-pointer"  onClick={this.handleToolbarMapPositionClick}>
+          <div className="p-2 cursor-pointer align-center"  onClick={this.handleToolbarMapPositionClick}>
             <FontAwesomeIcon icon="arrow-down" transform={{ rotate: 135 }}/>
           </div>
         </div>
