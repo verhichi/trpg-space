@@ -45,7 +45,8 @@ import {
   faCamera,
   faUserSecret,
   faArrowDown,
-  faSearch
+  faSearch,
+  faExternalLinkSquareAlt
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -91,5 +92,6 @@ library.add(
   faCamera,
   faUserSecret,
   faArrowDown,
-  faSearch
+  faSearch,
+  faExternalLinkSquareAlt
 );

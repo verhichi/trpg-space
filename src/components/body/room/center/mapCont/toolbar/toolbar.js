@@ -76,7 +76,7 @@ class Toolbar extends Component {
         </div>
         <div className="map-toolbar-btn p-relative d-inline-block">
           <div className="p-2 cursor-pointer align-center"  onClick={this.handleToolbarMapPositionClick}>
-            <FontAwesomeIcon icon="arrow-down" transform={{ rotate: 135 }}/>
+            <FontAwesomeIcon icon="external-link-square-alt" transform={{ rotate: -90 }}/>
           </div>
         </div>
         <ScaleMapButton/>
