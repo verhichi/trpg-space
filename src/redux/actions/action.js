@@ -40,7 +40,9 @@ import {
   EDIT_MAP_POSITION,
   EDIT_MAP_SCALE,
   SHOW_MAP_SCALE,
-  HIDE_MAP_SCALE
+  HIDE_MAP_SCALE,
+  CHECK_SEND_MSG_TO_ALL,
+  UNCHECK_SEND_MSG_TO_ALL
 } from '../constants/actionTypes';
 
 export const resetState = () => {
@@ -281,3 +283,11 @@ export const showMapScale = () => {
 export const hideMapScale = () => {
   return { type: HIDE_MAP_SCALE };
 };
+
+export const checkSendMsgToAll = () => {
+  return { type: CHECK_SEND_MSG_TO_ALL };
+}
+
+export const uncheckSendMsgToAll = () => {
+  return { type: UNCHECK_SEND_MSG_TO_ALL };
+}

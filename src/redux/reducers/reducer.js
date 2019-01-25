@@ -42,7 +42,9 @@ import {
   EDIT_MAP_POSITION,
   EDIT_MAP_SCALE,
   SHOW_MAP_SCALE,
-  HIDE_MAP_SCALE
+  HIDE_MAP_SCALE,
+  CHECK_SEND_MSG_TO_ALL,
+  UNCHECK_SEND_MSG_TO_ALL
 } from '../constants/actionTypes';
 
 export const initialState = {
@@ -516,6 +518,30 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         displayMapScale: false
+      };
+
+    case CHECK_SEND_MSG_TO_ALL:
+      return {
+        ...state,
+        chatSetting: {
+          ...state.chatSetting,
+          sendTo: {
+            ...state.chatSetting.sendTo,
+            sendToAll: true
+          }
+        }
+      };
+
+    case UNCHECK_SEND_MSG_TO_ALL:
+      return {
+        ...state,
+        chatSetting: {
+          ...state.chatSetting,
+          sendTo: {
+            ...state.chatSetting.sendTo,
+            sendToAll: false
+          }
+        }
       };
 
     default:
