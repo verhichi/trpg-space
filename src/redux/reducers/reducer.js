@@ -46,7 +46,10 @@ import {
   CHECK_SEND_MSG_TO_ALL,
   UNCHECK_SEND_MSG_TO_ALL,
   ADD_SEND_MSG_USER,
-  REMOVE_SEND_MSG_USER
+  REMOVE_SEND_MSG_USER,
+  EDIT_SEND_AS,
+  CHECK_SEND_AS_PLAYER,
+  UNCHECK_SEND_AS_PLAYER
 } from '../constants/actionTypes';
 
 export const initialState = {
@@ -566,6 +569,42 @@ const rootReducer = (state = initialState, action) => {
           sendTo: {
             ...state.chatSetting.sendTo,
             sendToUsers: state.chatSetting.sendTo.sendToUsers.filter(id => id !== action.userId)
+          }
+        }
+      };
+
+    case EDIT_SEND_AS:
+      return {
+        ...state,
+        chatSetting: {
+          ...state.chatSetting,
+          sendAs: {
+            ...state.chatSetting.sendAs,
+            sendAsCharacter: action.charId
+          }
+        }
+      };
+
+    case UNCHECK_SEND_AS_PLAYER:
+      return {
+        ...state,
+        chatSetting: {
+          ...state.chatSetting,
+          sendAs: {
+            ...state.chatSetting.sendAs,
+            sendAsPlayer: false
+          }
+        }
+      };
+
+    case CHECK_SEND_AS_PLAYER:
+      return {
+        ...state,
+        chatSetting: {
+          ...state.chatSetting,
+          sendAs: {
+            ...state.chatSetting.sendAs,
+            sendAsPlayer: true
           }
         }
       };

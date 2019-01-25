@@ -44,7 +44,10 @@ import {
   CHECK_SEND_MSG_TO_ALL,
   UNCHECK_SEND_MSG_TO_ALL,
   ADD_SEND_MSG_USER,
-  REMOVE_SEND_MSG_USER
+  REMOVE_SEND_MSG_USER,
+  EDIT_SEND_AS,
+  CHECK_SEND_AS_PLAYER,
+  UNCHECK_SEND_AS_PLAYER
 } from '../constants/actionTypes';
 
 export const resetState = () => {
@@ -307,3 +310,18 @@ export const removeSendMsgUser = (userId) => {
     userId
   };
 }
+
+export const editSendAs = (charId) => {
+  return {
+    type: EDIT_SEND_AS,
+    charId
+  };
+};
+
+export const checkSendAsPlayer = () => {
+  return { type: CHECK_SEND_AS_PLAYER };
+};
+
+export const uncheckSendAsPlayer = () => {
+  return { type: UNCHECK_SEND_AS_PLAYER };
+};

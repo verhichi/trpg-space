@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { showModal, hideModal, removeFromCharList, removeMapChar } from '../../../../../../../redux/actions/action';
+import { showModal, hideModal, removeFromCharList, removeMapChar, checkSendAsPlayer, editSendAs } from '../../../../../../../redux/actions/action';
 import socket from '../../../../../../../socket/socketClient';
 
 // Font Awesome Component
@@ -12,19 +12,22 @@ import './char.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id: state.id,
-    roomId: state.roomId,
-    userList: state.userList
+    id:          state.id,
+    roomId:      state.roomId,
+    userList:    state.userList,
+    chatSetting: state.chatSetting
   };
 };
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
-    hideModal: () => dispatch(hideModal()),
-    removeFromCharList: (charId) => dispatch(removeFromCharList(charId)),
-    removeMapChar: (charId) => dispatch(removeMapChar(charId))
+    showModal:          (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
+    hideModal:          ()                     => dispatch(hideModal()),
+    removeFromCharList: (charId)               => dispatch(removeFromCharList(charId)),
+    removeMapChar:      (charId)               => dispatch(removeMapChar(charId)),
+    checkSendAsPlayer:  ()                     => dispatch(checkSendAsPlayer()),
+    editSendAs:         (charId)               => dispatch(editSendAs(charId))
   };
 };
 
@@ -34,6 +37,7 @@ class Char extends Component {
     this.handleRemoveClick = this.handleRemoveClick.bind(this);
     this.handleEditClick = this.handleEditClick.bind(this);
     this.handleViewClick = this.handleViewClick.bind(this);
+    this.resetSendAsState = this.resetSendAsState.bind(this);
   }
 
   handleRemoveClick (charId, e){
@@ -44,11 +48,19 @@ class Char extends Component {
       accept: [
         this.props.removeFromCharList.bind(null, this.props.charData.charId),
         this.props.removeMapChar.bind(null, this.props.charData.charId),
+        this.resetSendAsState,
         socket.emit.bind(socket, 'delChar', this.props.roomId, this.props.charData.charId),
         this.props.hideModal
       ],
       decline: this.props.hideModal
     });
+  }
+
+  resetSendAsState (){
+    if (this.props.charData.charId === this.props.chatSetting.sendAs.sendAsCharacter){
+      this.props.checkSendAsPlayer();
+      this.props.editSendAs('');
+    }
   }
 
   handleEditClick (e){

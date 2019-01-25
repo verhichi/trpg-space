@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { showModal, checkSendMsgToAll, uncheckSendMsgToAll, addSendMsgUser, removeSendMsgUser } from '../../../../../redux/actions/action';
+import { showModal, checkSendMsgToAll, uncheckSendMsgToAll, addSendMsgUser, removeSendMsgUser, checkSendAsPlayer, uncheckSendAsPlayer, editSendAs } from '../../../../../redux/actions/action';
 
 // Style
 import './chatToolbar.scss';
@@ -23,10 +23,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
-    checkSendMsgToAll: () => dispatch(checkSendMsgToAll()),
-    uncheckSendMsgToAll: () => dispatch(uncheckSendMsgToAll()),
-    addSendMsgUser: (userId) => dispatch(addSendMsgUser(userId)),
-    removeSendMsgUser: (userId) => dispatch(removeSendMsgUser(userId))
+    checkSendMsgToAll:   ()       => dispatch(checkSendMsgToAll()),
+    uncheckSendMsgToAll: ()       => dispatch(uncheckSendMsgToAll()),
+    checkSendAsPlayer:   ()       => dispatch(checkSendAsPlayer()),
+    uncheckSendAsPlayer: ()       => dispatch(uncheckSendAsPlayer()),
+    addSendMsgUser:      (userId) => dispatch(addSendMsgUser(userId)),
+    removeSendMsgUser:   (userId) => dispatch(removeSendMsgUser(userId)),
+    editSendAs:          (userId) => dispatch(editSendAs(userId))
   };
 };
 
@@ -34,10 +37,11 @@ class ChatToolbar extends Component {
   constructor (props){
     super(props);
 
-    this.handleImageClick = this.handleImageClick.bind(this);
-    this.handleUserCheckChange = this.handleUserCheckChange.bind(this);
-    this.handleAllCheckChange = this.handleAllCheckChange.bind(this);
-    this.handleSendRadioChange = this.handleSendRadioChange.bind(this);
+    this.handleImageClick        = this.handleImageClick.bind(this);
+    this.handleUserCheckChange   = this.handleUserCheckChange.bind(this);
+    this.handleAllCheckChange    = this.handleAllCheckChange.bind(this);
+    this.handleSendAsPlayerRadio = this.handleSendAsPlayerRadio.bind(this);
+    this.handleSendRadioChange   = this.handleSendRadioChange.bind(this);
   }
 
   handleImageClick (e){
@@ -62,8 +66,17 @@ class ChatToolbar extends Component {
       : this.props.addSendMsgUser(e.target.value);
   }
 
+  handleSendAsPlayerRadio (e){
+    this.props.chatSetting.sendAs.sendAsPlayer
+      ? this.props.uncheckSendAsPlayer()
+      : this.props.checkSendAsPlayer();
+
+    this.props.editSendAs('');
+  }
+
   handleSendRadioChange (e){
-    this.setState({ sendChatAs: e.target.value });
+    this.props.uncheckSendAsPlayer();
+    this.props.editSendAs(e.target.value);
   }
 
   render (){
@@ -75,7 +88,7 @@ class ChatToolbar extends Component {
     });
 
     const charRadioList = this.props.charList.filter(char => char.ownerId === this.props.id).map(char => {
-      return (<div className="chat-sender-name"><label><input type="radio" name="sender" value={char.charId} checked={this.state.sendChatAs === char.charId} onChange={this.handleSendRadioChange}/>{char.general.name}</label></div>)
+      return (<div className="chat-sender-name one-line-ellipsis"><label><input type="radio" name="sender" value={char.charId} checked={this.props.chatSetting.sendAs.sendAsCharacter === char.charId} onChange={this.handleSendRadioChange}/>{char.general.name}</label></div>)
     });
 
     return(
@@ -90,8 +103,8 @@ class ChatToolbar extends Component {
           </span>
           <div className="chat-opt-sender p-2 p-absolute align-left">
             <div>Send message as:</div>
-            <div><label><input type="radio" name="sender" value="player" />{userName}</label></div>
-            { charRadioList }
+            <div><label><input type="radio" name="sender" checked={this.props.chatSetting.sendAs.sendAsPlayer} onChange={this.handleSendAsPlayerRadio}/>{userName}</label></div>
+            { charRadioList}
           </div>
         </div>
         <div className="chat-opt-btn">
@@ -108,11 +121,5 @@ class ChatToolbar extends Component {
     );
   }
 }
-
-// <div className="chat-opt-sender p-2 p-absolute align-left">
-//   <div>Send message as:</div>
-//   <div><label><input type="radio" name="sender" value="player" checked={this.state.sendChatAs === 'player'} onChange={this.handleSendRadioChange}/>{userName}</label></div>
-//   { charRadioList}
-// </div>
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatToolbar);
