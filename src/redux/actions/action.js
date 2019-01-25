@@ -42,7 +42,9 @@ import {
   SHOW_MAP_SCALE,
   HIDE_MAP_SCALE,
   CHECK_SEND_MSG_TO_ALL,
-  UNCHECK_SEND_MSG_TO_ALL
+  UNCHECK_SEND_MSG_TO_ALL,
+  ADD_SEND_MSG_USER,
+  REMOVE_SEND_MSG_USER
 } from '../constants/actionTypes';
 
 export const resetState = () => {
@@ -290,4 +292,18 @@ export const checkSendMsgToAll = () => {
 
 export const uncheckSendMsgToAll = () => {
   return { type: UNCHECK_SEND_MSG_TO_ALL };
+}
+
+export const addSendMsgUser = (userId) => {
+  return {
+    type: ADD_SEND_MSG_USER,
+    userId
+  };
+}
+
+export const removeSendMsgUser = (userId) => {
+  return {
+    type: REMOVE_SEND_MSG_USER,
+    userId
+  };
 }

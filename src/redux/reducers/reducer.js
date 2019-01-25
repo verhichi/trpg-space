@@ -44,7 +44,9 @@ import {
   SHOW_MAP_SCALE,
   HIDE_MAP_SCALE,
   CHECK_SEND_MSG_TO_ALL,
-  UNCHECK_SEND_MSG_TO_ALL
+  UNCHECK_SEND_MSG_TO_ALL,
+  ADD_SEND_MSG_USER,
+  REMOVE_SEND_MSG_USER
 } from '../constants/actionTypes';
 
 export const initialState = {
@@ -540,6 +542,30 @@ const rootReducer = (state = initialState, action) => {
           sendTo: {
             ...state.chatSetting.sendTo,
             sendToAll: false
+          }
+        }
+      };
+
+    case ADD_SEND_MSG_USER:
+      return {
+        ...state,
+        chatSetting: {
+          ...state.chatSetting,
+          sendTo: {
+            ...state.chatSetting.sendTo,
+            sendToUsers: [...state.chatSetting.sendTo.sendToUsers, action.userId]
+          }
+        }
+      }
+
+    case REMOVE_SEND_MSG_USER:
+      return {
+        ...state,
+        chatSetting: {
+          ...state.chatSetting,
+          sendTo: {
+            ...state.chatSetting.sendTo,
+            sendToUsers: state.chatSetting.sendTo.sendToUsers.filter(id => id !== action.userId)
           }
         }
       };

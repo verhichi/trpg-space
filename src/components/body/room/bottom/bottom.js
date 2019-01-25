@@ -11,6 +11,7 @@ import './bottom.scss';
 
 // Component
 import DiceBalloon from './diceBalloon/diceBalloon';
+import ChatToolbar from './chatToolbar/chatToolbar';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -20,6 +21,7 @@ const mapStateToProps = (state) => {
     userList: state.userList,
     charList: state.charList,
     centerMode: state.centerMode,
+    chatSetting: state.chatSetting,
     displayDiceSetting: state.displayDiceSetting,
     displaySidebar: state.displaySidebar,
   };
@@ -46,8 +48,6 @@ class Bottom extends Component {
     this.state = {
       chatText: '',
       inputFocus: false,
-      checkedUsers: [],
-      checkedAll: true,
       sendChatAs: 'player'
     };
 
@@ -58,23 +58,13 @@ class Bottom extends Component {
     this.handleDiceSettingClick = this.handleDiceSettingClick.bind(this);
     this.handleCenterModeClick = this.handleCenterModeClick.bind(this);
     this.handleSidebarClick = this.handleSidebarClick.bind(this);
-    this.handleImageClick = this.handleImageClick.bind(this);
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.handleUserCheckChange = this.handleUserCheckChange.bind(this);
-    this.handleAllCheckChange = this.handleAllCheckChange.bind(this);
-    this.handleSendRadioChange = this.handleSendRadioChange.bind(this);
   }
 
   componentDidMount (){
     socket.on('chat', (content) => {
       this.props.addToChatLog(content);
-    });
-
-    socket.on('leave', (userId) => {
-      this.setState({ checkedUsers: this.state.checkedUsers.filter(id => id !== userId) }, () => {
-        if (this.state.checkedUsers.length === 0) this.setState({ checkedAll: true });
-      });
     });
   }
 
@@ -99,16 +89,16 @@ class Bottom extends Component {
     document.removeEventListener('click', this.handleOnFocusClick);
     this.setState({inputFocus: false});
 
-    const name = this.state.sendChatAs.length === 'player'
+    const name = this.state.sendChatAs === 'player'
                    ? this.props.userList.find((user) => this.props.id === user.id).name
                    : this.props.charList.find((char) => this.state.sendChatAs === char.charId).general.name;
 
     const chatData = {
       type: 'text',
       text: this.state.chatText.trim(),
-      private: !this.state.checkedAll,
-      sendTo: this.state.checkedUsers,
-      sendToNames: this.state.checkedUsers.map(id => this.props.userList.find(user => user.id === id).name).join(', '),
+      private: !this.props.chatSetting.sendTo.sendToAll,
+      sendTo: this.props.chatSetting.sendTo.sendToUsers,
+      sendToNames: this.props.chatSetting.sendTo.sendToUsers.map(id => this.props.userList.find(user => user.id === id).name).join(', '),
       name
     };
 
@@ -130,9 +120,9 @@ class Bottom extends Component {
         const chatData = {
           type: 'text',
           text: this.state.chatText.trim(),
-          private: !this.state.checkedAll,
-          sendTo: this.state.checkedUsers,
-          sendToNames: this.state.checkedUsers.map(id => this.props.userList.find(user => user.id === id).name).join(', '),
+          private: !this.props.chatSetting.sendTo.sendToAll,
+          sendTo: this.props.chatSetting.sendTo.sendToUsers,
+          sendToNames: this.props.chatSetting.sendTo.sendToUsers.map(id => this.props.userList.find(user => user.id === id).name).join(', '),
           name
         };
 
@@ -171,47 +161,37 @@ class Bottom extends Component {
       : this.props.showSidebar();
   }
 
-  handleImageClick (e){
-    e.preventDefault(e);
-    document.removeEventListener('click', this.handleOnFocusClick);
-    this.setState({inputFocus: false});
+  // handleImageClick (e){
+  //   e.preventDefault(e);
+  //   document.removeEventListener('click', this.handleOnFocusClick);
+  //   this.setState({inputFocus: false});
+  //
+  //   this.props.showModal('uploadImg', {
+  //     title: 'Upload an image',
+  //     displayClose: true,
+  //     type: 'chat'
+  //   });
+  // }
 
-    this.props.showModal('uploadImg', {
-      title: 'Upload an image',
-      displayClose: true,
-      type: 'chat'
-    });
-  }
-
-  handleUserCheckChange (e, userId){
-    this.state.checkedUsers.includes(userId)
-      ? this.setState( { checkedUsers: this.state.checkedUsers.filter(id => id !== userId ) })
-      : this.setState( { checkedUsers: [ ...this.state.checkedUsers, userId] });
-  }
-
-  handleAllCheckChange (e){
-    this.setState({ checkedAll: !this.state.checkedAll });
-  }
-
-  handleSendRadioChange (e){
-    this.setState({ sendChatAs: e.target.value });
-  }
+  // handleUserCheckChange (e, userId){
+  //   this.state.checkedUsers.includes(userId)
+  //     ? this.setState( { checkedUsers: this.state.checkedUsers.filter(id => id !== userId ) })
+  //     : this.setState( { checkedUsers: [ ...this.state.checkedUsers, userId] });
+  // }
+  //
+  // handleAllCheckChange (e){
+  //   this.setState({ checkedAll: !this.state.checkedAll });
+  // }
+  //
+  // handleSendRadioChange (e){
+  //   this.setState({ sendChatAs: e.target.value });
+  // }
 
   render() {
     const isDisabled = this.state.chatText.trim().length === 0;
 
     const hideOnFocusClass = this.state.inputFocus ? 'd-none' : '';
     const showOnFocusClass = this.state.inputFocus ? '' : 'd-none';
-
-    const userCheckList = this.props.userList.filter(user => user.id !== this.props.id).map(user => {
-      return (<div className="private-chat-user one-line-ellipsis"><label><input className="p-1" type="checkbox" value={user.id} checked={this.state.checkedUsers.includes(user.id)} onChange={(e) => this.handleUserCheckChange(e, user.id)}/>{user.name}</label></div>);
-    });
-
-    const charRadioList = this.props.charList.filter(char => char.ownerId === this.props.id).map(char => {
-      return (<div className="chat-sender-name"><label><input type="radio" name="sender" value={char.charId} checked={this.state.sendChatAs === char.charId} onChange={this.handleSendRadioChange}/>{char.general.name}</label></div>)
-    });
-
-    const userName = this.props.userList.find(user => user.id === this.props.id).name;
 
     return (
       <div className="room-bottom-cont" ref={node => this.node = node} onClick={this.handleOnFocusClick}>
@@ -236,32 +216,7 @@ class Bottom extends Component {
           </button>
           <div className="chat-bar-btn cursor-pointer align-center f-shrink-0">
             <FontAwesomeIcon icon="cog" mask="comment" transform="shrink-7 up-0.5"/>
-            <div className="chat-opt-toolbar p-absolute d-flex f-dir-col">
-              <div className="chat-opt-btn" onClick={this.handleImageClick}>
-                <FontAwesomeIcon icon="paperclip"/>
-              </div>
-              <div className="chat-opt-btn">
-                <span className="fa-layers fa-fw">
-                  <FontAwesomeIcon icon="user" transform="shrink-3 left-3 down-3"/>
-                  <FontAwesomeIcon icon="comment" transform="shrink-7 up-5 right-6"/>
-                </span>
-                <div className="chat-opt-sender p-2 p-absolute align-left">
-                  <div>Send message as:</div>
-                  <div><label><input type="radio" name="sender" value="player" checked={this.state.sendChatAs === 'player'} onChange={this.handleSendRadioChange}/>{userName}</label></div>
-                  { charRadioList}
-                </div>
-              </div>
-              <div className="chat-opt-btn">
-                <FontAwesomeIcon icon="user-secret"/>
-                <div className="chat-opt-private p-2 p-absolute align-left">
-                  <div>Send message to:</div>
-                  <div><label><input type="checkbox" checked={this.state.checkedAll} onChange={this.handleAllCheckChange}/>Everyone</label></div>
-                  { this.state.checkedAll
-                      ? null
-                      : userCheckList}
-                </div>
-              </div>
-            </div>
+            <ChatToolbar/>
           </div>
         </div>
       </div>
@@ -288,5 +243,33 @@ class Bottom extends Component {
             //   <span className={this.state.checkedAll ? '' : 'd-none'}><FontAwesomeIcon icon="users"/></span>
             //   <span className={this.state.checkedAll ? 'd-none' : ''}><FontAwesomeIcon icon="user-secret"/></span>
             // </div>
+            //
+            //
+// <div className="chat-opt-toolbar p-absolute d-flex f-dir-col">
+//   <div className="chat-opt-btn" onClick={this.handleImageClick}>
+//     <FontAwesomeIcon icon="paperclip"/>
+//   </div>
+//   <div className="chat-opt-btn">
+//     <span className="fa-layers fa-fw">
+//       <FontAwesomeIcon icon="user" transform="shrink-3 left-3 down-3"/>
+//       <FontAwesomeIcon icon="comment" transform="shrink-7 up-5 right-6"/>
+//     </span>
+//     <div className="chat-opt-sender p-2 p-absolute align-left">
+//       <div>Send message as:</div>
+//       <div><label><input type="radio" name="sender" value="player" checked={this.state.sendChatAs === 'player'} onChange={this.handleSendRadioChange}/>{userName}</label></div>
+//       { charRadioList}
+//     </div>
+//   </div>
+//   <div className="chat-opt-btn">
+//     <FontAwesomeIcon icon="user-secret"/>
+//     <div className="chat-opt-private p-2 p-absolute align-left">
+//       <div>Send message to:</div>
+//       <div><label><input type="checkbox" checked={this.state.checkedAll} onChange={this.handleAllCheckChange}/>Everyone</label></div>
+//       { this.state.checkedAll
+//           ? null
+//           : userCheckList}
+//     </div>
+//   </div>
+// </div>
 
 export default connect(mapStateToProps, mapDispatchToProps)(Bottom);

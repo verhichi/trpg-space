@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addUser, editUser, removeUser, setRoomId, setUserId, userCleanup, addToChatLog, newHost, editMapImage, addMapChar, editMapChar, removeMapChar, removeAllMapChar, lockNote, unlockNote, editNote, editMapPosition } from '../../../redux/actions/action';
+import { addUser, editUser, removeUser, setRoomId, setUserId, userCleanup, addToChatLog, newHost, editMapImage, addMapChar, editMapChar, removeMapChar, removeAllMapChar, lockNote, unlockNote, editNote, editMapPosition, removeSendMsgUser, checkSendMsgToAll } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
 // Style
@@ -19,6 +19,7 @@ const mapStateToProps = (state) => {
     userList:      state.userList,
     charList:      state.charList,
     mapSetting:    state.mapSetting,
+    chatSetting:   state.chatSetting,
     isNoteLocked:  state.isNoteLocked,
     notes:         state.notes
   };
@@ -27,23 +28,25 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    addUser:          (user)     => dispatch(addUser(user)),
-    editUser:         (user)     => dispatch(editUser(user)),
-    removeUser:       (userId)   => dispatch(removeUser(userId)),
-    setRoomId:        (roomId)   => dispatch(setRoomId(roomId)),
-    setUserId:        (userId)   => dispatch(setUserId(userId)),
-    userCleanup:      (id)       => dispatch(userCleanup(id)),
-    addToChatLog:     (content)  => dispatch(addToChatLog(content)),
-    newHost:          (id)       => dispatch(newHost(id)),
-    editMapImage:     (src)      => dispatch(editMapImage(src)),
-    addMapChar:       (charData) => dispatch(addMapChar(charData)),
-    editMapChar:      (charData) => dispatch(editMapChar(charData)),
-    removeMapChar:    (charId)   => dispatch(removeMapChar(charId)),
-    removeAllMapChar: ()         => dispatch(removeAllMapChar()),
-    editNote:         (notes)    => dispatch(editNote(notes)),
-    lockNote:         (userId)   => dispatch(lockNote(userId)),
-    unlockNote:       ()         => dispatch(unlockNote()),
-    editMapPosition:  (left, top)=> dispatch(editMapPosition(left, top))
+    addUser:           (user)      => dispatch(addUser(user)),
+    editUser:          (user)      => dispatch(editUser(user)),
+    removeUser:        (userId)    => dispatch(removeUser(userId)),
+    setRoomId:         (roomId)    => dispatch(setRoomId(roomId)),
+    setUserId:         (userId)    => dispatch(setUserId(userId)),
+    userCleanup:       (id)        => dispatch(userCleanup(id)),
+    addToChatLog:      (content)   => dispatch(addToChatLog(content)),
+    newHost:           (id)        => dispatch(newHost(id)),
+    editMapImage:      (src)       => dispatch(editMapImage(src)),
+    addMapChar:        (charData)  => dispatch(addMapChar(charData)),
+    editMapChar:       (charData)  => dispatch(editMapChar(charData)),
+    removeMapChar:     (charId)    => dispatch(removeMapChar(charId)),
+    removeAllMapChar:  ()          => dispatch(removeAllMapChar()),
+    editNote:          (notes)     => dispatch(editNote(notes)),
+    lockNote:          (userId)    => dispatch(lockNote(userId)),
+    unlockNote:        ()          => dispatch(unlockNote()),
+    editMapPosition:   (left, top) => dispatch(editMapPosition(left, top)),
+    removeSendMsgUser: (userId)    => dispatch(removeSendMsgUser(userId)),
+    checkSendMsgToAll: ()          => dispatch(checkSendMsgToAll())
   };
 };
 
@@ -116,6 +119,13 @@ class Room extends Component {
         type: 'leave',
         name: this.props.userList.find((user) => user.id === id).name
       });
+
+      if (this.props.chatSetting.sendTo.sendToUsers.includes(id)){
+        this.props.removeSendMsgUser(id);
+        if (this.props.chatSetting.sendTo.sendToUsers.length === 0){
+          this.props.checkSendMsgToAll();
+        }
+      }
 
       if (id === this.props.isNoteLocked){
         this.props.unlockNote();
