@@ -211,26 +211,15 @@ class Bottom extends Component {
               ? <FontAwesomeIcon icon="map-marked-alt"/>
               : <FontAwesomeIcon icon="comments"/>}
           </div>
-          <div className="private-chat-btn f-shrink-0 p-relative cursor-pointer align-center">
-            <div className="private-chat-balloon p-2 p-absolute align-left">
-              <div>Send message to:</div>
-              <div><label><input type="checkbox" checked={this.state.checkedAll} onChange={this.handleAllCheckChange}/>Everyone</label></div>
-              { this.state.checkedAll
-                  ? null
-                  : userCheckList}
-            </div>
-            <span className={this.state.checkedAll ? '' : 'd-none'}><FontAwesomeIcon icon="users"/></span>
-            <span className={this.state.checkedAll ? 'd-none' : ''}><FontAwesomeIcon icon="user-secret"/></span>
-          </div>
-          <textarea className="chat-inp f-grow-1 pr-2" placeholder="Enter text here" value={this.state.chatText} onChange={this.handleChange} onFocus={this.handleFocus} onBlur={this.handleBlur} onKeyDown={this.handleKeyDown} ></textarea>
-          <button className="chat-bar-btn btn-hot cursor-pointer f-shrink-0" disabled={isDisabled} onClick={this.handleSendClick}>
+          <textarea className="chat-inp f-grow-1 pr-2 pl-2" placeholder="Enter text here" value={this.state.chatText} onChange={this.handleChange} onFocus={this.handleFocus} onBlur={this.handleBlur} onKeyDown={this.handleKeyDown} ></textarea>
+          <button className={`chat-bar-btn btn-hot cursor-pointer f-shrink-0 ${showOnFocusClass}`} disabled={isDisabled} onClick={this.handleSendClick}>
             <FontAwesomeIcon icon="paper-plane"/>
           </button>
           <div className="chat-bar-btn cursor-pointer align-center f-shrink-0">
             <FontAwesomeIcon icon="cog" mask="comment" transform="shrink-7 up-0.5"/>
             <div className="chat-opt-toolbar p-absolute d-flex f-dir-col">
-              <div className="chat-opt-btn">
-                <FontAwesomeIcon icon="user-secret"/>
+              <div className="chat-opt-btn" onClick={this.handleImageClick}>
+                <FontAwesomeIcon icon="paperclip"/>
               </div>
               <div className="chat-opt-btn">
                 <span className="fa-layers fa-fw">
@@ -239,10 +228,14 @@ class Bottom extends Component {
                 </span>
               </div>
               <div className="chat-opt-btn">
-                <FontAwesomeIcon icon="palette"/>
-              </div>
-              <div className="chat-opt-btn" onClick={this.handleImageClick}>
-                <FontAwesomeIcon icon="paperclip"/>
+                <FontAwesomeIcon icon="user-secret"/>
+                <div className="chat-opt-private p-2 p-absolute align-left">
+                  <div>Send message to:</div>
+                  <div><label><input type="checkbox" checked={this.state.checkedAll} onChange={this.handleAllCheckChange}/>Everyone</label></div>
+                  { this.state.checkedAll
+                      ? null
+                      : userCheckList}
+                </div>
               </div>
             </div>
           </div>
@@ -260,5 +253,16 @@ class Bottom extends Component {
             //   <FontAwesomeIcon icon="cog" transform="shrink-3 up-8" color={'black'}/>
             //   <FontAwesomeIcon icon="comment" mask="cog"/>
             // </span>
+            // <div className="private-chat-btn f-shrink-0 p-relative cursor-pointer align-center">
+            //   <div className="private-chat-balloon p-2 p-absolute align-left">
+            //     <div>Send message to:</div>
+            //     <div><label><input type="checkbox" checked={this.state.checkedAll} onChange={this.handleAllCheckChange}/>Everyone</label></div>
+            //     { this.state.checkedAll
+            //         ? null
+            //         : userCheckList}
+            //   </div>
+            //   <span className={this.state.checkedAll ? '' : 'd-none'}><FontAwesomeIcon icon="users"/></span>
+            //   <span className={this.state.checkedAll ? 'd-none' : ''}><FontAwesomeIcon icon="user-secret"/></span>
+            // </div>
 
 export default connect(mapStateToProps, mapDispatchToProps)(Bottom);

@@ -42,40 +42,9 @@
   resize: none;
 }
 
-.private-chat-btn{
-  background: $tertiary-clr;
-  border: none;
-  border-radius: 0;
-  line-height: 44px;
-  padding: 0 10px;
-  flex-basis: 50px;
-
-  &:hover .private-chat-balloon{
-    display: block;
-  }
-}
-
-.private-chat-balloon{
-  background: $tertiary-clr;
-  border-bottom: 1px solid $black-clr;
-  bottom: 100%;
-  color: $white-clr;
-  display: none;
-  left: 0;
-  width: 200px;
-  z-index: 100;
-}
-
-.private-chat-user:nth-child(3){
-  border-top: 1px solid #ccc;
-}
-
-
-
 .chat-opt-toolbar{
   background: $secondary-clr;
   border: none;
-  border-bottom: 1px solid black;
   border-radius: 0;
   bottom: 100%;
   color: $white-clr;
@@ -87,5 +56,33 @@
 .chat-opt-btn{
   height: 50px;
   padding: 5px;
+  position: relative;
   width: 50px;
+
+  &:hover .chat-opt-private{
+    display: block;
+  }
+}
+
+.chat-opt-color{
+  bottom: 0;
+  display: none;
+  position: absolute;
+  right: 100%;
+}
+
+.chat-opt-private{
+  background: $secondary-clr;
+  border: 0;
+  border-right: 1px solid $black-clr;
+  bottom: 0;
+  color: $white-clr;
+  display: none;
+  right: 100%;
+  width: 200px;
+  z-index: 100;
+}
+
+.private-chat-user:nth-child(3){
+  border-top: 1px solid #ccc;
 }
