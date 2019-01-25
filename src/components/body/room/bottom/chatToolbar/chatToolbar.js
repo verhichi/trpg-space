@@ -103,7 +103,9 @@ class ChatToolbar extends Component {
           </span>
           <div className="chat-opt-sender p-2 p-absolute align-left">
             <div>Send message as:</div>
+            <div className="chat-opt-subtitle pt-2 pb-1 font-size-md text-dec-underline">User</div>
             <div><label><input type="radio" name="sender" checked={this.props.chatSetting.sendAs.sendAsPlayer} onChange={this.handleSendAsPlayerRadio}/>{userName}</label></div>
+            { charRadioList.length !== 0 && (<div className="chat-opt-subtitle pt-2 pb-1 font-size-md text-dec-underline">Character:</div>) }
             { charRadioList}
           </div>
         </div>
