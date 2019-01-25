@@ -241,7 +241,7 @@ class Bottom extends Component {
               <div className="chat-opt-btn">
                 <FontAwesomeIcon icon="palette"/>
               </div>
-              <div className="chat-opt-btn">
+              <div className="chat-opt-btn" onClick={this.handleImageClick}>
                 <FontAwesomeIcon icon="paperclip"/>
               </div>
             </div>
