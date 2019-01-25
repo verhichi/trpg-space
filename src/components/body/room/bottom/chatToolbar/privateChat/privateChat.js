@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { checkSendMsgToAll, uncheckSendMsgToAll, addSendMsgUser, removeSendMsgUser } from '../../../../../redux/actions/action';
+import { checkSendMsgToAll, uncheckSendMsgToAll, addSendMsgUser, removeSendMsgUser } from '../../../../../../redux/actions/action';
 
 // Style
 import './privateChat.scss';
