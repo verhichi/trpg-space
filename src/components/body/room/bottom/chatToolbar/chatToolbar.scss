@@ -12,6 +12,10 @@
   z-index: 51;
 }
 
+.chat-bar-btn:hover .chat-opt-toolbar{
+  display: block;
+}
+
 .chat-opt-btn{
   height: 50px;
   padding: 5px;
