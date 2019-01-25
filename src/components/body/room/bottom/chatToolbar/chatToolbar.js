@@ -1,127 +1,25 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { showModal, checkSendMsgToAll, uncheckSendMsgToAll, addSendMsgUser, removeSendMsgUser, checkSendAsPlayer, uncheckSendAsPlayer, editSendAs } from '../../../../../redux/actions/action';
 
 // Style
 import './chatToolbar.scss';
 
-// Font Awesome Component
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-// Redux Map State To Prop
-const mapStateToProps = (state) => {
-  return {
-    id:          state.id,
-    roomId:      state.roomId,
-    userList:    state.userList,
-    charList:    state.charList,
-    chatSetting: state.chatSetting
-  };
-};
-
-// Redux Map Dispatch To Props
-const mapDispatchToProps = (dispatch) => {
-  return {
-    showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
-    checkSendMsgToAll:   ()       => dispatch(checkSendMsgToAll()),
-    uncheckSendMsgToAll: ()       => dispatch(uncheckSendMsgToAll()),
-    checkSendAsPlayer:   ()       => dispatch(checkSendAsPlayer()),
-    uncheckSendAsPlayer: ()       => dispatch(uncheckSendAsPlayer()),
-    addSendMsgUser:      (userId) => dispatch(addSendMsgUser(userId)),
-    removeSendMsgUser:   (userId) => dispatch(removeSendMsgUser(userId)),
-    editSendAs:          (userId) => dispatch(editSendAs(userId))
-  };
-};
+// Component
+import PrivateChat from './privateChat/privateChat';
+import SendImage from './sendImage/sendImage';
+import SendMsgAs from './sendMsgAs/sendMsgAs';
 
 class ChatToolbar extends Component {
-  constructor (props){
-    super(props);
-
-    this.handleImageClick        = this.handleImageClick.bind(this);
-    this.handleUserCheckChange   = this.handleUserCheckChange.bind(this);
-    this.handleAllCheckChange    = this.handleAllCheckChange.bind(this);
-    this.handleSendAsPlayerRadio = this.handleSendAsPlayerRadio.bind(this);
-    this.handleSendRadioChange   = this.handleSendRadioChange.bind(this);
-  }
-
-  handleImageClick (e){
-    e.preventDefault(e);
-
-    this.props.showModal('uploadImg', {
-      title: 'Upload an image',
-      displayClose: true,
-      type: 'chat'
-    });
-  }
-
-  handleAllCheckChange (e){
-    this.props.chatSetting.sendTo.sendToAll
-      ? this.props.uncheckSendMsgToAll()
-      : this.props.checkSendMsgToAll();
-  }
-
-  handleUserCheckChange (e){
-    this.props.chatSetting.sendTo.sendToUsers.includes(e.target.value)
-      ? this.props.removeSendMsgUser(e.target.value)
-      : this.props.addSendMsgUser(e.target.value);
-  }
-
-  handleSendAsPlayerRadio (e){
-    this.props.chatSetting.sendAs.sendAsPlayer
-      ? this.props.uncheckSendAsPlayer()
-      : this.props.checkSendAsPlayer();
-
-    this.props.editSendAs('');
-  }
-
-  handleSendRadioChange (e){
-    this.props.uncheckSendAsPlayer();
-    this.props.editSendAs(e.target.value);
-  }
 
   render (){
 
-    const userName = this.props.userList.find(user => user.id === this.props.id).name;
-
-    const userCheckList = this.props.userList.filter(user => user.id !== this.props.id).map(user => {
-      return (<div className="private-chat-user one-line-ellipsis"><label><input className="p-1" type="checkbox" value={user.id} checked={this.props.chatSetting.sendTo.sendToUsers.includes(user.id)} onChange={this.handleUserCheckChange}/>{user.name}</label></div>);
-    });
-
-    const charRadioList = this.props.charList.filter(char => char.ownerId === this.props.id).map(char => {
-      return (<div className="chat-sender-name one-line-ellipsis"><label><input type="radio" name="sender" value={char.charId} checked={this.props.chatSetting.sendAs.sendAsCharacter === char.charId} onChange={this.handleSendRadioChange}/>{char.general.name}</label></div>)
-    });
-
     return(
       <div className="chat-opt-toolbar p-absolute d-flex f-dir-col">
-        <div className="chat-opt-btn" onClick={this.handleImageClick}>
-          <FontAwesomeIcon icon="paperclip"/>
-        </div>
-        <div className="chat-opt-btn">
-          <span className="fa-layers fa-fw">
-            <FontAwesomeIcon icon="user" transform="shrink-3 left-3 down-3"/>
-            <FontAwesomeIcon icon="comment" transform="shrink-7 up-5 right-6"/>
-          </span>
-          <div className="chat-opt-sender p-2 p-absolute align-left">
-            <div>Send message as:</div>
-            <div className="chat-opt-subtitle pt-2 pb-1 font-size-md text-dec-underline">User</div>
-            <div><label><input type="radio" name="sender" checked={this.props.chatSetting.sendAs.sendAsPlayer} onChange={this.handleSendAsPlayerRadio}/>{userName}</label></div>
-            { charRadioList.length !== 0 && (<div className="chat-opt-subtitle pt-2 pb-1 font-size-md text-dec-underline">Character:</div>) }
-            { charRadioList}
-          </div>
-        </div>
-        <div className="chat-opt-btn">
-          <FontAwesomeIcon icon="user-secret"/>
-          <div className="chat-opt-private p-2 p-absolute align-left">
-            <div>Send message to:</div>
-            <div><label><input type="checkbox" checked={this.props.chatSetting.sendTo.sendToAll} onChange={this.handleAllCheckChange}/>Everyone</label></div>
-            { this.props.chatSetting.sendTo.sendToAll
-                ? null
-                : userCheckList}
-          </div>
-        </div>
+        <SendImage/>
+        <SendMsgAs/>
+        <PrivateChat/>
       </div>
     );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChatToolbar);
+export default ChatToolbar;
