@@ -59,7 +59,6 @@ export const initialState = {
     //   displayClose*: display the X button on the top-right to close modal
     // }
   },
-  centerMode: 'chat',
   mapSetting: {
     image: {
       src: '',
@@ -79,6 +78,8 @@ export const initialState = {
   displayRemoveChar: false,
   displayMapGrid: false,
   displayMapScale: false,
+  sidebarTabMode: 'char',
+  centerMode: 'chat',
   userList: [
   //   {
   //   id: '123457',
@@ -129,7 +130,16 @@ export const initialState = {
     //   type: 'text/help/image/join/leave/newHost/help,'
     // }
   ],
-  sidebarTabMode: 'char',
+  chatSetting: {
+    sendTo: {
+      sendToAll: true,
+      sendToUsers: []
+    },
+    sendAs: {
+      sendAsPlayer: true,
+      sendAsCharacter: ''
+    }
+  },
   notes: '',
   isNoteLocked: ''
 };
