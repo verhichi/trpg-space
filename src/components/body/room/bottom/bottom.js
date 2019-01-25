@@ -18,6 +18,7 @@ const mapStateToProps = (state) => {
     id: state.id,
     roomId: state.roomId,
     userList: state.userList,
+    charList: state.charList,
     centerMode: state.centerMode,
     displayDiceSetting: state.displayDiceSetting,
     displaySidebar: state.displaySidebar,
@@ -46,7 +47,8 @@ class Bottom extends Component {
       chatText: '',
       inputFocus: false,
       checkedUsers: [],
-      checkedAll: true
+      checkedAll: true,
+      sendChatAs: 'player'
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -61,6 +63,7 @@ class Bottom extends Component {
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleUserCheckChange = this.handleUserCheckChange.bind(this);
     this.handleAllCheckChange = this.handleAllCheckChange.bind(this);
+    this.handleSendRadioChange = this.handleSendRadioChange.bind(this);
   }
 
   componentDidMount (){
@@ -95,7 +98,10 @@ class Bottom extends Component {
 
     document.removeEventListener('click', this.handleOnFocusClick);
     this.setState({inputFocus: false});
-    const name = this.props.userList.find((user) => this.props.id === user.id).name;
+
+    const name = this.state.sendChatAs.length === 'player'
+                   ? this.props.userList.find((user) => this.props.id === user.id).name
+                   : this.props.charList.find((char) => this.state.sendChatAs === char.charId).general.name;
 
     const chatData = {
       type: 'text',
@@ -117,7 +123,10 @@ class Bottom extends Component {
       e.preventDefault();
 
       if (text.length !== 0){
-        const name = this.props.userList.find((user) => this.props.id === user.id).name;
+        const name = this.state.sendChatAs === 'player'
+                       ? this.props.userList.find((user) => this.props.id === user.id).name
+                       : this.props.charList.find((char) => this.state.sendChatAs === char.charId).general.name;
+
         const chatData = {
           type: 'text',
           text: this.state.chatText.trim(),
@@ -184,6 +193,10 @@ class Bottom extends Component {
     this.setState({ checkedAll: !this.state.checkedAll });
   }
 
+  handleSendRadioChange (e){
+    this.setState({ sendChatAs: e.target.value });
+  }
+
   render() {
     const isDisabled = this.state.chatText.trim().length === 0;
 
@@ -193,6 +206,12 @@ class Bottom extends Component {
     const userCheckList = this.props.userList.filter(user => user.id !== this.props.id).map(user => {
       return (<div className="private-chat-user one-line-ellipsis"><label><input className="p-1" type="checkbox" value={user.id} checked={this.state.checkedUsers.includes(user.id)} onChange={(e) => this.handleUserCheckChange(e, user.id)}/>{user.name}</label></div>);
     });
+
+    const charRadioList = this.props.charList.filter(char => char.ownerId === this.props.id).map(char => {
+      return (<div className="chat-sender-name"><label><input type="radio" name="sender" value={char.charId} checked={this.state.sendChatAs === char.charId} onChange={this.handleSendRadioChange}/>{char.general.name}</label></div>)
+    });
+
+    const userName = this.props.userList.find(user => user.id === this.props.id).name;
 
     return (
       <div className="room-bottom-cont" ref={node => this.node = node} onClick={this.handleOnFocusClick}>
@@ -226,6 +245,11 @@ class Bottom extends Component {
                   <FontAwesomeIcon icon="user" transform="shrink-3 left-3 down-3"/>
                   <FontAwesomeIcon icon="comment" transform="shrink-7 up-5 right-6"/>
                 </span>
+                <div className="chat-opt-sender p-2 p-absolute align-left">
+                  <div>Send message as:</div>
+                  <div><label><input type="radio" name="sender" value="player" checked={this.state.sendChatAs === 'player'} onChange={this.handleSendRadioChange}/>{userName}</label></div>
+                  { charRadioList}
+                </div>
               </div>
               <div className="chat-opt-btn">
                 <FontAwesomeIcon icon="user-secret"/>
