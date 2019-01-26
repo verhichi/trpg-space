@@ -91,6 +91,10 @@ class Room extends Component {
       this.props.removeUser(id);
     });
 
+    socket.on('chat', (content) => {
+      this.props.addToChatLog(content);
+    });
+
     socket.on('join', (content) => {
       this.props.addUser(content);
       socket.emit('user', this.props.roomId, this.props.userList.find((user) => user.id === this.props.id));

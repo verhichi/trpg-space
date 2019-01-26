@@ -62,12 +62,6 @@ class Bottom extends Component {
     this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
-  componentDidMount (){
-    socket.on('chat', (content) => {
-      this.props.addToChatLog(content);
-    });
-  }
-
   handleFocus (e){
     document.addEventListener('click', this.handleOnFocusClick);
     this.setState({inputFocus: true});
