@@ -52,6 +52,8 @@ import {
   UNCHECK_SEND_AS_PLAYER
 } from '../constants/actionTypes';
 
+import { CENTER_MODE_CHAT, SIDEBAR_MODE_CHAR, CHAT_TYPE_HELP } from '../../constants/constants';
+
 export const initialState = {
   isMobile: /Mobile/.test(navigator.userAgent),
   id: '',
@@ -85,8 +87,8 @@ export const initialState = {
   displayRemoveChar: false,
   displayMapGrid: false,
   displayMapScale: false,
-  sidebarTabMode: 'char',
-  centerMode: 'chat',
+  sidebarTabMode: SIDEBAR_MODE_CHAR,
+  centerMode:     CENTER_MODE_CHAT,
   userList: [
   //   {
   //   id: '123457',
@@ -132,7 +134,7 @@ export const initialState = {
     // }
   ],
   chatLog: [
-    { type: 'help', id: 'abc' }
+    { type: CHAT_TYPE_HELP, id: 'abc' }
     // {
     //   type: 'text/help/image/join/leave/newHost/help,'
     // }

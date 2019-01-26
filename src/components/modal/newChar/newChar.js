@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
-import { CHAR_TYPE_ALLY, CHAR_PRIVACY_LEVEL_ZERO } from '../../../constants/constants';
+import { CHAR_TYPE_ALLY, CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_THREE, CHAR_MODAL_TAB_GENERAL, CHAR_MODAL_TAB_STATUS, CHAR_MODAL_TAB_DETAIL } from '../../../constants/constants';
 import { addToCharList, hideModal } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
@@ -12,9 +12,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './newChar.scss';
 
 // Component
-import Detail from './detail/detail';
+import Detail  from './detail/detail';
 import General from './general/general';
-import Status from './status/status';
+import Status  from './status/status';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -30,7 +30,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addToCharList: (charData) => dispatch(addToCharList(charData)),
-    hideModal: () => dispatch(hideModal())
+    hideModal:     ()         => dispatch(hideModal())
   };
 };
 
@@ -39,7 +39,7 @@ class NewChar extends Component {
   constructor (props){
     super(props);
     this.state = {
-      tabMode: 'general',
+      tabMode: CHAR_MODAL_TAB_GENERAL,
       general: {
         name:    '',
         type:    CHAR_TYPE_ALLY,
@@ -55,9 +55,9 @@ class NewChar extends Component {
     this.returnStatusValue     = this.returnStatusValue.bind(this);
     this.returnDetailValue     = this.returnDetailValue.bind(this);
     this.returnGeneralValue    = this.returnGeneralValue.bind(this);
-    this.handleGeneralTabClick = this.handleTabClick.bind(this, 'general');
-    this.handleStatusTabClick  = this.handleTabClick.bind(this, 'status');
-    this.handleDetailTabClick  = this.handleTabClick.bind(this, 'detail');
+    this.handleGeneralTabClick = this.handleTabClick.bind(this, CHAR_MODAL_TAB_GENERAL);
+    this.handleStatusTabClick  = this.handleTabClick.bind(this, CHAR_MODAL_TAB_STATUS);
+    this.handleDetailTabClick  = this.handleTabClick.bind(this, CHAR_MODAL_TAB_DETAIL);
     this.handleSubmitClick     = this.handleSubmitClick.bind(this);
   }
 
@@ -132,7 +132,7 @@ class NewChar extends Component {
 
     this.props.addToCharList(charData);
 
-    if (this.state.general.privacy !== '3'){
+    if (this.state.general.privacy !== CHAR_PRIVACY_LEVEL_THREE){
       socket.emit('char', this.props.roomId, charData);
     }
 
@@ -140,9 +140,9 @@ class NewChar extends Component {
   }
 
   render() {
-    const toggleGeneralTabClass = this.state.tabMode === 'general' ? 'is-active' : '';
-    const toggleStatusTabClass =  this.state.tabMode === 'status' ? 'is-active' : '';
-    const toggleDetailTabClass =  this.state.tabMode === 'detail' ? 'is-active' : '';
+    const toggleGeneralTabClass = this.state.tabMode === CHAR_MODAL_TAB_GENERAL ? 'is-active' : '';
+    const toggleStatusTabClass =  this.state.tabMode === CHAR_MODAL_TAB_STATUS ? 'is-active' : '';
+    const toggleDetailTabClass =  this.state.tabMode === CHAR_MODAL_TAB_DETAIL ? 'is-active' : '';
 
     const hasErrorGeneral = this.state.general.name.length === 0 ||
                             (this.state.general.link.length !== 0 && !/^http(s)?:\/\/.+/.test(this.state.general.link));
@@ -180,9 +180,9 @@ class NewChar extends Component {
           <div className={`char-tab cursor-pointer p-2 ${toggleDetailTabClass}`} onClick={this.handleDetailTabClick}>Detail <span className={`text-danger ${hasErrorDetail ? '' : 'v-hidden'}`}><FontAwesomeIcon icon="exclamation-circle"/></span></div>
         </div>
 
-        <General isActive={this.state.tabMode === 'general'} returnGeneralValue={this.returnGeneralValue}/>
-        <Status  isActive={this.state.tabMode === 'status'} returnStatusValue={this.returnStatusValue}/>
-        <Detail  isActive={this.state.tabMode === 'detail'} returnDetailValue={this.returnDetailValue}/>
+        <General isActive={this.state.tabMode === CHAR_MODAL_TAB_GENERAL} returnGeneralValue={this.returnGeneralValue}/>
+        <Status  isActive={this.state.tabMode === CHAR_MODAL_TAB_STATUS} returnStatusValue={this.returnStatusValue}/>
+        <Detail  isActive={this.state.tabMode === CHAR_MODAL_TAB_DETAIL} returnDetailValue={this.returnDetailValue}/>
 
         <button type="button" className="btn btn-hot w-100 cursor-pointer f-shrink-0 f-align-self-end" disabled={isDisabled} onClick={this.handleSubmitClick}>
           <FontAwesomeIcon icon="check"/>

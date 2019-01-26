@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { SIDEBAR_MODE_CHAR, SIDEBAR_MODE_NOTE } from '../../../../../constants/constants';
 import { setSidebarTabMode } from '../../../../../redux/actions/action';
-// import socket from '../../../../../socket/socketClient';
 
 
 // Font Awesome Component
@@ -12,12 +12,12 @@ import './sidebar.scss';
 
 // // Component
 import CharList from './charList/charList';
-import Notes from './notes/notes';
+import Notes    from './notes/notes';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    isMobile: state.isMobile,
+    isMobile:       state.isMobile,
     displaySidebar: state.displaySidebar,
     sidebarTabMode: state.sidebarTabMode
   };
@@ -31,8 +31,8 @@ const mapDispatchToProps = (dispatch) => {
 class Sidebar extends Component {
   constructor (props){
     super(props);
-    this.handleCharTabClick = this.handleTabClick.bind(this, 'char');
-    this.handleNotesTabClick = this.handleTabClick.bind(this, 'notes');
+    this.handleCharTabClick  = this.handleTabClick.bind(this, SIDEBAR_MODE_CHAR);
+    this.handleNotesTabClick = this.handleTabClick.bind(this, SIDEBAR_MODE_NOTE);
   }
 
   handleTabClick (tabMode, e){
@@ -43,8 +43,13 @@ class Sidebar extends Component {
     const toggleClass = this.props.isMobile ? '' : 'hide-scroll';
     const toggleSidebarClass = this.props.displaySidebar ? 'is-active' : '';
 
-    const toggleCharTabClass = this.props.sidebarTabMode === 'char' ? 'is-active' : '';
-    const toggleNotesTabClass = this.props.sidebarTabMode === 'notes' ? 'is-active' : '';
+    const toggleCharTabClass  = this.props.sidebarTabMode === SIDEBAR_MODE_CHAR ? 'is-active' : '';
+    const toggleNotesTabClass = this.props.sidebarTabMode === SIDEBAR_MODE_NOTE ? 'is-active' : '';
+
+    const tabType = {
+      [SIDEBAR_MODE_CHAR]: <CharList/>,
+      [SIDEBAR_MODE_NOTE]: <Notes/>
+    };
 
     return (
       <div className={`list-cont f-dir-col f-shrink-0 d-flex ${toggleSidebarClass}`}>
@@ -61,9 +66,7 @@ class Sidebar extends Component {
         </div>
 
         <div className={`sidebar-body p-1 d-flex f-grow-1 f-dir-col ${toggleClass}`}>
-          {this.props.sidebarTabMode === 'char'
-            ? <CharList/>
-            : <Notes/>}
+          {tabType[this.props.sidebarTabMode]}
         </div>
 
       </div>

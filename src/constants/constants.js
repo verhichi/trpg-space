@@ -6,6 +6,11 @@ export const CENTER_MODE_MAP  = 'map';
 export const SIDEBAR_MODE_CHAR = 'char';
 export const SIDEBAR_MODE_NOTE = 'note';
 
+// Character Tab Mode
+export const CHAR_MODAL_TAB_GENERAL = 'general';
+export const CHAR_MODAL_TAB_STATUS = 'status';
+export const CHAR_MODAL_TAB_DETAIL = 'detail';
+
 // Chat type
 export const CHAT_TYPE_HELP  = 'help';
 export const CHAT_TYPE_TEXT  = 'text';

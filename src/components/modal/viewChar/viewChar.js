@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { CHAR_MODAL_TAB_GENERAL, CHAR_MODAL_TAB_STATUS, CHAR_MODAL_TAB_DETAIL } from '../../../constants/constants';
 import { connect } from 'react-redux';
 
 // Component
@@ -23,15 +24,15 @@ class ViewChar extends Component {
     const char = this.props.charList.find((char) => char.charId === this.props.modalSetting.modalProp.charId);
 
     this.state = {
-      tabMode: 'general',
+      tabMode: CHAR_MODAL_TAB_GENERAL,
       general: char.general,
       status:  char.status,
       detail:  char.detail
     };
 
-    this.handleGeneralTabClick = this.handleTabClick.bind(this, 'general');
-    this.handleStatusTabClick = this.handleTabClick.bind(this, 'status');
-    this.handleDetailTabClick = this.handleTabClick.bind(this, 'detail');
+    this.handleGeneralTabClick = this.handleTabClick.bind(this, CHAR_MODAL_TAB_GENERAL);
+    this.handleStatusTabClick  = this.handleTabClick.bind(this, CHAR_MODAL_TAB_STATUS);
+    this.handleDetailTabClick  = this.handleTabClick.bind(this, CHAR_MODAL_TAB_DETAIL);
   }
 
   handleTabClick (tabMode, e){
@@ -39,9 +40,9 @@ class ViewChar extends Component {
   }
 
   render() {
-    const toggleGeneralTabClass = this.state.tabMode === 'general' ? 'is-active' : '';
-    const toggleStatusTabClass =  this.state.tabMode === 'status' ? 'is-active' : '';
-    const toggleDetailTabClass =  this.state.tabMode === 'detail' ? 'is-active' : '';
+    const toggleGeneralTabClass = this.state.tabMode === CHAR_MODAL_TAB_GENERAL ? 'is-active' : '';
+    const toggleStatusTabClass =  this.state.tabMode === CHAR_MODAL_TAB_STATUS  ? 'is-active' : '';
+    const toggleDetailTabClass =  this.state.tabMode === CHAR_MODAL_TAB_DETAIL  ? 'is-active' : '';
 
     return (
       <div className="d-flex f-dir-col f-grow-1">
@@ -52,9 +53,9 @@ class ViewChar extends Component {
           <div className={`char-tab cursor-pointer p-2 ${toggleDetailTabClass}`} onClick={this.handleDetailTabClick}>Detail</div>
         </div>
 
-        <General isActive={this.state.tabMode === 'general'} ownerId={this.state.general.ownerId} privacy={this.state.general.privacy} general={this.state.general}/>
-        <Status  isActive={this.state.tabMode === 'status'}  ownerId={this.state.general.ownerId} privacy={this.state.general.privacy} status={this.state.status}/>
-        <Detail  isActive={this.state.tabMode === 'detail'}  ownerId={this.state.general.ownerId} privacy={this.state.general.privacy} detail={this.state.detail}/>
+        <General isActive={this.state.tabMode === CHAR_MODAL_TAB_GENERAL} ownerId={this.state.general.ownerId} privacy={this.state.general.privacy} general={this.state.general}/>
+        <Status  isActive={this.state.tabMode === CHAR_MODAL_TAB_STATUS}  ownerId={this.state.general.ownerId} privacy={this.state.general.privacy} status={this.state.status}/>
+        <Detail  isActive={this.state.tabMode === CHAR_MODAL_TAB_DETAIL}  ownerId={this.state.general.ownerId} privacy={this.state.general.privacy} detail={this.state.detail}/>
       </div>
     );
   }
