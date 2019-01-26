@@ -1,6 +1,7 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
+import { CHAR_TYPE_ALLY, CHAR_PRIVACY_LEVEL_ZERO } from '../../../constants/constants';
 import { addToCharList, hideModal } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
@@ -40,26 +41,24 @@ class NewChar extends Component {
     this.state = {
       tabMode: 'general',
       general: {
-        name: '',
-        type: 'ally',
-        color: '#ff0000',
-        image: '',
-        privacy: '0',
-        link: ''
+        name:    '',
+        type:    CHAR_TYPE_ALLY,
+        color:   '#ff0000',
+        image:   '',
+        privacy: CHAR_PRIVACY_LEVEL_ZERO,
+        link:    ''
       },
       status: [],
       detail: []
     };
 
-    this.returnStatusValue = this.returnStatusValue.bind(this);
-    this.returnDetailValue = this.returnDetailValue.bind(this);
-    this.returnGeneralValue = this.returnGeneralValue.bind(this);
-
+    this.returnStatusValue     = this.returnStatusValue.bind(this);
+    this.returnDetailValue     = this.returnDetailValue.bind(this);
+    this.returnGeneralValue    = this.returnGeneralValue.bind(this);
     this.handleGeneralTabClick = this.handleTabClick.bind(this, 'general');
-    this.handleStatusTabClick = this.handleTabClick.bind(this, 'status');
-    this.handleDetailTabClick = this.handleTabClick.bind(this, 'detail');
-
-    this.handleSubmitClick = this.handleSubmitClick.bind(this);
+    this.handleStatusTabClick  = this.handleTabClick.bind(this, 'status');
+    this.handleDetailTabClick  = this.handleTabClick.bind(this, 'detail');
+    this.handleSubmitClick     = this.handleSubmitClick.bind(this);
   }
 
   returnStatusValue (status){

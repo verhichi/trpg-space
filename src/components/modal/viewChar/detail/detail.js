@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { CHAR_PRIVACY_LEVEL_ZERO } from '../../../../constants/constants';
 import { connect } from 'react-redux';
 
 // Redux Map State To Prop
@@ -15,7 +16,7 @@ class Detail extends Component {
 
     const toggleActiveClass = this.props.isActive ? 'is-active' : '';
     const toggleScrollClass = this.props.isMobile ? '' : 'hide-scroll';
-    const showStat = this.props.privacy <= 0 || this.props.ownerId === this.props.id;
+    const showStat = this.props.privacy <= CHAR_PRIVACY_LEVEL_ZERO || this.props.ownerId === this.props.id;
 
     const detailList = this.props.detail.map(detail => {
 

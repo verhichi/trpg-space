@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { CHAT_TYPE_ROLL } from '../../../../../constants/constants';
 import { addToChatLog, hideDiceBubble } from '../../../../../redux/actions/action';
 import socket from '../../../../../socket/socketClient';
 import { getDiceRollResult } from './roll';
@@ -36,20 +37,13 @@ class DiceBalloon extends Component {
       private: false
     };
 
-    // this.handleOutsideClick = this.handleOutsideClick.bind(this);
     this.handleDiceNumberChange = this.handleDiceNumberChange.bind(this);
-    this.handleDiceTypeChange = this.handleDiceTypeChange.bind(this);
-    this.handleSymbolChange = this.handleSymbolChange.bind(this);
-    this.handleModifierChange = this.handleModifierChange.bind(this);
-    this.handlePrivateChange = this.handlePrivateChange.bind(this);
-    this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleDiceTypeChange   = this.handleDiceTypeChange.bind(this);
+    this.handleSymbolChange     = this.handleSymbolChange.bind(this);
+    this.handleModifierChange   = this.handleModifierChange.bind(this);
+    this.handlePrivateChange    = this.handlePrivateChange.bind(this);
+    this.handleButtonClick      = this.handleButtonClick.bind(this);
   }
-
-
-  // handleOutsideClick (e){
-  //   if (this.diceNode.contains(e.target)) return;
-  //   this.props.hideDiceBubble();
-  // }
 
   handleDiceNumberChange (e){
     this.setState({ diceNumber: e.target.value });
@@ -75,7 +69,7 @@ class DiceBalloon extends Component {
     const result = getDiceRollResult(this.state);
     const name = this.props.userList.find((user) => this.props.id === user.id).name;
     const rollData = {
-      type: 'roll',
+      type: CHAT_TYPE_ROLL,
       private: this.state.private,
       diceSetting: this.state.diceNumber + 'd' + this.state.diceType,
       name,

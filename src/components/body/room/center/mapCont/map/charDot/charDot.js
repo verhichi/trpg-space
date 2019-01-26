@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE } from '../../../../../../../constants/constants';
 import { editMapChar } from '../../../../../../../redux/actions/action';
 import socket from '../../../../../../../socket/socketClient';
 
@@ -28,12 +29,12 @@ class CharDot extends Component {
       offsetY: 0
     };
 
-    this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handleMouseDown  = this.handleMouseDown.bind(this);
     this.handleTouchStart = this.handleTouchStart.bind(this);
-    this.handleMouseUp = this.handleMouseUp.bind(this);
-    this.handleTouchEnd = this.handleTouchEnd.bind(this);
-    this.handleMouseMove = this.handleMouseMove.bind(this);
-    this.handleTouchMove = this.handleTouchMove.bind(this);
+    this.handleMouseUp    = this.handleMouseUp.bind(this);
+    this.handleTouchEnd   = this.handleTouchEnd.bind(this);
+    this.handleMouseMove  = this.handleMouseMove.bind(this);
+    this.handleTouchMove  = this.handleTouchMove.bind(this);
   }
 
   componentWillUnmount (){
@@ -128,8 +129,8 @@ class CharDot extends Component {
     const isOwnCharacter = this.props.id === this.props.charData.ownerId;
     const toggleGrabClass = isOwnCharacter ? 'cursor-grabbable' : '';
 
-    const showName = this.props.charData.general.privacy <= 1 || this.props.charData.ownerId === this.props.id;
-    const showStat = this.props.charData.general.privacy <= 0 || this.props.charData.ownerId === this.props.id;
+    const showName = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ONE || this.props.charData.ownerId === this.props.id;
+    const showStat = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ZERO || this.props.charData.ownerId === this.props.id;
 
     const charName = showName ? this.props.charData.general.name : 'UNKNOWN';
 

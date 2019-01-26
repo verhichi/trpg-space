@@ -74,13 +74,13 @@ class ChatLog extends Component {
 
     // Choose component based on chat type
     const chatType = {
-      text:    (chatData) => <ChatText  chatData={chatData} key={chatData.id}/>,
-      roll:    (chatData) => <ChatRoll  chatData={chatData} key={chatData.id}/>,
-      image:   (chatData) => <ChatImage chatData={chatData} key={chatData.id}/>,
-      join:    (chatData) => <ChatJoin  chatData={chatData} key={chatData.id}/>,
-      leave:   (chatData) => <ChatLeave chatData={chatData} key={chatData.id}/>,
-      newHost: (chatData) => <ChatHost  chatData={chatData} key={chatData.id}/>,
-      help:    (chatData) => <ChatHelp                      key={chatData.id}/>
+      text:  (chatData) => <ChatText  chatData={chatData} key={chatData.id}/>,
+      roll:  (chatData) => <ChatRoll  chatData={chatData} key={chatData.id}/>,
+      image: (chatData) => <ChatImage chatData={chatData} key={chatData.id}/>,
+      join:  (chatData) => <ChatJoin  chatData={chatData} key={chatData.id}/>,
+      leave: (chatData) => <ChatLeave chatData={chatData} key={chatData.id}/>,
+      host:  (chatData) => <ChatHost  chatData={chatData} key={chatData.id}/>,
+      help:  (chatData) => <ChatHelp                      key={chatData.id}/>
     };
 
     const chatLog = this.props.chatLog.slice(-1 * this.state.displayLastNChat).map((chatData, idx) => {

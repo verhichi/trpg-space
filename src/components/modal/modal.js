@@ -15,7 +15,7 @@ import EditChar    from './editChar/editChar';
 import EditUser    from './editUser/editUser';
 import Image       from './image/image';
 import NewChar     from './newChar/newChar';
-import NewUser     from './NewUser/NewUser';
+import NewUser     from './newUser/newUser';
 import Notes       from './notes/notes';
 import Requesting  from './requesting/requesting';
 import RoomSetting from './roomSetting/roomSetting';

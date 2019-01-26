@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { CHAR_TYPE_ALLY, CHAR_TYPE_ENEMY, CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, CHAR_PRIVACY_LEVEL_TWO, CHAR_PRIVACY_LEVEL_THREE } from '../../../../constants/constants';
 import { GithubPicker } from 'react-color';
 
 // Font Awesome Component
@@ -24,12 +25,12 @@ class General extends Component {
     this.state = {
       displayColorPicker: false,
       charData: {
-        type: 'ally',
-        name: '',
-        color: '#ff0000',
-        privacy: '0',
-        image: '',
-        link: ''
+        type:    CHAR_TYPE_ALLY,
+        name:    '',
+        color:   '#ff0000',
+        privacy: CHAR_PRIVACY_LEVEL_ZERO,
+        image:   '',
+        link:    ''
       },
       file: {
         fileSizeError: false,
@@ -44,14 +45,14 @@ class General extends Component {
       '#FF7F7F', '#FFCF7F', '#FFFF7F', '#7FFF7F', '#7FFFCF', '#7FFFFF', '#7F7FFF', '#CF7FFF', '#FF7FFF',
     ];
 
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleColorChange = this.handleColorChange.bind(this);
-    this.handleColorClick = this.handleColorClick.bind(this);
-    this.handleOutsideClick = this.handleOutsideClick.bind(this);
-    this.handleTypeChange = this.handleTypeChange.bind(this);
-    this.handlePrivacyChange = this.handlePrivacyChange.bind(this);
-    this.handleFileChange = this.handleFileChange.bind(this);
-    this.handleLinkChange = this.handleLinkChange.bind(this);
+    this.handleNameChange      = this.handleNameChange.bind(this);
+    this.handleColorChange     = this.handleColorChange.bind(this);
+    this.handleColorClick      = this.handleColorClick.bind(this);
+    this.handleOutsideClick    = this.handleOutsideClick.bind(this);
+    this.handleTypeChange      = this.handleTypeChange.bind(this);
+    this.handlePrivacyChange   = this.handlePrivacyChange.bind(this);
+    this.handleFileChange      = this.handleFileChange.bind(this);
+    this.handleLinkChange      = this.handleLinkChange.bind(this);
     this.handleFileRemoveClick = this.handleFileRemoveClick.bind(this);
   }
 
@@ -174,8 +175,8 @@ class General extends Component {
 
         <div className="mb-2 d-flex">
           <div className="char-inp-label pr-1">Type:</div>
-          <label className="char-inp-radio pr-1"><input className="inp-radio" type="radio" value="ally" checked={this.state.charData.type === 'ally'} onChange={this.handleTypeChange}/>Ally</label>
-          <label className="char-inp-radio"><input className="inp-radio" type="radio" value="enemy" checked={this.state.charData.type === 'enemy'} onChange={this.handleTypeChange}/>Enemy</label>
+          <label className="char-inp-radio pr-1"><input className="inp-radio" type="radio" value={CHAR_TYPE_ALLY} checked={this.state.charData.type === CHAR_TYPE_ALLY} onChange={this.handleTypeChange}/>Ally</label>
+          <label className="char-inp-radio"><input className="inp-radio" type="radio" value={CHAR_TYPE_ENEMY} checked={this.state.charData.type === CHAR_TYPE_ENEMY} onChange={this.handleTypeChange}/>Enemy</label>
         </div>
 
         <div className="mb-2 d-flex">
@@ -193,10 +194,10 @@ class General extends Component {
           <div className="char-inp-label pr-1">Privacy Level:</div>
           <div className="sel-cont char-sel f-grow-1">
             <select value={this.state.charData.privacy} onChange={this.handlePrivacyChange}>
-              <option value="0">Display all data</option>
-              <option value="1">Only display name</option>
-              <option value="2">Hide all data</option>
-              <option value="3">Do not share character</option>
+              <option value={CHAR_PRIVACY_LEVEL_ZERO}>Display all data</option>
+              <option value={CHAR_PRIVACY_LEVEL_ONE}>Only display name</option>
+              <option value={CHAR_PRIVACY_LEVEL_TWO}>Hide all data</option>
+              <option value={CHAR_PRIVACY_LEVEL_THREE}>Do not share character</option>
             </select>
           </div>
         </div>

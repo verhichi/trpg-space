@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, CHAR_PRIVACY_LEVEL_TWO } from '../../../../constants/constants';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -18,9 +19,9 @@ class General extends Component {
     const toggleScrollClass = this.props.isMobile ? '' : 'hide-scroll';
 
     const privacyText = {
-      '0': 'Display all data',
-      '1': 'Only display name',
-      '2': 'Hide all data',
+      [CHAR_PRIVACY_LEVEL_ZERO]: 'Display all data',
+      [CHAR_PRIVACY_LEVEL_ONE]:  'Only display name',
+      [CHAR_PRIVACY_LEVEL_TWO]:  'Hide all data',
     };
 
     const imageStyle = this.props.general.image.length === 0

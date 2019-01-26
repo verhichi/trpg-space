@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
+import { CHAT_TYPE_IMAGE } from '../../../constants/constants';
 import { addToChatLog, hideModal, editMapImage, editMapPosition, removeAllMapChar } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
@@ -38,12 +39,12 @@ class UploadImg extends Component {
     super(props);
 
     this.state = {
-      fileExist: false,
+      fileExist:     false,
       fileSizeError: false,
       fileTypeError: false,
-      src: '',
-      height: 0,
-      width: 0
+      src:           '',
+      height:        0,
+      width:         0
     };
 
     this.fileInput = React.createRef();
@@ -56,7 +57,7 @@ class UploadImg extends Component {
     if (this.props.modalSetting.modalProp.type === 'chat'){
       const name = this.props.userList.find((user) => this.props.id === user.id).name;
       const imgData = {
-        type: 'image',
+        type: CHAT_TYPE_IMAGE,
         src: this.state.src,
         height: this.state.height,
         width: this.state.width,

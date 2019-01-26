@@ -17,12 +17,12 @@ class MiniChatLog extends Component {
     const contKey = uuid.v4();
 
     const miniChatType = {
-      text:    (chatData) => <ChatText  chatData={chatData} key={chatData.id}/>,
-      roll:    (chatData) => <ChatRoll  chatData={chatData} key={chatData.id}/>,
-      image:   (chatData) => <ChatImage chatData={chatData} key={chatData.id}/>,
-      join:    (chatData) => <ChatJoin  chatData={chatData} key={chatData.id}/>,
-      leave:   (chatData) => <ChatLeave chatData={chatData} key={chatData.id}/>,
-      newHost: (chatData) => <ChatHost  chatData={chatData} key={chatData.id}/>,
+      text:  (chatData) => <ChatText  chatData={chatData} key={chatData.id}/>,
+      roll:  (chatData) => <ChatRoll  chatData={chatData} key={chatData.id}/>,
+      image: (chatData) => <ChatImage chatData={chatData} key={chatData.id}/>,
+      join:  (chatData) => <ChatJoin  chatData={chatData} key={chatData.id}/>,
+      leave: (chatData) => <ChatLeave chatData={chatData} key={chatData.id}/>,
+      host:  (chatData) => <ChatHost  chatData={chatData} key={chatData.id}/>,
     };
 
     const miniChatLog = this.props.miniChatLog.map(chatData => {

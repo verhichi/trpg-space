@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addUser, editUser, removeUser, setRoomId, setUserId, userCleanup, addToChatLog, newHost, editMapImage, addMapChar, editMapChar, removeMapChar, removeAllMapChar, lockNote, unlockNote, editNote, editMapPosition, removeSendMsgUser, checkSendMsgToAll } from '../../../redux/actions/action';
+import { CHAT_TYPE_HOST, CHAT_TYPE_LEAVE, CHAT_TYPE_JOIN } from '../../../constants/constants';
+import { addUser, editUser, removeUser, setRoomId, setUserId, userCleanup, addToChatLog, newHost, editMapImage, addMapChar, editMapChar, removeMapChar, removeAllMapChar, lockNote, unlockNote, editNote, editMapPosition, removeSendMsgUser, checkSendMsgToAll, editChar, addToCharList, removeFromCharList } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
 // Style
@@ -28,25 +29,28 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    addUser:           (user)      => dispatch(addUser(user)),
-    editUser:          (user)      => dispatch(editUser(user)),
-    removeUser:        (userId)    => dispatch(removeUser(userId)),
-    setRoomId:         (roomId)    => dispatch(setRoomId(roomId)),
-    setUserId:         (userId)    => dispatch(setUserId(userId)),
-    userCleanup:       (id)        => dispatch(userCleanup(id)),
-    addToChatLog:      (content)   => dispatch(addToChatLog(content)),
-    newHost:           (id)        => dispatch(newHost(id)),
-    editMapImage:      (src)       => dispatch(editMapImage(src)),
-    addMapChar:        (charData)  => dispatch(addMapChar(charData)),
-    editMapChar:       (charData)  => dispatch(editMapChar(charData)),
-    removeMapChar:     (charId)    => dispatch(removeMapChar(charId)),
-    removeAllMapChar:  ()          => dispatch(removeAllMapChar()),
-    editNote:          (notes)     => dispatch(editNote(notes)),
-    lockNote:          (userId)    => dispatch(lockNote(userId)),
-    unlockNote:        ()          => dispatch(unlockNote()),
-    editMapPosition:   (left, top) => dispatch(editMapPosition(left, top)),
-    removeSendMsgUser: (userId)    => dispatch(removeSendMsgUser(userId)),
-    checkSendMsgToAll: ()          => dispatch(checkSendMsgToAll())
+    addUser:            (user)      => dispatch(addUser(user)),
+    editUser:           (user)      => dispatch(editUser(user)),
+    removeUser:         (userId)    => dispatch(removeUser(userId)),
+    setRoomId:          (roomId)    => dispatch(setRoomId(roomId)),
+    setUserId:          (userId)    => dispatch(setUserId(userId)),
+    userCleanup:        (id)        => dispatch(userCleanup(id)),
+    addToChatLog:       (content)   => dispatch(addToChatLog(content)),
+    newHost:            (id)        => dispatch(newHost(id)),
+    editMapImage:       (src)       => dispatch(editMapImage(src)),
+    addMapChar:         (charData)  => dispatch(addMapChar(charData)),
+    editMapChar:        (charData)  => dispatch(editMapChar(charData)),
+    removeMapChar:      (charId)    => dispatch(removeMapChar(charId)),
+    removeAllMapChar:   ()          => dispatch(removeAllMapChar()),
+    editNote:           (notes)     => dispatch(editNote(notes)),
+    lockNote:           (userId)    => dispatch(lockNote(userId)),
+    unlockNote:         ()          => dispatch(unlockNote()),
+    editMapPosition:    (left, top) => dispatch(editMapPosition(left, top)),
+    removeSendMsgUser:  (userId)    => dispatch(removeSendMsgUser(userId)),
+    checkSendMsgToAll:  ()          => dispatch(checkSendMsgToAll()),
+    editChar:           (charData)  => dispatch(editChar(charData)),
+    addToCharList:      (charData)  => dispatch(addToCharList(charData)),
+    removeFromCharList: (charId)    => dispatch(removeFromCharList(charId)),
   };
 };
 
@@ -91,6 +95,19 @@ class Room extends Component {
       this.props.removeUser(id);
     });
 
+    socket.on('char', (content) => {
+      if (this.props.charList.some((char) => char.charId === content.charId)){
+        this.props.editChar(content);
+      } else {
+        this.props.addToCharList(content);
+      }
+    });
+
+    socket.on('delChar', (charId) => {
+      this.props.removeFromCharList(charId);
+      this.props.removeMapChar(charId);
+    });
+
     socket.on('chat', (content) => {
       this.props.addToChatLog(content);
     });
@@ -111,7 +128,7 @@ class Room extends Component {
 
     socket.on('newHost', (id) => {
       this.props.addToChatLog({
-        type: 'newHost',
+        type: CHAT_TYPE_HOST,
         name: this.props.userList.find((user) => user.id === id).name
       });
 
@@ -120,7 +137,7 @@ class Room extends Component {
 
     socket.on('leave', (id) => {
       this.props.addToChatLog({
-        type: 'leave',
+        type: CHAT_TYPE_LEAVE,
         name: this.props.userList.find((user) => user.id === id).name
       });
 
@@ -172,7 +189,7 @@ class Room extends Component {
     socket.emit('join', this.props.match.params.roomId, this.props.userList.find((user) => user.id === this.props.id))
       .then(() => {
         socket.emit('chat', this.props.roomId, {
-          type: 'join',
+          type: CHAT_TYPE_JOIN,
           name: this.props.userList.find((user) => user.id === this.props.id).name
         });
       });

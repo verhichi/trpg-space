@@ -1,8 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { showModal, editChar, addToCharList, removeFromCharList, removeMapChar } from '../../../../../../redux/actions/action';
-import socket from '../../../../../../socket/socketClient';
-
+import { CHAR_TYPE_ALLY, CHAR_TYPE_ENEMY } from '../../../../../../constants/constants';
+import { showModal } from '../../../../../../redux/actions/action';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,34 +23,13 @@ const mapStateToProps = (state) => {
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
-  return {
-    showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
-    editChar: (charData) => dispatch(editChar(charData)),
-    addToCharList: (charData) => dispatch(addToCharList(charData)),
-    removeFromCharList: (charId) => dispatch(removeFromCharList(charId)),
-    removeMapChar: (charId) => dispatch(removeMapChar(charId))
-  };
+  return { showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)) };
 };
 
 class CharList extends Component {
   constructor (props){
     super(props);
     this.handleNewClick = this.handleNewClick.bind(this);
-  }
-
-  componentDidMount (){
-    socket.on('char', (content) => {
-      if (this.props.charList.some((char) => char.charId === content.charId)){
-        this.props.editChar(content);
-      } else {
-        this.props.addToCharList(content);
-      }
-    });
-
-    socket.on('delChar', (charId) => {
-      this.props.removeFromCharList(charId);
-      this.props.removeMapChar(charId);
-    })
   }
 
   handleNewClick (){
@@ -62,11 +40,11 @@ class CharList extends Component {
   }
 
   render() {
-    const charList = this.props.charList.filter(char => char.general.type === 'ally').map((charData) => {
+    const charList = this.props.charList.filter(char => char.general.type === CHAR_TYPE_ALLY).map((charData) => {
       return <Char key={charData.charId} charData={charData}/>;
     });
 
-    const enemyList = this.props.charList.filter(char => char.general.type === 'enemy').map((charData) => {
+    const enemyList = this.props.charList.filter(char => char.general.type === CHAR_TYPE_ENEMY).map((charData) => {
       return <Char key={charData.charId} charData={charData}/>;
     });
 

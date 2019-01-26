@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE } from '../../../../../../../constants/constants'
 import { showModal, hideModal, removeFromCharList, removeMapChar, checkSendAsPlayer, editSendAs } from '../../../../../../../redux/actions/action';
 import socket from '../../../../../../../socket/socketClient';
 
@@ -35,9 +36,9 @@ class Char extends Component {
   constructor (props){
     super(props);
     this.handleRemoveClick = this.handleRemoveClick.bind(this);
-    this.handleEditClick = this.handleEditClick.bind(this);
-    this.handleViewClick = this.handleViewClick.bind(this);
-    this.resetSendAsState = this.resetSendAsState.bind(this);
+    this.handleEditClick   = this.handleEditClick.bind(this);
+    this.handleViewClick   = this.handleViewClick.bind(this);
+    this.resetSendAsState  = this.resetSendAsState.bind(this);
   }
 
   handleRemoveClick (charId, e){
@@ -80,8 +81,8 @@ class Char extends Component {
   }
 
   render() {
-    const showName = this.props.charData.general.privacy <= 1 || this.props.charData.ownerId === this.props.id;
-    const showStat = this.props.charData.general.privacy <= 0 || this.props.charData.ownerId === this.props.id;
+    const showName = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ONE || this.props.charData.ownerId === this.props.id;
+    const showStat = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ZERO || this.props.charData.ownerId === this.props.id;
 
     const charName = showName ? this.props.charData.general.name : 'UNKNOWN';
     const userName = this.props.userList.find(user => user.id === this.props.charData.ownerId).name;
