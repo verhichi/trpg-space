@@ -48,7 +48,6 @@ class Bottom extends Component {
     this.state = {
       chatText: '',
       inputFocus: false,
-      sendChatAs: 'player'
     };
 
     this.handleChange = this.handleChange.bind(this);
