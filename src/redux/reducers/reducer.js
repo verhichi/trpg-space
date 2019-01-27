@@ -52,7 +52,7 @@ import {
   UNCHECK_SEND_AS_PLAYER
 } from '../constants/actionTypes';
 
-import { CENTER_MODE_CHAT, SIDEBAR_MODE_CHAR, CHAT_TYPE_HELP } from '../../constants/constants';
+import { CENTER_MODE_CHAT, CENTER_MODE_MAP, SIDEBAR_MODE_CHAR, CHAT_TYPE_HELP } from '../../constants/constants';
 
 export const initialState = {
   isMobile: /Mobile/.test(navigator.userAgent),
@@ -324,13 +324,13 @@ const rootReducer = (state = initialState, action) => {
     case SHOW_CHAT:
       return {
         ...state,
-        centerMode: 'chat'
+        centerMode: CENTER_MODE_CHAT
       };
 
     case SHOW_MAP:
       return {
         ...state,
-        centerMode: 'map'
+        centerMode: CENTER_MODE_MAP
       };
 
     case EDIT_MAP_IMAGE:

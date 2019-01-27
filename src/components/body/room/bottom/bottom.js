@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { CHAT_TYPE_TEXT, CENTER_MODE_CHAT } from '../../../../constants/constants';
 import { addToChatLog, showSidebar, hideSidebar, hideDiceBubble, showDiceBubble, showModal, showChat, showMap } from '../../../../redux/actions/action';
 import socket from '../../../../socket/socketClient';
 
@@ -16,28 +17,28 @@ import ChatToolbar from './chatToolbar/chatToolbar';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id: state.id,
-    roomId: state.roomId,
-    userList: state.userList,
-    charList: state.charList,
-    centerMode: state.centerMode,
-    chatSetting: state.chatSetting,
+    id:                 state.id,
+    roomId:             state.roomId,
+    userList:           state.userList,
+    charList:           state.charList,
+    centerMode:         state.centerMode,
+    chatSetting:        state.chatSetting,
     displayDiceSetting: state.displayDiceSetting,
-    displaySidebar: state.displaySidebar,
+    displaySidebar:     state.displaySidebar,
   };
 };
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    addToChatLog: content => dispatch(addToChatLog(content)),
-    showSidebar: () => dispatch(showSidebar()),
-    hideSidebar: () => dispatch(hideSidebar()),
-    showDiceBubble: () => dispatch(showDiceBubble()),
-    hideDiceBubble: () => dispatch(hideDiceBubble()),
-    showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
-    showChat: () => dispatch(showChat()),
-    showMap: () => dispatch(showMap())
+    addToChatLog:   (content)              => dispatch(addToChatLog(content)),
+    showSidebar:    ()                     => dispatch(showSidebar()),
+    hideSidebar:    ()                     => dispatch(hideSidebar()),
+    showDiceBubble: ()                     => dispatch(showDiceBubble()),
+    hideDiceBubble: ()                     => dispatch(hideDiceBubble()),
+    showModal:      (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
+    showChat:       ()                     => dispatch(showChat()),
+    showMap:        ()                     => dispatch(showMap())
   };
 };
 
@@ -46,19 +47,19 @@ class Bottom extends Component {
     super(props);
     this.diceRef = React.createRef();
     this.state = {
-      chatText: '',
+      chatText:   '',
       inputFocus: false,
     };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleFocus = this.handleFocus.bind(this);
-    this.handleOnFocusClick = this.handleOnFocusClick.bind(this);
-    this.handleSendClick = this.handleSendClick.bind(this);
+    this.handleChange           = this.handleChange.bind(this);
+    this.handleFocus            = this.handleFocus.bind(this);
+    this.handleOnFocusClick     = this.handleOnFocusClick.bind(this);
+    this.handleSendClick        = this.handleSendClick.bind(this);
     this.handleDiceSettingClick = this.handleDiceSettingClick.bind(this);
-    this.handleCenterModeClick = this.handleCenterModeClick.bind(this);
-    this.handleSidebarClick = this.handleSidebarClick.bind(this);
-    this.handleOutsideClick = this.handleOutsideClick.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleCenterModeClick  = this.handleCenterModeClick.bind(this);
+    this.handleSidebarClick     = this.handleSidebarClick.bind(this);
+    this.handleOutsideClick     = this.handleOutsideClick.bind(this);
+    this.handleKeyDown          = this.handleKeyDown.bind(this);
   }
 
   handleFocus (e){
@@ -87,10 +88,10 @@ class Bottom extends Component {
                    : this.props.charList.find((char) => this.props.chatSetting.sendAs.sendAsCharacter === char.charId).general.name;
 
     const chatData = {
-      type: 'text',
-      text: this.state.chatText.trim(),
-      private: !this.props.chatSetting.sendTo.sendToAll,
-      sendTo: this.props.chatSetting.sendTo.sendToUsers,
+      type:        CHAT_TYPE_TEXT,
+      text:        this.state.chatText.trim(),
+      private:     !this.props.chatSetting.sendTo.sendToAll,
+      sendTo:      this.props.chatSetting.sendTo.sendToUsers,
       sendToNames: this.props.chatSetting.sendTo.sendToUsers.map(id => this.props.userList.find(user => user.id === id).name).join(', '),
       name
     };
@@ -111,7 +112,7 @@ class Bottom extends Component {
                        : this.props.charList.find((char) => this.props.chatSetting.sendAs.sendAsCharacter === char.charId).general.name;
 
         const chatData = {
-          type: 'text',
+          type: CHAT_TYPE_TEXT,
           text: this.state.chatText.trim(),
           private: !this.props.chatSetting.sendTo.sendToAll,
           sendTo: this.props.chatSetting.sendTo.sendToUsers,
@@ -143,7 +144,7 @@ class Bottom extends Component {
   }
 
   handleCenterModeClick (e){
-    this.props.centerMode === 'chat'
+    this.props.centerMode === CENTER_MODE_CHAT
       ? this.props.showMap()
       : this.props.showChat();
   }
