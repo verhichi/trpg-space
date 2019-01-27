@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { MAP_MODE_PLACE_CHAR } from '../../../../../../../../constants/constants';
 import { hidePlaceChar, setMapMode, setCharToPlace } from '../../../../../../../../redux/actions/action';
 
 // Style
@@ -8,11 +9,11 @@ import './placeCharBalloon.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id: state.id,
-    roomId: state.roomId,
-    charList: state.charList,
+    id:               state.id,
+    roomId:           state.roomId,
+    charList:         state.charList,
     displayPlaceChar: state.displayPlaceChar,
-    mapSetting: state.mapSetting
+    mapSetting:       state.mapSetting
   };
 };
 
@@ -31,11 +32,11 @@ class PlaceCharBalloon extends Component {
     this.state = { charIdToPlace: '-' };
 
     this.handlePlaceCharButtonClick = this.handlePlaceCharButtonClick.bind(this);
-    this.handlePlaceCharChange = this.handlePlaceCharChange.bind(this);
+    this.handlePlaceCharChange      = this.handlePlaceCharChange.bind(this);
   }
 
   handlePlaceCharButtonClick (e){
-    this.props.setMapMode('placeChar');
+    this.props.setMapMode(MAP_MODE_PLACE_CHAR);
     this.props.setCharToPlace(this.state.charIdToPlace);
     this.setState({ charIdToPlace: '-' });
     this.props.hidePlaceChar();

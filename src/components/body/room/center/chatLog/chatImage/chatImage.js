@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { MODAL_TYPE_IMAGE } from '../../../../../../constants/constants';
 import { showModal } from '../../../../../../redux/actions/action';
 
 // Style
@@ -15,8 +16,9 @@ class ChatImage extends Component {
     super(props);
     this.state = {
       height: 0,
-      width: 0
+      width:  0
     };
+
     this.handleImageClick = this.handleImageClick.bind(this);
   }
 
@@ -26,18 +28,18 @@ class ChatImage extends Component {
     if (isImgWide){
       this.setState({
         height: Math.floor(200 * this.props.chatData.height/this.props.chatData.width),
-        width: 200
+        width:  200
       });
     } else {
       this.setState({
         height: 300,
-        width: Math.floor(300 * this.props.chatData.width/this.props.chatData.height)
+        width:  Math.floor(300 * this.props.chatData.width/this.props.chatData.height)
       });
     }
   }
 
   handleImageClick (e){
-    this.props.showModal('image', {
+    this.props.showModal(MODAL_TYPE_IMAGE, {
       title: 'Image',
       displayClose: true,
       src: this.props.chatData.src

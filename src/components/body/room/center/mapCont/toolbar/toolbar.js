@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { MODAL_TYPE_UPLOAD_IMG } from '../../../../../../constants/constants';
 import { showModal, showRemoveChar, hideRemoveChar, toggleMapGrid, showPlaceChar, hidePlaceChar, editMapPosition } from '../../../../../../redux/actions/action';
 
 // Font Awesome Component
@@ -16,7 +17,7 @@ import ScaleMapButton from './scaleMapButton/scaleMapButton';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    displayPlaceChar: state.displayPlaceChar,
+    displayPlaceChar:  state.displayPlaceChar,
     displayRemoveChar: state.displayRemoveChar
   };
 };
@@ -24,13 +25,13 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
-    showPlaceChar: () => dispatch(showPlaceChar()),
-    hidePlaceChar: () => dispatch(hidePlaceChar()),
-    showRemoveChar: () => dispatch(showRemoveChar()),
-    hideRemoveChar: () => dispatch(hideRemoveChar()),
-    toggleMapGrid: () => dispatch(toggleMapGrid()),
-    editMapPosition: (left, top) => dispatch(editMapPosition(left, top))
+    showModal:       (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
+    showPlaceChar:   ()                     => dispatch(showPlaceChar()),
+    hidePlaceChar:   ()                     => dispatch(hidePlaceChar()),
+    showRemoveChar:  ()                     => dispatch(showRemoveChar()),
+    hideRemoveChar:  ()                     => dispatch(hideRemoveChar()),
+    toggleMapGrid:   ()                     => dispatch(toggleMapGrid()),
+    editMapPosition: (left, top)            => dispatch(editMapPosition(left, top))
   };
 };
 
@@ -38,13 +39,13 @@ class Toolbar extends Component {
   constructor (props){
     super(props);
 
-    this.handleImageUploadClick = this.handleImageUploadClick.bind(this);
-    this.handleToolbarMapGridClick = this.handleToolbarMapGridClick.bind(this);
+    this.handleImageUploadClick        = this.handleImageUploadClick.bind(this);
+    this.handleToolbarMapGridClick     = this.handleToolbarMapGridClick.bind(this);
     this.handleToolbarMapPositionClick = this.handleToolbarMapPositionClick.bind(this);
   }
 
   handleImageUploadClick (e){
-    this.props.showModal('uploadImg', {
+    this.props.showModal(MODAL_TYPE_UPLOAD_IMG, {
       title: 'Upload an image',
       displayClose: true,
       type: 'map'

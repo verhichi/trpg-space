@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import uuid from 'uuid';
+import { STATUS_TYPE_PARAM, STATUS_TYPE_VALUE } from '../../../../constants/constants';
 import { connect } from 'react-redux';
 
 // Font Awesome Component
@@ -14,14 +15,6 @@ const mapStateToProps = (state) => {
     modalSetting: state.modalSetting
   };
 };
-
-// // Redux Map Dispatch To Props
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     addToCharList: (charData) => dispatch(addToCharList(charData)),
-//     hideModal: () => dispatch(hideModal())
-//   };
-// };
 
 
 class Detail extends Component {
@@ -39,8 +32,8 @@ class Detail extends Component {
 
   handleNewValueDetailButtonClick (e){
     this.setState({ detail: [ ...this.state.detail, {
-      id: uuid.v4(),
-      type: 'value',
+      id:    uuid.v4(),
+      type:  STATUS_TYPE_VALUE,
       label: '',
       value: ''
     }]}, () => {
@@ -50,10 +43,10 @@ class Detail extends Component {
 
   handleNewParameterDetailButtonClick (e){
     this.setState({ detail: [ ...this.state.detail, {
-      id: uuid.v4(),
-      type: 'parameter',
-      label: '',
-      value: '',
+      id:       uuid.v4(),
+      type:     STATUS_TYPE_PARAM,
+      label:    '',
+      value:    '',
       maxValue: ''
     }]}, () => {
       this.props.returnDetailValue(this.state.detail);
@@ -108,7 +101,7 @@ class Detail extends Component {
     const toggleScrollClass = this.props.isMobile ? '' : 'hide-scroll';
 
     const detailList = this.state.detail.map(detail => {
-      if (detail.type === 'value'){
+      if (detail.type === STATUS_TYPE_VALUE){
         return (
           <div className="stat-inp-cont d-flex mb-2 font-size-lg font-weight-bold">
             <input className="inp stat-label f-shrink-0" type="text" value={this.state.detail.find(stat => stat.id === detail.id).label} onChange={e => this.handleLabelChange(e, detail.id)}/>

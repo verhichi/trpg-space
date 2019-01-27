@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { CHAT_TYPE_HELP, CHAT_TYPE_TEXT, CHAT_TYPE_ROLL, CHAT_TYPE_IMAGE, CHAT_TYPE_JOIN, CHAT_TYPE_LEAVE, CHAT_TYPE_HOST } from '../../../../../constants/constants';
 import { showModal } from '../../../../../redux/actions/action';
 
 // Font Awesome Component
@@ -74,13 +75,13 @@ class ChatLog extends Component {
 
     // Choose component based on chat type
     const chatType = {
-      text:  (chatData) => <ChatText  chatData={chatData} key={chatData.id}/>,
-      roll:  (chatData) => <ChatRoll  chatData={chatData} key={chatData.id}/>,
-      image: (chatData) => <ChatImage chatData={chatData} key={chatData.id}/>,
-      join:  (chatData) => <ChatJoin  chatData={chatData} key={chatData.id}/>,
-      leave: (chatData) => <ChatLeave chatData={chatData} key={chatData.id}/>,
-      host:  (chatData) => <ChatHost  chatData={chatData} key={chatData.id}/>,
-      help:  (chatData) => <ChatHelp                      key={chatData.id}/>
+      [CHAT_TYPE_HELP]:  (chatData) => <ChatHelp                      key={chatData.id}/>,
+      [CHAT_TYPE_TEXT]:  (chatData) => <ChatText  chatData={chatData} key={chatData.id}/>,
+      [CHAT_TYPE_ROLL]:  (chatData) => <ChatRoll  chatData={chatData} key={chatData.id}/>,
+      [CHAT_TYPE_IMAGE]: (chatData) => <ChatImage chatData={chatData} key={chatData.id}/>,
+      [CHAT_TYPE_JOIN]:  (chatData) => <ChatJoin  chatData={chatData} key={chatData.id}/>,
+      [CHAT_TYPE_LEAVE]: (chatData) => <ChatLeave chatData={chatData} key={chatData.id}/>,
+      [CHAT_TYPE_HOST]:  (chatData) => <ChatHost  chatData={chatData} key={chatData.id}/>,
     };
 
     const chatLog = this.props.chatLog.slice(-1 * this.state.displayLastNChat).map((chatData, idx) => {

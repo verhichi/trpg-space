@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { MODAL_TYPE_UPLOAD_IMG } from '../../../../../../constants/constants';
 import { showModal } from '../../../../../../redux/actions/action';
 
 // Style
@@ -16,16 +17,17 @@ const mapDispatchToProps = (dispatch) => {
 class ChatToolbar extends Component {
   constructor (props){
     super(props);
+
     this.handleImageClick = this.handleImageClick.bind(this);
   }
 
   handleImageClick (e){
     e.preventDefault(e);
 
-    this.props.showModal('uploadImg', {
-      title: 'Upload an image',
-      displayClose: true,
-      type: 'chat'
+    this.props.showModal(MODAL_TYPE_UPLOAD_IMG, {
+      title:        'Upload an image',
+      displayClose:  true,
+      type:         'chat'
     });
   }
 

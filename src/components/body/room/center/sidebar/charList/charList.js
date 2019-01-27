@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { CHAR_TYPE_ALLY, CHAR_TYPE_ENEMY } from '../../../../../../constants/constants';
+import { CHAR_TYPE_ALLY, CHAR_TYPE_ENEMY, MODAL_TYPE_NEW_CHAR } from '../../../../../../constants/constants';
 import { showModal } from '../../../../../../redux/actions/action';
 
 // Font Awesome Component
@@ -15,9 +15,9 @@ import Char from './char/char';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id: state.id,
+    id:              state.id,
     displayCharList: state.displayCharList,
-    charList: state.charList
+    charList:        state.charList
   };
 };
 
@@ -33,7 +33,7 @@ class CharList extends Component {
   }
 
   handleNewClick (){
-    this.props.showModal('newChar', {
+    this.props.showModal(MODAL_TYPE_NEW_CHAR, {
       title: 'Create New Character',
       displayClose: true
     });

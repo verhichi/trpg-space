@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { STATUS_TYPE_VALUE } from '../../../../constants/constants';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -15,11 +16,10 @@ class Status extends Component {
 
     const toggleActiveClass = this.props.isActive ? 'is-active' : '';
     const toggleScrollClass = this.props.isMobile ? '' : 'hide-scroll';
-    const showStat = this.props.privacy <= 0 || this.props.ownerId === this.props.id;
+    const showStat          = this.props.privacy <= 0 || this.props.ownerId === this.props.id;
 
     const statusList = this.props.status.map(status => {
-
-      if (status.type === 'value'){
+      if (status.type === STATUS_TYPE_VALUE){
         return (
           <div className="stat-inp-cont mb-1 font-size-lg">
             <span className="font-weight-bold">{status.label}</span>: {showStat ? status.value : '???'}

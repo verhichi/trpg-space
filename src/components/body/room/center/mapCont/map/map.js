@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { MAP_MODE_PLACE_CHAR } from '../../../../../../constants/constants';
 import { setMapMode, addMapChar, editMapChar, setCharToPlace, editMapPosition, editMapScale } from '../../../../../../redux/actions/action';
 import socket from '../../../../../../socket/socketClient';
 
@@ -12,26 +13,26 @@ import CharDot from './charDot/charDot';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id: state.id,
-    roomId: state.roomId,
-    charList: state.charList,
-    isMobile: state.isMobile,
-    mapSetting: state.mapSetting,
+    id:               state.id,
+    roomId:           state.roomId,
+    charList:         state.charList,
+    isMobile:         state.isMobile,
+    mapSetting:       state.mapSetting,
     displayPlaceChar: state.displayPlaceChar,
-    displayMapGrid: state.displayMapGrid,
-    displaySidebar: state.displaySidebar
+    displayMapGrid:   state.displayMapGrid,
+    displaySidebar:   state.displaySidebar
   };
 };
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    setMapMode: (mode) => dispatch(setMapMode(mode)),
-    addMapChar: (charData) => dispatch(addMapChar(charData)),
-    editMapChar: (charData) => dispatch(editMapChar(charData)),
-    setCharToPlace: (charId) => dispatch(setCharToPlace(charId)),
+    setMapMode:      (mode)      => dispatch(setMapMode(mode)),
+    addMapChar:      (charData)  => dispatch(addMapChar(charData)),
+    editMapChar:     (charData)  => dispatch(editMapChar(charData)),
+    setCharToPlace:  (charId)    => dispatch(setCharToPlace(charId)),
     editMapPosition: (left, top) => dispatch(editMapPosition(left, top)),
-    editMapScale: (scale) => dispatch(editMapScale(scale))
+    editMapScale:    (scale)     => dispatch(editMapScale(scale))
   };
 };
 
@@ -143,7 +144,7 @@ class Map extends Component {
 
 
   handleImageClick (e){
-    if (this.props.mapSetting.mode === 'placeChar'){
+    if (this.props.mapSetting.mode === MAP_MODE_PLACE_CHAR){
       const charData = {
         charId: this.props.mapSetting.charToPlace,
         x: e.nativeEvent.offsetX,
@@ -165,7 +166,7 @@ class Map extends Component {
 
 
   render() {
-    const togglePlaceCharClass = this.props.mapSetting.mode === 'placeChar'
+    const togglePlaceCharClass = this.props.mapSetting.mode === MAP_MODE_PLACE_CHAR
       ? 'is-place-char-active'
       : '';
 

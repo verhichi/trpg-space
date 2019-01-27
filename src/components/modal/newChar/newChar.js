@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
-import { CHAR_TYPE_ALLY, CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_THREE, CHAR_MODAL_TAB_GENERAL, CHAR_MODAL_TAB_STATUS, CHAR_MODAL_TAB_DETAIL } from '../../../constants/constants';
+import { CHAR_TYPE_ALLY, CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_THREE, CHAR_MODAL_TAB_GENERAL, CHAR_MODAL_TAB_STATUS, CHAR_MODAL_TAB_DETAIL, STATUS_TYPE_VALUE } from '../../../constants/constants';
 import { addToCharList, hideModal } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
@@ -63,7 +63,7 @@ class NewChar extends Component {
 
   returnStatusValue (status){
     const trimmedData = status.map(status => {
-      if (status.type === 'value'){
+      if (status.type === STATUS_TYPE_VALUE){
         return {
           ...status,
           label: status.label.trim(),
@@ -83,7 +83,7 @@ class NewChar extends Component {
 
   returnDetailValue (detail){
     const trimmedData = detail.map(status => {
-      if (status.type === 'value'){
+      if (status.type === STATUS_TYPE_VALUE){
         return {
           ...status,
           label: status.label.trim(),
@@ -141,14 +141,14 @@ class NewChar extends Component {
 
   render() {
     const toggleGeneralTabClass = this.state.tabMode === CHAR_MODAL_TAB_GENERAL ? 'is-active' : '';
-    const toggleStatusTabClass =  this.state.tabMode === CHAR_MODAL_TAB_STATUS ? 'is-active' : '';
-    const toggleDetailTabClass =  this.state.tabMode === CHAR_MODAL_TAB_DETAIL ? 'is-active' : '';
+    const toggleStatusTabClass =  this.state.tabMode === CHAR_MODAL_TAB_STATUS  ? 'is-active' : '';
+    const toggleDetailTabClass =  this.state.tabMode === CHAR_MODAL_TAB_DETAIL  ? 'is-active' : '';
 
     const hasErrorGeneral = this.state.general.name.length === 0 ||
                             (this.state.general.link.length !== 0 && !/^http(s)?:\/\/.+/.test(this.state.general.link));
 
     const hasErrorStatus  = this.state.status.some(status => {
-      if (status.type === 'value'){
+      if (status.type === STATUS_TYPE_VALUE){
         return status.label.length === 0 ||
                status.value.length === 0
       } else {
@@ -159,7 +159,7 @@ class NewChar extends Component {
     });
 
     const hasErrorDetail  = this.state.detail.some(status => {
-      if (status.type === 'value'){
+      if (status.type === STATUS_TYPE_VALUE){
         return status.label.length === 0 ||
                status.value.length === 0
       } else {

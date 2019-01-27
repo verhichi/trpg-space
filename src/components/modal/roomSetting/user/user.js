@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { MODAL_TYPE_EDIT_USER, MODAL_TYPE_ROOM_SETTING, MODAL_TYPE_CONFIRM } from '../../../../constants/constants';
 import { showModal, hideModal, removeUser } from '../../../../redux/actions/action';
 import socket from '../../../../socket/socketClient';
 
@@ -13,8 +14,8 @@ import './user.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id: state.id,
-    roomId: state.roomId,
+    id:       state.id,
+    roomId:   state.roomId,
     userList: state.userList
   };
 };
@@ -22,37 +23,38 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
-    hideModal: () => dispatch(hideModal()),
-    removeUser: (userId) => dispatch(removeUser(userId))
+    showModal:  (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
+    hideModal:  ()                     => dispatch(hideModal()),
+    removeUser: (userId)               => dispatch(removeUser(userId))
   };
 };
 
 class User extends Component {
   constructor (props){
     super(props);
-    this.handleEditClick = this.handleEditClick.bind(this);
+
+    this.handleEditClick   = this.handleEditClick.bind(this);
     this.handleRemoveClick = this.handleRemoveClick.bind(this);
   }
 
   handleEditClick (e){
-    this.props.showModal('editUser', {
+    this.props.showModal(MODAL_TYPE_EDIT_USER, {
       title: 'Edit User',
       displayClose: true
     });
   }
 
   handleRemoveClick (e){
-    this.props.showModal('confirm', {
+    this.props.showModal(MODAL_TYPE_CONFIRM, {
       title: 'Kick User',
       displayClose: false,
       confirmText: `Are you sure you want to kick ${this.props.userData.name} from this room?`,
       accept: [
         this.props.removeUser.bind(null, this.props.userData.id),
         socket.emit.bind(socket, 'delUser', this.props.roomId, this.props.userData.id),
-        this.props.showModal.bind(null, 'roomSetting', { title: 'Setting', displayClose: true })
+        this.props.showModal.bind(null, MODAL_TYPE_ROOM_SETTING, { title: 'Setting', displayClose: true })
       ],
-      decline: this.props.showModal.bind(null, 'roomSetting', { title: 'Room Setting' })
+      decline: this.props.showModal.bind(null, MODAL_TYPE_ROOM_SETTING, { title: 'Room Setting' })
     });
   }
 

@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import { MODAL_TYPE_NOTES } from '../../../../../../constants/constants';
 import { showModal, lockNote } from '../../../../../../redux/actions/action';
 import socket from '../../../../../../socket/socketClient';
 
@@ -13,9 +14,9 @@ import './notes.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id: state.id,
-    roomId: state.roomId,
-    notes: state.notes,
+    id:           state.id,
+    roomId:       state.roomId,
+    notes:        state.notes,
     isNoteLocked: state.isNoteLocked
   };
 };
@@ -24,13 +25,14 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
-    lockNote: (userId) => dispatch(lockNote(userId))
+    lockNote:  (userId)               => dispatch(lockNote(userId))
   };
 };
 
 class Notes extends Component {
   constructor (props){
     super(props);
+
     this.handleEditClick = this.handleEditClick.bind(this, this.props.id);
   }
 
@@ -38,7 +40,7 @@ class Notes extends Component {
     this.props.lockNote(userId);
     socket.emit('lockNote', this.props.roomId, this.props.id);
 
-    this.props.showModal('notes', {
+    this.props.showModal(MODAL_TYPE_NOTES, {
       title: 'Edit Shared Notes',
       displayClose: false
     });

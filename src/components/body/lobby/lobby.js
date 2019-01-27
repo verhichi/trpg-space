@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { MODAL_TYPE_NEW_USER } from '../../../constants/constants';
 import { showModal, resetState } from '../../../redux/actions/action';
 
 // Font Awesome Component
@@ -11,8 +12,8 @@ import './lobby.scss';
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    resetState: () => dispatch(resetState()),
-    showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp))
+    resetState: ()                     => dispatch(resetState()),
+    showModal:  (modalType, modalProp) => dispatch(showModal(modalType, modalProp))
   };
 };
 
@@ -20,8 +21,9 @@ class Lobby extends Component {
   constructor (props){
     super(props);
     this.state = { roomId: '' };
-    this.handleNewClick = this.handleNewClick.bind(this);
-    this.handleJoinClick = this.handleJoinClick.bind(this);
+
+    this.handleNewClick     = this.handleNewClick.bind(this);
+    this.handleJoinClick    = this.handleJoinClick.bind(this);
     this.handleRoomIdChange = this.handleRoomIdChange.bind(this);
   }
 
@@ -31,7 +33,7 @@ class Lobby extends Component {
 
   handleNewClick (e){
 
-    this.props.showModal('newUser', {
+    this.props.showModal(MODAL_TYPE_NEW_USER, {
       title:  'Enter Display Name',
       displayClose: true,
       host: true,
@@ -41,7 +43,7 @@ class Lobby extends Component {
   }
 
   handleJoinClick (e){
-    this.props.showModal('newUser', {
+    this.props.showModal(MODAL_TYPE_NEW_USER, {
       title:  'Enter Display Name',
       displayClose: true,
       host:   false,

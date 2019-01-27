@@ -19,6 +19,7 @@ const mapDispatchToProps = (dispatch) => {
 class Confirm extends Component {
   constructor (props){
     super(props);
+
     this.handleAcceptClick = this.handleAcceptClick.bind(this);
     this.handleDeclineClick = this.handleDeclineClick.bind(this);
   }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE } from '../../../../../../../constants/constants';
+import { CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, STATUS_TYPE_VALUE, STATUS_TYPE_PARAM } from '../../../../../../../constants/constants';
 import { editMapChar } from '../../../../../../../redux/actions/action';
 import socket from '../../../../../../../socket/socketClient';
 
@@ -126,21 +126,18 @@ class CharDot extends Component {
 
 
   render() {
-    const isOwnCharacter = this.props.id === this.props.charData.ownerId;
+    const isOwnCharacter  = this.props.id === this.props.charData.ownerId;
     const toggleGrabClass = isOwnCharacter ? 'cursor-grabbable' : '';
+    const showName        = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ONE || this.props.charData.ownerId === this.props.id;
+    const showStat        = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ZERO || this.props.charData.ownerId === this.props.id;
+    const charName        = showName ? this.props.charData.general.name : 'UNKNOWN';
 
-    const showName = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ONE || this.props.charData.ownerId === this.props.id;
-    const showStat = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ZERO || this.props.charData.ownerId === this.props.id;
+    const charDataType = {
+      [STATUS_TYPE_VALUE]: (status) => (<div className="font-size-sm one-line-ellipsis">{status.label}: {showStat ? status.value : '???'}</div>),
+      [STATUS_TYPE_PARAM]: (status) => (<div className="font-size-sm one-line-ellipsis">{status.label}: {showStat ? status.value : '???'} / {showStat ? status.maxValue : '???'}</div>)
+    }
 
-    const charName = showName ? this.props.charData.general.name : 'UNKNOWN';
-
-    const statList = this.props.charData.status.map(status => {
-      if (status.type === 'value'){
-        return(<div className="font-size-sm one-line-ellipsis">{status.label}: {showStat ? status.value : '???'}</div>);
-      } else {
-        return(<div className="font-size-sm one-line-ellipsis">{status.label}: {showStat ? status.value : '???'} / {showStat ? status.maxValue : '???'}</div>);
-      }
-    });
+    const statList = this.props.charData.status.map(status => charDataType[status.type](status));
 
     return (
       <div className={`map-char-profile ${toggleGrabClass}`} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} onTouchStart={this.handleTouchStart} onTouchEnd={this.handleTouchEnd} style={{borderColor: this.props.charData.general.color, backgroundImage: `url(${this.props.charData.general.image})`, left: this.props.charData.map.x, top: this.props.charData.map.y}}>

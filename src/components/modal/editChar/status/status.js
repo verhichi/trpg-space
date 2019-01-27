@@ -1,5 +1,6 @@
 import React, { Component} from 'react';
 import uuid from 'uuid';
+import { STATUS_TYPE_PARAM, STATUS_TYPE_VALUE } from '../../../../constants/constants';
 import { connect } from 'react-redux';
 
 // Font Awesome Component
@@ -16,21 +17,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-// // Redux Map Dispatch To Props
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     addToCharList: (charData) => dispatch(addToCharList(charData)),
-//     hideModal: () => dispatch(hideModal())
-//   };
-// };
-
 
 class Status extends Component {
   constructor (props){
     super(props);
     this.state = { status: this.props.charList.find((char) => char.charId === this.props.charId).status };
 
-    this.handleNewValueStatusButtonClick = this.handleNewValueStatusButtonClick.bind(this);
+    this.handleNewValueStatusButtonClick     = this.handleNewValueStatusButtonClick.bind(this);
     this.handleNewParameterStatusButtonClick = this.handleNewParameterStatusButtonClick.bind(this);
   }
 
@@ -40,8 +33,8 @@ class Status extends Component {
 
   handleNewValueStatusButtonClick (e){
     this.setState({ status: [ ...this.state.status, {
-      id: uuid.v4(),
-      type: 'value',
+      id:    uuid.v4(),
+      type:  STATUS_TYPE_VALUE,
       label: '',
       value: ''
     }]}, () => {
@@ -52,7 +45,7 @@ class Status extends Component {
   handleNewParameterStatusButtonClick (e){
     this.setState({ status: [ ...this.state.status, {
       id: uuid.v4(),
-      type: 'parameter',
+      type: STATUS_TYPE_PARAM,
       label: '',
       value: '',
       maxValue: ''
@@ -109,7 +102,7 @@ class Status extends Component {
     const toggleScrollClass = this.props.isMobile ? '' : 'hide-scroll';
 
     const statusList = this.state.status.map(status => {
-      if (status.type === 'value'){
+      if (status.type === STATUS_TYPE_VALUE){
         return (
           <div className="stat-inp-cont d-flex mb-2 font-size-lg font-weight-bold">
             <input className="inp stat-label f-shrink-0" type="text" value={this.state.status.find(stat => stat.id === status.id).label} onChange={e => this.handleLabelChange(e, status.id)}/>

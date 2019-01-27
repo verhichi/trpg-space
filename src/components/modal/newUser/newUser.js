@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
+import { MODAL_TYPE_ALERT, MODAL_TYPE_REQUESTING } from '../../../constants/constants';
 import { addUser, showModal, hideModal, setUserId, setRoomId } from '../../../redux/actions/action';
 
 // Font Awesome Component
@@ -20,11 +21,11 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    addUser: (userData) => dispatch(addUser(userData)),
-    hideModal: () => dispatch(hideModal()),
+    addUser:   (userData)             => dispatch(addUser(userData)),
+    hideModal: ()                     => dispatch(hideModal()),
     showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
-    setUserId: (userId) => dispatch(setUserId(userId)),
-    setRoomId: (roomId) => dispatch(setRoomId(roomId))
+    setUserId: (userId)               => dispatch(setUserId(userId)),
+    setRoomId: (roomId)               => dispatch(setRoomId(roomId))
   };
 };
 
@@ -50,7 +51,7 @@ class NewUser extends Component {
   handleSubmit (e){
     e.preventDefault();
 
-    this.props.showModal('requesting', {
+    this.props.showModal(MODAL_TYPE_REQUESTING, {
       title: '',
       displayClose: false
     });
@@ -90,7 +91,7 @@ class NewUser extends Component {
             this.props.hideModal();
             this.props.modalSetting.modalProp.redirect(`/${this.props.modalSetting.modalProp.roomId}`);
           } else {
-            this.props.showModal('alert', {
+            this.props.showModal(MODAL_TYPE_ALERT, {
               title: '',
               displayClose: false,
               alertText: `Room ID "${this.props.modalSetting.modalProp.roomId}" does not exist.`

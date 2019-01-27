@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { CHAR_TYPE_ALLY, CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_THREE, CHAR_MODAL_TAB_GENERAL, CHAR_MODAL_TAB_STATUS, CHAR_MODAL_TAB_DETAIL } from '../../../constants/constants';
+import { CHAR_PRIVACY_LEVEL_THREE, CHAR_MODAL_TAB_GENERAL, CHAR_MODAL_TAB_STATUS, CHAR_MODAL_TAB_DETAIL, STATUS_TYPE_VALUE } from '../../../constants/constants';
 import { editChar, hideModal } from '../../../redux/actions/action';
 import socket from '../../../socket/socketClient';
 
@@ -59,7 +59,7 @@ class EditChar extends Component {
 
   returnStatusValue (status){
     const trimmedData = status.map(status => {
-      if (status.type === 'value'){
+      if (status.type === STATUS_TYPE_VALUE){
         return {
           ...status,
           label: status.label.trim(),
@@ -79,7 +79,7 @@ class EditChar extends Component {
 
   returnDetailValue (detail){
     const trimmedData = detail.map(status => {
-      if (status.type === 'value'){
+      if (status.type === STATUS_TYPE_VALUE){
         return {
           ...status,
           label: status.label.trim(),
@@ -146,7 +146,7 @@ class EditChar extends Component {
                             (this.state.general.link.length !== 0 && !/^http(s)?:\/\/.+/.test(this.state.general.link));
 
     const hasErrorStatus  = this.state.status.some(status => {
-      if (status.type === 'value'){
+      if (status.type === STATUS_TYPE_VALUE){
         return status.label.length === 0 ||
                status.value.length === 0
       } else {
@@ -156,7 +156,7 @@ class EditChar extends Component {
       }
     });
     const hasErrorDetail  = this.state.detail.some(status => {
-      if (status.type === 'value'){
+      if (status.type === STATUS_TYPE_VALUE){
         return status.label.length === 0 ||
                status.value.length === 0
       } else {

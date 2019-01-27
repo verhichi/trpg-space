@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CHAR_PRIVACY_LEVEL_ZERO } from '../../../../constants/constants';
+import { CHAR_PRIVACY_LEVEL_ZERO, STATUS_TYPE_VALUE } from '../../../../constants/constants';
 import { connect } from 'react-redux';
 
 // Redux Map State To Prop
@@ -19,8 +19,7 @@ class Detail extends Component {
     const showStat = this.props.privacy <= CHAR_PRIVACY_LEVEL_ZERO || this.props.ownerId === this.props.id;
 
     const detailList = this.props.detail.map(detail => {
-
-      if (detail.type === 'value'){
+      if (detail.type === STATUS_TYPE_VALUE){
         return (
           <div className="stat-inp-cont mb-1 font-size-lg">
             <span className="font-weight-bold">{detail.label}</span>: {showStat ? detail.value : '???'}

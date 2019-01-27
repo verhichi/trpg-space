@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE } from '../../../../../../../constants/constants'
+import { CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, MODAL_TYPE_VIEW_CHAR, MODAL_TYPE_CONFIRM, MODAL_TYPE_EDIT_CHAR, STATUS_TYPE_VALUE, STATUS_TYPE_PARAM } from '../../../../../../../constants/constants'
 import { showModal, hideModal, removeFromCharList, removeMapChar, checkSendAsPlayer, editSendAs } from '../../../../../../../redux/actions/action';
 import socket from '../../../../../../../socket/socketClient';
 
@@ -35,6 +35,7 @@ const mapDispatchToProps = (dispatch) => {
 class Char extends Component {
   constructor (props){
     super(props);
+
     this.handleRemoveClick = this.handleRemoveClick.bind(this);
     this.handleEditClick   = this.handleEditClick.bind(this);
     this.handleViewClick   = this.handleViewClick.bind(this);
@@ -42,7 +43,7 @@ class Char extends Component {
   }
 
   handleRemoveClick (charId, e){
-    this.props.showModal('confirm', {
+    this.props.showModal(MODAL_TYPE_CONFIRM, {
       title: 'Delete Character',
       displayClose: false,
       confirmText: `Are you sure you want to delete ${this.props.charData.general.name}?`,
@@ -65,7 +66,7 @@ class Char extends Component {
   }
 
   handleEditClick (e){
-    this.props.showModal('editChar', {
+    this.props.showModal(MODAL_TYPE_EDIT_CHAR, {
       title: 'Edit Character',
       displayClose: true,
       charId: this.props.charData.charId
@@ -73,7 +74,7 @@ class Char extends Component {
   }
 
   handleViewClick (e){
-    this.props.showModal('viewChar', {
+    this.props.showModal(MODAL_TYPE_VIEW_CHAR, {
       title: 'View Character',
       displayClose: true,
       charId: this.props.charData.charId
@@ -83,18 +84,15 @@ class Char extends Component {
   render() {
     const showName = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ONE || this.props.charData.ownerId === this.props.id;
     const showStat = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ZERO || this.props.charData.ownerId === this.props.id;
-
     const charName = showName ? this.props.charData.general.name : 'UNKNOWN';
     const userName = this.props.userList.find(user => user.id === this.props.charData.ownerId).name;
 
-    const statList = this.props.charData.status.map(status => {
-      if (status.type === 'value'){
-        return(<div className="char-data"><span className="font-weight-bold">{status.label}</span>: {showStat ? status.value : '???'}</div>);
-      } else {
-        return(<div className="char-data"><span className="font-weight-bold">{status.label}</span>: {showStat ? status.value : '???'} / {showStat ? status.maxValue : '???'}</div>);
-      }
-    });
+    const charDataType = {
+      [STATUS_TYPE_VALUE]: (status) => (<div className="char-data"><span className="font-weight-bold">{status.label}</span>: {showStat ? status.value : '???'}</div>),
+      [STATUS_TYPE_PARAM]: (status) => (<div className="char-data"><span className="font-weight-bold">{status.label}</span>: {showStat ? status.value : '???'} / {showStat ? status.maxValue : '???'}</div>)
+    }
 
+    const statList   = this.props.charData.status.map(status => charDataType[status.type](status));
     const imageStyle = this.props.charData.general.image.length === 0
                          ? null
                          : { backgroundImage: `url(${this.props.charData.general.image})`};

@@ -23,8 +23,8 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    editUser: (userData) => dispatch(editUser(userData)),
-    hideModal: () => dispatch(hideModal())
+    editUser:  (userData) => dispatch(editUser(userData)),
+    hideModal: ()         => dispatch(hideModal())
   };
 };
 

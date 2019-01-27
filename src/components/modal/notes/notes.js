@@ -9,18 +9,18 @@ import './notes.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id: state.id,
+    id:     state.id,
     roomId: state.roomId,
-    notes: state.notes
+    notes:  state.notes
   };
 };
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    editNote: (notes) => dispatch(editNote(notes)),
-    hideModal: () => dispatch(hideModal()),
-    unlockNote: () => dispatch(unlockNote())
+    editNote:   (notes) => dispatch(editNote(notes)),
+    hideModal:  ()      => dispatch(hideModal()),
+    unlockNote: ()      => dispatch(unlockNote())
   };
 };
 
@@ -29,8 +29,8 @@ class Notes extends Component {
     super(props);
     this.state = { notes: this.props.notes };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleCloseClick = this.handleCloseClick.bind(this);
+    this.handleChange      = this.handleChange.bind(this);
+    this.handleCloseClick  = this.handleCloseClick.bind(this);
     this.handleSubmitClick = this.handleSubmitClick.bind(this);
   }
 

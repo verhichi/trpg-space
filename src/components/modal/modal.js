@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { MODAL_TYPE_ALERT, MODAL_TYPE_CONFIRM, MODAL_TYPE_EDIT_CHAR, MODAL_TYPE_EDIT_USER, MODAL_TYPE_IMAGE, MODAL_TYPE_NEW_CHAR, MODAL_TYPE_NEW_USER, MODAL_TYPE_NOTES, MODAL_TYPE_REQUESTING, MODAL_TYPE_ROOM_SETTING, MODAL_TYPE_UPLOAD_IMG, MODAL_TYPE_VIEW_CHAR } from '../../constants/constants';
 import { hideModal } from '../../redux/actions/action';
 
 // Font Awesome Component
@@ -49,18 +50,18 @@ class Modal extends Component {
     const toggleClass = this.props.modalSetting.display ? 'is-active' : '';
 
     const modalBody = {
-      alert:       <Alert />,
-      confirm:     <Confirm />,
-      editChar:    <EditChar />,
-      editUser:    <EditUser />,
-      image:       <Image />,
-      newChar:     <NewChar />,
-      newUser:     <NewUser />,
-      notes:       <Notes />,
-      requesting:  <Requesting />,
-      roomSetting: <RoomSetting />,
-      uploadImg:   <UploadImg />,
-      viewChar:    <ViewChar />
+      [MODAL_TYPE_ALERT]:        <Alert />,
+      [MODAL_TYPE_CONFIRM]:      <Confirm />,
+      [MODAL_TYPE_EDIT_CHAR]:    <EditChar />,
+      [MODAL_TYPE_EDIT_USER]:    <EditUser />,
+      [MODAL_TYPE_IMAGE]:        <Image />,
+      [MODAL_TYPE_NEW_CHAR]:     <NewChar />,
+      [MODAL_TYPE_NEW_USER]:     <NewUser />,
+      [MODAL_TYPE_NOTES]:        <Notes />,
+      [MODAL_TYPE_REQUESTING]:   <Requesting />,
+      [MODAL_TYPE_ROOM_SETTING]: <RoomSetting />,
+      [MODAL_TYPE_UPLOAD_IMG]:   <UploadImg />,
+      [MODAL_TYPE_VIEW_CHAR]:    <ViewChar />
     };
 
     return (

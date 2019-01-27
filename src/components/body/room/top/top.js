@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { MODAL_TYPE_ROOM_SETTING, MODAL_TYPE_CONFIRM } from '../../../../constants/constants';
 import { showModal, hideModal, showUserList, hideUserList } from '../../../../redux/actions/action';
 
 // Font Awesome Component
@@ -11,19 +12,19 @@ import './top.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    roomId: state.roomId,
+    roomId:          state.roomId,
     displayUserList: state.displayUserList,
-    userList: state.userList
+    userList:        state.userList
   };
 };
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    showModal: (modalType, modalProp)=> dispatch(showModal(modalType, modalProp)),
-    hideModal: () => dispatch(hideModal()),
-    hideUserList: () => dispatch(hideUserList()),
-    showUserList: () => dispatch(showUserList())
+    showModal:    (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
+    hideModal:    ()                     => dispatch(hideModal()),
+    hideUserList: ()                     => dispatch(hideUserList()),
+    showUserList: ()                     => dispatch(showUserList())
   };
 };
 
@@ -31,12 +32,13 @@ const mapDispatchToProps = (dispatch) => {
 class Top extends Component {
   constructor (props){
     super(props);
+
     this.handleSettingClick = this.handleSettingClick.bind(this);
     this.handleLeaveClick = this.handleLeaveClick.bind(this);
   }
 
   handleLeaveClick (e){
-    this.props.showModal('confirm', {
+    this.props.showModal(MODAL_TYPE_CONFIRM, {
       title: 'Leave Room',
       displayClose: false,
       confirmText: 'Are you sure you want to leave this room?',
@@ -46,7 +48,7 @@ class Top extends Component {
   }
 
   handleSettingClick (e){
-    this.props.showModal('roomSetting', {
+    this.props.showModal(MODAL_TYPE_ROOM_SETTING, {
       title: 'Setting',
       displayClose: true
     });
