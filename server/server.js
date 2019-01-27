@@ -13,10 +13,6 @@ app.use(bodyParser.urlencoded({extended: true})); // use body-parser
 app.use(bodyParser.json());                       // parse body to json
 
 
-
-
-
-
 // Set express listener at port 3000
 server.listen(portNo, () => {
   const serverStartTimestamp = new Date().toLocaleString();
@@ -27,11 +23,6 @@ server.listen(portNo, () => {
   console.log('The Server is up and running!');
   console.log(`Access the website at: http://localhost:${portNo}`);
 });
-
-
-
-
-
 
 
 // Set path for file to ./dist
@@ -63,17 +54,8 @@ app.get('/checkRoomId', (req, res) => {
 
 // All URL sends user to home page
 app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../build/index.html'), (err) => {
-    if (err){
-      res.redirect('/');
-    }
-  });
+  res.redirect('/');
 });
-
-
-
-
-
 
 
 // Place Holder socket.io logic
