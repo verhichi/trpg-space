@@ -48,7 +48,7 @@ import {
   EDIT_SEND_AS,
   CHECK_SEND_AS_PLAYER,
   UNCHECK_SEND_AS_PLAYER
-} from '../constants/actionTypes';
+} from '../../constants/actionTypes';
 
 export const resetState = () => {
   return { type: RESET_STATE };

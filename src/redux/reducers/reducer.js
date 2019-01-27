@@ -50,7 +50,7 @@ import {
   EDIT_SEND_AS,
   CHECK_SEND_AS_PLAYER,
   UNCHECK_SEND_AS_PLAYER
-} from '../constants/actionTypes';
+} from '../../constants/actionTypes';
 
 import { CENTER_MODE_CHAT, CENTER_MODE_MAP, SIDEBAR_MODE_CHAR, CHAT_TYPE_HELP } from '../../constants/constants';
 
