@@ -36,7 +36,7 @@ const modalReducer = (state = initialState, action) => {
 
     default:
       return state;
-    }
+  }
 
 };
 

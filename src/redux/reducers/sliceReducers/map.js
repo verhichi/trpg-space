@@ -85,7 +85,7 @@ const mapReducer = (state = initialState, action) => {
 
     default:
       return state;
-    }
+  }
 
 };
 

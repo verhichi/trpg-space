@@ -21,7 +21,7 @@ const userReducer = (state = initialState, action) => {
       if (state.userList.some(user => user.id === action.userData.id)){
         return state;
       } else {
-        return { ...state, userList: [...state.userList, action.userData] };
+        return { userList: [...state.userList, action.userData] };
       }
 
     case EDIT_USER:
@@ -54,7 +54,7 @@ const userReducer = (state = initialState, action) => {
 
     default:
       return state;
-    }
+  }
 
 };
 
