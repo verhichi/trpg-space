@@ -1,5 +1,4 @@
 import {
-  ADD_CHAT,
   CHECK_SEND_MSG_TO_ALL,
   UNCHECK_SEND_MSG_TO_ALL,
   ADD_SEND_MSG_USER,
@@ -9,12 +8,6 @@ import {
   EDIT_SEND_AS
 } from '../../../constants/actionTypes';
 
-export const addChat = (content) => {
-  return {
-    type: ADD_CHAT,
-    content
-  };
-};
 
 export const checkSendMsgToAll = () => {
   return { type: CHECK_SEND_MSG_TO_ALL };

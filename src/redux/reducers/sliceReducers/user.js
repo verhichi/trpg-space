@@ -5,52 +5,46 @@ import {
   NEW_HOST
 } from '../../../constants/actionTypes';
 
-const initialState = {
-  userList: [
+const initialState = [
   //   {
   //   id: '123457',
   //   name: 'Daichi Nishida',
   //   host: false,
   // }
-  ]
-};
+];
 
 const userReducer = (state = initialState, action) => {
   switch(action.type){
     case ADD_USER:
-      if (state.userList.some(user => user.id === action.userData.id)){
+      if (state.some(user => user.id === action.userData.id)){
         return state;
       } else {
-        return { userList: [...state.userList, action.userData] };
+        return [...state, action.userData];
       }
 
     case EDIT_USER:
-      return {
-        userList: state.userList.map((user) => {
-          if (user.id === action.userData.id){
-            return { ...user, name: action.userData.name };
-          } else {
-            return user;
-          }
-        })
-      };
+      return state.map(user => {
+        if (user.id === action.userData.id){
+          return { ...user, name: action.userData.name };
+        } else {
+          return user;
+        }
+      });
 
     case REMOVE_USER:
-      return { userList: state.userList.filter(user => user.id !== action.userId) };
+      return state.filter(user => user.id !== action.userId);
 
     case NEW_HOST:
-      return {
-        userList: state.userList.map((user) => {
-          if (user.id === action.id){
-            return {
-              ...user,
-              host: true
-            };
-          } else {
-            return user;
-          }
-        })
-      };
+      return state.map(user => {
+        if (user.id === action.id){
+          return {
+            ...user,
+            host: true
+          };
+        } else {
+          return user;
+        }
+      });
 
     default:
       return state;
