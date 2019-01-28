@@ -2,8 +2,8 @@ import { SET_ROOM_ID, SET_USER_ID } from '../../../constants/actionTypes';
 
 const initialState = {
   isMobile: /Mobile/.test(navigator.userAgent),
-  id: '',
-  roomId: ''
+  id:       '',
+  roomId:   ''
 };
 
 const generalReducer = (state = initialState, action) => {

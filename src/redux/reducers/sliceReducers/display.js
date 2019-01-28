@@ -32,7 +32,7 @@ const initialState = {
   centerMode:         CENTER_MODE_CHAT,
 };
 
-const noteReducer = (state = initialState, action) => {
+const displayReducer = (state = initialState, action) => {
   switch(action.type){
     case SHOW_DICE_BUBBLE:
       return {
@@ -124,4 +124,4 @@ const noteReducer = (state = initialState, action) => {
 
 };
 
-export default noteReducer;
+export default displayReducer;
