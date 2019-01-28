@@ -1,5 +1,6 @@
 export const ADD_USER= 'ADD_USER';
 export const ADD_TO_CHAT_LOG = 'ADD_TO_CHAT_LOG';
+export const ADD_CHAT = 'ADD_CHAT';
 export const ADD_TO_CHAR_LIST = 'ADD_TO_CHAR_LIST';
 export const ADD_CHAR = 'ADD_CHAR';
 export const EDIT_CHAR = 'EDIT_CHAR';
