@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CHAT_TYPE_TEXT, CENTER_MODE_CHAT } from '../../../../constants/constants';
-import { addToChatLog, showSidebar, hideSidebar, hideDiceBubble, showDiceBubble, showModal, showChat, showMap } from '../../../../redux/actions/action';
+import { addChat } from '../../../../redux/actions/chatLog';
+import { showSidebar, hideSidebar, hideDiceBubble, showDiceBubble, showChat, showMap } from '../../../../redux/actions/display'
 import socket from '../../../../socket/socketClient';
 
 // Font Awesome Component
@@ -17,28 +18,24 @@ import ChatToolbar from './chatToolbar/chatToolbar';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id:                 state.id,
-    roomId:             state.roomId,
-    userList:           state.userList,
-    charList:           state.charList,
-    centerMode:         state.centerMode,
-    chatSetting:        state.chatSetting,
-    displayDiceSetting: state.displayDiceSetting,
-    displaySidebar:     state.displaySidebar,
+    charList:       state.charList,
+    chatSetting:    state.chatSetting,
+    displaySetting: state.displaySetting,
+    global:         state.global,
+    userList:       state.userList,
   };
 };
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    addToChatLog:   (content)              => dispatch(addToChatLog(content)),
-    showSidebar:    ()                     => dispatch(showSidebar()),
-    hideSidebar:    ()                     => dispatch(hideSidebar()),
-    showDiceBubble: ()                     => dispatch(showDiceBubble()),
-    hideDiceBubble: ()                     => dispatch(hideDiceBubble()),
-    showModal:      (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
-    showChat:       ()                     => dispatch(showChat()),
-    showMap:        ()                     => dispatch(showMap())
+    addChat:        (content) => dispatch(addChat(content)),
+    showSidebar:    ()        => dispatch(showSidebar()),
+    hideSidebar:    ()        => dispatch(hideSidebar()),
+    showDiceBubble: ()        => dispatch(showDiceBubble()),
+    hideDiceBubble: ()        => dispatch(hideDiceBubble()),
+    showChat:       ()        => dispatch(showChat()),
+    showMap:        ()        => dispatch(showMap())
   };
 };
 
@@ -83,8 +80,8 @@ class Bottom extends Component {
     document.removeEventListener('click', this.handleOnFocusClick);
     this.setState({inputFocus: false});
 
-    const name = this.props.chatSetting.sendAs.sendAsPlayer
-                   ? this.props.userList.find((user) => this.props.id === user.id).name
+    const name = this.props.chatSetting.sendAs.sendAsUser
+                   ? this.props.userList.find((user) => this.props.global.id === user.id).name
                    : this.props.charList.find((char) => this.props.chatSetting.sendAs.sendAsCharacter === char.charId).general.name;
 
     const chatData = {
@@ -96,8 +93,8 @@ class Bottom extends Component {
       name
     };
 
-    this.props.addToChatLog({ ...chatData, self: true });
-    socket.emit('chat', this.props.roomId, { ...chatData, self: false });
+    this.props.addChat({ ...chatData, self: true });
+    socket.emit('chat', this.props.global.roomId, { ...chatData, self: false });
     this.setState({ chatText: '' });
   }
 
@@ -107,28 +104,28 @@ class Bottom extends Component {
       e.preventDefault();
 
       if (text.length !== 0){
-        const name = this.props.chatSetting.sendAs.sendAsPlayer
-                       ? this.props.userList.find((user) => this.props.id === user.id).name
-                       : this.props.charList.find((char) => this.props.chatSetting.sendAs.sendAsCharacter === char.charId).general.name;
+        const name = this.props.chatSetting.sendAs.sendAsUser
+                       ? this.props.userList.find(user => this.props.global.id === user.id).name
+                       : this.props.charList.find(char => this.props.chatSetting.sendAs.sendAsCharacter === char.charId).general.name;
 
         const chatData = {
-          type: CHAT_TYPE_TEXT,
-          text: this.state.chatText.trim(),
-          private: !this.props.chatSetting.sendTo.sendToAll,
-          sendTo: this.props.chatSetting.sendTo.sendToUsers,
+          type:        CHAT_TYPE_TEXT,
+          text:        this.state.chatText.trim(),
+          private:     !this.props.chatSetting.sendTo.sendToAll,
+          sendTo:      this.props.chatSetting.sendTo.sendToUsers,
           sendToNames: this.props.chatSetting.sendTo.sendToUsers.map(id => this.props.userList.find(user => user.id === id).name).join(', '),
           name
         };
 
-        this.props.addToChatLog({ ...chatData, self: true });
-        socket.emit('chat', this.props.roomId, { ...chatData, self: false });
+        this.props.addChat({ ...chatData, self: true });
+        socket.emit('chat', this.props.global.roomId, { ...chatData, self: false });
         this.setState({ chatText: '' });
       }
     }
   }
 
   handleDiceSettingClick (e){
-    if (this.props.displayDiceSetting){
+    if (this.props.displaySetting.displayDiceSetting){
       window.removeEventListener('click', this.handleOutsideClick, false);
       this.props.hideDiceBubble();
     } else {
@@ -144,13 +141,13 @@ class Bottom extends Component {
   }
 
   handleCenterModeClick (e){
-    this.props.centerMode === CENTER_MODE_CHAT
+    this.props.displaySetting.centerMode === CENTER_MODE_CHAT
       ? this.props.showMap()
       : this.props.showChat();
   }
 
   handleSidebarClick (e){
-    this.props.displaySidebar
+    this.props.displaySetting.displaySidebar
       ? this.props.hideSidebar()
       : this.props.showSidebar();
   }
@@ -174,7 +171,7 @@ class Bottom extends Component {
             </div>
           </div>
           <div className={`chat-bar-btn cursor-pointer align-center ${hideOnFocusClass}`} onClick={this.handleCenterModeClick}>
-            {this.props.centerMode === 'chat'
+            {this.props.displaySetting.centerMode === CENTER_MODE_CHAT
               ? <FontAwesomeIcon icon="map-marked-alt"/>
               : <FontAwesomeIcon icon="comments"/>}
           </div>

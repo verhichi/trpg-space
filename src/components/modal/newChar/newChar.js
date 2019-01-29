@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
 import { CHAR_TYPE_ALLY, CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_THREE, CHAR_MODAL_TAB_GENERAL, CHAR_MODAL_TAB_STATUS, CHAR_MODAL_TAB_DETAIL, STATUS_TYPE_VALUE } from '../../../constants/constants';
-import { addToCharList, hideModal } from '../../../redux/actions/action';
+import { hideModal } from '../../../redux/actions/modal';
+import { addChar } from '../../../redux/actions/char';
 import socket from '../../../socket/socketClient';
 
 // Font Awesome Component
@@ -18,19 +19,14 @@ import Status  from './status/status';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
-  return {
-    isMobile:     state.isMobile,
-    id:           state.id,
-    roomId:       state.roomId,
-    modalSetting: state.modalSetting
-  };
+  return { global: state.global };
 };
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    addToCharList: (charData) => dispatch(addToCharList(charData)),
-    hideModal:     ()         => dispatch(hideModal())
+    addChar:   (charData) => dispatch(addChar(charData)),
+    hideModal: ()         => dispatch(hideModal())
   };
 };
 
@@ -118,11 +114,11 @@ class NewChar extends Component {
 
   handleSubmitClick (e){
     const charData = {
-      charId: uuid.v4(),
-      ownerId: this.props.id,
+      charId:  uuid.v4(),
+      ownerId: this.props.global.id,
       general: this.state.general,
-      status: this.state.status,
-      detail: this.state.detail,
+      status:  this.state.status,
+      detail:  this.state.detail,
       map: {
         onMap: false,
         x: '',
@@ -130,10 +126,10 @@ class NewChar extends Component {
       }
     };
 
-    this.props.addToCharList(charData);
+    this.props.addChar(charData);
 
     if (this.state.general.privacy !== CHAR_PRIVACY_LEVEL_THREE){
-      socket.emit('char', this.props.roomId, charData);
+      socket.emit('char', this.props.global.roomId, charData);
     }
 
     this.props.hideModal();

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, STATUS_TYPE_VALUE, STATUS_TYPE_PARAM } from '../../../../../../../constants/constants';
-import { editMapChar } from '../../../../../../../redux/actions/action';
+import { editMapChar } from '../../../../../../../redux/actions/char';
 import socket from '../../../../../../../socket/socketClient';
 
 // Style
@@ -10,8 +10,7 @@ import './charDot.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id:         state.id,
-    roomId:     state.roomId,
+    global:     state.global,
     mapSetting: state.mapSetting
   };
 };
@@ -45,7 +44,7 @@ class CharDot extends Component {
   handleMouseDown (e){
     e.stopPropagation();
     e.preventDefault();
-    if (this.props.id === this.props.charData.ownerId){
+    if (this.props.global.id === this.props.charData.ownerId){
       this.setState({
         isCharMoveMode: true,
         offsetX: Math.floor(e.nativeEvent.offsetX * this.props.mapSetting.image.scale),
@@ -58,7 +57,7 @@ class CharDot extends Component {
   handleTouchStart (e){
     e.stopPropagation();
 
-    if (this.props.id === this.props.charData.ownerId){
+    if (this.props.global.id === this.props.charData.ownerId){
       this.setState({
         isCharMoveMode: true,
         offsetX: Math.floor(e.target.offsetWidth / 2),
@@ -99,7 +98,7 @@ class CharDot extends Component {
     e.preventDefault();
 
     if (this.state.isCharMoveMode){
-      socket.emit('mapChar', this.props.roomId, {
+      socket.emit('mapChar', this.props.global.roomId, {
         charId: this.props.charData.charId,
         x: this.props.charData.map.x,
         y: this.props.charData.map.y
@@ -113,7 +112,7 @@ class CharDot extends Component {
     e.stopPropagation();
 
     if (this.state.isCharMoveMode){
-      socket.emit('mapChar', this.props.roomId, {
+      socket.emit('mapChar', this.props.global.roomId, {
         charId: this.props.charData.charId,
         x: this.props.charData.map.x,
         y: this.props.charData.map.y
@@ -126,10 +125,10 @@ class CharDot extends Component {
 
 
   render() {
-    const isOwnCharacter  = this.props.id === this.props.charData.ownerId;
+    const isOwnCharacter  = this.props.global.id === this.props.charData.ownerId;
     const toggleGrabClass = isOwnCharacter ? 'cursor-grabbable' : '';
-    const showName        = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ONE || this.props.charData.ownerId === this.props.id;
-    const showStat        = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ZERO || this.props.charData.ownerId === this.props.id;
+    const showName        = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ONE || this.props.charData.ownerId === this.props.global.id;
+    const showStat        = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ZERO || this.props.charData.ownerId === this.props.global.id;
     const charName        = showName ? this.props.charData.general.name : 'UNKNOWN';
 
     const charDataType = {

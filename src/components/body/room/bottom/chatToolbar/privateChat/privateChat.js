@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { checkSendMsgToAll, uncheckSendMsgToAll, addSendMsgUser, removeSendMsgUser } from '../../../../../../redux/actions/action';
+import { checkSendMsgToAll, uncheckSendMsgToAll, addSendMsgUser, removeSendMsgUser } from '../../../../../../redux/actions/chatSetting';
 
 // Style
 import './privateChat.scss';
@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id:          state.id,
+    global:      state.global,
     userList:    state.userList,
     chatSetting: state.chatSetting
   };
@@ -31,8 +31,8 @@ class PrivateChat extends Component {
   constructor (props){
     super(props);
 
-    this.handleUserCheckChange   = this.handleUserCheckChange.bind(this);
-    this.handleAllCheckChange    = this.handleAllCheckChange.bind(this);
+    this.handleUserCheckChange = this.handleUserCheckChange.bind(this);
+    this.handleAllCheckChange  = this.handleAllCheckChange.bind(this);
   }
 
   handleAllCheckChange (e){
@@ -49,7 +49,7 @@ class PrivateChat extends Component {
 
   render (){
 
-    const userCheckList = this.props.userList.filter(user => user.id !== this.props.id).map(user => {
+    const userCheckList = this.props.userList.filter(user => user.id !== this.props.global.id).map(user => {
       return (<div className="private-chat-user one-line-ellipsis"><label><input className="p-1" type="checkbox" value={user.id} checked={this.props.chatSetting.sendTo.sendToUsers.includes(user.id)} onChange={this.handleUserCheckChange}/>{user.name}</label></div>);
     });
 

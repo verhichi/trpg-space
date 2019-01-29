@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { CHAR_TYPE_ALLY, CHAR_TYPE_ENEMY, MODAL_TYPE_NEW_CHAR } from '../../../../../../constants/constants';
-import { showModal } from '../../../../../../redux/actions/action';
+import { showModal } from '../../../../../../redux/actions/modal';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,11 +14,7 @@ import Char from './char/char';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
-  return {
-    id:              state.id,
-    displayCharList: state.displayCharList,
-    charList:        state.charList
-  };
+  return { charList: state.charList };
 };
 
 // Redux Map Dispatch To Props
@@ -29,22 +25,23 @@ const mapDispatchToProps = (dispatch) => {
 class CharList extends Component {
   constructor (props){
     super(props);
+
     this.handleNewClick = this.handleNewClick.bind(this);
   }
 
   handleNewClick (){
     this.props.showModal(MODAL_TYPE_NEW_CHAR, {
-      title: 'Create New Character',
+      title:        'Create New Character',
       displayClose: true
     });
   }
 
   render() {
-    const charList = this.props.charList.filter(char => char.general.type === CHAR_TYPE_ALLY).map((charData) => {
+    const charList = this.props.charList.filter(char => char.general.type === CHAR_TYPE_ALLY).map(charData => {
       return <Char key={charData.charId} charData={charData}/>;
     });
 
-    const enemyList = this.props.charList.filter(char => char.general.type === CHAR_TYPE_ENEMY).map((charData) => {
+    const enemyList = this.props.charList.filter(char => char.general.type === CHAR_TYPE_ENEMY).map(charData => {
       return <Char key={charData.charId} charData={charData}/>;
     });
 

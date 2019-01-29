@@ -3,16 +3,14 @@ import { CHAR_MODAL_TAB_GENERAL, CHAR_MODAL_TAB_STATUS, CHAR_MODAL_TAB_DETAIL } 
 import { connect } from 'react-redux';
 
 // Component
-import Detail from './detail/detail';
+import Detail  from './detail/detail';
 import General from './general/general';
-import Status from './status/status';
+import Status  from './status/status';
 
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    isMobile:     state.isMobile,
-    id:           state.id,
     charList:     state.charList,
     modalSetting: state.modalSetting
   };

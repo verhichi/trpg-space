@@ -12,12 +12,11 @@ import Sidebar from './sidebar/sidebar';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
-  return { centerMode: state.centerMode };
+  return { displaySetting: state.displaySetting };
 };
 
 
 class Center extends Component {
-
   render() {
     const centerType = {
       [CENTER_MODE_CHAT]: <ChatLog/>,
@@ -25,10 +24,10 @@ class Center extends Component {
     }
 
     return (
-        <div className="room-center-cont d-flex f-grow-1">
-          <Sidebar/>
-          {centerType[this.props.centerMode]}
-        </div>
+      <div className="room-center-cont d-flex f-grow-1">
+        <Sidebar/>
+        {centerType[this.props.displaySetting.centerMode]}
+      </div>
     );
   }
 }

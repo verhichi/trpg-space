@@ -5,7 +5,7 @@ import {
   EDIT_MAP_SCALE,
   TOGGLE_MAP_GRID,
   SET_CHAR_TO_PLACE
-} from '../../../constants/actionTypes';
+} from '../../constants/actionTypes';
 
 export const editMapImage = (imageData) => {
   return {

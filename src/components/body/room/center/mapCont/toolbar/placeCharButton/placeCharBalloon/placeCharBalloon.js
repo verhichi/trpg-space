@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MAP_MODE_PLACE_CHAR } from '../../../../../../../../constants/constants';
-import { hidePlaceChar, setMapMode, setCharToPlace } from '../../../../../../../../redux/actions/action';
+import { hidePlaceChar } from '../../../../../../../../redux/actions/display';
+import { setMapMode, setCharToPlace } from '../../../../../../../../redux/actions/map';
 
 // Style
 import './placeCharBalloon.scss';
@@ -9,11 +10,10 @@ import './placeCharBalloon.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id:               state.id,
-    roomId:           state.roomId,
-    charList:         state.charList,
-    displayPlaceChar: state.displayPlaceChar,
-    mapSetting:       state.mapSetting
+    global:         state.global,
+    charList:       state.charList,
+    displaySetting: state.displaySetting,
+    mapSetting:     state.mapSetting
   };
 };
 
@@ -48,9 +48,9 @@ class PlaceCharBalloon extends Component {
 
   render() {
     const isDisabled = this.state.charIdToPlace.length === 0 || this.props.mapSetting.image.src.length === 0 || !this.props.charList.some(char => char.charId === this.state.charIdToPlace);
-    const toggleClass = this.props.displayPlaceChar ? 'is-active' : '';
+    const toggleClass = this.props.displaySetting.displayPlaceChar ? 'is-active' : '';
 
-    const charOpt = this.props.charList.filter(char => this.props.id === char.ownerId).map((char) => {
+    const charOpt = this.props.charList.filter(char => this.props.global.id === char.ownerId).map((char) => {
       return (<option key={char.charId} value={char.charId}>{char.general.name}</option>);
     });
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { hideMapScale, editMapScale } from '../../../../../../../../redux/actions/action';
+import { hideMapScale } from '../../../../../../../../redux/actions/display';
+import { editMapScale } from '../../../../../../../../redux/actions/map';
 
 // Style
 import './scaleMapBalloon.scss';
@@ -8,15 +9,15 @@ import './scaleMapBalloon.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    displayMapScale: state.displayMapScale,
-    mapSetting: state.mapSetting
+    displaySetting: state.displaySetting,
+    mapSetting:     state.mapSetting
   };
 };
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    hideMapScale: () => dispatch(hideMapScale()),
+    hideMapScale: ()      => dispatch(hideMapScale()),
     editMapScale: (scale) => dispatch(editMapScale(scale))
   };
 };
@@ -24,6 +25,7 @@ const mapDispatchToProps = (dispatch) => {
 class ScaleMapBalloon extends Component {
   constructor (props){
     super(props);
+
     this.handleMapScaleChange = this.handleMapScaleChange.bind(this);
   }
 
@@ -32,7 +34,7 @@ class ScaleMapBalloon extends Component {
   }
 
   render() {
-    const toggleClass = this.props.displayMapScale ? 'is-active' : '';
+    const toggleClass = this.props.displaySetting.displayMapScale ? 'is-active' : '';
 
     return (
       <div className={`map-scale-balloon cursor-default ${toggleClass}`}>

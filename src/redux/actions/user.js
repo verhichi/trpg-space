@@ -3,7 +3,7 @@ import {
   EDIT_USER,
   REMOVE_USER,
   NEW_HOST
-} from '../../../constants/actionTypes';
+} from '../../constants/actionTypes';
 
 export const addUser = (userData) => {
   return {

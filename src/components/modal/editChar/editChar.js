@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CHAR_PRIVACY_LEVEL_THREE, CHAR_MODAL_TAB_GENERAL, CHAR_MODAL_TAB_STATUS, CHAR_MODAL_TAB_DETAIL, STATUS_TYPE_VALUE } from '../../../constants/constants';
-import { editChar, hideModal } from '../../../redux/actions/action';
+import { hideModal } from '../../../redux/actions/modal';
+import { editChar } from '../../../redux/actions/char';
 import socket from '../../../socket/socketClient';
 
 // Font Awesome Component
@@ -19,9 +20,7 @@ import Status  from './status/status';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    isMobile:     state.isMobile,
-    id:           state.id,
-    roomId:       state.roomId,
+    global:       state.global,
     charList:     state.charList,
     modalSetting: state.modalSetting
   };
@@ -45,7 +44,8 @@ class EditChar extends Component {
       tabMode: CHAR_MODAL_TAB_GENERAL,
       general: char.general,
       status:  char.status,
-      detail:  char.detail
+      detail:  char.detail,
+      map:     char.map
     };
 
     this.returnStatusValue     = this.returnStatusValue.bind(this);
@@ -114,24 +114,20 @@ class EditChar extends Component {
 
   handleSubmitClick (e){
     const charData = {
-      charId: this.props.modalSetting.modalProp.charId,
-      ownerId: this.props.id,
+      charId:  this.props.modalSetting.modalProp.charId,
+      ownerId: this.props.global.id,
       general: this.state.general,
-      status: this.state.status,
-      detail: this.state.detail,
-      map: {
-        onMap: false,
-        x: '',
-        y: ''
-      }
+      status:  this.state.status,
+      detail:  this.state.detail,
+      map:     this.state.map
     };
 
     this.props.editChar(charData);
 
     if (this.state.general.privacy !== CHAR_PRIVACY_LEVEL_THREE){
-      socket.emit('char', this.props.roomId, charData);
+      socket.emit('char', this.props.global.roomId, charData);
     } else {
-      socket.emit('delChar', this.props.roomId, this.props.modalSetting.modalProp.charId);
+      socket.emit('delChar', this.props.global.roomId, this.props.modalSetting.modalProp.charId);
     }
 
     this.props.hideModal();

@@ -8,12 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
-  return {
-    isMobile:     state.isMobile,
-    id:           state.id,
-    roomId:       state.roomId,
-    modalSetting: state.modalSetting
-  };
+  return { global: state.global };
 };
 
 
@@ -113,7 +108,7 @@ class Status extends Component {
   render() {
 
     const toggleActiveClass = this.props.isActive ? 'is-active' : '';
-    const toggleScrollClass = this.props.isMobile ? '' : 'hide-scroll';
+    const toggleScrollClass = this.props.global.isMobile ? '' : 'hide-scroll';
 
     const statusList = this.state.status.map(status => {
       if (status.type === STATUS_TYPE_VALUE){

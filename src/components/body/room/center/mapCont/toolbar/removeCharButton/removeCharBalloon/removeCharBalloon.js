@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { hideRemoveChar, setMapMode, removeMapChar } from '../../../../../../../../redux/actions/action';
+import { hideRemoveChar } from '../../../../../../../../redux/actions/display';
+import { setMapMode } from '../../../../../../../../redux/actions/map';
+import { removeMapChar } from '../../../../../../../../redux/actions/char';
 import socket from '../../../../../../../../socket/socketClient';
 
 // Style
@@ -9,20 +11,19 @@ import './removeCharBalloon.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id: state.id,
-    roomId: state.roomId,
-    charList: state.charList,
-    displayRemoveChar: state.displayRemoveChar,
-    mapSetting: state.mapSetting
+    global:         state.global,
+    charList:       state.charList,
+    displaySetting: state.displaySetting,
+    mapSetting:     state.mapSetting
   };
 };
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    setMapMode: (mode) => dispatch(setMapMode(mode)),
-    hideRemoveChar: () => dispatch(hideRemoveChar()),
-    removeMapChar: (charId) => dispatch(removeMapChar(charId))
+    setMapMode:     (mode)   => dispatch(setMapMode(mode)),
+    hideRemoveChar: ()       => dispatch(hideRemoveChar()),
+    removeMapChar:  (charId) => dispatch(removeMapChar(charId))
   };
 };
 
@@ -32,12 +33,12 @@ class RemoveCharBalloon extends Component {
     this.state = { charIdToRemove: '-' };
 
     this.handleRemoveCharButtonClick = this.handleRemoveCharButtonClick.bind(this);
-    this.handleRemoveCharChange = this.handleRemoveCharChange.bind(this);
+    this.handleRemoveCharChange      = this.handleRemoveCharChange.bind(this);
   }
 
   handleRemoveCharButtonClick (e){
     this.props.removeMapChar(this.state.charIdToRemove);
-    socket.emit('removeMapChar', this.props.roomId, this.state.charIdToRemove);
+    socket.emit('removeMapChar', this.props.global.roomId, this.state.charIdToRemove);
     this.setState({ charIdToRemove: '-' });
     this.props.hideRemoveChar();
   }
@@ -48,9 +49,9 @@ class RemoveCharBalloon extends Component {
 
   render() {
     const isDisabled = this.state.charIdToRemove.length === 0 || !this.props.charList.some(char => char.charId === this.state.charIdToRemove);
-    const toggleRemoveChar = this.props.displayRemoveChar ? 'is-active' : '';
+    const toggleRemoveChar = this.props.displaySetting.displayRemoveChar ? 'is-active' : '';
 
-    const charOpt = this.props.charList.filter(char => char.map.onMap && this.props.id === char.ownerId).map(char => {
+    const charOpt = this.props.charList.filter(char => char.map.onMap && this.props.global.id === char.ownerId).map(char => {
       return (<option key={char.charId} value={char.charId}>{char.general.name}</option>);
     });
 

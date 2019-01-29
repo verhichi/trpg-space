@@ -3,7 +3,9 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
 import { MODAL_TYPE_ALERT, MODAL_TYPE_REQUESTING } from '../../../constants/constants';
-import { addUser, showModal, hideModal, setUserId, setRoomId } from '../../../redux/actions/action';
+import { showModal, hideModal} from '../../../redux/actions/modal';
+import { addUser } from '../../../redux/actions/user';
+import { setUserId, setRoomId } from '../../../redux/actions/global';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,9 +15,7 @@ import './newUser.scss';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
-  return {
-    modalSetting: state.modalSetting
-  };
+  return { modalSetting: state.modalSetting };
 };
 
 // Redux Map Dispatch To Props
@@ -52,7 +52,7 @@ class NewUser extends Component {
     e.preventDefault();
 
     this.props.showModal(MODAL_TYPE_REQUESTING, {
-      title: '',
+      title:        '',
       displayClose: false
     });
 
@@ -92,9 +92,9 @@ class NewUser extends Component {
             this.props.modalSetting.modalProp.redirect(`/${this.props.modalSetting.modalProp.roomId}`);
           } else {
             this.props.showModal(MODAL_TYPE_ALERT, {
-              title: '',
+              title:        '',
               displayClose: false,
-              alertText: `Room ID "${this.props.modalSetting.modalProp.roomId}" does not exist.`
+              alertText:    `Room ID "${this.props.modalSetting.modalProp.roomId}" does not exist.`
             });
           }
         });

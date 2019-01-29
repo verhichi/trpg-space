@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { CHAT_TYPE_HOST, CHAT_TYPE_LEAVE, CHAT_TYPE_JOIN } from '../../../constants/constants';
-import { addUser, editUser, removeUser, setRoomId, setUserId, userCleanup, addToChatLog, newHost, editMapImage, addMapChar, editMapChar, removeMapChar, removeAllMapChar, lockNote, unlockNote, editNote, editMapPosition, removeSendMsgUser, checkSendMsgToAll, editChar, addToCharList, removeFromCharList } from '../../../redux/actions/action';
+import { CHAT_TYPE_HOST, CHAT_TYPE_LEAVE, CHAT_TYPE_JOIN, CHAR_PRIVACY_LEVEL_THREE } from '../../../constants/constants';
+import { setUserId, setRoomId } from '../../../redux/actions/global';
+import { addUser, editUser, removeUser, newHost } from '../../../redux/actions/user';
+import { addChat } from '../../../redux/actions/chatLog';
+import { addChar, editChar, removeChar, addMapChar, editMapChar, removeMapChar, removeAllMapChar } from '../../../redux/actions/char';
+import { editMapImage } from '../../../redux/actions/map';
+import { lockNote, unlockNote, editNote } from '../../../redux/actions/note';
+import { removeSendMsgUser, checkSendMsgToAll } from '../../../redux/actions/chatSetting';
 import socket from '../../../socket/socketClient';
 
 // Style
@@ -15,14 +21,12 @@ import Bottom from './bottom/bottom';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id:            state.id,
-    roomId:        state.roomId,
-    userList:      state.userList,
-    charList:      state.charList,
-    mapSetting:    state.mapSetting,
-    chatSetting:   state.chatSetting,
-    isNoteLocked:  state.isNoteLocked,
-    notes:         state.notes
+    global:      state.global,
+    userList:    state.userList,
+    charList:    state.charList,
+    mapSetting:  state.mapSetting,
+    chatSetting: state.chatSetting,
+    noteSetting: state.noteSetting
   };
 };
 
@@ -34,8 +38,7 @@ const mapDispatchToProps = (dispatch) => {
     removeUser:         (userId)    => dispatch(removeUser(userId)),
     setRoomId:          (roomId)    => dispatch(setRoomId(roomId)),
     setUserId:          (userId)    => dispatch(setUserId(userId)),
-    userCleanup:        (id)        => dispatch(userCleanup(id)),
-    addToChatLog:       (content)   => dispatch(addToChatLog(content)),
+    addChat:            (content)   => dispatch(addChat(content)),
     newHost:            (id)        => dispatch(newHost(id)),
     editMapImage:       (src)       => dispatch(editMapImage(src)),
     addMapChar:         (charData)  => dispatch(addMapChar(charData)),
@@ -45,12 +48,11 @@ const mapDispatchToProps = (dispatch) => {
     editNote:           (notes)     => dispatch(editNote(notes)),
     lockNote:           (userId)    => dispatch(lockNote(userId)),
     unlockNote:         ()          => dispatch(unlockNote()),
-    editMapPosition:    (left, top) => dispatch(editMapPosition(left, top)),
     removeSendMsgUser:  (userId)    => dispatch(removeSendMsgUser(userId)),
     checkSendMsgToAll:  ()          => dispatch(checkSendMsgToAll()),
     editChar:           (charData)  => dispatch(editChar(charData)),
-    addToCharList:      (charData)  => dispatch(addToCharList(charData)),
-    removeFromCharList: (charId)    => dispatch(removeFromCharList(charId)),
+    addChar:            (charData)  => dispatch(addChar(charData)),
+    removeChar:         (charId)    => dispatch(removeChar(charId)),
   };
 };
 
@@ -63,14 +65,14 @@ class Room extends Component {
   }
 
   // onUnload (){
-  //   socket.emit('leave', this.props.roomId, this.props.id);
+  //   socket.emit('leave', this.props.global.roomId, this.props.global.id);
   //
   //   // If the user that left was host, get new host
-  //   if (this.props.userList.find(user => user.id === this.props.id).host){
+  //   if (this.props.userList.find(user => user.id === this.props.global.id).host){
   //     for (let idx = 0; idx < this.props.userList.length; idx++){
-  //       if (this.props.userList[idx].id === this.props.id) continue; // can't set user that's leaving as host
+  //       if (this.props.userList[idx].id === this.props.global.id) continue; // can't set user that's leaving as host
   //
-  //       socket.emit('newHost', this.props.roomId, this.props.userList[idx].id);
+  //       socket.emit('newHost', this.props.global.roomId, this.props.userList[idx].id);
   //       break;
   //     }
   //   }
@@ -89,7 +91,7 @@ class Room extends Component {
     });
 
     socket.on('delUser', (id) => {
-      if (id === this.props.id){
+      if (id === this.props.global.id){
         this.props.history.push('/');
       }
       this.props.removeUser(id);
@@ -99,35 +101,35 @@ class Room extends Component {
       if (this.props.charList.some((char) => char.charId === content.charId)){
         this.props.editChar(content);
       } else {
-        this.props.addToCharList(content);
+        this.props.addChar(content);
       }
     });
 
     socket.on('delChar', (charId) => {
-      this.props.removeFromCharList(charId);
+      this.props.removeChar(charId);
       this.props.removeMapChar(charId);
     });
 
     socket.on('chat', (content) => {
-      this.props.addToChatLog(content);
+      this.props.addChat(content);
     });
 
     socket.on('join', (content) => {
       this.props.addUser(content);
-      socket.emit('user', this.props.roomId, this.props.userList.find((user) => user.id === this.props.id));
+      socket.emit('user', this.props.global.roomId, this.props.userList.find(user => user.id === this.props.global.id));
 
-      socket.emit('mapImage', this.props.roomId, this.props.mapSetting.image);
-      socket.emit('editNote', this.props.roomId, this.props.notes);
+      socket.emit('mapImage', this.props.global.roomId, this.props.mapSetting.image);
+      socket.emit('editNote', this.props.global.roomId, this.props.noteSetting.notes);
 
       this.props.charList.forEach((char) => {
-        if (char.ownerId === this.props.id && char.general.privacy !== '3'){
-          socket.emit('char', this.props.roomId, char);
+        if (char.ownerId === this.props.global.id && char.general.privacy !== CHAR_PRIVACY_LEVEL_THREE){
+          socket.emit('char', this.props.global.roomId, char);
         }
       });
     });
 
     socket.on('newHost', (id) => {
-      this.props.addToChatLog({
+      this.props.addChat({
         type: CHAT_TYPE_HOST,
         name: this.props.userList.find((user) => user.id === id).name
       });
@@ -136,9 +138,15 @@ class Room extends Component {
     });
 
     socket.on('leave', (id) => {
-      this.props.addToChatLog({
+      this.props.addChat({
         type: CHAT_TYPE_LEAVE,
         name: this.props.userList.find((user) => user.id === id).name
+      });
+
+      this.props.charList.forEach(char => {
+        if (char.ownerId === id){
+          this.props.removeChar(char.charId);
+        }
       });
 
       if (this.props.chatSetting.sendTo.sendToUsers.includes(id)){
@@ -148,11 +156,11 @@ class Room extends Component {
         }
       }
 
-      if (id === this.props.isNoteLocked){
+      if (id === this.props.noteSetting.isNoteLocked){
         this.props.unlockNote();
       }
 
-      this.props.userCleanup(id);
+      this.props.removeUser(id);
     });
 
     socket.on('mapImage', (imageData) => {
@@ -186,11 +194,11 @@ class Room extends Component {
       this.props.editNote(notes);
     });
 
-    socket.emit('join', this.props.match.params.roomId, this.props.userList.find((user) => user.id === this.props.id))
+    socket.emit('join', this.props.match.params.roomId, this.props.userList.find((user) => user.id === this.props.global.id))
       .then(() => {
-        socket.emit('chat', this.props.roomId, {
+        socket.emit('chat', this.props.global.roomId, {
           type: CHAT_TYPE_JOIN,
-          name: this.props.userList.find((user) => user.id === this.props.id).name
+          name: this.props.userList.find(user => user.id === this.props.global.id).name
         });
       });
 
@@ -201,14 +209,14 @@ class Room extends Component {
     // window.removeEventListener('beforeunload', this.onUnload);
     //
     // this.onUnload();
-    socket.emit('leave', this.props.roomId, this.props.id);
+    socket.emit('leave', this.props.global.roomId, this.props.global.id);
 
     // If the user that left was host, get new host
-    if (this.props.userList.find(user => user.id === this.props.id).host){
+    if (this.props.userList.find(user => user.id === this.props.global.id).host){
       for (let idx = 0; idx < this.props.userList.length; idx++){
-        if (this.props.userList[idx].id === this.props.id) continue; // can't set user that's leaving as host
+        if (this.props.userList[idx].id === this.props.global.id) continue; // can't set user that's leaving as host
 
-        socket.emit('newHost', this.props.roomId, this.props.userList[idx].id);
+        socket.emit('newHost', this.props.global.roomId, this.props.userList[idx].id);
         break;
       }
     }

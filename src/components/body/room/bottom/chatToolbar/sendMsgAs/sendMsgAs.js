@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { checkSendAsPlayer, uncheckSendAsPlayer, editSendAs } from '../../../../../../redux/actions/action';
+import { checkSendAsUser, uncheckSendAsUser, editSendAs } from '../../../../../../redux/actions/chatSetting';
 
 // Style
 import './sendMsgAs.scss';
@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id:          state.id,
+    global:      state.global,
     userList:    state.userList,
     charList:    state.charList,
     chatSetting: state.chatSetting
@@ -21,9 +21,9 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    checkSendAsPlayer:   ()       => dispatch(checkSendAsPlayer()),
-    uncheckSendAsPlayer: ()       => dispatch(uncheckSendAsPlayer()),
-    editSendAs:          (userId) => dispatch(editSendAs(userId))
+    checkSendAsUser:   ()       => dispatch(checkSendAsUser()),
+    uncheckSendAsUser: ()       => dispatch(uncheckSendAsUser()),
+    editSendAs:        (userId) => dispatch(editSendAs(userId))
   };
 };
 
@@ -31,28 +31,27 @@ class SendMsgAs extends Component {
   constructor (props){
     super(props);
 
-    this.handleSendAsPlayerRadio = this.handleSendAsPlayerRadio.bind(this);
-    this.handleSendRadioChange   = this.handleSendRadioChange.bind(this);
+    this.handleSendAsUserRadio = this.handleSendAsUserRadio.bind(this);
+    this.handleSendRadioChange = this.handleSendRadioChange.bind(this);
   }
 
-  handleSendAsPlayerRadio (e){
-    this.props.chatSetting.sendAs.sendAsPlayer
-      ? this.props.uncheckSendAsPlayer()
-      : this.props.checkSendAsPlayer();
+  handleSendAsUserRadio (e){
+    this.props.chatSetting.sendAs.sendAsUser
+      ? this.props.uncheckSendAsUser()
+      : this.props.checkSendAsUser();
 
     this.props.editSendAs('');
   }
 
   handleSendRadioChange (e){
-    this.props.uncheckSendAsPlayer();
+    this.props.uncheckSendAsUser();
     this.props.editSendAs(e.target.value);
   }
 
   render (){
+    const userName = this.props.userList.find(user => user.id === this.props.global.id).name;
 
-    const userName = this.props.userList.find(user => user.id === this.props.id).name;
-
-    const charRadioList = this.props.charList.filter(char => char.ownerId === this.props.id).map(char => {
+    const charRadioList = this.props.charList.filter(char => char.ownerId === this.props.global.id).map(char => {
       return (<div className="chat-sender-name one-line-ellipsis"><label><input type="radio" name="sender" value={char.charId} checked={this.props.chatSetting.sendAs.sendAsCharacter === char.charId} onChange={this.handleSendRadioChange}/>{char.general.name}</label></div>)
     });
 
@@ -65,7 +64,7 @@ class SendMsgAs extends Component {
         <div className="chat-opt-sender p-2 p-absolute align-left">
           <div>Send message as:</div>
           <div className="chat-opt-subtitle pt-2 pb-1 font-size-md text-dec-underline">User</div>
-          <div><label><input type="radio" name="sender" checked={this.props.chatSetting.sendAs.sendAsPlayer} onChange={this.handleSendAsPlayerRadio}/>{userName}</label></div>
+          <div><label><input type="radio" name="sender" checked={this.props.chatSetting.sendAs.sendAsUser} onChange={this.handleSendAsUserRadio}/>{userName}</label></div>
           { charRadioList.length !== 0 && (<div className="chat-opt-subtitle pt-2 pb-1 font-size-md text-dec-underline">Character:</div>) }
           { charRadioList}
         </div>

@@ -9,11 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    isMobile:     state.isMobile,
-    id:           state.id,
-    roomId:       state.roomId,
-    charList:     state.charList,
-    modalSetting: state.modalSetting
+    global:   state.global,
+    charList: state.charList
   };
 };
 
@@ -134,7 +131,7 @@ class General extends Component {
   render() {
 
     const toggleActiveClass = this.props.isActive ? 'is-active' : '';
-    const toggleScrollClass = this.props.isMobile ? '' : 'hide-scroll';
+    const toggleScrollClass = this.props.global.isMobile ? '' : 'hide-scroll';
     const toggleColorPickerClass = this.state.displayColorPicker ? '' : 'd-none';
 
     const imageStyle = this.state.charData.image.length === 0

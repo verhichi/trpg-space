@@ -6,12 +6,12 @@ import { CHAT_TYPE_HELP, CHAT_TYPE_TEXT, CHAT_TYPE_ROLL, CHAT_TYPE_IMAGE, CHAT_T
 import './miniChatLog.scss';
 
 // Components
-import ChatHost from './chatHost/chatHost';
+import ChatHost  from './chatHost/chatHost';
 import ChatImage from './chatImage/chatImage';
-import ChatJoin from './chatJoin/chatJoin';
+import ChatJoin  from './chatJoin/chatJoin';
 import ChatLeave from './chatLeave/chatLeave';
-import ChatRoll from './chatRoll/chatRoll';
-import ChatText from './chatText/chatText';
+import ChatRoll  from './chatRoll/chatRoll';
+import ChatText  from './chatText/chatText';
 
 class MiniChatLog extends Component {
   render() {

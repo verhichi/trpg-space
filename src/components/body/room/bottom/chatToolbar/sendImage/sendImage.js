@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MODAL_TYPE_UPLOAD_IMG } from '../../../../../../constants/constants';
-import { showModal } from '../../../../../../redux/actions/action';
+import { showModal } from '../../../../../../redux/actions/modal';
 
 // Style
 import './sendImage.scss';

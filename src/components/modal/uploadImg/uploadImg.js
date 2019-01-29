@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
 import { CHAT_TYPE_IMAGE } from '../../../constants/constants';
-import { addToChatLog, hideModal, editMapImage, editMapPosition, removeAllMapChar } from '../../../redux/actions/action';
+import { addChat } from '../../../redux/actions/chatLog';
+import { hideModal } from '../../../redux/actions/modal';
+import { removeAllMapChar } from '../../../redux/actions/char';
+import { editMapImage, editMapPosition } from '../../../redux/actions/map';
 import socket from '../../../socket/socketClient';
 
 
@@ -15,8 +18,7 @@ import './uploadImg.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id:           state.id,
-    roomId:       state.roomId,
+    global:      state.global,
     userList:     state.userList,
     modalSetting: state.modalSetting
   };
@@ -25,11 +27,11 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    hideModal: () => dispatch(hideModal()),
-    addToChatLog: (content) => dispatch(addToChatLog(content)),
-    editMapImage: (src) => dispatch(editMapImage(src)),
-    editMapPosition: (left, top) => dispatch(editMapPosition(left, top)),
-    removeAllMapChar: () => dispatch(removeAllMapChar())
+    hideModal:        ()          => dispatch(hideModal()),
+    addChat:          (content)   => dispatch(addChat(content)),
+    editMapImage:     (src)       => dispatch(editMapImage(src)),
+    editMapPosition:  (left, top) => dispatch(editMapPosition(left, top)),
+    removeAllMapChar: ()          => dispatch(removeAllMapChar())
   };
 };
 
@@ -37,7 +39,6 @@ const mapDispatchToProps = (dispatch) => {
 class UploadImg extends Component {
   constructor (props){
     super(props);
-
     this.state = {
       fileExist:     false,
       fileSizeError: false,
@@ -55,7 +56,7 @@ class UploadImg extends Component {
   handleButtonClick (e){
 
     if (this.props.modalSetting.modalProp.type === 'chat'){
-      const name = this.props.userList.find((user) => this.props.id === user.id).name;
+      const name = this.props.userList.find((user) => this.props.global.id === user.id).name;
       const imgData = {
         type: CHAT_TYPE_IMAGE,
         src: this.state.src,
@@ -64,8 +65,8 @@ class UploadImg extends Component {
         name
       };
 
-      this.props.addToChatLog({ ...imgData, self: true });
-      socket.emit('chat', this.props.roomId, { ...imgData, self: false });
+      this.props.addChat({ ...imgData, self: true });
+      socket.emit('chat', this.props.global.roomId, { ...imgData, self: false });
     } else {
       const backgroundData = {
         id: uuid.v4(),
@@ -78,7 +79,7 @@ class UploadImg extends Component {
       };
 
       this.props.editMapImage(backgroundData);
-      socket.emit('mapImage', this.props.roomId, backgroundData);
+      socket.emit('mapImage', this.props.global.roomId, backgroundData);
 
       this.props.removeAllMapChar();
       socket.emit('removeAllMapChar');

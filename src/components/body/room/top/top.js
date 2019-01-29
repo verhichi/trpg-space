@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MODAL_TYPE_ROOM_SETTING, MODAL_TYPE_CONFIRM } from '../../../../constants/constants';
-import { showModal, hideModal, showUserList, hideUserList } from '../../../../redux/actions/action';
+import { showModal, hideModal } from '../../../../redux/actions/modal';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,19 +12,16 @@ import './top.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    roomId:          state.roomId,
-    displayUserList: state.displayUserList,
-    userList:        state.userList
+    global:   state.global,
+    userList: state.userList
   };
 };
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    showModal:    (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
-    hideModal:    ()                     => dispatch(hideModal()),
-    hideUserList: ()                     => dispatch(hideUserList()),
-    showUserList: ()                     => dispatch(showUserList())
+    showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
+    hideModal: ()                     => dispatch(hideModal()),
   };
 };
 
@@ -34,22 +31,25 @@ class Top extends Component {
     super(props);
 
     this.handleSettingClick = this.handleSettingClick.bind(this);
-    this.handleLeaveClick = this.handleLeaveClick.bind(this);
+    this.handleLeaveClick   = this.handleLeaveClick.bind(this);
   }
 
   handleLeaveClick (e){
     this.props.showModal(MODAL_TYPE_CONFIRM, {
-      title: 'Leave Room',
+      title:        'Leave Room',
       displayClose: false,
-      confirmText: 'Are you sure you want to leave this room?',
-      accept: this.props.redirect,
-      decline: this.props.hideModal
+      confirmText:  'Are you sure you want to leave this room?',
+      accept:       [
+        this.props.redirect,
+        this.props.hideModal
+      ],
+      decline:      this.props.hideModal
     });
   }
 
   handleSettingClick (e){
     this.props.showModal(MODAL_TYPE_ROOM_SETTING, {
-      title: 'Setting',
+      title:        'Setting',
       displayClose: true
     });
   }
@@ -62,7 +62,7 @@ class Top extends Component {
             <FontAwesomeIcon icon="door-open"/>
             <span className="d-none-sm"> Leave</span>
           </div>
-          <div className="f-grow-1 align-center p-2">({this.props.userList.length})Room ID: {this.props.roomId}</div>
+          <div className="f-grow-1 align-center p-2">({this.props.userList.length})Room ID: {this.props.global.roomId}</div>
           <div className="toolbar-btn cursor-pointer p-2" onClick={this.handleSettingClick}>
             <FontAwesomeIcon icon="cog"/>
             <span className="d-none-sm"> Settings</span>

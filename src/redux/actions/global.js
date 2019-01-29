@@ -1,7 +1,8 @@
 import {
   SET_ROOM_ID,
-  SET_USER_ID
-} from '../../../constants/actionTypes';
+  SET_USER_ID,
+  RESET_STATE
+} from '../../constants/actionTypes';
 
 export const setRoomId = (roomId) => {
   return {
@@ -16,3 +17,7 @@ export const setUserId = (userId) => {
     userId
   };
 };
+
+export const resetState = () => {
+  return { type: RESET_STATE};
+}

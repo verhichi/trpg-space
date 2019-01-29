@@ -3,10 +3,10 @@ import {
   UNCHECK_SEND_MSG_TO_ALL,
   ADD_SEND_MSG_USER,
   REMOVE_SEND_MSG_USER,
-  CHECK_SEND_AS_PLAYER,
-  UNCHECK_SEND_AS_PLAYER,
+  CHECK_SEND_AS_USER,
+  UNCHECK_SEND_AS_USER,
   EDIT_SEND_AS
-} from '../../../constants/actionTypes';
+} from '../../constants/actionTypes';
 
 
 export const checkSendMsgToAll = () => {
@@ -31,12 +31,12 @@ export const removeSendMsgUser = (userId) => {
   };
 };
 
-export const checkSendAsPlayer = () => {
-  return { type: CHECK_SEND_AS_PLAYER };
+export const checkSendAsUser = () => {
+  return { type: CHECK_SEND_AS_USER };
 };
 
-export const uncheckSendAsPlayer = () => {
-  return { type: UNCHECK_SEND_AS_PLAYER };
+export const uncheckSendAsUser = () => {
+  return { type: UNCHECK_SEND_AS_USER };
 };
 
 export const editSendAs = (charId) => {

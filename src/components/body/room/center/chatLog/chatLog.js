@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CHAT_TYPE_HELP, CHAT_TYPE_TEXT, CHAT_TYPE_ROLL, CHAT_TYPE_IMAGE, CHAT_TYPE_JOIN, CHAT_TYPE_LEAVE, CHAT_TYPE_HOST } from '../../../../../constants/constants';
-import { showModal } from '../../../../../redux/actions/action';
+import { showModal } from '../../../../../redux/actions/modal';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,18 +10,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './chatLog.scss';
 
 // Components
-import ChatHelp from './chatHelp/chatHelp';
-import ChatHost from './chatHost/chatHost';
+import ChatHelp  from './chatHelp/chatHelp';
+import ChatHost  from './chatHost/chatHost';
 import ChatImage from './chatImage/chatImage';
-import ChatJoin from './chatJoin/chatJoin';
+import ChatJoin  from './chatJoin/chatJoin';
 import ChatLeave from './chatLeave/chatLeave';
-import ChatRoll from './chatRoll/chatRoll';
-import ChatText from './chatText/chatText';
+import ChatRoll  from './chatRoll/chatRoll';
+import ChatText  from './chatText/chatText';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    isMobile: state.isMobile,
+    global:  state.global,
     chatLog: state.chatLog
   };
 };
@@ -34,12 +34,13 @@ const mapDispatchToProps = (dispatch) => {
 class ChatLog extends Component {
   constructor (props){
     super(props);
+    this.myRef = React.createRef();
     this.state = {
       displayLastNChat: 30,
       isScrolledDown: true
     };
-    this.myRef = React.createRef();
-    this.handleChatLogScroll = this.handleChatLogScroll.bind(this);
+
+    this.handleChatLogScroll   = this.handleChatLogScroll.bind(this);
     this.handleScrollDownClick = this.handleScrollDownClick.bind(this);
   }
 
@@ -58,9 +59,9 @@ class ChatLog extends Component {
   }
 
   handleChatLogScroll (e){
-    const scrollTop = Math.floor(this.myRef.current.scrollTop);
+    const scrollTop    = Math.floor(this.myRef.current.scrollTop);
     const offsetHeight = Math.floor(this.myRef.current.offsetHeight);
-    const scrollHeight =  Math.floor(this.myRef.current.scrollHeight);
+    const scrollHeight = Math.floor(this.myRef.current.scrollHeight);
 
     if (scrollTop === 0 && this.props.chatLog.length > this.state.displayLastNChat){
       this.setState({ displayLastNChat: this.state.displayLastNChat + 30 });
@@ -70,7 +71,7 @@ class ChatLog extends Component {
 
   render() {
 
-    const toggleClass = this.props.isMobile ? '' : 'hide-scroll';
+    const toggleClass   = this.props.global.isMobile ? '' : 'hide-scroll';
     const toggleDisplay = this.state.isScrolledDown ? 'd-none' : '';
 
     // Choose component based on chat type

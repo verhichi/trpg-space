@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MAP_MODE_PLACE_CHAR } from '../../../../../../constants/constants';
-import { setMapMode, addMapChar, editMapChar, setCharToPlace, editMapPosition, editMapScale } from '../../../../../../redux/actions/action';
+import { setMapMode, setCharToPlace, editMapPosition, editMapScale } from '../../../../../../redux/actions/map';
+import { addMapChar, editMapChar } from '../../../../../../redux/actions/char';
 import socket from '../../../../../../socket/socketClient';
 
 // Style
@@ -13,14 +14,10 @@ import CharDot from './charDot/charDot';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id:               state.id,
-    roomId:           state.roomId,
-    charList:         state.charList,
-    isMobile:         state.isMobile,
-    mapSetting:       state.mapSetting,
-    displayPlaceChar: state.displayPlaceChar,
-    displayMapGrid:   state.displayMapGrid,
-    displaySidebar:   state.displaySidebar
+    global:         state.global,
+    charList:       state.charList,
+    mapSetting:     state.mapSetting,
+    displaySetting: state.displaySetting
   };
 };
 
@@ -78,7 +75,7 @@ class Map extends Component {
   handleTouchStart (e){
     if (this.props.mapSetting.mode === ''){
       const sidebar = document.querySelector('.list-cont');
-      const sidebarWidth = this.props.displaySidebar ? sidebar.offsetWidth : 0;
+      const sidebarWidth = this.props.displaySetting.displaySidebar ? sidebar.offsetWidth : 0;
 
       const header = document.querySelector('header');
       const roomTopCont = document.querySelector('.room-top-cont');
@@ -157,7 +154,7 @@ class Map extends Component {
         this.props.addMapChar(charData);
       }
 
-      socket.emit('mapChar', this.props.roomId, charData);
+      socket.emit('mapChar', this.props.global.roomId, charData);
     }
 
     this.props.setCharToPlace('');
@@ -170,7 +167,7 @@ class Map extends Component {
       ? 'is-place-char-active'
       : '';
 
-    const toggleMapGridClass = this.props.displayMapGrid
+    const toggleMapGridClass = this.props.mapSetting.displayMapGrid
       ? 'is-grid-active'
       : '';
 

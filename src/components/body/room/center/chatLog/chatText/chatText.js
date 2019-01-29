@@ -7,7 +7,7 @@ import './chatText.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id: state.id,
+    global:   state.global,
     userList: state.userList
   };
 };
@@ -16,7 +16,7 @@ class ChatText extends Component {
   render() {
     const selfClass = this.props.chatData.self ? 'self-chat' : 'other-chat';
 
-    if (this.props.chatData.self || !this.props.chatData.private || (this.props.chatData.private && this.props.chatData.sendTo.includes(this.props.id))){
+    if (this.props.chatData.self || !this.props.chatData.private || (this.props.chatData.private && this.props.chatData.sendTo.includes(this.props.global.id))){
       return (<div className={`chat-log mb-3 ${selfClass}`}>
                  <div className="chat-log-head">
                    {this.props.chatData.private
@@ -24,7 +24,7 @@ class ChatText extends Component {
                      : null}
                    <span className="chat-log-user">{this.props.chatData.name}</span>
                    { this.props.chatData.private && !this.props.chatData.self
-                       ? <span className="chat-log-user"> > {this.props.userList.find(user => user.id === this.props.id).name}</span>
+                       ? <span className="chat-log-user"> > {this.props.userList.find(user => user.id === this.props.global.id).name}</span>
                        : null }
                    { this.props.chatData.private && this.props.chatData.self
                        ? <span className="chat-log-user"> > {this.props.chatData.sendToNames}</span>

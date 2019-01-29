@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SIDEBAR_MODE_CHAR, SIDEBAR_MODE_NOTE } from '../../../../../constants/constants';
-import { setSidebarTabMode } from '../../../../../redux/actions/action';
+import { setSidebarChar, setSidebarNote } from '../../../../../redux/actions/display';
 
 
 // Font Awesome Component
@@ -17,34 +17,41 @@ import Notes    from './notes/notes';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    isMobile:       state.isMobile,
-    displaySidebar: state.displaySidebar,
-    sidebarTabMode: state.sidebarTabMode
+    global:        state.global,
+    displaySetting: state.displaySetting
   };
 };
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
-  return { setSidebarTabMode: (sidebarTabMode) => dispatch(setSidebarTabMode(sidebarTabMode)) };
+  return {
+    setSidebarChar: () => dispatch(setSidebarChar()),
+    setSidebarNote: () => dispatch(setSidebarNote())
+  };
 };
 
 class Sidebar extends Component {
   constructor (props){
     super(props);
-    this.handleCharTabClick  = this.handleTabClick.bind(this, SIDEBAR_MODE_CHAR);
-    this.handleNotesTabClick = this.handleTabClick.bind(this, SIDEBAR_MODE_NOTE);
+
+    this.handleCharTabClick  = this.handleCharTabClick.bind(this);
+    this.handleNoteTabClick  = this.handleNoteTabClick.bind(this);
   }
 
-  handleTabClick (tabMode, e){
-    this.props.setSidebarTabMode(tabMode);
+  handleCharTabClick (e){
+    this.props.setSidebarChar();
+  }
+
+  handleNoteTabClick (e){
+    this.props.setSidebarNote();
   }
 
   render() {
-    const toggleClass = this.props.isMobile ? '' : 'hide-scroll';
-    const toggleSidebarClass = this.props.displaySidebar ? 'is-active' : '';
+    const toggleClass        = this.props.global.isMobile ? '' : 'hide-scroll';
+    const toggleSidebarClass = this.props.displaySetting.displaySidebar ? 'is-active' : '';
 
-    const toggleCharTabClass  = this.props.sidebarTabMode === SIDEBAR_MODE_CHAR ? 'is-active' : '';
-    const toggleNotesTabClass = this.props.sidebarTabMode === SIDEBAR_MODE_NOTE ? 'is-active' : '';
+    const toggleCharTabClass  = this.props.displaySetting.sidebarTabMode === SIDEBAR_MODE_CHAR ? 'is-active' : '';
+    const toggleNotesTabClass = this.props.displaySetting.sidebarTabMode === SIDEBAR_MODE_NOTE ? 'is-active' : '';
 
     const tabType = {
       [SIDEBAR_MODE_CHAR]: <CharList/>,
@@ -59,14 +66,14 @@ class Sidebar extends Component {
             <FontAwesomeIcon icon="address-card"/>
             <span className="d-none-sm"> Character</span>
           </div>
-          <div className={`list-tab f-shrink-0 align-center p-1 cursor-pointer ${toggleNotesTabClass}`} onClick={this.handleNotesTabClick}>
+          <div className={`list-tab f-shrink-0 align-center p-1 cursor-pointer ${toggleNotesTabClass}`} onClick={this.handleNoteTabClick}>
             <FontAwesomeIcon icon="sticky-note"/>
             <span className="d-none-sm"> Notes</span>
           </div>
         </div>
 
         <div className={`sidebar-body p-1 d-flex f-grow-1 f-dir-col ${toggleClass}`}>
-          {tabType[this.props.sidebarTabMode]}
+          {tabType[this.props.displaySetting.sidebarTabMode]}
         </div>
 
       </div>

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CHAT_TYPE_ROLL } from '../../../../../constants/constants';
-import { addToChatLog, hideDiceBubble } from '../../../../../redux/actions/action';
+import { addChat } from '../../../../../redux/actions/chatLog';
+import { hideDiceBubble } from '../../../../../redux/actions/display';
 import socket from '../../../../../socket/socketClient';
 import { getDiceRollResult } from './roll';
 
@@ -11,17 +12,16 @@ import './diceBalloon.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id: state.id,
-    roomId: state.roomId,
-    displayDiceSetting: state.displayDiceSetting,
-    userList: state.userList
+    displaySetting: state.displaySetting,
+    global:         state.global,
+    userList:       state.userList
   };
 };
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    addToChatLog: content => dispatch(addToChatLog(content)),
+    addChat:        content => dispatch(addChat(content)),
     hideDiceBubble: () => dispatch(hideDiceBubble())
   };
 };
@@ -31,10 +31,10 @@ class DiceBalloon extends Component {
     super(props);
     this.state = {
       diceNumber: 2,
-      diceType: 6,
-      symbol: '+',
-      modifier: 0,
-      private: false
+      diceType:   6,
+      symbol:     '+',
+      modifier:   0,
+      private:    false
     };
 
     this.handleDiceNumberChange = this.handleDiceNumberChange.bind(this);
@@ -67,19 +67,19 @@ class DiceBalloon extends Component {
 
   handleButtonClick (e){
     const result = getDiceRollResult(this.state);
-    const name = this.props.userList.find((user) => this.props.id === user.id).name;
+    const name = this.props.userList.find((user) => this.props.global.id === user.id).name;
     const rollData = {
-      type: CHAT_TYPE_ROLL,
-      private: this.state.private,
+      type:        CHAT_TYPE_ROLL,
+      private:     this.state.private,
       diceSetting: this.state.diceNumber + 'd' + this.state.diceType,
       name,
       ...result
     };
 
-    this.props.addToChatLog({ ...rollData, self: true });
+    this.props.addChat({ ...rollData, self: true });
 
     if (!this.state.private){
-      socket.emit('chat', this.props.roomId, { ...rollData, self: false});
+      socket.emit('chat', this.props.global.roomId, { ...rollData, self: false});
     }
 
     this.props.hideDiceBubble();
@@ -87,7 +87,7 @@ class DiceBalloon extends Component {
 
   render (){
 
-    const toggleClass = this.props.displayDiceSetting ? '' : 'd-none';
+    const toggleClass = this.props.displaySetting.displayDiceSetting ? '' : 'd-none';
 
     return (
       <div className={`dice-help-balloon font-weight-bold font-size-md ${toggleClass}`} ref={node => this.diceNode = node}>

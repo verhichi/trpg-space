@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { editUser, hideModal } from '../../../redux/actions/action';
+import { hideModal } from '../../../redux/actions/modal';
+import { editUser } from '../../../redux/actions/user';
 import socket from '../../../socket/socketClient';
 
 
@@ -13,8 +14,7 @@ import './editUser.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id:           state.id,
-    roomId:       state.roomId,
+    global:       state.global,
     userList:     state.userList,
     modalSetting: state.modalSetting
   };
@@ -33,7 +33,7 @@ class EditUser extends Component {
   constructor (props){
     super(props);
     this.nameRef = React.createRef();
-    const user = this.props.userList.find((user) => user.id === this.props.id);
+    const user = this.props.userList.find((user) => user.id === this.props.global.id);
     this.state = { name: user.name };
 
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -52,12 +52,12 @@ class EditUser extends Component {
     e.preventDefault();
 
     this.props.editUser({
-      id: this.props.id,
+      id: this.props.global.id,
       name: this.state.name.trim()
     });
 
-    socket.emit('user', this.props.roomId, {
-      id: this.props.id,
+    socket.emit('user', this.props.global.roomId, {
+      id: this.props.global.id,
       name: this.state.name.trim()
     });
 

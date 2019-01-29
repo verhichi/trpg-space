@@ -3,8 +3,8 @@ import {
   UNCHECK_SEND_MSG_TO_ALL,
   ADD_SEND_MSG_USER,
   REMOVE_SEND_MSG_USER,
-  CHECK_SEND_AS_PLAYER,
-  UNCHECK_SEND_AS_PLAYER,
+  CHECK_SEND_AS_USER,
+  UNCHECK_SEND_AS_USER,
   EDIT_SEND_AS
 } from '../../../constants/actionTypes';
 
@@ -66,21 +66,21 @@ const chatReducer = (state = initialState, action) => {
         }
       };
 
-    case UNCHECK_SEND_AS_PLAYER:
+    case UNCHECK_SEND_AS_USER:
       return {
         ...state,
         sendAs: {
           ...state.sendAs,
-          sendAsPlayer: false
+          sendAsUser: false
         }
       };
 
-    case CHECK_SEND_AS_PLAYER:
+    case CHECK_SEND_AS_USER:
       return {
         ...state,
         sendAs: {
           ...state.sendAs,
-          sendAsPlayer: true
+          sendAsUser: true
         }
       };
 

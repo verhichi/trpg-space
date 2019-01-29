@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { setMapMode, addMapChar, editMapChar } from '../../../../../redux/actions/action';
-// import socket from '../../../../../socket/socketClient';
-
-// // Font Awesome Component
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Style
 import './mapCont.scss';
 
 // Component
-import Map from './map/map';
-import Toolbar from './toolbar/toolbar';
+import Map         from './map/map';
+import Toolbar     from './toolbar/toolbar';
 import MiniChatLog from './miniChatLog/miniChatLog';
 
 // Redux Map State To Prop

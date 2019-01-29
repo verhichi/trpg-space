@@ -24,10 +24,10 @@ export const CHAT_TYPE_HOST  = 'host';
 export const MAP_MODE_PLACE_CHAR = 'PLACE_CHAR';
 
 // Character Privacy Level
-export const CHAR_PRIVACY_LEVEL_ZERO  = 0;
-export const CHAR_PRIVACY_LEVEL_ONE   = 1;
-export const CHAR_PRIVACY_LEVEL_TWO   = 2;
-export const CHAR_PRIVACY_LEVEL_THREE = 3;
+export const CHAR_PRIVACY_LEVEL_ZERO  = '0';
+export const CHAR_PRIVACY_LEVEL_ONE   = '1';
+export const CHAR_PRIVACY_LEVEL_TWO   = '2';
+export const CHAR_PRIVACY_LEVEL_THREE = '3';
 
 // Character Type
 export const CHAR_TYPE_ALLY  = 'Ally';

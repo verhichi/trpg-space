@@ -6,7 +6,7 @@ import {
   EDIT_MAP_CHAR,
   REMOVE_MAP_CHAR,
   REMOVE_ALL_MAP_CHAR
-} from '../../../constants/actionTypes';
+} from '../../constants/actionTypes';
 
 export const addChar = (charData) => {
   return {

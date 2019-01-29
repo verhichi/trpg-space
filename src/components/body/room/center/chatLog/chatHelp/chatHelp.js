@@ -3,9 +3,6 @@ import React, { Component } from 'react';
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-// // Style
-// import './chatHost.scss';
-
 class ChatHelp extends Component {
   render() {
     return(

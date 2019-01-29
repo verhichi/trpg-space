@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, MODAL_TYPE_VIEW_CHAR, MODAL_TYPE_CONFIRM, MODAL_TYPE_EDIT_CHAR, STATUS_TYPE_VALUE, STATUS_TYPE_PARAM } from '../../../../../../../constants/constants'
-import { showModal, hideModal, removeFromCharList, removeMapChar, checkSendAsPlayer, editSendAs } from '../../../../../../../redux/actions/action';
+import { showModal, hideModal } from '../../../../../../../redux/actions/modal';
+import { removeChar, removeMapChar } from '../../../../../../../redux/actions/char';
+import { checkSendAsUser, editSendAs } from '../../../../../../../redux/actions/chatSetting';
+
 import socket from '../../../../../../../socket/socketClient';
 
 // Font Awesome Component
@@ -13,8 +16,7 @@ import './char.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    id:          state.id,
-    roomId:      state.roomId,
+    global:      state.global,
     userList:    state.userList,
     chatSetting: state.chatSetting
   };
@@ -23,12 +25,12 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    showModal:          (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
-    hideModal:          ()                     => dispatch(hideModal()),
-    removeFromCharList: (charId)               => dispatch(removeFromCharList(charId)),
-    removeMapChar:      (charId)               => dispatch(removeMapChar(charId)),
-    checkSendAsPlayer:  ()                     => dispatch(checkSendAsPlayer()),
-    editSendAs:         (charId)               => dispatch(editSendAs(charId))
+    showModal:       (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
+    hideModal:       ()                     => dispatch(hideModal()),
+    removeChar:      (charId)               => dispatch(removeChar(charId)),
+    removeMapChar:   (charId)               => dispatch(removeMapChar(charId)),
+    checkSendAsUser: ()                     => dispatch(checkSendAsUser()),
+    editSendAs:      (charId)               => dispatch(editSendAs(charId))
   };
 };
 
@@ -44,14 +46,14 @@ class Char extends Component {
 
   handleRemoveClick (charId, e){
     this.props.showModal(MODAL_TYPE_CONFIRM, {
-      title: 'Delete Character',
+      title:        'Delete Character',
       displayClose: false,
-      confirmText: `Are you sure you want to delete ${this.props.charData.general.name}?`,
+      confirmText:  `Are you sure you want to delete ${this.props.charData.general.name}?`,
       accept: [
-        this.props.removeFromCharList.bind(null, this.props.charData.charId),
+        this.props.removeChar.bind(null, this.props.charData.charId),
         this.props.removeMapChar.bind(null, this.props.charData.charId),
         this.resetSendAsState,
-        socket.emit.bind(socket, 'delChar', this.props.roomId, this.props.charData.charId),
+        socket.emit.bind(socket, 'delChar', this.props.global.roomId, this.props.charData.charId),
         this.props.hideModal
       ],
       decline: this.props.hideModal
@@ -60,30 +62,30 @@ class Char extends Component {
 
   resetSendAsState (){
     if (this.props.charData.charId === this.props.chatSetting.sendAs.sendAsCharacter){
-      this.props.checkSendAsPlayer();
+      this.props.checkSendAsUser();
       this.props.editSendAs('');
     }
   }
 
   handleEditClick (e){
     this.props.showModal(MODAL_TYPE_EDIT_CHAR, {
-      title: 'Edit Character',
+      title:        'Edit Character',
       displayClose: true,
-      charId: this.props.charData.charId
+      charId:       this.props.charData.charId
     });
   }
 
   handleViewClick (e){
     this.props.showModal(MODAL_TYPE_VIEW_CHAR, {
-      title: 'View Character',
+      title:        'View Character',
       displayClose: true,
-      charId: this.props.charData.charId
+      charId:       this.props.charData.charId
     });
   }
 
   render() {
-    const showName = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ONE || this.props.charData.ownerId === this.props.id;
-    const showStat = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ZERO || this.props.charData.ownerId === this.props.id;
+    const showName = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ONE || this.props.charData.ownerId === this.props.global.id;
+    const showStat = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ZERO || this.props.charData.ownerId === this.props.global.id;
     const charName = showName ? this.props.charData.general.name : 'UNKNOWN';
     const userName = this.props.userList.find(user => user.id === this.props.charData.ownerId).name;
 
@@ -106,12 +108,12 @@ class Char extends Component {
           { statList }
         </div>
         <div className="d-flex f-dir-col f-shrink-0 pr-1 pt-1">
-          {this.props.charData.ownerId === this.props.id
+          {this.props.charData.ownerId === this.props.global.id
             ? (<div className="char-btn cursor-pointer align-center" onClick={this.handleRemoveClick}>
                  <FontAwesomeIcon icon="window-close"/>
                </div>)
             : null}
-          {this.props.charData.ownerId === this.props.id
+          {this.props.charData.ownerId === this.props.global.id
             ? (<div className="cursor-pointer char-btn align-center f-shrink-0" onClick={this.handleEditClick}>
                  <FontAwesomeIcon icon="pen-square"/>
                </div>)

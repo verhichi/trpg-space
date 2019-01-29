@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MODAL_TYPE_IMAGE } from '../../../../../../constants/constants';
-import { showModal } from '../../../../../../redux/actions/action';
+import { showModal } from '../../../../../../redux/actions/modal';
 
 // Style
 import './chatImage.scss';
@@ -40,9 +40,9 @@ class ChatImage extends Component {
 
   handleImageClick (e){
     this.props.showModal(MODAL_TYPE_IMAGE, {
-      title: 'Image',
+      title:       'Image',
       displayClose: true,
-      src: this.props.chatData.src
+      src:          this.props.chatData.src
     });
   }
 

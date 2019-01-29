@@ -4,11 +4,7 @@ import { CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, CHAR_PRIVACY_LEVEL_TWO
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
-  return {
-    isMobile:     state.isMobile,
-    id:           state.id,
-    modalSetting: state.modalSetting
-  };
+  return { global: state.global };
 };
 
 
@@ -16,7 +12,7 @@ class General extends Component {
   render() {
 
     const toggleActiveClass = this.props.isActive ? 'is-active' : '';
-    const toggleScrollClass = this.props.isMobile ? '' : 'hide-scroll';
+    const toggleScrollClass = this.props.global.isMobile ? '' : 'hide-scroll';
 
     const privacyText = {
       [CHAR_PRIVACY_LEVEL_ZERO]: 'Display all data',

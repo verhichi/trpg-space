@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { showRemoveChar, hideRemoveChar } from '../../../../../../../redux/actions/action';
+import { showRemoveChar, hideRemoveChar } from '../../../../../../../redux/actions/display';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,7 +10,7 @@ import RemoveCharBalloon from './removeCharBalloon/removeCharBalloon';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
-  return { displayRemoveChar: state.displayRemoveChar };
+  return { displaySetting: state.displaySetting };
 };
 
 // Redux Map Dispatch To Props
@@ -26,12 +26,12 @@ class RemoveCharButton extends Component {
     super(props);
     this.removeCharRef = React.createRef();
 
-    this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleButtonClick  = this.handleButtonClick.bind(this);
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
   }
 
   handleButtonClick (e){
-    if (this.props.displayRemoveChar){
+    if (this.props.displaySetting.displayRemoveChar){
       window.removeEventListener('click', this.handleOutsideClick, false);
       this.props.hideRemoveChar()
     } else {

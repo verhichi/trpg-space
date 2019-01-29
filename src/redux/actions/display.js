@@ -13,7 +13,7 @@ import {
   HIDE_MAP_SCALE,
   SET_SIDEBAR_CHAR,
   SET_SIDEBAR_NOTE
-} from '../../../constants/actionTypes';
+} from '../../constants/actionTypes';
 
 export const showDiceBubble = () => {
   return { type: SHOW_DICE_BUBBLE };

@@ -1,4 +1,4 @@
-import { ADD_CHAT } from '../../../constants/actionTypes';
+import { ADD_CHAT } from '../../constants/actionTypes';
 
 export const addChat = (content) => {
   return {

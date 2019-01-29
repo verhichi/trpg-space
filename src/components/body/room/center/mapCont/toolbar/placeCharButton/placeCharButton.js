@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { showPlaceChar, hidePlaceChar } from '../../../../../../../redux/actions/action';
+import { showPlaceChar, hidePlaceChar } from '../../../../../../../redux/actions/display';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,7 +10,7 @@ import PlaceCharBalloon from './placeCharBalloon/placeCharBalloon';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
-  return { displayPlaceChar: state.displayPlaceChar };
+  return { displaySetting: state.displaySetting };
 };
 
 // Redux Map Dispatch To Props
@@ -26,13 +26,13 @@ class PlaceCharButton extends Component {
     super(props);
     this.placeCharRef = React.createRef();
 
-    this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleButtonClick  = this.handleButtonClick.bind(this);
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
   }
 
 
   handleButtonClick (e){
-    if (this.props.displayPlaceChar){
+    if (this.props.displaySetting.displayPlaceChar){
       window.removeEventListener('click', this.handleOutsideClick, false);
       this.props.hidePlaceChar()
     } else {

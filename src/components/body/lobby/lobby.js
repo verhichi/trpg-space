@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MODAL_TYPE_NEW_USER } from '../../../constants/constants';
-import { showModal, resetState } from '../../../redux/actions/action';
+import { showModal } from '../../../redux/actions/modal';
+import { resetState } from '../../../redux/actions/global';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -32,23 +33,21 @@ class Lobby extends Component {
   }
 
   handleNewClick (e){
-
     this.props.showModal(MODAL_TYPE_NEW_USER, {
-      title:  'Enter Display Name',
+      title:        'Enter Display Name',
       displayClose: true,
-      host: true,
-      redirect: this.props.history.push.bind(this)
+      host:         true,
+      redirect:     this.props.history.push.bind(this)
     });
-
   }
 
   handleJoinClick (e){
     this.props.showModal(MODAL_TYPE_NEW_USER, {
-      title:  'Enter Display Name',
+      title:        'Enter Display Name',
       displayClose: true,
-      host:   false,
-      roomId: this.state.roomId,
-      redirect: this.props.history.push.bind(this)
+      host:         false,
+      roomId:       this.state.roomId,
+      redirect:     this.props.history.push.bind(this)
     });
   }
 

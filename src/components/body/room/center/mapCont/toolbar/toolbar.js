@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MODAL_TYPE_UPLOAD_IMG } from '../../../../../../constants/constants';
-import { showModal, showRemoveChar, hideRemoveChar, toggleMapGrid, showPlaceChar, hidePlaceChar, editMapPosition } from '../../../../../../redux/actions/action';
+import { showModal } from '../../../../../../redux/actions/modal';
+import { showRemoveChar, hideRemoveChar, showPlaceChar, hidePlaceChar } from '../../../../../../redux/actions/display';
+import { toggleMapGrid, editMapPosition } from '../../../../../../redux/actions/map';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,14 +15,6 @@ import './toolbar.scss';
 import PlaceCharButton from './placeCharButton/placeCharButton';
 import RemoveCharButton from './removeCharButton/removeCharButton';
 import ScaleMapButton from './scaleMapButton/scaleMapButton';
-
-// Redux Map State To Prop
-const mapStateToProps = (state) => {
-  return {
-    displayPlaceChar:  state.displayPlaceChar,
-    displayRemoveChar: state.displayRemoveChar
-  };
-};
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
@@ -46,9 +40,9 @@ class Toolbar extends Component {
 
   handleImageUploadClick (e){
     this.props.showModal(MODAL_TYPE_UPLOAD_IMG, {
-      title: 'Upload an image',
+      title:        'Upload an image',
       displayClose: true,
-      type: 'map'
+      type:         'map'
     });
   }
 
@@ -86,4 +80,4 @@ class Toolbar extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
+export default connect(null, mapDispatchToProps)(Toolbar);

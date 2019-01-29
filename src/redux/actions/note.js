@@ -2,7 +2,7 @@ import {
   LOCK_NOTE,
   UNLOCK_NOTE,
   EDIT_NOTE
-} from '../../../constants/actionTypes';
+} from '../../constants/actionTypes';
 
 export const lockNote = (userId) => {
   return {
@@ -15,9 +15,9 @@ export const unlockNote = () => {
   return { type: UNLOCK_NOTE };
 };
 
-export const editNote = (notes) => {
+export const editNote = (note) => {
   return {
     type: EDIT_NOTE,
-    notes
+    note
   };
 };
