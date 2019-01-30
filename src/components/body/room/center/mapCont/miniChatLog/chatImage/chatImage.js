@@ -8,8 +8,10 @@ class ChatImage extends Component {
   render() {
     return(
       <div className="mini-chat">
-        <FontAwesomeIcon icon="file-image"/>
-        [{this.props.chatData.name}] -Check chat to view image-
+        <div className="mini-chat-icon">
+          <FontAwesomeIcon icon="file-image"/>
+        </div>
+        <div>[{this.props.chatData.name}] -Check chat to view image-</div>
       </div>
     );
 

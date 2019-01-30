@@ -10,10 +10,10 @@ class ChatRoll extends Component {
   render() {
     return(
       <div className="mini-chat">
-        <FontAwesomeIcon icon="dice"/>
-        {this.props.chatData.private
-          ? <span>[PRIVATE]</span>
-          : null}
+        <div className="mini-chat-icon">
+          <FontAwesomeIcon icon="dice"/>
+        </div>
+        {this.props.chatData.private && <div>[PRIVATE]</div>}
         [{this.props.chatData.name}]
         [{this.props.chatData.diceSetting}] {this.props.chatData.result} -> {this.props.chatData.total}
       </div>

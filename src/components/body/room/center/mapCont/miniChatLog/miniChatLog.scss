@@ -17,23 +17,17 @@
 }
 
 .mini-chat{
+  color: $white-clr;
+  display: flex;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-
-  &:last-child{
-    color: $white-clr;
-  }
-
-  &:nth-last-child(2){
-    color: #DDD;
-  }
-
-  &:nth-last-child(3){
-    color: #BBB;
-  }
 }
 
+.mini-chat-icon{
+  flex-basis: 25px;
+  text-align: center;
+}
 
 @keyframes fadeout{
   0%{
