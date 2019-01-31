@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import uuid from 'uuid';
 import { STATUS_TYPE_PARAM, STATUS_TYPE_VALUE } from '../../../../constants/constants';
 import { connect } from 'react-redux';
+import { statusHelpText, addValBtnLabel, addParamBtnLabel } from './status.i18n';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -140,15 +141,15 @@ class Status extends Component {
 
     return (
         <div className={`char-modal f-grow-1 ${toggleActiveClass} ${toggleScrollClass}`}>
-          <div className="font-size-sm align-center pb-1">Statuses inputted here will be visible without having to open the character detail window.</div>
+          <div className="font-size-sm align-center pb-1">{statusHelpText[this.props.global.lang]}</div>
           <div className="d-flex justify-content-around mb-2">
             <button className="btn-slim btn-hot p-2 align-center cursor-pointer" type="button" onClick={this.handleNewValueStatusButtonClick}>
               <div className="d-none-sm pr-2"><FontAwesomeIcon icon="plus-square"/></div>
-              <div className="btn-text">Add Value</div>
+              <div className="btn-text">{addValBtnLabel[this.props.global.lang]}</div>
             </button>
             <button className="btn-slim btn-hot p-2 align-center cursor-pointer" type="button" onClick={this.handleNewParameterStatusButtonClick}>
               <div className="d-none-sm pr-2"><FontAwesomeIcon icon="plus-square"/></div>
-              <div className="btn-text">Add Parameter</div>
+              <div className="btn-text">{addParamBtnLabel[this.props.global.lang]}</div>
               <div className="d-none-sm pl-2"><FontAwesomeIcon icon="percent"/></div>
             </button>
           </div>

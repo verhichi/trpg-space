@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { CHAR_MODAL_TAB_GENERAL, CHAR_MODAL_TAB_STATUS, CHAR_MODAL_TAB_DETAIL } from '../../../constants/constants';
 import { connect } from 'react-redux';
+import { generalTabLabel, statusTabLabel, detailTabLabel } from './viewChar.i18n';
 
 // Component
 import Detail  from './detail/detail';
@@ -12,6 +13,7 @@ import Status  from './status/status';
 const mapStateToProps = (state) => {
   return {
     charList:     state.charList,
+    global:       state.global,
     modalSetting: state.modalSetting
   };
 };
@@ -39,16 +41,16 @@ class ViewChar extends Component {
 
   render() {
     const toggleGeneralTabClass = this.state.tabMode === CHAR_MODAL_TAB_GENERAL ? 'is-active' : '';
-    const toggleStatusTabClass =  this.state.tabMode === CHAR_MODAL_TAB_STATUS  ? 'is-active' : '';
-    const toggleDetailTabClass =  this.state.tabMode === CHAR_MODAL_TAB_DETAIL  ? 'is-active' : '';
+    const toggleStatusTabClass  = this.state.tabMode === CHAR_MODAL_TAB_STATUS  ? 'is-active' : '';
+    const toggleDetailTabClass  = this.state.tabMode === CHAR_MODAL_TAB_DETAIL  ? 'is-active' : '';
 
     return (
       <div className="d-flex f-dir-col f-grow-1">
 
         <div className="char-tab-cont f-shrink-0 d-flex mb-1">
-          <div className={`char-tab cursor-pointer p-2 ${toggleGeneralTabClass}`} onClick={this.handleGeneralTabClick}>General</div>
-          <div className={`char-tab cursor-pointer p-2 ${toggleStatusTabClass}`} onClick={this.handleStatusTabClick}>Status</div>
-          <div className={`char-tab cursor-pointer p-2 ${toggleDetailTabClass}`} onClick={this.handleDetailTabClick}>Detail</div>
+          <div className={`char-tab cursor-pointer p-2 ${toggleGeneralTabClass}`} onClick={this.handleGeneralTabClick}>{generalTabLabel[this.props.global.lang]}</div>
+          <div className={`char-tab cursor-pointer p-2 ${toggleStatusTabClass}`} onClick={this.handleStatusTabClick}>{statusTabLabel[this.props.global.lang]}</div>
+          <div className={`char-tab cursor-pointer p-2 ${toggleDetailTabClass}`} onClick={this.handleDetailTabClick}>{detailTabLabel[this.props.global.lang]}</div>
         </div>
 
         <General isActive={this.state.tabMode === CHAR_MODAL_TAB_GENERAL} ownerId={this.state.general.ownerId} privacy={this.state.general.privacy} general={this.state.general}/>

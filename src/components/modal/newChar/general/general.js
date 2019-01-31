@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CHAR_TYPE_ALLY, CHAR_TYPE_ENEMY, CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, CHAR_PRIVACY_LEVEL_TWO, CHAR_PRIVACY_LEVEL_THREE } from '../../../../constants/constants';
 import { GithubPicker } from 'react-color';
+import { optionalLabel, charImageLabel, charTypeLabel, charNameLabel, charColorLabel, charPrivacyLabel, charLinkLabel } from './general.i18n';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -147,7 +148,7 @@ class General extends Component {
       <div className={`char-modal f-grow-1 ${toggleActiveClass} ${toggleScrollClass}`}>
 
         <div className="mb-2">
-          <div>Profile Image <span className="font-size-sm text-optional">(optional)</span>:</div>
+          <div>{charImageLabel[this.props.global.lang]} <span className="font-size-sm text-optional">({optionalLabel[this.props.global.lang]})</span>:</div>
           <div className="d-flex p-relative">
             <label className="profile-circle cursor-pointer p-relative" style={imageStyle}>
               <div className="profile-side-btn align-center p-absolute"><FontAwesomeIcon icon="camera"/></div>
@@ -164,18 +165,18 @@ class General extends Component {
         </div>
 
         <div className="mb-2 d-flex">
-          <div className="char-inp-label pr-1">Name:</div>
+          <div className="char-inp-label pr-1">{charNameLabel[this.props.global.lang]}:</div>
           <input className="inp f-grow-1" type="text" value={this.state.charData.name} onChange={this.handleNameChange}/>
         </div>
 
         <div className="mb-2 d-flex">
-          <div className="char-inp-label pr-1">Type:</div>
+          <div className="char-inp-label pr-1">{charTypeLabel[this.props.global.lang]}:</div>
           <label className="char-inp-radio pr-1"><input className="inp-radio" type="radio" value={CHAR_TYPE_ALLY} checked={this.state.charData.type === CHAR_TYPE_ALLY} onChange={this.handleTypeChange}/>Ally</label>
           <label className="char-inp-radio"><input className="inp-radio" type="radio" value={CHAR_TYPE_ENEMY} checked={this.state.charData.type === CHAR_TYPE_ENEMY} onChange={this.handleTypeChange}/>Enemy</label>
         </div>
 
         <div className="mb-2 d-flex">
-          <div className="char-inp-label pr-1">Theme Color:</div>
+          <div className="char-inp-label pr-1">{charColorLabel[this.props.global.lang]}:</div>
           <div className="d-flex p-relative f-grow-1" onClick={this.handleColorClick} ref={ this.colorRef }>
             <div className="inp-clr-circle f-shrink-0" style={{background: this.state.charData.color}}></div>
             <div className="pseudo-inp f-grow-1">{this.state.charData.color}</div>
@@ -186,7 +187,7 @@ class General extends Component {
         </div>
 
         <div className="mb-2 d-flex">
-          <div className="char-inp-label pr-1">Privacy Level:</div>
+          <div className="char-inp-label pr-1">{charPrivacyLabel[this.props.global.lang]}:</div>
           <div className="sel-cont char-sel f-grow-1">
             <select value={this.state.charData.privacy} onChange={this.handlePrivacyChange}>
               <option value={CHAR_PRIVACY_LEVEL_ZERO}>Display all data</option>
@@ -199,8 +200,8 @@ class General extends Component {
 
         <div className="mb-2 d-flex">
           <div className="char-inp-link-label pr-1">
-            <div>Char-Sheet Link:</div>
-            <span className="font-size-sm text-optional">(optional)</span>
+            <div>{charLinkLabel[this.props.global.lang]}:</div>
+            <span className="font-size-sm text-optional">({optionalLabel[this.props.global.lang]})</span>
           </div>
           <input className="inp f-grow-1" type="text" placeholder="http(s)://..." value={this.state.charData.link} onChange={this.handleLinkChange}/>
         </div>
