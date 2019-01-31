@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SIDEBAR_MODE_CHAR, SIDEBAR_MODE_NOTE } from '../../../../../constants/constants';
 import { setSidebarChar, setSidebarNote } from '../../../../../redux/actions/display';
-
+import { charTabLabel, noteTabLabel } from './sidebar.i18n';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -64,11 +64,11 @@ class Sidebar extends Component {
         <div className="d-flex f-shrink-0 font-size-lg">
           <div className={`list-tab f-shrink-0 align-center p-1 cursor-pointer ${toggleCharTabClass}`} onClick={this.handleCharTabClick}>
             <FontAwesomeIcon icon="address-card"/>
-            <span className="d-none-sm"> Character</span>
+            <span className="d-none-sm"> {charTabLabel[this.props.global.lang]}</span>
           </div>
           <div className={`list-tab f-shrink-0 align-center p-1 cursor-pointer ${toggleNotesTabClass}`} onClick={this.handleNoteTabClick}>
             <FontAwesomeIcon icon="sticky-note"/>
-            <span className="d-none-sm"> Notes</span>
+            <span className="d-none-sm"> {noteTabLabel[this.props.global.lang]}</span>
           </div>
         </div>
 
