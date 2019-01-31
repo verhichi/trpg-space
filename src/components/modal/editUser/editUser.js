@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { hideModal } from '../../../redux/actions/modal';
 import { editUser } from '../../../redux/actions/user';
 import socket from '../../../socket/socketClient';
-
+import { editUserHelpText, displayNameInpLabel, submitBtnLabel } from './editUser.i18n';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -70,13 +70,16 @@ class EditUser extends Component {
 
     return (
       <form className="d-flex f-dir-col f-grow-1" onSubmit={this.handleSubmit}>
+        <div className="pb-2">
+          {editUserHelpText[this.props.global.lang]}
+        </div>
         <div className="f-grow-1 font-size-lg">
-          <div>Name:</div>
+          <div>{displayNameInpLabel[this.props.global.lang]}</div>
           <input className="inp w-100" type="text" placeholder="Enter username..." value={this.state.name} onChange={this.handleNameChange} ref={this.nameRef}/>
         </div>
         <button type="submit" className="btn btn-hot cursor-pointer" disabled={isDisabled}>
           <FontAwesomeIcon icon="check"/>
-          <div className="btn-text">Submit</div>
+          <div className="btn-text">{submitBtnLabel[this.props.global.lang]}</div>
         </button>
       </form>
     );

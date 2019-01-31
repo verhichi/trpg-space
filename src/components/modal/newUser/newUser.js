@@ -6,6 +6,7 @@ import { MODAL_TYPE_ALERT, MODAL_TYPE_REQUESTING } from '../../../constants/cons
 import { showModal, hideModal} from '../../../redux/actions/modal';
 import { addUser } from '../../../redux/actions/user';
 import { setUserId, setRoomId } from '../../../redux/actions/global';
+import { newUserHelpText, displayNameInpLabel, submitBtnLabel } from './newUser.i18n';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,7 +16,10 @@ import './newUser.scss';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
-  return { modalSetting: state.modalSetting };
+  return {
+    global:       state.global,
+    modalSetting: state.modalSetting
+  };
 };
 
 // Redux Map Dispatch To Props
@@ -108,15 +112,15 @@ class NewUser extends Component {
     return (
       <form className="d-flex f-dir-col f-grow-1" onSubmit={this.handleSubmit}>
         <div className="pb-2">
-          Enter your display name. This is NOT your character's name.
+          {newUserHelpText[this.props.global.lang]}
         </div>
         <div className="f-grow-1 font-size-lg">
-          <div>Name:</div>
+          <div>{displayNameInpLabel[this.props.global.lang]}</div>
           <input className="inp w-100" type="text" placeholder="Enter username..." value={this.state.name} onChange={this.handleNameChange} ref={this.nameRef}/>
         </div>
         <button type="submit" className="btn btn-hot cursor-pointer" disabled={isDisabled}>
           <FontAwesomeIcon icon="check"/>
-          <div className="btn-text">Submit</div>
+          <div className="btn-text">{submitBtnLabel[this.props.global.lang]}</div>
         </button>
       </form>
     );
