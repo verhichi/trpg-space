@@ -5,6 +5,7 @@ import { addChat } from '../../../../../redux/actions/chatLog';
 import { hideDiceBubble } from '../../../../../redux/actions/display';
 import socket from '../../../../../socket/socketClient';
 import { getDiceRollResult } from './roll';
+import { diceShareResultLabel, diceRollBtnLabel } from './diceBalloon.i18n';
 
 // Style
 import './diceBalloon.scss';
@@ -140,10 +141,10 @@ class DiceBalloon extends Component {
           </div>
         </div>
         <div>
-          <label><input type="checkbox" checked={this.state.private} onChange={this.handlePrivateChange}/> Do not share result</label>
+          <label><input type="checkbox" checked={this.state.private} onChange={this.handlePrivateChange}/> {diceShareResultLabel[this.props.global.lang]}</label>
         </div>
         <button className="btn btn-hot w-100 cursor-pointer" onClick={this.handleButtonClick}>
-          <div className="btn-text font-weight-bold">Roll</div>
+          <div className="btn-text font-weight-bold">{diceRollBtnLabel[this.props.global.lang]}</div>
         </button>
       </div>
     );

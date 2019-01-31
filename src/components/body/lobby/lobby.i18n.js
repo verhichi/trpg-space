@@ -1,4 +1,4 @@
-import { APP_LANG_EN, APP_LANG_JP } from '../constants/constants';
+import { APP_LANG_EN, APP_LANG_JP } from '../../../constants/constants';
 
 export const lobbyInpJoinLabel = {
   [APP_LANG_EN]: 'Enter Room ID to join:',

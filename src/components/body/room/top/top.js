@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MODAL_TYPE_ROOM_SETTING, MODAL_TYPE_CONFIRM } from '../../../../constants/constants';
 import { showModal, hideModal } from '../../../../redux/actions/modal';
+import { leaveLabel, settingLabel } from './top.i18n';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -60,12 +61,12 @@ class Top extends Component {
         <div className="room-toolbar d-flex">
           <div className="toolbar-btn cursor-pointer p-2" onClick={this.handleLeaveClick}>
             <FontAwesomeIcon icon="door-open"/>
-            <span className="d-none-sm"> Leave</span>
+            <span className="d-none-sm"> {leaveLabel[this.props.global.lang]}</span>
           </div>
           <div className="f-grow-1 align-center p-2">({this.props.userList.length})Room ID: {this.props.global.roomId}</div>
           <div className="toolbar-btn cursor-pointer p-2" onClick={this.handleSettingClick}>
             <FontAwesomeIcon icon="cog"/>
-            <span className="d-none-sm"> Settings</span>
+            <span className="d-none-sm"> {settingLabel[this.props.global.lang]}</span>
           </div>
         </div>
       </div>

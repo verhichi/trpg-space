@@ -107,6 +107,9 @@ class NewUser extends Component {
 
     return (
       <form className="d-flex f-dir-col f-grow-1" onSubmit={this.handleSubmit}>
+        <div className="pb-2">
+          Enter your display name. This is NOT your character's name.
+        </div>
         <div className="f-grow-1 font-size-lg">
           <div>Name:</div>
           <input className="inp w-100" type="text" placeholder="Enter username..." value={this.state.name} onChange={this.handleNameChange} ref={this.nameRef}/>

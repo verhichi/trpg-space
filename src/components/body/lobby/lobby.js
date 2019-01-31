@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MODAL_TYPE_NEW_USER } from '../../../constants/constants';
-import { lobbyInpJoinLabel, lobbyInpJoinBtnLabel, lobbyInpCreateLabel, lobbyInpCreateBtnLabel, lobbyNameInpModalTitle } from '../../../i18n/lobby';
+import { lobbyInpJoinLabel, lobbyInpJoinBtnLabel, lobbyInpCreateLabel, lobbyInpCreateBtnLabel, lobbyNameInpModalTitle } from './lobby.i18n';
 import { showModal } from '../../../redux/actions/modal';
 import { resetState } from '../../../redux/actions/global';
 
