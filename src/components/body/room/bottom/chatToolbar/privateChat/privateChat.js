@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { checkSendMsgToAll, uncheckSendMsgToAll, addSendMsgUser, removeSendMsgUser } from '../../../../../../redux/actions/chatSetting';
+import { sendMsgToLabel, everyoneLabel } from './privateChat.i18n';
 
 // Style
 import './privateChat.scss';
@@ -57,11 +58,9 @@ class PrivateChat extends Component {
       <div className="chat-opt-btn">
         <FontAwesomeIcon icon="user-secret"/>
         <div className="chat-opt-private p-2 p-absolute align-left">
-          <div>Send message to:</div>
-          <div><label><input type="checkbox" checked={this.props.chatSetting.sendTo.sendToAll} onChange={this.handleAllCheckChange}/>Everyone</label></div>
-          { this.props.chatSetting.sendTo.sendToAll
-              ? null
-              : userCheckList}
+          <div>{sendMsgToLabel[this.props.global.lang]}</div>
+          <div><label><input type="checkbox" checked={this.props.chatSetting.sendTo.sendToAll} onChange={this.handleAllCheckChange}/>{everyoneLabel[this.props.global.lang]}</label></div>
+          { this.props.chatSetting.sendTo.sendToAll && userCheckList}
         </div>
       </div>
     );

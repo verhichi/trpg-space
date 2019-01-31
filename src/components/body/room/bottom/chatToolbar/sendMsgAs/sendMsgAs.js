@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { checkSendAsUser, uncheckSendAsUser, editSendAs } from '../../../../../../redux/actions/chatSetting';
+import { sendMsgAsLabel, userLabel, charLabel } from './sendMsgAs.i18n';
 
 // Style
 import './sendMsgAs.scss';
@@ -62,10 +63,10 @@ class SendMsgAs extends Component {
           <FontAwesomeIcon icon="comment" transform="shrink-7 up-5 right-6"/>
         </span>
         <div className="chat-opt-sender p-2 p-absolute align-left">
-          <div>Send message as:</div>
-          <div className="chat-opt-subtitle pt-2 pb-1 font-size-md text-dec-underline">User</div>
+          <div>{sendMsgAsLabel[this.props.global.lang]}</div>
+          <div className="chat-opt-subtitle pt-2 pb-1 font-size-md text-dec-underline">{userLabel[this.props.global.lang]}</div>
           <div><label><input type="radio" name="sender" checked={this.props.chatSetting.sendAs.sendAsUser} onChange={this.handleSendAsUserRadio}/>{userName}</label></div>
-          { charRadioList.length !== 0 && (<div className="chat-opt-subtitle pt-2 pb-1 font-size-md text-dec-underline">Character:</div>) }
+          { charRadioList.length !== 0 && (<div className="chat-opt-subtitle pt-2 pb-1 font-size-md text-dec-underline">{charLabel[this.props.global.lang]}</div>) }
           { charRadioList}
         </div>
       </div>
