@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { roomSettingLabel, userRoomLabel } from './roomSetting.i18n';
 
 // Style
 import './roomSetting.scss';
@@ -27,12 +28,12 @@ class RoomSetting extends Component {
     return (
       <div className="d-flex f-dir-col f-grow-1">
         <div className="mb-3">
-          <div className="setting-title font-weight-bold mb-1">Room Setting:</div>
+          <div className="setting-title font-weight-bold mb-1">{roomSettingLabel[this.props.global.lang]}</div>
           <div className="setting-detail">Room ID: {this.props.global.roomId}</div>
           <div className="setting-detail">Room Host: {hostName}</div>
         </div>
         <div>
-          <div className="setting-title font-weight-bold mb-2">Users in Room:</div>
+          <div className="setting-title font-weight-bold mb-2">{userRoomLabel[this.props.global.lang]}</div>
           { userList }
         </div>
       </div>
