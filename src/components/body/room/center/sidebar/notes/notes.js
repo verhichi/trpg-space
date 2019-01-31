@@ -4,7 +4,7 @@ import { MODAL_TYPE_NOTES } from '../../../../../../constants/constants';
 import { showModal } from '../../../../../../redux/actions/modal';
 import { lockNote } from '../../../../../../redux/actions/note';
 import socket from '../../../../../../socket/socketClient';
-
+import { noteEditBtnLabel, sharedNotesLabel } from './notes.i18n';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -56,11 +56,11 @@ class Notes extends Component {
             <span className={isLocked ? 'd-none' : ''}><FontAwesomeIcon icon="pen-square"/></span>
             <span className={!isLocked ? 'd-none' : ''}><FontAwesomeIcon icon="lock"/></span>
           </div>
-          <div className="btn-text">Edit notes</div>
+          <div className="btn-text">{noteEditBtnLabel[this.props.global.lang]}</div>
         </button>
 
         <div className="mb-2 f-grow-1">
-          <div className="notes-label align-center font-weight-bold text-dec-underline pb-1">Shared Notes:</div>
+          <div className="notes-label align-center font-weight-bold text-dec-underline pb-1">{sharedNotesLabel[this.props.global.lang]}</div>
           <div className="notes-cont">
             { this.props.noteSetting.note }
           </div>
