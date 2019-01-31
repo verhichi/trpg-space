@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { hideModal } from '../../../redux/actions/modal';
 import { unlockNote, editNote } from '../../../redux/actions/note';
 import socket from '../../../socket/socketClient';
+import { sharedNotesInpLabel, closeBtnLabel, submitBtnLabel } from './notes.i18n';
 
 // Style
 import './notes.scss';
@@ -58,11 +59,11 @@ class Notes extends Component {
   render() {
     return (
       <div className="d-flex f-dir-col f-grow-1">
-        <div>Shared notes:</div>
+        <div>{sharedNotesInpLabel[this.props.global.lang]}:</div>
         <textarea className="notes-textarea f-grow-1 p-1" value={this.state.note} onChange={this.handleChange}></textarea>
         <div className="d-flex justify-content-around pt-2 f-shrink-0">
-          <button className="notes-btn p-2 btn-danger align-center" onClick={this.handleCloseClick} >Close</button>
-          <button className="notes-btn p-2 btn-hot align-center" onClick={this.handleSubmitClick}>Submit</button>
+          <button className="notes-btn p-2 btn-danger align-center" onClick={this.handleCloseClick} >{closeBtnLabel[this.props.global.lang]}</button>
+          <button className="notes-btn p-2 btn-hot align-center" onClick={this.handleSubmitClick}>{submitBtnLabel[this.props.global.lang]}</button>
         </div>
       </div>
     );

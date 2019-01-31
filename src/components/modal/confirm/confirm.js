@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { hideModal } from '../../../redux/actions/modal';
+import { noBtnLabel, yesBtnLabel } from './confirm.i18n';
 
 // Style
 import './confirm.scss';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
-  return { modalSetting: state.modalSetting };
+  return {
+    global:       state.global,
+    modalSetting: state.modalSetting
+  };
 };
 
 // Redux Map Dispatch To Props
@@ -44,10 +48,10 @@ class Confirm extends Component {
         <div className="align-center font-size-xxl mb-3 pb-3">{this.props.modalSetting.modalProp.confirmText}</div>
         <div className="d-flex justify-content-around">
           <button className="confirm-btn btn btn-danger cursor-pointer" onClick={this.handleDeclineClick}>
-            <div className="btn-text">No</div>
+            <div className="btn-text">{noBtnLabel[this.props.global.lang]}</div>
           </button>
           <button className="confirm-btn btn btn-hot cursor-pointer" onClick={this.handleAcceptClick}>
-            <div className="btn-text">Yes</div>
+            <div className="btn-text">{yesBtnLabel[this.props.global.lang]}</div>
           </button>
         </div>
       </div>

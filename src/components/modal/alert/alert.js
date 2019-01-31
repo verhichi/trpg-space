@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { hideModal } from '../../../redux/actions/modal';
+import { okBtnLabel } from './alert.i18n';
 
 // Style
 import './alert.scss';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
-  return { modalSetting: state.modalSetting };
+  return {
+    global:       state.global,
+    modalSetting: state.modalSetting
+  };
 };
 
 // Redux Map Dispatch To Props
@@ -32,7 +36,7 @@ class Alert extends Component {
         <div className="align-center font-size-xxl mb-3 pb-3">{this.props.modalSetting.modalProp.alertText}</div>
         <div className="d-flex justify-content-around">
           <button className="btn btn-danger w-100 cursor-pointer" onClick={this.handleButtonClick}>
-            <div className="btn-text">OK</div>
+            <div className="btn-text">{okBtnLabel[this.props.global.lang]}</div>
           </button>
         </div>
       </div>
