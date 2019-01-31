@@ -60,7 +60,7 @@ class PrivateChat extends Component {
         <div className="chat-opt-private p-2 p-absolute align-left">
           <div>{sendMsgToLabel[this.props.global.lang]}</div>
           <div><label><input type="checkbox" checked={this.props.chatSetting.sendTo.sendToAll} onChange={this.handleAllCheckChange}/>{everyoneLabel[this.props.global.lang]}</label></div>
-          { this.props.chatSetting.sendTo.sendToAll && userCheckList}
+          { !this.props.chatSetting.sendTo.sendToAll && userCheckList}
         </div>
       </div>
     );

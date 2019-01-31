@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { CHAR_TYPE_ALLY, CHAR_TYPE_ENEMY, MODAL_TYPE_NEW_CHAR } from '../../../../../../constants/constants';
 import { showModal } from '../../../../../../redux/actions/modal';
+import { createCharBtnLabel, charListLabel, enemyListLabel } from './charList.i18n';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,7 +15,10 @@ import Char from './char/char';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
-  return { charList: state.charList };
+  return {
+    charList: state.charList,
+    global:   state.global
+  };
 };
 
 // Redux Map Dispatch To Props
@@ -52,11 +56,11 @@ class CharList extends Component {
           <div>
             <FontAwesomeIcon icon="user-plus"/>
           </div>
-          <div className="btn-text">New Character</div>
+          <div className="btn-text">{createCharBtnLabel[this.props.global.lang]}</div>
         </button>
 
         <div className="mb-2">
-          <div className="char-list-label align-center font-weight-bold text-dec-underline pb-1">Character List</div>
+          <div className="char-list-label align-center font-weight-bold text-dec-underline pb-1">{charListLabel[this.props.global.lang]}</div>
           <div className="d-flex f-grow-1 f-dir-col">
             {charList.length === 0
               ? (<div className="empty-cont p-3 font-size-lg align-center font-weight-bold cursor-pointer" onClick={this.handleNewClick}>Create New Character</div>)
@@ -65,7 +69,7 @@ class CharList extends Component {
         </div>
 
         <div>
-           <div className="char-list-label align-center font-weight-bold text-dec-underline pb-1">Enemy List</div>
+           <div className="char-list-label align-center font-weight-bold text-dec-underline pb-1">{enemyListLabel[this.props.global.lang]}</div>
            <div className="d-flex f-grow-1 f-dir-col">
              {enemyList.length === 0
                ? (<div className="empty-cont p-3 font-size-lg align-center font-weight-bold cursor-pointer" onClick={this.handleNewClick}>Create New Enemy</div>)

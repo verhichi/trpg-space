@@ -4,6 +4,7 @@ import { hideRemoveChar } from '../../../../../../../../redux/actions/display';
 import { setMapMode } from '../../../../../../../../redux/actions/map';
 import { removeMapChar } from '../../../../../../../../redux/actions/char';
 import socket from '../../../../../../../../socket/socketClient';
+import { removeSelectLabel, removeCharBtnLabel } from './removeCharBalloon.i18n';
 
 // Style
 import './removeCharBalloon.scss';
@@ -58,7 +59,7 @@ class RemoveCharBalloon extends Component {
 
     return (
       <div className={`place-char-balloon cursor-default ${toggleRemoveChar}`}>
-        <div>Select character:</div>
+        <div>{removeSelectLabel[this.props.global.lang]}</div>
         <div className="balloon-sel sel-cont w-100">
           <select value={this.state.charIdToRemove} onChange={this.handleRemoveCharChange}>
             <option value="-">---</option>
@@ -66,7 +67,7 @@ class RemoveCharBalloon extends Component {
           </select>
         </div>
         <button className="btn btn-hot w-100 cursor-pointer" disabled={isDisabled} onClick={this.handleRemoveCharButtonClick}>
-          <div className="btn-text font-weight-bold">Remove Character from Map</div>
+          <div className="btn-text font-weight-bold">{removeCharBtnLabel[this.props.global.lang]}</div>
         </button>
       </div>
     );

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { MAP_MODE_PLACE_CHAR } from '../../../../../../../../constants/constants';
 import { hidePlaceChar } from '../../../../../../../../redux/actions/display';
 import { setMapMode, setCharToPlace } from '../../../../../../../../redux/actions/map';
+import { charSelectLabel, placeCharBtnLabel } from './placeCharBalloon.i18n';
 
 // Style
 import './placeCharBalloon.scss';
@@ -56,7 +57,7 @@ class PlaceCharBalloon extends Component {
 
     return (
       <div className={`place-char-balloon cursor-default ${toggleClass}`}>
-        <div>Select character:</div>
+        <div>{charSelectLabel[this.props.global.lang]}</div>
         <div className="balloon-sel sel-cont w-100">
           <select value={this.state.charIdToPlace} onChange={this.handlePlaceCharChange}>
             <option value="-">---</option>
@@ -64,7 +65,7 @@ class PlaceCharBalloon extends Component {
           </select>
         </div>
         <button className="btn btn-hot w-100 cursor-pointer" disabled={isDisabled} onClick={this.handlePlaceCharButtonClick}>
-          <div className="btn-text font-weight-bold">Place Character on Map</div>
+          <div className="btn-text font-weight-bold">{placeCharBtnLabel[this.props.global.lang]}</div>
         </button>
       </div>
     );
