@@ -4,6 +4,7 @@ import { CHAR_PRIVACY_LEVEL_THREE, CHAR_MODAL_TAB_GENERAL, CHAR_MODAL_TAB_STATUS
 import { hideModal } from '../../../redux/actions/modal';
 import { editChar } from '../../../redux/actions/char';
 import socket from '../../../socket/socketClient';
+import { generalTabLabel, statusTabLabel, detailTabLabel, submitBtnLabel } from './editChar.i18n';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -168,9 +169,9 @@ class EditChar extends Component {
       <div className="d-flex f-dir-col f-grow-1">
 
         <div className="char-tab-cont f-shrink-0 d-flex mb-1">
-          <div className={`char-tab cursor-pointer p-2 ${toggleGeneralTabClass}`} onClick={this.handleGeneralTabClick}>General <span className={`text-danger ${hasErrorGeneral ? '' : 'v-hidden'}`}><FontAwesomeIcon icon="exclamation-circle"/></span></div>
-          <div className={`char-tab cursor-pointer p-2 ${toggleStatusTabClass}`} onClick={this.handleStatusTabClick}>Status <span className={`text-danger ${hasErrorStatus ? '' : 'v-hidden'}`}><FontAwesomeIcon icon="exclamation-circle"/></span></div>
-          <div className={`char-tab cursor-pointer p-2 ${toggleDetailTabClass}`} onClick={this.handleDetailTabClick}>Detail <span className={`text-danger ${hasErrorDetail ? '' : 'v-hidden'}`}><FontAwesomeIcon icon="exclamation-circle"/></span></div>
+          <div className={`char-tab cursor-pointer p-2 ${toggleGeneralTabClass}`} onClick={this.handleGeneralTabClick}> {generalTabLabel[this.props.global.lang]}<span className={`text-danger ${hasErrorGeneral ? '' : 'v-hidden'}`}><FontAwesomeIcon icon="exclamation-circle"/></span></div>
+          <div className={`char-tab cursor-pointer p-2 ${toggleStatusTabClass}`} onClick={this.handleStatusTabClick}> {statusTabLabel[this.props.global.lang]}<span className={`text-danger ${hasErrorStatus ? '' : 'v-hidden'}`}><FontAwesomeIcon icon="exclamation-circle"/></span></div>
+          <div className={`char-tab cursor-pointer p-2 ${toggleDetailTabClass}`} onClick={this.handleDetailTabClick}> {detailTabLabel[this.props.global.lang]}<span className={`text-danger ${hasErrorDetail ? '' : 'v-hidden'}`}><FontAwesomeIcon icon="exclamation-circle"/></span></div>
         </div>
 
         <General isActive={this.state.tabMode === CHAR_MODAL_TAB_GENERAL} returnGeneralValue={this.returnGeneralValue} charId={this.props.modalSetting.modalProp.charId}/>
@@ -179,7 +180,7 @@ class EditChar extends Component {
 
         <button type="button" className="btn btn-hot w-100 cursor-pointer f-shrink-0 f-align-self-end" disabled={isDisabled} onClick={this.handleSubmitClick}>
           <FontAwesomeIcon icon="check"/>
-          <div className="btn-text">Submit</div>
+          <div className="btn-text">{submitBtnLabel[this.props.global.lang]}</div>
         </button>
 
       </div>
