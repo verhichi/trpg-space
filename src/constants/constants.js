@@ -38,7 +38,9 @@ export const MODAL_TYPE_ALERT        = 'ALERT';
 export const MODAL_TYPE_CONFIRM      = 'CONFIRM';
 export const MODAL_TYPE_EDIT_CHAR    = 'EDIT_CHAR';
 export const MODAL_TYPE_EDIT_USER    = 'EDIT_USER';
+export const MODAL_TYPE_HELP         = 'HELP';
 export const MODAL_TYPE_IMAGE        = 'IMAGE';
+export const MODAL_TYPE_LANG         = 'LANG';
 export const MODAL_TYPE_NEW_CHAR     = 'NEW_CHAR';
 export const MODAL_TYPE_NEW_USER     = 'NEW_USER';
 export const MODAL_TYPE_NOTES        = 'NOTES';
@@ -50,3 +52,7 @@ export const MODAL_TYPE_VIEW_CHAR    = 'VIEW_CHAR';
 // Status Type
 export const STATUS_TYPE_VALUE = 'VALUE';
 export const STATUS_TYPE_PARAM = 'PARAM';
+
+// Language
+export const APP_LANG_EN = 'EN';
+export const APP_LANG_JP = 'JP';

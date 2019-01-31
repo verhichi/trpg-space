@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MODAL_TYPE_NEW_USER } from '../../../constants/constants';
+import { lobbyInpJoinLabel, lobbyInpJoinBtnLabel, lobbyInpCreateLabel, lobbyInpCreateBtnLabel, lobbyNameInpModalTitle } from '../../../i18n/lobby';
 import { showModal } from '../../../redux/actions/modal';
 import { resetState } from '../../../redux/actions/global';
 
@@ -9,6 +10,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Style
 import './lobby.scss';
+
+const mapStateToProps = (state) => {
+  return { global: state.global };
+};
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
@@ -34,7 +39,7 @@ class Lobby extends Component {
 
   handleNewClick (e){
     this.props.showModal(MODAL_TYPE_NEW_USER, {
-      title:        'Enter Display Name',
+      title:        lobbyNameInpModalTitle[this.props.global.lang],
       displayClose: true,
       host:         true,
       redirect:     this.props.history.push.bind(this)
@@ -43,7 +48,7 @@ class Lobby extends Component {
 
   handleJoinClick (e){
     this.props.showModal(MODAL_TYPE_NEW_USER, {
-      title:        'Enter Display Name',
+      title:        lobbyNameInpModalTitle[this.props.global.lang],
       displayClose: true,
       host:         false,
       roomId:       this.state.roomId,
@@ -63,21 +68,21 @@ class Lobby extends Component {
 
         <div>
           <div className="lobby-inp-cont w-100">
-            <div className="lobby-inp-label">Enter Room ID to join:</div>
+            <div className="lobby-inp-label">{lobbyInpJoinLabel[this.props.global.lang]}</div>
             <div><input className="lobby-inp-field w-100" type="tel" onChange={this.handleRoomIdChange}/></div>
             <button className="btn btn-hot w-100 cursor-pointer" disabled={isDisabled} onClick={this.handleJoinClick}>
               <FontAwesomeIcon icon="sign-in-alt"/>
-              <div className="btn-text">Join Existing Room</div>
+              <div className="btn-text">{lobbyInpJoinBtnLabel[this.props.global.lang]}</div>
             </button>
           </div>
 
           <div className="align-center">or</div>
 
           <div className="lobby-inp-cont w-100">
-            <div className="lobby-inp-label">Click here to start your own Room:</div>
+            <div className="lobby-inp-label">{lobbyInpCreateLabel[this.props.global.lang]}</div>
             <button className="btn btn-hot w-100 cursor-pointer" onClick={this.handleNewClick}>
               <FontAwesomeIcon icon="tools"/>
-              <div className="btn-text">Start New Room</div>
+              <div className="btn-text">{lobbyInpCreateBtnLabel[this.props.global.lang]}</div>
             </button>
             </div>
         </div>
@@ -87,4 +92,4 @@ class Lobby extends Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Lobby);
+export default connect(mapStateToProps, mapDispatchToProps)(Lobby);
