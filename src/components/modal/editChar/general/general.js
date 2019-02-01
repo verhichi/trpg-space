@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CHAR_TYPE_ALLY, CHAR_TYPE_ENEMY, CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, CHAR_PRIVACY_LEVEL_TWO, CHAR_PRIVACY_LEVEL_THREE } from '../../../../constants/constants';
 import { GithubPicker } from 'react-color';
-import { optionalLabel, charImageLabel, charTypeLabel, charNameLabel, charColorLabel, charPrivacyLabel, charLinkLabel, privacyLevelZeroLabel, privacyLevelOneLabel, privacyLevelTwoLabel, privacyLevelThreeLabel } from './general.i18n';
+import { optionalLabel, charImageLabel, charTypeLabel, charTypeAllyLabel, charTypeEnemyLabel, charNameLabel, charColorLabel, charPrivacyLabel, charLinkLabel, privacyLevelZeroLabel, privacyLevelOneLabel, privacyLevelTwoLabel, privacyLevelThreeLabel } from './general.i18n';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -166,8 +166,8 @@ class General extends Component {
 
       <div className="mb-2 d-flex">
         <div className="char-inp-label pr-1">{charTypeLabel[this.props.global.lang]}:</div>
-        <label className="char-inp-radio pr-1"><input className="inp-radio" type="radio" value={CHAR_TYPE_ALLY} checked={this.state.charData.type === CHAR_TYPE_ALLY} onChange={this.handleTypeChange}/>Ally</label>
-        <label className="char-inp-radio"><input className="inp-radio" type="radio" value={CHAR_TYPE_ENEMY} checked={this.state.charData.type === CHAR_TYPE_ENEMY} onChange={this.handleTypeChange}/>Enemy</label>
+        <label className="char-inp-radio pr-1"><input className="inp-radio" type="radio" value={CHAR_TYPE_ALLY} checked={this.state.charData.type === CHAR_TYPE_ALLY} onChange={this.handleTypeChange}/>{charTypeAllyLabel[this.props.global.lang]}</label>
+        <label className="char-inp-radio"><input className="inp-radio" type="radio" value={CHAR_TYPE_ENEMY} checked={this.state.charData.type === CHAR_TYPE_ENEMY} onChange={this.handleTypeChange}/>{charTypeEnemyLabel[this.props.global.lang]}</label>
       </div>
 
       <div className="mb-2 d-flex">

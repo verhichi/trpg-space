@@ -54,3 +54,13 @@ export const privacyLevelThreeLabel = {
   [APP_LANG_EN]: 'Do not share character',
   [APP_LANG_JP]: 'キャラを共有しない'
 };
+
+export const charTypeAllyLabel = {
+  [APP_LANG_EN]: 'Ally',
+  [APP_LANG_JP]: '仲間'
+};
+
+export const charTypeEnemyLabel = {
+  [APP_LANG_EN]: 'Enemy',
+  [APP_LANG_JP]: 'エネミー'
+};

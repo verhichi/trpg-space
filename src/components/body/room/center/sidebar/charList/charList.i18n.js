@@ -6,8 +6,8 @@ export const createCharBtnLabel = {
 };
 
 export const charListLabel = {
-  [APP_LANG_EN]: 'Character List',
-  [APP_LANG_JP]: 'キャラ 一覧'
+  [APP_LANG_EN]: 'Ally List',
+  [APP_LANG_JP]: '仲間 一覧'
 };
 
 export const enemyListLabel = {

@@ -49,3 +49,13 @@ export const privacyLevelTwoLabel = {
   [APP_LANG_EN]: 'Hide all data',
   [APP_LANG_JP]: '全データを隠蔽'
 };
+
+export const charTypeAllyLabel = {
+  [APP_LANG_EN]: 'Ally',
+  [APP_LANG_JP]: '仲間'
+};
+
+export const charTypeEnemyLabel = {
+  [APP_LANG_EN]: 'Enemy',
+  [APP_LANG_JP]: 'エネミー'
+};

@@ -63,7 +63,7 @@ class CharList extends Component {
           <div className="char-list-label align-center font-weight-bold text-dec-underline pb-1">{charListLabel[this.props.global.lang]}</div>
           <div className="d-flex f-grow-1 f-dir-col">
             {charList.length === 0
-              ? (<div className="empty-cont p-3 font-size-lg align-center font-weight-bold cursor-pointer" onClick={this.handleNewClick}>Create New Character</div>)
+              ? (<div className="empty-cont p-3 font-size-lg align-center font-weight-bold cursor-pointer" onClick={this.handleNewClick}>Create New Ally</div>)
               : charList}
           </div>
         </div>

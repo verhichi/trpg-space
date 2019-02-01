@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, CHAR_PRIVACY_LEVEL_TWO } from '../../../../constants/constants';
-import { charImageLabel, charTypeLabel, charNameLabel, charColorLabel, charPrivacyLabel, charLinkLabel, privacyLevelZeroLabel, privacyLevelOneLabel, privacyLevelTwoLabel } from './general.i18n';
+import { CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, CHAR_PRIVACY_LEVEL_TWO, CHAR_TYPE_ALLY, CHAR_TYPE_ENEMY } from '../../../../constants/constants';
+import { charImageLabel, charTypeLabel, charTypeAllyLabel, charTypeEnemyLabel, charNameLabel, charColorLabel, charPrivacyLabel, charLinkLabel, privacyLevelZeroLabel, privacyLevelOneLabel, privacyLevelTwoLabel } from './general.i18n';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -19,6 +19,11 @@ class General extends Component {
       [CHAR_PRIVACY_LEVEL_ZERO]: privacyLevelZeroLabel[this.props.global.lang],
       [CHAR_PRIVACY_LEVEL_ONE]:  privacyLevelOneLabel[this.props.global.lang],
       [CHAR_PRIVACY_LEVEL_TWO]:  privacyLevelTwoLabel[this.props.global.lang],
+    };
+
+    const typeText = {
+      [CHAR_TYPE_ALLY]:  charTypeAllyLabel[this.props.global.lang],
+      [CHAR_TYPE_ENEMY]: charTypeEnemyLabel[this.props.global.lang]
     };
 
     const imageStyle = this.props.general.image.length === 0
@@ -40,7 +45,7 @@ class General extends Component {
 
         <div className="mb-2 font-size-lg">
           <div>{charTypeLabel[this.props.global.lang]}:</div>
-          <div className="pl-2">{this.props.general.type}</div>
+          <div className="pl-2">{typeText[this.props.general.type]}</div>
         </div>
 
         <div className="mb-2 font-size-lg">
