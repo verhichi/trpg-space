@@ -44,27 +44,23 @@ class CharDot extends Component {
   handleMouseDown (e){
     e.stopPropagation();
     e.preventDefault();
-    if (this.props.global.id === this.props.charData.ownerId){
       this.setState({
         isCharMoveMode: true,
         offsetX: Math.floor(e.nativeEvent.offsetX * this.props.mapSetting.image.scale),
         offsetY: Math.floor(e.nativeEvent.offsetY * this.props.mapSetting.image.scale)
       });
       document.querySelector('.map-img-overlay').addEventListener('mousemove', this.handleMouseMove);
-    }
   }
 
   handleTouchStart (e){
     e.stopPropagation();
 
-    if (this.props.global.id === this.props.charData.ownerId){
-      this.setState({
-        isCharMoveMode: true,
-        offsetX: Math.floor(e.target.offsetWidth / 2),
-        offsetY: Math.floor(e.target.offsetHeight / 2)
-      });
-      document.querySelector('.map-img-overlay').addEventListener('touchmove', this.handleTouchMove);
-    }
+    this.setState({
+      isCharMoveMode: true,
+      offsetX: Math.floor(e.target.offsetWidth / 2),
+      offsetY: Math.floor(e.target.offsetHeight / 2)
+    });
+    document.querySelector('.map-img-overlay').addEventListener('touchmove', this.handleTouchMove);
   }
 
   handleMouseMove (e){
@@ -125,8 +121,6 @@ class CharDot extends Component {
 
 
   render() {
-    const isOwnCharacter  = this.props.global.id === this.props.charData.ownerId;
-    const toggleGrabClass = isOwnCharacter ? 'cursor-grabbable' : '';
     const showName        = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ONE || this.props.charData.ownerId === this.props.global.id;
     const showStat        = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ZERO || this.props.charData.ownerId === this.props.global.id;
     const charName        = showName ? this.props.charData.general.name : 'UNKNOWN';
@@ -139,7 +133,7 @@ class CharDot extends Component {
     const statList = this.props.charData.status.map(status => charDataType[status.type](status));
 
     return (
-      <div className={`map-char-profile ${toggleGrabClass}`} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} onTouchStart={this.handleTouchStart} onTouchEnd={this.handleTouchEnd} style={{borderColor: this.props.charData.general.color, backgroundImage: `url(${this.props.charData.general.image})`, left: this.props.charData.map.x, top: this.props.charData.map.y}}>
+      <div className="map-char-profile cursor-grabbable" onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} onTouchStart={this.handleTouchStart} onTouchEnd={this.handleTouchEnd} style={{borderColor: this.props.charData.general.color, backgroundImage: `url(${this.props.charData.general.image})`, left: this.props.charData.map.x, top: this.props.charData.map.y}}>
         <div className="map-char-balloon p-absolute p-1 align-left cursor-default">
           <div className="font-size-md font-weight-bold pb-1 one-line-ellipsis">{charName}</div>
           { statList }

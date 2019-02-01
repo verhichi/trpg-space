@@ -52,10 +52,9 @@ class RemoveCharBalloon extends Component {
     const isDisabled = this.state.charIdToRemove.length === 0 || !this.props.charList.some(char => char.charId === this.state.charIdToRemove);
     const toggleRemoveChar = this.props.displaySetting.displayRemoveChar ? 'is-active' : '';
 
-    const charOpt = this.props.charList.filter(char => char.map.onMap && this.props.global.id === char.ownerId).map(char => {
+    const charOpt = this.props.charList.filter(char => char.map.onMap).map(char => {
       return (<option key={char.charId} value={char.charId}>{char.general.name}</option>);
     });
-
 
     return (
       <div className={`place-char-balloon cursor-default ${toggleRemoveChar}`}>
