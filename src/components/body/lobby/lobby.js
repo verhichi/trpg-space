@@ -69,7 +69,7 @@ class Lobby extends Component {
         <div>
           <div className="lobby-inp-cont w-100">
             <div className="lobby-inp-label">{lobbyInpJoinLabel[this.props.global.lang]}</div>
-            <div><input className="lobby-inp-field w-100" type="tel" onChange={this.handleRoomIdChange}/></div>
+            <div><input className="lobby-inp-field w-100" type="text" onChange={this.handleRoomIdChange}/></div>
             <button className="btn btn-hot w-100 cursor-pointer" disabled={isDisabled} onClick={this.handleJoinClick}>
               <FontAwesomeIcon icon="sign-in-alt"/>
               <div className="btn-text">{lobbyInpJoinBtnLabel[this.props.global.lang]}</div>

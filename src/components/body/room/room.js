@@ -61,26 +61,29 @@ class Room extends Component {
     super(props);
     socket.connect();
 
-    // this.onUnload = this.onUnload.bind(this);
+    this.onBeforeUnload = this.onBeforeUnload.bind(this);
+    this.onUnload = this.onUnload.bind(this);
   }
 
-  // onUnload (){
-  //   socket.emit('leave', this.props.global.roomId, this.props.global.id);
-  //
-  //   // If the user that left was host, get new host
-  //   if (this.props.userList.find(user => user.id === this.props.global.id).host){
-  //     for (let idx = 0; idx < this.props.userList.length; idx++){
-  //       if (this.props.userList[idx].id === this.props.global.id) continue; // can't set user that's leaving as host
-  //
-  //       socket.emit('newHost', this.props.global.roomId, this.props.userList[idx].id);
-  //       break;
-  //     }
-  //   }
-  //   socket.disconnect();
-  // }
+  onBeforeUnload (e){
+    e.preventDefault();
+    e.returnValue = ''; // for Chrome
+  }
+
+  onUnload (e){
+    socket.emit('leave', this.props.global.roomId, this.props.global.id);
+
+    // If the user that left was host, get new host
+    if (this.props.userList.find(user => user.id === this.props.global.id).host && this.props.userList.length >= 2){
+      socket.emit('newHost', this.props.global.roomId, this.props.userList[1].id);
+    }
+
+    socket.disconnect();
+  }
 
   componentDidMount (){
-    // window.addEventListener('beforeunload', this.onUnload);
+    window.addEventListener('beforeunload', this.onBeforeUnload);
+    window.addEventListener('unload', this.onUnload);
 
     socket.on('user', (content) => {
       if (this.props.userList.some((user) => user.id === content.id)){
@@ -206,20 +209,16 @@ class Room extends Component {
   }
 
   componentWillUnmount (){
-    // window.removeEventListener('beforeunload', this.onUnload);
-    //
-    // this.onUnload();
+    window.removeEventListener('beforeunload', this.onBeforeUnload);
+    window.removeEventListener('unload', this.onUnload);
+
     socket.emit('leave', this.props.global.roomId, this.props.global.id);
 
     // If the user that left was host, get new host
-    if (this.props.userList.find(user => user.id === this.props.global.id).host){
-      for (let idx = 0; idx < this.props.userList.length; idx++){
-        if (this.props.userList[idx].id === this.props.global.id) continue; // can't set user that's leaving as host
-
-        socket.emit('newHost', this.props.global.roomId, this.props.userList[idx].id);
-        break;
-      }
+    if (this.props.userList.find(user => user.id === this.props.global.id).host && this.props.userList.length >= 2){
+      socket.emit('newHost', this.props.global.roomId, this.props.userList[1].id);
     }
+
     socket.disconnect();
   }
 
