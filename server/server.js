@@ -3,6 +3,7 @@ const app     = express();                    // instantiating express
 const http    = require('http');              // import http package
 const server  = http.Server(app);             // Create server
 const io      = require('socket.io')(server); // set socket.io with server
+const uuid    = require('uuid');              // Used to generate unique string for room id
 
 const portNo  = process.env.PORT || 3000; // set port number
 
@@ -37,7 +38,7 @@ app.get('/', (req, res) => {
 app.get('/newRoomId', (req, res) => {
   let roomId = '';
   do {
-    roomId = Math.random().toString().slice(2,10);
+    roomId = uuid.v4().slice(0,8).toUpperCase();
   } while(!!io.sockets.adapter.rooms[roomId]);
   res.json({ roomId });
 });
