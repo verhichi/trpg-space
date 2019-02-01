@@ -6,7 +6,7 @@ import { MODAL_TYPE_ALERT, MODAL_TYPE_REQUESTING } from '../../../constants/cons
 import { showModal, hideModal} from '../../../redux/actions/modal';
 import { addUser } from '../../../redux/actions/user';
 import { setUserId, setRoomId } from '../../../redux/actions/global';
-import { newUserHelpText, displayNameInpLabel, submitBtnLabel } from './newUser.i18n';
+import { newUserHelpText, displayNameInpLabel, submitBtnLabel, roomNotExistText } from './newUser.i18n';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -98,7 +98,7 @@ class NewUser extends Component {
             this.props.showModal(MODAL_TYPE_ALERT, {
               title:        '',
               displayClose: false,
-              alertText:    `Room ID "${this.props.modalSetting.modalProp.roomId}" does not exist.`
+              alertText:    roomNotExistText[this.props.global.lang]
             });
           }
         });

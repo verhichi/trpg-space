@@ -14,3 +14,8 @@ export const submitBtnLabel = {
   [APP_LANG_EN]: 'Submit',
   [APP_LANG_JP]: '決定'
 };
+
+export const roomNotExistText = {
+  [APP_LANG_EN]: 'Could not find room with entered ID.',
+  [APP_LANG_JP]: '入力されたIDの部屋は見つかりませんでした。'
+};

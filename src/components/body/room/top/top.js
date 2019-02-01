@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MODAL_TYPE_ROOM_SETTING, MODAL_TYPE_CONFIRM } from '../../../../constants/constants';
 import { showModal, hideModal } from '../../../../redux/actions/modal';
-import { leaveLabel, settingLabel } from './top.i18n';
+import { leaveLabel, settingLabel, leaveConfirmText } from './top.i18n';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -39,7 +39,7 @@ class Top extends Component {
     this.props.showModal(MODAL_TYPE_CONFIRM, {
       title:        'Leave Room',
       displayClose: false,
-      confirmText:  'Are you sure you want to leave this room?',
+      confirmText:  leaveConfirmText[this.props.global.lang],
       accept:       [
         this.props.redirect,
         this.props.hideModal
