@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CHAR_TYPE_ALLY, CHAR_TYPE_ENEMY, CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, CHAR_PRIVACY_LEVEL_TWO, CHAR_PRIVACY_LEVEL_THREE } from '../../../../constants/constants';
 import { GithubPicker } from 'react-color';
-import { optionalLabel, charImageLabel, charTypeLabel, charNameLabel, charColorLabel, charPrivacyLabel, charLinkLabel } from './general.i18n';
+import { optionalLabel, charImageLabel, charTypeLabel, charNameLabel, charColorLabel, charPrivacyLabel, charLinkLabel, privacyLevelZeroLabel, privacyLevelOneLabel, privacyLevelTwoLabel, privacyLevelThreeLabel } from './general.i18n';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -190,10 +190,10 @@ class General extends Component {
           <div className="char-inp-label pr-1">{charPrivacyLabel[this.props.global.lang]}:</div>
           <div className="sel-cont char-sel f-grow-1">
             <select value={this.state.charData.privacy} onChange={this.handlePrivacyChange}>
-              <option value={CHAR_PRIVACY_LEVEL_ZERO}>Display all data</option>
-              <option value={CHAR_PRIVACY_LEVEL_ONE}>Only display name</option>
-              <option value={CHAR_PRIVACY_LEVEL_TWO}>Hide all data</option>
-              <option value={CHAR_PRIVACY_LEVEL_THREE}>Do not share character</option>
+              <option value={CHAR_PRIVACY_LEVEL_ZERO}>{privacyLevelZeroLabel[this.props.global.lang]}</option>
+              <option value={CHAR_PRIVACY_LEVEL_ONE}>{privacyLevelOneLabel[this.props.global.lang]}</option>
+              <option value={CHAR_PRIVACY_LEVEL_TWO}>{privacyLevelTwoLabel[this.props.global.lang]}</option>
+              <option value={CHAR_PRIVACY_LEVEL_THREE}>{privacyLevelThreeLabel[this.props.global.lang]}</option>
             </select>
           </div>
         </div>

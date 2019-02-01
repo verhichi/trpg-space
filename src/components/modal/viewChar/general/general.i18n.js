@@ -34,3 +34,18 @@ export const charLinkLabel = {
   [APP_LANG_EN]: 'Char-sheet Link',
   [APP_LANG_JP]: '外部ｷｬﾗｸﾀｰｼｰﾄﾘﾝｸ'
 };
+
+export const privacyLevelZeroLabel = {
+  [APP_LANG_EN]: 'Display all data',
+  [APP_LANG_JP]: '全データを開示'
+};
+
+export const privacyLevelOneLabel = {
+  [APP_LANG_EN]: 'Only display name',
+  [APP_LANG_JP]: '名前のみ開示'
+};
+
+export const privacyLevelTwoLabel = {
+  [APP_LANG_EN]: 'Hide all data',
+  [APP_LANG_JP]: '全データを隠蔽'
+};
