@@ -116,7 +116,7 @@ class NewUser extends Component {
         </div>
         <div className="f-grow-1 font-size-lg">
           <div>{displayNameInpLabel[this.props.global.lang]}</div>
-          <input className="inp w-100" type="text" placeholder="Enter username..." value={this.state.name} onChange={this.handleNameChange} ref={this.nameRef}/>
+          <input className="inp w-100" type="text" placeholder="Enter name..." value={this.state.name} onChange={this.handleNameChange} ref={this.nameRef}/>
         </div>
         <button type="submit" className="btn btn-hot cursor-pointer" disabled={isDisabled}>
           <FontAwesomeIcon icon="check"/>
