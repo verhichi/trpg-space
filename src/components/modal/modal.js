@@ -86,4 +86,5 @@ class Modal extends Component {
   }
 }
 
+
 export default connect(mapStateToProps, mapDispatchToProps)(Modal);

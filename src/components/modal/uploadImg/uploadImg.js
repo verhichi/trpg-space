@@ -7,7 +7,7 @@ import { hideModal } from '../../../redux/actions/modal';
 import { removeAllMapChar } from '../../../redux/actions/char';
 import { editMapImage, editMapPosition } from '../../../redux/actions/map';
 import socket from '../../../socket/socketClient';
-
+import { fileInpLabel, fileTypeError, fileSizeError, submitBtnLabel } from './uploadImg.i18n';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,7 +18,7 @@ import './uploadImg.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    global:      state.global,
+    global:       state.global,
     userList:     state.userList,
     modalSetting: state.modalSetting
   };
@@ -54,7 +54,6 @@ class UploadImg extends Component {
   }
 
   handleButtonClick (e){
-
     if (this.props.modalSetting.modalProp.type === 'chat'){
       const name = this.props.userList.find((user) => this.props.global.id === user.id).name;
       const imgData = {
@@ -97,12 +96,15 @@ class UploadImg extends Component {
     reader.readAsDataURL(this.fileInput.current.files[0]);
 
     reader.onload = () => {
+      this.setState({
+        fileExist: file.name.length !== 0,
+        fileTypeError: !imagePattern.test(file.name),
+        fileSizeError: file.size > 1000000,
+      });
+
       const image = new Image();
       image.onload = () => {
         this.setState({
-          fileExist: file.name.length !== 0,
-          fileTypeError: !imagePattern.test(file.name),
-          fileSizeError: file.size > 1000000,
           src: reader.result,
           height: image.height,
           width: image.width,
@@ -118,22 +120,22 @@ class UploadImg extends Component {
     return (
       <div className="d-flex f-dir-col f-grow-1">
         <div className="f-grow-1 font-size-lg">
-          <div>Select an image to send(max 1MB):</div>
+          <div>{fileInpLabel[this.props.global.lang]}:</div>
           <label class="inp-file-cont d-flex w-100 cursor-pointer">
             <FontAwesomeIcon icon="upload"/>
             <div className="inp-file-text f-grow-1 pl-3">{this.fileInput.current ? this.fileInput.current.files[0].name : 'Choose an image...'}</div>
             <input id="imageInput" className="d-none" type="file" accept="image/*" ref={this.fileInput} onChange={this.handleFileChange}/>
           </label>
+          {this.state.fileTypeError
+            ? (<div className="text-danger">{fileTypeError[this.props.global.lang]}</div>)
+            : null}
+          {this.state.fileSizeError
+            ? (<div className="text-danger">{fileSizeError[this.props.global.lang]}</div>)
+            : null}
         </div>
-        {this.state.fileTypeError
-          ? (<div className="text-danger">File must be in jpg/png/gif format</div>)
-          : null}
-        {this.state.fileSizeError
-          ? (<div className="text-danger">File must be smaller than 1MB</div>)
-          : null}
         <button className="btn btn-hot cursor-pointer" disabled={isDisabled} onClick={this.handleButtonClick}>
           <FontAwesomeIcon icon="check"/>
-          <div className="btn-text">Submit</div>
+          <div className="btn-text">{submitBtnLabel[this.props.global.lang]}</div>
         </button>
       </div>
     );

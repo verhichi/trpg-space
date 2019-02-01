@@ -7,8 +7,6 @@ const getBrowserLang = () => {
            : APP_LANG_EN;
 };
 
-console.log(getBrowserLang());
-
 const initialState = {
   lang:     getBrowserLang(),
   isMobile: /Mobile/.test(navigator.userAgent),

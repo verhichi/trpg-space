@@ -27,8 +27,8 @@ class Header extends Component {
   constructor (props){
     super(props);
 
-    this.handleLangEnClick = this.handleLangClick.bind(this, APP_LANG_EN);
-    this.handleLangJpClick = this.handleLangClick.bind(this, APP_LANG_JP);
+    this.handleLangEnClick = this.handleLangEnClick.bind(this);
+    this.handleLangJpClick = this.handleLangJpClick.bind(this);
     this.handleHelpClick   = this.handleHelpClick.bind(this);
   }
 
@@ -39,8 +39,12 @@ class Header extends Component {
     });
   }
 
-  handleLangClick (lang){
-    this.props.setAppLang(lang);
+  handleLangEnClick (){
+    this.props.setAppLang(APP_LANG_EN);
+  }
+
+  handleLangJpClick (){
+    this.props.setAppLang(APP_LANG_JP);
   }
 
   render() {
