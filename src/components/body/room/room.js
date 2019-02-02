@@ -14,7 +14,7 @@ import socket from '../../../socket/socketClient';
 import './room.scss';
 
 // Components
-import Top from './top/top';
+import Top from    './top/top';
 import Center from './center/center';
 import Bottom from './bottom/bottom';
 
@@ -62,7 +62,7 @@ class Room extends Component {
     socket.connect();
 
     this.onBeforeUnload = this.onBeforeUnload.bind(this);
-    this.onUnload = this.onUnload.bind(this);
+    this.onUnload       = this.onUnload.bind(this);
   }
 
   onBeforeUnload (e){
@@ -71,12 +71,11 @@ class Room extends Component {
   }
 
   onUnload (e){
-    socket.emit('leave', this.props.global.roomId, this.props.global.id);
-
-    // If the user that left was host, get new host
-    if (this.props.userList.find(user => user.id === this.props.global.id).host && this.props.userList.length >= 2){
-      socket.emit('newHost', this.props.global.roomId, this.props.userList[1].id);
-    }
+    socket.emit('leave', this.props.global.roomId, {
+      id:             this.props.global.id,
+      appointNewHost: this.props.userList.find(user => user.id === this.props.global.id).host,
+      newHost:        this.props.userList.length >= 2 ? this.props.userList[1].id : ''
+    });
 
     socket.disconnect();
   }
@@ -131,39 +130,39 @@ class Room extends Component {
       });
     });
 
-    socket.on('newHost', (id) => {
-      this.props.addChat({
-        type: CHAT_TYPE_HOST,
-        name: this.props.userList.find((user) => user.id === id).name
-      });
-
-      this.props.newHost(id);
-    });
-
-    socket.on('leave', (id) => {
+    socket.on('leave', leaveData => {
       this.props.addChat({
         type: CHAT_TYPE_LEAVE,
-        name: this.props.userList.find((user) => user.id === id).name
+        name: this.props.userList.find((user) => user.id === leaveData.id).name
       });
 
+      if (leaveData.appointNewHost){
+        this.props.addChat({
+          type: CHAT_TYPE_HOST,
+          name: this.props.userList.find((user) => user.id === leaveData.id).name
+        });
+
+        this.props.newHost(leaveData.newHost);
+      }
+
       this.props.charList.forEach(char => {
-        if (char.ownerId === id){
+        if (char.ownerId === leaveData.id){
           this.props.removeChar(char.charId);
         }
       });
 
-      if (this.props.chatSetting.sendTo.sendToUsers.includes(id)){
-        this.props.removeSendMsgUser(id);
+      if (this.props.chatSetting.sendTo.sendToUsers.includes(leaveData.id)){
+        this.props.removeSendMsgUser(leaveData.id);
         if (this.props.chatSetting.sendTo.sendToUsers.length === 0){
           this.props.checkSendMsgToAll();
         }
       }
 
-      if (id === this.props.noteSetting.isNoteLocked){
+      if (leaveData.id === this.props.noteSetting.isNoteLocked){
         this.props.unlockNote();
       }
 
-      this.props.removeUser(id);
+      this.props.removeUser(leaveData.id);
     });
 
     socket.on('mapImage', (imageData) => {
@@ -212,12 +211,11 @@ class Room extends Component {
     window.removeEventListener('beforeunload', this.onBeforeUnload);
     window.removeEventListener('unload', this.onUnload);
 
-    socket.emit('leave', this.props.global.roomId, this.props.global.id);
-
-    // If the user that left was host, get new host
-    if (this.props.userList.find(user => user.id === this.props.global.id).host && this.props.userList.length >= 2){
-      socket.emit('newHost', this.props.global.roomId, this.props.userList[1].id);
-    }
+    socket.emit('leave', this.props.global.roomId, {
+      id:             this.props.global.id,
+      appointNewHost: this.props.userList.find(user => user.id === this.props.global.id).host,
+      newHost:        this.props.userList.length >= 2 ? this.props.userList[1].id : ''
+    });
 
     socket.disconnect();
   }

@@ -106,8 +106,8 @@ io.on('connection', (socket) => {
   });
 
   // Logic for when a user leaves a room
-  socket.on('leave', (roomId, id) => {
-    socket.broadcast.to(roomId).emit('leave', id);
+  socket.on('leave', (roomId, leaveData) => {
+    socket.broadcast.to(roomId).emit('leave', leaveData);
   });
 
   // Logic for when a user changes map's background
