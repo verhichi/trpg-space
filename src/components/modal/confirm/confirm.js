@@ -23,18 +23,23 @@ const mapDispatchToProps = (dispatch) => {
 class Confirm extends Component {
   constructor (props){
     super(props);
+    this.state = { submitted: false };
 
     this.handleAcceptClick  = this.handleAcceptClick.bind(this);
     this.handleDeclineClick = this.handleDeclineClick.bind(this);
   }
 
   handleAcceptClick (e){
-    if (this.props.modalSetting.modalProp.accept.constructor === Array){
-      this.props.modalSetting.modalProp.accept.forEach((fun) => {
-        fun();
-      });
-    } else {
-      this.props.modalSetting.modalProp.accept();
+    if (!this.state.submitted){
+      this.setState({ submitted: true });
+
+      if (this.props.modalSetting.modalProp.accept.constructor === Array){
+        this.props.modalSetting.modalProp.accept.forEach((fun) => {
+          fun();
+        });
+      } else {
+        this.props.modalSetting.modalProp.accept();
+      }
     }
   }
 
@@ -43,6 +48,8 @@ class Confirm extends Component {
   }
 
   render() {
+    const isDisabled = this.state.submitted;
+
     return(
       <div className="d-flex f-dir-col f-grow-1 justify-content-between">
         <div className="align-center font-size-xxl mb-3 pb-3">{this.props.modalSetting.modalProp.confirmText}</div>
@@ -50,7 +57,7 @@ class Confirm extends Component {
           <button className="confirm-btn btn btn-danger cursor-pointer" onClick={this.handleDeclineClick}>
             <div className="btn-text">{noBtnLabel[this.props.global.lang]}</div>
           </button>
-          <button className="confirm-btn btn btn-hot cursor-pointer" onClick={this.handleAcceptClick}>
+          <button className="confirm-btn btn btn-hot cursor-pointer" onClick={this.handleAcceptClick} disabled={isDisabled}>
             <div className="btn-text">{yesBtnLabel[this.props.global.lang]}</div>
           </button>
         </div>

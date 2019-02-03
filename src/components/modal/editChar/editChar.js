@@ -42,11 +42,12 @@ class EditChar extends Component {
     const char = this.props.charList.find((char) => char.charId === this.props.modalSetting.modalProp.charId);
 
     this.state = {
-      tabMode: CHAR_MODAL_TAB_GENERAL,
-      general: char.general,
-      status:  char.status,
-      detail:  char.detail,
-      map:     char.map
+      submitted: false,
+      tabMode:   CHAR_MODAL_TAB_GENERAL,
+      general:   char.general,
+      status:    char.status,
+      detail:    char.detail,
+      map:       char.map
     };
 
     this.returnStatusValue     = this.returnStatusValue.bind(this);
@@ -114,24 +115,28 @@ class EditChar extends Component {
   }
 
   handleSubmitClick (e){
-    const charData = {
-      charId:  this.props.modalSetting.modalProp.charId,
-      ownerId: this.props.global.id,
-      general: this.state.general,
-      status:  this.state.status,
-      detail:  this.state.detail,
-      map:     this.state.map
-    };
+    if (!this.state.submitted){
+      this.setState({ submitted: true });
 
-    this.props.editChar(charData);
+      const charData = {
+        charId:  this.props.modalSetting.modalProp.charId,
+        ownerId: this.props.global.id,
+        general: this.state.general,
+        status:  this.state.status,
+        detail:  this.state.detail,
+        map:     this.state.map
+      };
 
-    if (this.state.general.privacy !== CHAR_PRIVACY_LEVEL_THREE){
-      socket.emit('char', this.props.global.roomId, charData);
-    } else {
-      socket.emit('delChar', this.props.global.roomId, this.props.modalSetting.modalProp.charId);
+      this.props.editChar(charData);
+
+      if (this.state.general.privacy !== CHAR_PRIVACY_LEVEL_THREE){
+        socket.emit('char', this.props.global.roomId, charData);
+      } else {
+        socket.emit('delChar', this.props.global.roomId, this.props.modalSetting.modalProp.charId);
+      }
+
+      this.props.hideModal();
     }
-
-    this.props.hideModal();
   }
 
   render() {
@@ -163,7 +168,7 @@ class EditChar extends Component {
       }
     });
 
-    const isDisabled = hasErrorGeneral || hasErrorStatus || hasErrorDetail;
+    const isDisabled = hasErrorGeneral || hasErrorStatus || hasErrorDetail || this.state.submitted;
 
     return (
       <div className="d-flex f-dir-col f-grow-1">

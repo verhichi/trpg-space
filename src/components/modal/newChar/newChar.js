@@ -36,7 +36,8 @@ class NewChar extends Component {
   constructor (props){
     super(props);
     this.state = {
-      tabMode: CHAR_MODAL_TAB_GENERAL,
+      submitted: false,
+      tabMode:   CHAR_MODAL_TAB_GENERAL,
       general: {
         name:    '',
         type:    CHAR_TYPE_ALLY,
@@ -114,26 +115,30 @@ class NewChar extends Component {
   }
 
   handleSubmitClick (e){
-    const charData = {
-      charId:  uuid.v4(),
-      ownerId: this.props.global.id,
-      general: this.state.general,
-      status:  this.state.status,
-      detail:  this.state.detail,
-      map: {
-        onMap: false,
-        x: '',
-        y: ''
+    if (!this.state.submitted){
+      this.setState({ submitted: true });
+
+      const charData = {
+        charId:  uuid.v4(),
+        ownerId: this.props.global.id,
+        general: this.state.general,
+        status:  this.state.status,
+        detail:  this.state.detail,
+        map: {
+          onMap: false,
+          x: '',
+          y: ''
+        }
+      };
+
+      this.props.addChar(charData);
+
+      if (this.state.general.privacy !== CHAR_PRIVACY_LEVEL_THREE){
+        socket.emit('char', this.props.global.roomId, charData);
       }
-    };
 
-    this.props.addChar(charData);
-
-    if (this.state.general.privacy !== CHAR_PRIVACY_LEVEL_THREE){
-      socket.emit('char', this.props.global.roomId, charData);
+      this.props.hideModal();
     }
-
-    this.props.hideModal();
   }
 
   render() {
@@ -166,7 +171,7 @@ class NewChar extends Component {
       }
     });
 
-    const isDisabled = hasErrorGeneral || hasErrorStatus || hasErrorDetail;
+    const isDisabled = hasErrorGeneral || hasErrorStatus || hasErrorDetail || this.state.submitted;
 
     return (
       <div className="d-flex f-dir-col f-grow-1">

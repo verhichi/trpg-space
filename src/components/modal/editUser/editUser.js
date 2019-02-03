@@ -34,10 +34,13 @@ class EditUser extends Component {
     super(props);
     this.nameRef = React.createRef();
     const user = this.props.userList.find((user) => user.id === this.props.global.id);
-    this.state = { name: user.name };
+    this.state = {
+      name:      user.name,
+      submitted: false
+    };
 
     this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmit     = this.handleSubmit.bind(this);
   }
 
   componentDidMount (){
@@ -51,22 +54,26 @@ class EditUser extends Component {
   handleSubmit (e){
     e.preventDefault();
 
-    this.props.editUser({
-      id: this.props.global.id,
-      name: this.state.name.trim()
-    });
+    if (!this.state.submitted){
+      this.setState({ submitted: true });
+      
+      this.props.editUser({
+        id: this.props.global.id,
+        name: this.state.name.trim()
+      });
 
-    socket.emit('user', this.props.global.roomId, {
-      id: this.props.global.id,
-      name: this.state.name.trim()
-    });
+      socket.emit('user', this.props.global.roomId, {
+        id: this.props.global.id,
+        name: this.state.name.trim()
+      });
 
-    this.setState({ name: '' });
-    this.props.hideModal();
+      this.setState({ name: '' });
+      this.props.hideModal();
+    }
   }
 
   render() {
-    const isDisabled = this.state.name.trim().length === 0;
+    const isDisabled = this.state.name.trim().length === 0 || this.state.submitted;
 
     return (
       <form className="d-flex f-dir-col f-grow-1" onSubmit={this.handleSubmit}>

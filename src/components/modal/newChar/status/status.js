@@ -17,20 +17,20 @@ class Status extends Component {
   constructor (props){
     super(props);
     this.state = { status: [
-      {
-        id: uuid.v4(),
-        type:     STATUS_TYPE_PARAM,
-        label:    'HP',
-        value:    '',
-        maxValue: ''
-      },
-      {
-        id: uuid.v4(),
-        type:     STATUS_TYPE_PARAM,
-        label:    'MP',
-        value:    '',
-        maxValue: ''
-      }
+      // {
+      //   id: uuid.v4(),
+      //   type:     STATUS_TYPE_PARAM,
+      //   label:    'HP',
+      //   value:    '',
+      //   maxValue: ''
+      // },
+      // {
+      //   id: uuid.v4(),
+      //   type:     STATUS_TYPE_PARAM,
+      //   label:    'MP',
+      //   value:    '',
+      //   maxValue: ''
+      // }
     ]};
 
     this.handleNewValueStatusButtonClick     = this.handleNewValueStatusButtonClick.bind(this);

@@ -28,7 +28,10 @@ const mapDispatchToProps = (dispatch) => {
 class Notes extends Component {
   constructor (props){
     super(props);
-    this.state = { note: this.props.noteSetting.note };
+    this.state = {
+      note:      this.props.noteSetting.note,
+      submitted: false
+    };
 
     this.handleChange      = this.handleChange.bind(this);
     this.handleCloseClick  = this.handleCloseClick.bind(this);
@@ -46,24 +49,31 @@ class Notes extends Component {
   }
 
   handleSubmitClick (e){
-    const note = this.state.note.trim();
-    this.props.unlockNote();
-    socket.emit('unlockNote', this.props.global.roomId);
+    if (!this.state.submitted){
+      this.setState({ submitted: true });
 
-    this.props.editNote(note);
-    socket.emit('editNote', this.props.global.roomId, note);
+      const note = this.state.note.trim();
 
-    this.props.hideModal();
+      this.props.unlockNote();
+      socket.emit('unlockNote', this.props.global.roomId);
+
+      this.props.editNote(note);
+      socket.emit('editNote', this.props.global.roomId, note);
+
+      this.props.hideModal();
+    }
   }
 
   render() {
+    const isDisabled = this.state.submitted;
+
     return (
       <div className="d-flex f-dir-col f-grow-1">
         <div>{sharedNotesInpLabel[this.props.global.lang]}:</div>
         <textarea className="notes-textarea f-grow-1 p-1" value={this.state.note} onChange={this.handleChange}></textarea>
         <div className="d-flex justify-content-around pt-2 f-shrink-0">
-          <button className="notes-btn p-2 btn-danger align-center" onClick={this.handleCloseClick} >{closeBtnLabel[this.props.global.lang]}</button>
-          <button className="notes-btn p-2 btn-hot align-center" onClick={this.handleSubmitClick}>{submitBtnLabel[this.props.global.lang]}</button>
+          <button className="notes-btn p-2 btn-danger align-center cursor-pointer" onClick={this.handleCloseClick} >{closeBtnLabel[this.props.global.lang]}</button>
+          <button className="notes-btn p-2 btn-hot align-center cursor-pointer" onClick={this.handleSubmitClick} disabled={isDisabled}>{submitBtnLabel[this.props.global.lang]}</button>
         </div>
       </div>
     );

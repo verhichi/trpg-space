@@ -38,7 +38,10 @@ class NewUser extends Component {
   constructor (props){
     super(props);
     this.nameRef = React.createRef();
-    this.state = { name: '' };
+    this.state = {
+      name:      '',
+      submitted: false
+    };
 
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -55,13 +58,16 @@ class NewUser extends Component {
   handleSubmit (e){
     e.preventDefault();
 
-    this.props.showModal(MODAL_TYPE_REQUESTING, {
-      title:        '',
-      displayClose: false
-    });
+    if (!this.state.submitted){
+      this.setState({ submitted: true });
+      
+      this.props.showModal(MODAL_TYPE_REQUESTING, {
+        title:        '',
+        displayClose: false
+      });
 
-    if (this.props.modalSetting.modalProp.host){
-      axios.get('/newRoomId')
+      if (this.props.modalSetting.modalProp.host){
+        axios.get('/newRoomId')
         .then((result) => {
           const id = uuid.v4();
           this.props.setUserId(id);
@@ -77,8 +83,8 @@ class NewUser extends Component {
           this.props.hideModal();
           this.props.modalSetting.modalProp.redirect(`/${result.data.roomId}`);
         });
-    } else {
-      axios.get('/checkRoomId', {params: { roomId: this.props.modalSetting.modalProp.roomId }})
+      } else {
+        axios.get('/checkRoomId', {params: { roomId: this.props.modalSetting.modalProp.roomId }})
         .then((result) => {
           if (result.data.roomExists){
             const id = uuid.v4();
@@ -102,12 +108,13 @@ class NewUser extends Component {
             });
           }
         });
+      }
     }
 
   }
 
   render() {
-    const isDisabled = this.state.name.trim().length === 0;
+    const isDisabled = this.state.name.trim().length === 0 || this.state.isButtonPressed;
 
     return (
       <form className="d-flex f-dir-col f-grow-1" onSubmit={this.handleSubmit}>

@@ -40,6 +40,7 @@ class UploadImg extends Component {
   constructor (props){
     super(props);
     this.state = {
+      submitted:     false,
       fileExist:     false,
       fileSizeError: false,
       fileTypeError: false,
@@ -48,43 +49,47 @@ class UploadImg extends Component {
       width:         0
     };
 
-    this.fileInput = React.createRef();
+    this.fileInput         = React.createRef();
     this.handleButtonClick = this.handleButtonClick.bind(this);
-    this.handleFileChange = this.handleFileChange.bind(this);
+    this.handleFileChange  = this.handleFileChange.bind(this);
   }
 
   handleButtonClick (e){
-    if (this.props.modalSetting.modalProp.type === 'chat'){
-      const name = this.props.userList.find((user) => this.props.global.id === user.id).name;
-      const imgData = {
-        type: CHAT_TYPE_IMAGE,
-        src: this.state.src,
-        height: this.state.height,
-        width: this.state.width,
-        name
-      };
+    if (!this.state.submitted){
+      this.setState({ submitted: true });
 
-      this.props.addChat({ ...imgData, self: true });
-      socket.emit('chat', this.props.global.roomId, { ...imgData, self: false });
-    } else {
-      const backgroundData = {
-        id: uuid.v4(),
-        src: this.state.src,
-        height: this.state.height,
-        width: this.state.width,
-        left: 0,
-        top: 0,
-        scale: 1
-      };
+      if (this.props.modalSetting.modalProp.type === 'chat'){
+        const name = this.props.userList.find((user) => this.props.global.id === user.id).name;
+        const imgData = {
+          type: CHAT_TYPE_IMAGE,
+          src: this.state.src,
+          height: this.state.height,
+          width: this.state.width,
+          name
+        };
 
-      this.props.editMapImage(backgroundData);
-      socket.emit('mapImage', this.props.global.roomId, backgroundData);
+        this.props.addChat({ ...imgData, self: true });
+        socket.emit('chat', this.props.global.roomId, { ...imgData, self: false });
+      } else {
+        const backgroundData = {
+          id: uuid.v4(),
+          src: this.state.src,
+          height: this.state.height,
+          width: this.state.width,
+          left: 0,
+          top: 0,
+          scale: 1
+        };
 
-      this.props.removeAllMapChar();
-      socket.emit('removeAllMapChar');
+        this.props.editMapImage(backgroundData);
+        socket.emit('mapImage', this.props.global.roomId, backgroundData);
+
+        this.props.removeAllMapChar();
+        socket.emit('removeAllMapChar');
+      }
+
+      this.props.hideModal();
     }
-
-    this.props.hideModal();
   }
 
   handleFileChange (e){
@@ -115,7 +120,7 @@ class UploadImg extends Component {
   }
 
   render() {
-    const isDisabled = !this.state.fileExist || this.state.fileTypeError || this.state.fileSizeError;
+    const isDisabled = !this.state.fileExist || this.state.fileTypeError || this.state.fileSizeError || this.state.submitted;
 
     return (
       <div className="d-flex f-dir-col f-grow-1">
