@@ -16,22 +16,7 @@ const mapStateToProps = (state) => {
 class Status extends Component {
   constructor (props){
     super(props);
-    this.state = { status: [
-      // {
-      //   id: uuid.v4(),
-      //   type:     STATUS_TYPE_PARAM,
-      //   label:    'HP',
-      //   value:    '',
-      //   maxValue: ''
-      // },
-      // {
-      //   id: uuid.v4(),
-      //   type:     STATUS_TYPE_PARAM,
-      //   label:    'MP',
-      //   value:    '',
-      //   maxValue: ''
-      // }
-    ]};
+    this.state = { status: []};
 
     this.handleNewValueStatusButtonClick     = this.handleNewValueStatusButtonClick.bind(this);
     this.handleNewParameterStatusButtonClick = this.handleNewParameterStatusButtonClick.bind(this);
