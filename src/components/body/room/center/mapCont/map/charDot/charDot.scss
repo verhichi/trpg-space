@@ -25,6 +25,10 @@
   }
 }
 
+.is-static{
+  transition: left 0.1s, top 0.1s;
+}
+
 @keyframes shadow-pulse{
   0%{ box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2); }
   20%, 100% { box-shadow: 0 0 0 15px rgba(0, 0, 0, 0); }
