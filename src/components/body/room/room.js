@@ -14,7 +14,7 @@ import socket from '../../../socket/socketClient';
 import './room.scss';
 
 // Components
-import Top from    './top/top';
+import Top    from './top/top';
 import Center from './center/center';
 import Bottom from './bottom/bottom';
 

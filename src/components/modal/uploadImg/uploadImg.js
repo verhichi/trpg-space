@@ -128,7 +128,7 @@ class UploadImg extends Component {
           <div>{fileInpLabel[this.props.global.lang]}:</div>
           <label class="inp-file-cont d-flex w-100 cursor-pointer">
             <FontAwesomeIcon icon="upload"/>
-            <div className="inp-file-text f-grow-1 pl-3">{this.fileInput.current ? this.fileInput.current.files[0].name : 'Choose an image...'}</div>
+            <div className="inp-file-text f-grow-1 pl-3">Choose an image...</div>
             <input id="imageInput" className="d-none" type="file" accept="image/*" ref={this.fileInput} onChange={this.handleFileChange}/>
           </label>
           {this.state.fileTypeError
