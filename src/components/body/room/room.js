@@ -139,7 +139,7 @@ class Room extends Component {
       if (leaveData.appointNewHost){
         this.props.addChat({
           type: CHAT_TYPE_HOST,
-          name: this.props.userList.find((user) => user.id === leaveData.id).name
+          name: this.props.userList.find((user) => user.id === leaveData.newHost).name
         });
 
         this.props.newHost(leaveData.newHost);
