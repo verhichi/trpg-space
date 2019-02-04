@@ -5,10 +5,15 @@ header{
   background: $black-clr;
   color: $white-clr;
   display: flex;
-  font-size: $font-size-xxl;
-  height: 40px;
-  line-height: 40px;
-  padding: 0 10px;
+  font-size: $font-size-lg;
+  height: 30px;
+  line-height: 30px;
+
+  @include md{
+    font-size: $font-size-xxl;
+    height: 40px;
+    line-height: 40px;
+  }
 }
 
 .header-title{
@@ -16,8 +21,21 @@ header{
   flex-grow: 1;
 }
 
+.header-help{
+  font-size: $font-size-lg;
+  
+  @include md{
+    font-size: $font-size-xl;
+  }
+}
+
 .header-lang{
+  font-size: $font-size-lg;
   position: relative;
+
+  @include md{
+    font-size: $font-size-xl;
+  }
 
   &:hover{
     background: $tertiary-clr;

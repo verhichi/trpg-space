@@ -51,7 +51,7 @@ class Header extends Component {
     return (
       <header>
         <div className="header-title">TRPG PARTY TOOL</div>
-        <div className="header-lang font-size-xl pl-2 pr-2 cursor-pointer" onClick={this.handleLangClick}>
+        <div className="header-lang pl-2 pr-2 cursor-pointer" onClick={this.handleLangClick}>
           <FontAwesomeIcon icon="globe" />
           <div className="lang-list-cont">
             <div className="lang-cont" onClick={this.handleLangEnClick}>
@@ -68,7 +68,7 @@ class Header extends Component {
             </div>
           </div>
         </div>
-        <div className="header-help pr-2 pl-2 font-size-xl cursor-pointer" onClick={this.handleHelpClick}>
+        <div className="header-help pr-2 pl-2 cursor-pointer" onClick={this.handleHelpClick}>
           <FontAwesomeIcon icon="question-circle" />
         </div>
       </header>

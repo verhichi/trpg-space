@@ -2,6 +2,10 @@
 @import '../../styles/partials/mediaQueries';
 
 main{
-  height: calc(100% - 40px);
+  height: calc(100% - 30px);
   width: 100%;
+
+  @include md{
+    height: calc(100% - 40px);
+  }
 }

@@ -4,6 +4,13 @@
 .room-toolbar{
   background: $secondary-clr;
   color: $white-clr;
-  font-size: $font-size-xl;
-  height: 45px;
+  font-size: $font-size-lg;
+  height: 30px;
+  line-height: 20px;
+
+  @include md{
+    font-size: $font-size-xl;
+    height: 40px;
+    line-height: 30px;
+  }
 }
