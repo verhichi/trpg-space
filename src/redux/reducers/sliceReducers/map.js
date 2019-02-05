@@ -74,6 +74,20 @@ const mapReducer = (state = initialState, action) => {
   }
 };
 
+// import {
+//   ADD_MAP,
+//   EDIT_MAP,
+//   REDUCER_MAP,
+//   SET_MAP_MODE,
+//   EDIT_MAP_POSITION,
+//   EDIT_MAP_SCALE,
+//   TOGGLE_MAP_GRID,
+//   SET_CHAR_TO_PLACE,
+//   ADD_MAP_CHAR,
+//   EDIT_MAP_CHAR,
+//   REMOVE_MAP_CHAR
+// } from '../../../constants/actionTypes';
+
 // const initialState = [
 //   {
 //     mapId:          id of the map itself,
