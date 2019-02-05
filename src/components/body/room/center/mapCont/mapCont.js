@@ -6,6 +6,7 @@ import './mapCont.scss';
 
 // Component
 import Map         from './map/map';
+import MapTab      from './mapTab/mapTab';
 import Toolbar     from './toolbar/toolbar';
 import MiniChatLog from './miniChatLog/miniChatLog';
 
@@ -20,6 +21,7 @@ class MapCont extends Component {
 
     return (
       <div className="map-cont d-flex f-dir-col f-grow-1">
+        <MapTab/>
         <Toolbar/>
         <Map/>
         { miniChatLog.length === 0

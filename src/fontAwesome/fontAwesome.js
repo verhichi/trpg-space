@@ -49,7 +49,8 @@ import {
   faExternalLinkSquareAlt,
   faPalette,
   faQuestion,
-  faGlobe
+  faGlobe,
+  faPlus
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -99,5 +100,6 @@ library.add(
   faExternalLinkSquareAlt,
   faPalette,
   faQuestion,
-  faGlobe
+  faGlobe,
+  faPlus
 );

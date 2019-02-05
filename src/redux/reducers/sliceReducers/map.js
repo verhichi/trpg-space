@@ -87,29 +87,29 @@ const mapReducer = (state = initialState, action) => {
 //   EDIT_MAP_CHAR,
 //   REMOVE_MAP_CHAR
 // } from '../../../constants/actionTypes';
-
+//
 // const initialState = [
-//   {
-//     mapId:          id of the map itself,
-//     ownerId:        userId of the owner of the map,
-//     displayMapGrid: true/false,
-//     left:           x coordinate of map itself,
-//     top:            y coordinate of map itself,
-//     mode:           mapMode,
-//     charToPlace:    characterIdToPlace,
-//     src:            src of map image,
-//     name:           name of map,
-//     privacy:        [userId of users to show map to],
-//     charDots: [
-//       {
-//         charId: charId,
-//         left:   x position of charDot,
-//         top:    y position of charDot
-//       }
-//     ],
-//   }
+// //   {
+// //     mapId:          id of the map itself,
+// //     ownerId:        userId of the owner of the map,
+// //     displayMapGrid: true/false,
+// //     left:           x coordinate of map itself,
+// //     top:            y coordinate of map itself,
+// //     mode:           mapMode,
+// //     charToPlace:    characterIdToPlace,
+// //     src:            src of map image,
+// //     name:           name of map,
+// //     privacy:        [userId of users to show map to],
+// //     charDots: [
+// //       {
+// //         charId: charId,
+// //         left:   x position of charDot,
+// //         top:    y position of charDot
+// //       }
+// //     ],
+// //   }
 // ];
-
+//
 // const mapReducer = (state = initialState, action) => {
 //   switch(action.type){
 //     case APP_MAP:

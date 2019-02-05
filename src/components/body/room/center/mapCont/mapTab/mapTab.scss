@@ -1,0 +1,44 @@
+@import '../../../../../../styles/partials/variables';
+@import '../../../../../../styles/partials/mediaQueries';
+
+.map-tab-cont{
+  background: $black-clr;
+  border: 1px solid $black-clr;
+  border-bottom: none;
+  color: $white-clr;
+  flex-basis: 35px;
+  overflow: hidden;
+  width: 100%;
+  z-index: 60;
+}
+
+.map-tab-wrap{
+  overflow-x: scroll;
+  white-space: nowrap;
+
+  &.hide-scroll{
+    height: 60px;
+  }
+}
+
+.map-tab-new{
+  background: $secondary-clr;
+  border-right: 1px solid $black-clr;
+  flex-basis: 46px;
+  font-size: $font-size-lg;
+  height: 35px;
+  vertical-align: top;
+}
+
+.map-tab{
+  background: $black-clr;
+  border-right: 1px solid $secondary-clr;
+  height: 35px;
+  line-height: 25px;
+  vertical-align: top;
+  width: 175px;
+
+  &.is-active{
+    background: $secondary-clr;
+  }
+}

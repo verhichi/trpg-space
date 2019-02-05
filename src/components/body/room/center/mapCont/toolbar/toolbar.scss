@@ -5,17 +5,12 @@
   background: $secondary-clr;
   border: 1px solid $black-clr;
   color: $white-clr;
-  left: 15px;
-  z-index: 65;
+  z-index: 60;
 }
 
 .map-toolbar > div{
   border-right: 1px solid $black-clr;
 }
-
-// .map-toolbar-btn-cont{
-//   position: relative;
-// }
 
 .map-toolbar-btn{
   flex-basis: 45px;

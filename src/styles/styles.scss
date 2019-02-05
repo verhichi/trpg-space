@@ -226,14 +226,14 @@
   // Flex
     .d-flex{
       display: flex;
-      display: -webkit-box;
-      display: -ms-flexbox;
+    }
+
+    .d-inline-flex{
+      display: inline-flex;
     }
 
     .f-grow-1{
       flex-grow: 1;
-      -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
     }
 
     .f-shrink-0{
