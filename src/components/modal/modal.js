@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { MODAL_TYPE_ALERT, MODAL_TYPE_HELP, MODAL_TYPE_CONFIRM, MODAL_TYPE_EDIT_CHAR, MODAL_TYPE_EDIT_USER, MODAL_TYPE_IMAGE, MODAL_TYPE_NEW_CHAR, MODAL_TYPE_NEW_USER, MODAL_TYPE_NOTES, MODAL_TYPE_REQUESTING, MODAL_TYPE_ROOM_SETTING, MODAL_TYPE_UPLOAD_IMG, MODAL_TYPE_VIEW_CHAR } from '../../constants/constants';
+import { MODAL_TYPE_ALERT, MODAL_TYPE_HELP, MODAL_TYPE_CONFIRM, MODAL_TYPE_EDIT_CHAR, MODAL_TYPE_EDIT_USER, MODAL_TYPE_IMAGE, MODAL_TYPE_NEW_CHAR, MODAL_TYPE_NEW_USER, MODAL_TYPE_NOTES, MODAL_TYPE_REQUESTING, MODAL_TYPE_ROOM_SETTING, MODAL_TYPE_UPLOAD_IMG, MODAL_TYPE_VIEW_CHAR, MODAL_TYPE_NEW_MAP, MODAL_TYPE_EDIT_MAP } from '../../constants/constants';
 import { hideModal } from '../../redux/actions/modal';
 
 // Font Awesome Component
@@ -13,10 +13,12 @@ import './modal.scss';
 import Alert       from './alert/alert';
 import Confirm     from './confirm/confirm';
 import EditChar    from './editChar/editChar';
+import EditMap     from './editMap/editMap';
 import EditUser    from './editUser/editUser';
 import Help        from './help/help';
 import Image       from './image/image';
 import NewChar     from './newChar/newChar';
+import NewMap      from './newMap/newMap';
 import NewUser     from './newUser/newUser';
 import Notes       from './notes/notes';
 import Requesting  from './requesting/requesting';
@@ -54,10 +56,12 @@ class Modal extends Component {
       [MODAL_TYPE_ALERT]:        <Alert />,
       [MODAL_TYPE_CONFIRM]:      <Confirm />,
       [MODAL_TYPE_EDIT_CHAR]:    <EditChar />,
+      [MODAL_TYPE_EDIT_MAP]:     <EditMap />,
       [MODAL_TYPE_EDIT_USER]:    <EditUser />,
       [MODAL_TYPE_HELP]:         <Help />,
       [MODAL_TYPE_IMAGE]:        <Image />,
       [MODAL_TYPE_NEW_CHAR]:     <NewChar />,
+      [MODAL_TYPE_NEW_MAP]:      <NewMap />,
       [MODAL_TYPE_NEW_USER]:     <NewUser />,
       [MODAL_TYPE_NOTES]:        <Notes />,
       [MODAL_TYPE_REQUESTING]:   <Requesting />,
