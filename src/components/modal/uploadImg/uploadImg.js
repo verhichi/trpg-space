@@ -4,8 +4,8 @@ import uuid from 'uuid';
 import { CHAT_TYPE_IMAGE } from '../../../constants/constants';
 import { addChat } from '../../../redux/actions/chatLog';
 import { hideModal } from '../../../redux/actions/modal';
-import { removeAllMapChar } from '../../../redux/actions/char';
-import { editMapImage, editMapPosition } from '../../../redux/actions/map';
+// import { removeAllMapChar } from '../../../redux/actions/char';
+// import { editMapImage, editMapPosition } from '../../../redux/actions/map';
 import socket from '../../../socket/socketClient';
 import { fileInpLabel, fileTypeError, fileSizeError, submitBtnLabel } from './uploadImg.i18n';
 
@@ -29,9 +29,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     hideModal:        ()          => dispatch(hideModal()),
     addChat:          (content)   => dispatch(addChat(content)),
-    editMapImage:     (src)       => dispatch(editMapImage(src)),
-    editMapPosition:  (left, top) => dispatch(editMapPosition(left, top)),
-    removeAllMapChar: ()          => dispatch(removeAllMapChar())
+    // editMapImage:     (src)       => dispatch(editMapImage(src)),
+    // editMapPosition:  (left, top) => dispatch(editMapPosition(left, top)),
+    // removeAllMapChar: ()          => dispatch(removeAllMapChar())
   };
 };
 
@@ -58,35 +58,17 @@ class UploadImg extends Component {
     if (!this.state.submitted){
       this.setState({ submitted: true });
 
-      if (this.props.modalSetting.modalProp.type === 'chat'){
-        const name = this.props.userList.find((user) => this.props.global.id === user.id).name;
-        const imgData = {
-          type: CHAT_TYPE_IMAGE,
-          src: this.state.src,
-          height: this.state.height,
-          width: this.state.width,
-          name
-        };
+      const name = this.props.userList.find((user) => this.props.global.id === user.id).name;
+      const imgData = {
+        type: CHAT_TYPE_IMAGE,
+        src: this.state.src,
+        height: this.state.height,
+        width: this.state.width,
+        name
+      };
 
-        this.props.addChat({ ...imgData, self: true });
-        socket.emit('chat', this.props.global.roomId, { ...imgData, self: false });
-      } else {
-        const backgroundData = {
-          id: uuid.v4(),
-          src: this.state.src,
-          height: this.state.height,
-          width: this.state.width,
-          left: 0,
-          top: 0,
-          scale: 1
-        };
-
-        this.props.editMapImage(backgroundData);
-        socket.emit('mapImage', this.props.global.roomId, backgroundData);
-
-        this.props.removeAllMapChar();
-        socket.emit('removeAllMapChar');
-      }
+      this.props.addChat({ ...imgData, self: true });
+      socket.emit('chat', this.props.global.roomId, { ...imgData, self: false });
 
       this.props.hideModal();
     }

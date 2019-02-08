@@ -5,6 +5,16 @@ export const fileInpLabel = {
   [APP_LANG_JP]: '画像の選択(最大 1MB)'
 };
 
+export const mapNameLabel = {
+  [APP_LANG_EN]: 'Map Name',
+  [APP_LANG_JP]: '地図名'
+};
+
+export const mapPrivacyLabel = {
+  [APP_LANG_EN]: 'Share with Everyone',
+  [APP_LANG_JP]: '全員と共有する'
+};
+
 export const fileTypeError = {
   [APP_LANG_EN]: 'File must be in jpg/png/gif format',
   [APP_LANG_JP]: 'ファイルフォーマットはjpg/png/gifのみ'

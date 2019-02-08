@@ -54,3 +54,7 @@ export const SET_SIDEBAR_CHAR = 'SET_SIDEBAR_CHAR';
 export const SET_SIDEBAR_NOTE = 'SET_SIDEBAR_NOTE';
 export const SET_APP_LANG = 'SET_APP_LANG';
 export const RESET_STATE = 'RESET_STATE';
+export const ADD_MAP = 'ADD_MAP';
+export const EDIT_MAP = 'EDIT_MAP';
+export const REMOVE_MAP = 'REMOVE_MAP';
+export const SET_DISPLAY_MAP = 'SET_DISPLAY_MAP';

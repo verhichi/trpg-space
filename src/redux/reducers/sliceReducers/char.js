@@ -1,11 +1,7 @@
 import {
   ADD_CHAR,
   EDIT_CHAR,
-  REMOVE_CHAR,
-  ADD_MAP_CHAR,
-  EDIT_MAP_CHAR,
-  REMOVE_MAP_CHAR,
-  REMOVE_ALL_MAP_CHAR
+  REMOVE_CHAR
 } from '../../../constants/actionTypes';
 
 const initialState = [
@@ -37,12 +33,7 @@ const initialState = [
     //        value: 'currentValue',
     //        maxValue: 'maximumValue'(only if type is param)
     //     }
-    //   ],
-    //   map: {
-    //     onMap: true/false,
-    //     x: x-coordinate,
-    //     y: y-coordinate
-    //   }
+    //   ]
     // }
 ];
 
@@ -71,66 +62,6 @@ const charReducer = (state = initialState, action) => {
 
     case REMOVE_CHAR:
       return state.filter(char => char.charId !== action.charId);
-
-    case ADD_MAP_CHAR:
-      return state.map(char => {
-        if (char.charId === action.charData.charId){
-          return {
-            ...char,
-            map: {
-              onMap: true,
-              x: action.charData.x,
-              y: action.charData.y
-            }
-          };
-        } else {
-          return char;
-        }
-      })
-
-    case EDIT_MAP_CHAR:
-      return state.map(char => {
-        if (char.charId === action.charData.charId){
-          return {
-            ...char,
-            map: {
-              ...char.map,
-              x: action.charData.x,
-              y: action.charData.y
-            }
-          };
-        } else {
-          return char;
-        }
-      });
-
-    case REMOVE_MAP_CHAR:
-      return state.map(char => {
-        if (char.charId === action.charId){
-          return {
-            ...char,
-            map: {
-              onMap: false,
-              x: '',
-              y: ''
-            }
-          };
-        } else {
-          return char;
-        }
-      });
-
-    case REMOVE_ALL_MAP_CHAR:
-      return state.map(char => {
-        return {
-          ...char,
-          map: {
-            onMap: false,
-            x: '',
-            y: ''
-          }
-        };
-      });
 
     default:
       return state;

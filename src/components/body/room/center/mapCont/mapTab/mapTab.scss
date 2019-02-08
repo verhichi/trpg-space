@@ -4,17 +4,18 @@
 .map-tab-cont{
   background: $black-clr;
   border: 1px solid $black-clr;
-  border-bottom: none;
+  border-bottom: 1px solid $secondary-clr;
   color: $white-clr;
   flex-basis: 35px;
   overflow: hidden;
   width: 100%;
-  z-index: 60;
+  z-index: 100;
 }
 
 .map-tab-wrap{
   overflow-x: scroll;
   white-space: nowrap;
+  z-index: 100;
 
   &.hide-scroll{
     height: 60px;
@@ -28,6 +29,7 @@
   font-size: $font-size-lg;
   height: 35px;
   vertical-align: top;
+  z-index: 100;
 }
 
 .map-tab{
@@ -37,6 +39,7 @@
   line-height: 25px;
   vertical-align: top;
   width: 175px;
+  z-index: 100;
 
   &.is-active{
     background: $secondary-clr;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, STATUS_TYPE_VALUE, STATUS_TYPE_PARAM } from '../../../../../../../constants/constants';
-import { editMapChar } from '../../../../../../../redux/actions/char';
+import { CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, CHAR_PRIVACY_LEVEL_THREE, STATUS_TYPE_VALUE, STATUS_TYPE_PARAM } from '../../../../../../../constants/constants';
+import { editMapChar } from '../../../../../../../redux/actions/map';
 import socket from '../../../../../../../socket/socketClient';
 
 // Style
@@ -10,13 +10,14 @@ import './charDot.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    global:     state.global,
-    mapSetting: state.mapSetting
+    global:         state.global,
+    displaySetting: state.displaySetting,
+    mapSetting:     state.mapSetting
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return { editMapChar: (charData) => dispatch(editMapChar(charData)) };
+  return { editMapChar: (mapId, charData) => dispatch(editMapChar(mapId, charData)) };
 }
 
 class CharDot extends Component {
@@ -49,11 +50,12 @@ class CharDot extends Component {
 
     const adjustOffsetX = e.nativeEvent.offsetX <= 10 ? 10 : e.nativeEvent.offsetX; // prevent mouse from falling outside the charDot
     const adjustOffsetY = e.nativeEvent.offsetY <= 10 ? 10 : e.nativeEvent.offsetY; // prevent mouse from falling outside the charDot
+    const scale = this.props.mapSetting.find(map => map.mapId === this.props.displaySetting.displayMap).scale;
 
     this.setState({
       isCharMoveMode: true,
-      offsetX: Math.floor(adjustOffsetX * this.props.mapSetting.image.scale),
-      offsetY: Math.floor(adjustOffsetY * this.props.mapSetting.image.scale)
+      offsetX: Math.floor(adjustOffsetX * scale),
+      offsetY: Math.floor(adjustOffsetY * scale)
     });
 
     document.querySelector('.map-img-overlay').addEventListener('mousemove', this.handleMouseMove);
@@ -77,10 +79,14 @@ class CharDot extends Component {
     e.preventDefault();
 
     if (this.state.isCharMoveMode){
-      this.props.editMapChar({
-        charId: this.props.charData.charId,
-        x: Math.floor((e.pageX - document.querySelector('.map-img-overlay').getBoundingClientRect().left - this.state.offsetX) / this.props.mapSetting.image.scale),
-        y: Math.floor((e.pageY - document.querySelector('.map-img-overlay').getBoundingClientRect().top - this.state.offsetY) / this.props.mapSetting.image.scale)
+      const scale = this.props.mapSetting.find(map => map.mapId === this.props.displaySetting.displayMap).scale;
+
+      this.props.editMapChar(this.props.displaySetting.displayMap, {
+        ownerId: this.props.charData.ownerId,
+        charId:  this.props.charData.charId,
+        privacy: this.props.charData.general.privacy,
+        left:    Math.floor((e.pageX - document.querySelector('.map-img-overlay').getBoundingClientRect().left - this.state.offsetX) / scale),
+        top:     Math.floor((e.pageY - document.querySelector('.map-img-overlay').getBoundingClientRect().top - this.state.offsetY) / scale)
       });
     }
   }
@@ -90,10 +96,14 @@ class CharDot extends Component {
     e.preventDefault();
 
     if (this.state.isCharMoveMode){
-      this.props.editMapChar({
-        charId: this.props.charData.charId,
-        x: Math.floor((e.touches[0].pageX - document.querySelector('.map-img-overlay').getBoundingClientRect().left - this.state.offsetX) / this.props.mapSetting.image.scale),
-        y: Math.floor((e.touches[0].pageY - document.querySelector('.map-img-overlay').getBoundingClientRect().top - this.state.offsetY) / this.props.mapSetting.image.scale)
+      const scale = this.props.mapSetting.find(map => map.mapId === this.props.displaySetting.displayMap).scale;
+
+      this.props.editMapChar(this.props.displaySetting.displayMap, {
+        ownerId: this.props.charData.ownerId,
+        charId:  this.props.charData.charId,
+        privacy: this.props.charData.general.privacy,
+        left:    Math.floor((e.touches[0].pageX - document.querySelector('.map-img-overlay').getBoundingClientRect().left - this.state.offsetX) / scale),
+        top:     Math.floor((e.touches[0].pageY - document.querySelector('.map-img-overlay').getBoundingClientRect().top - this.state.offsetY) / scale)
       });
     }
   }
@@ -102,11 +112,18 @@ class CharDot extends Component {
     e.stopPropagation();
     e.preventDefault();
 
-    if (this.state.isCharMoveMode){
-      socket.emit('mapChar', this.props.global.roomId, {
-        charId: this.props.charData.charId,
-        x: this.props.charData.map.x,
-        y: this.props.charData.map.y
+    // console.log('this.state.isCharMoveMode:', this.state.isCharMoveMode);
+    // console.log('this.props.charData.general.privacy !== CHAR_PRIVACY_LEVEL_THREE:', this.props.charData.general.privacy !== CHAR_PRIVACY_LEVEL_THREE);
+    // console.log('this.props.mapShareWithAll:', this.props.mapShareWithAll);
+
+    if (this.state.isCharMoveMode && this.props.charData.general.privacy !== CHAR_PRIVACY_LEVEL_THREE && this.props.mapShareWithAll){
+      console.log('socket mapChar event fired');
+      socket.emit('mapChar', this.props.global.roomId, this.props.displaySetting.displayMap, {
+        ownerId: this.props.charData.ownerId,
+        charId:  this.props.charData.charId,
+        privacy: this.props.charData.general.privacy,
+        left:    this.props.charPlot.left,
+        top:     this.props.charPlot.top
       });
     }
     document.querySelector('.map-img-overlay').removeEventListener('mousemove', this.handleMouseMove);
@@ -117,11 +134,13 @@ class CharDot extends Component {
   handleTouchEnd (e){
     e.stopPropagation();
 
-    if (this.state.isCharMoveMode){
-      socket.emit('mapChar', this.props.global.roomId, {
-        charId: this.props.charData.charId,
-        x: this.props.charData.map.x,
-        y: this.props.charData.map.y
+    if (this.state.isCharMoveMode && this.props.charData.general.privacy !== CHAR_PRIVACY_LEVEL_THREE && this.props.mapShareWithAll){
+      socket.emit('mapChar', this.props.global.roomId, this.props.displaySetting.displayMap, {
+        ownerId: this.props.charData.ownerId,
+        charId:  this.props.charData.charId,
+        privacy: this.props.charData.general.privacy,
+        left:    this.props.charPlot.left,
+        top:     this.props.charPlot.top
       });
     }
     document.querySelector('.map-img-overlay').removeEventListener('touchmove', this.handleTouchMove);
@@ -132,11 +151,13 @@ class CharDot extends Component {
     e.stopPropagation();
     e.preventDefault();
 
-    if (this.state.isCharMoveMode){
-      socket.emit('mapChar', this.props.global.roomId, {
-        charId: this.props.charData.charId,
-        x: this.props.charData.map.x,
-        y: this.props.charData.map.y
+    if (this.state.isCharMoveMode && this.props.charData.general.privacy !== CHAR_PRIVACY_LEVEL_THREE && this.props.mapShareWithAll){
+      socket.emit('mapChar', this.props.global.roomId, this.props.displaySetting.displayMap, {
+        ownerId: this.props.charData.ownerId,
+        charId:  this.props.charData.charId,
+        privacy: this.props.charData.general.privacy,
+        left:    this.props.charPlot.left,
+        top:     this.props.charPlot.top
       });
     }
 
@@ -159,7 +180,7 @@ class CharDot extends Component {
     const statList = this.props.charData.status.map(status => charDataType[status.type](status));
 
     return (
-      <div className={`map-char-profile cursor-grabbable ${isMovingClass}`} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} onTouchStart={this.handleTouchStart} onTouchEnd={this.handleTouchEnd} style={{borderColor: this.props.charData.general.color, backgroundImage: `url(${this.props.charData.general.image})`, left: this.props.charData.map.x, top: this.props.charData.map.y}}>
+      <div className={`map-char-profile cursor-grabbable ${isMovingClass}`} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} onTouchStart={this.handleTouchStart} onTouchEnd={this.handleTouchEnd} style={{borderColor: this.props.charData.general.color, backgroundImage: `url(${this.props.charData.general.image})`, left: this.props.charPlot.left, top: this.props.charPlot.top}}>
         <div className="map-char-balloon p-absolute p-1 align-left cursor-default">
           <div className="font-size-md font-weight-bold pb-1 one-line-ellipsis">{charName}</div>
           { statList }

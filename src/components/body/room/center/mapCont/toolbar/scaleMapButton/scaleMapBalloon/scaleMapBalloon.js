@@ -17,8 +17,8 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    hideMapScale: ()      => dispatch(hideMapScale()),
-    editMapScale: (scale) => dispatch(editMapScale(scale))
+    hideMapScale: ()             => dispatch(hideMapScale()),
+    editMapScale: (mapId, scale) => dispatch(editMapScale(mapId, scale))
   };
 };
 
@@ -30,7 +30,7 @@ class ScaleMapBalloon extends Component {
   }
 
   handleMapScaleChange (e){
-    this.props.editMapScale(e.target.value);
+    this.props.editMapScale(this.props.displaySetting.displayMap, e.target.value);
   }
 
   render() {
@@ -38,9 +38,9 @@ class ScaleMapBalloon extends Component {
 
     return (
       <div className={`map-scale-balloon cursor-default ${toggleClass}`}>
-        <div>Scale ({parseFloat(this.props.mapSetting.image.scale).toFixed(1)}):</div>
+        <div>Scale ({parseFloat(this.props.mapSetting.find(map => map.mapId === this.props.displaySetting.displayMap).scale).toFixed(1)}):</div>
         <div>
-          <input className="map-scale-inp" type="range" min="0.1" max="2.0" step="0.1" value={this.props.mapSetting.image.scale} onChange={this.handleMapScaleChange}/>
+          <input className="map-scale-inp" type="range" min="0.1" max="2.0" step="0.1" value={this.props.mapSetting.find(map => map.mapId === this.props.displaySetting.displayMap).scale} onChange={this.handleMapScaleChange}/>
         </div>
       </div>
     );

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { hideRemoveChar } from '../../../../../../../../redux/actions/display';
-import { setMapMode } from '../../../../../../../../redux/actions/map';
-import { removeMapChar } from '../../../../../../../../redux/actions/char';
+import { setMapMode, removeMapChar } from '../../../../../../../../redux/actions/map';
 import socket from '../../../../../../../../socket/socketClient';
 import { removeSelectLabel, removeCharBtnLabel } from './removeCharBalloon.i18n';
 
@@ -22,9 +21,9 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    setMapMode:     (mode)   => dispatch(setMapMode(mode)),
-    hideRemoveChar: ()       => dispatch(hideRemoveChar()),
-    removeMapChar:  (charId) => dispatch(removeMapChar(charId))
+    setMapMode:     (mapId, mode)   => dispatch(setMapMode(mapId, mode)),
+    hideRemoveChar: ()              => dispatch(hideRemoveChar()),
+    removeMapChar:  (mapId, charId) => dispatch(removeMapChar(mapId, charId))
   };
 };
 
@@ -38,8 +37,8 @@ class RemoveCharBalloon extends Component {
   }
 
   handleRemoveCharButtonClick (e){
-    this.props.removeMapChar(this.state.charIdToRemove);
-    socket.emit('removeMapChar', this.props.global.roomId, this.state.charIdToRemove);
+    this.props.removeMapChar(this.props.displaySetting.displayMap, this.state.charIdToRemove);
+    socket.emit('removeMapChar', this.props.global.roomId, this.props.displaySetting.displayMap, this.state.charIdToRemove);
     this.setState({ charIdToRemove: '-' });
     this.props.hideRemoveChar();
   }
@@ -52,8 +51,9 @@ class RemoveCharBalloon extends Component {
     const isDisabled = this.state.charIdToRemove.length === 0 || !this.props.charList.some(char => char.charId === this.state.charIdToRemove);
     const toggleRemoveChar = this.props.displaySetting.displayRemoveChar ? 'is-active' : '';
 
-    const charOpt = this.props.charList.filter(char => char.map.onMap).map(char => {
-      return (<option key={char.charId} value={char.charId}>{char.general.name}</option>);
+    const charOpt = this.props.mapSetting.find(map => map.mapId === this.props.displaySetting.displayMap).charDots.map(mapChar => {
+      const name = this.props.charList.find(char => char.charId === mapChar.charId).general.name;
+      return (<option key={mapChar.charId} value={mapChar.charId}>{name}</option>);
     });
 
     return (

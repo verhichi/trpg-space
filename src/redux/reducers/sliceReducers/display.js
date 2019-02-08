@@ -12,7 +12,8 @@ import {
   SHOW_MAP_SCALE,
   HIDE_MAP_SCALE,
   SET_SIDEBAR_CHAR,
-  SET_SIDEBAR_NOTE
+  SET_SIDEBAR_NOTE,
+  SET_DISPLAY_MAP
 } from '../../../constants/actionTypes';
 
 import {
@@ -30,6 +31,7 @@ const initialState = {
   displayMapScale:    false,
   sidebarTabMode:     SIDEBAR_MODE_CHAR,
   centerMode:         CENTER_MODE_CHAT,
+  displayMap:         ''
 };
 
 const displayReducer = (state = initialState, action) => {
@@ -116,6 +118,12 @@ const displayReducer = (state = initialState, action) => {
       return {
         ...state,
         sidebarTabMode: SIDEBAR_MODE_NOTE
+      };
+
+    case SET_DISPLAY_MAP:
+      return {
+        ...state,
+        displayMap: action.mapId
       };
 
     default:

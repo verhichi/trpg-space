@@ -22,8 +22,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     hidePlaceChar:  ()       => dispatch(hidePlaceChar()),
-    setMapMode:     (mode)   => dispatch(setMapMode(mode)),
-    setCharToPlace: (charId) => dispatch(setCharToPlace(charId))
+    setMapMode:     (mapId, mode)   => dispatch(setMapMode(mapId, mode)),
+    setCharToPlace: (mapId, charId) => dispatch(setCharToPlace(mapId, charId))
   };
 };
 
@@ -37,8 +37,8 @@ class PlaceCharBalloon extends Component {
   }
 
   handlePlaceCharButtonClick (e){
-    this.props.setMapMode(MAP_MODE_PLACE_CHAR);
-    this.props.setCharToPlace(this.state.charIdToPlace);
+    this.props.setMapMode(this.props.displaySetting.displayMap, MAP_MODE_PLACE_CHAR);
+    this.props.setCharToPlace(this.props.displaySetting.displayMap, this.state.charIdToPlace);
     this.setState({ charIdToPlace: '-' });
     this.props.hidePlaceChar();
   }
@@ -48,10 +48,10 @@ class PlaceCharBalloon extends Component {
   }
 
   render() {
-    const isDisabled = this.state.charIdToPlace.length === 0 || this.props.mapSetting.image.src.length === 0 || !this.props.charList.some(char => char.charId === this.state.charIdToPlace);
+    const isDisabled = this.state.charIdToPlace.length === 0 || this.props.mapSetting.find(map => map.mapId === this.props.displaySetting.displayMap).length === 0 || !this.props.charList.some(char => char.charId === this.state.charIdToPlace);
     const toggleClass = this.props.displaySetting.displayPlaceChar ? 'is-active' : '';
 
-    const charOpt = this.props.charList.map((char) => {
+    const charOpt = this.props.charList.map(char => {
       return (<option key={char.charId} value={char.charId}>{char.general.name}</option>);
     });
 

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, MODAL_TYPE_VIEW_CHAR, MODAL_TYPE_CONFIRM, MODAL_TYPE_EDIT_CHAR, STATUS_TYPE_VALUE, STATUS_TYPE_PARAM } from '../../../../../../../constants/constants'
 import { showModal, hideModal } from '../../../../../../../redux/actions/modal';
-import { removeChar, removeMapChar } from '../../../../../../../redux/actions/char';
+import { removeMapChar } from '../../../../../../../redux/actions/map';
+import { removeChar } from '../../../../../../../redux/actions/char';
 import { checkSendAsUser, editSendAs } from '../../../../../../../redux/actions/chatSetting';
 
 import socket from '../../../../../../../socket/socketClient';
@@ -16,9 +17,11 @@ import './char.scss';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    global:      state.global,
-    userList:    state.userList,
-    chatSetting: state.chatSetting
+    global:         state.global,
+    userList:       state.userList,
+    displaySetting: state.displaySetting,
+    chatSetting:    state.chatSetting,
+    mapSetting:     state.mapSetting
   };
 };
 
@@ -28,7 +31,7 @@ const mapDispatchToProps = (dispatch) => {
     showModal:       (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
     hideModal:       ()                     => dispatch(hideModal()),
     removeChar:      (charId)               => dispatch(removeChar(charId)),
-    removeMapChar:   (charId)               => dispatch(removeMapChar(charId)),
+    removeMapChar:   (mapId, charId)        => dispatch(removeMapChar(mapId, charId)),
     checkSendAsUser: ()                     => dispatch(checkSendAsUser()),
     editSendAs:      (charId)               => dispatch(editSendAs(charId))
   };
@@ -38,10 +41,11 @@ class Char extends Component {
   constructor (props){
     super(props);
 
-    this.handleRemoveClick = this.handleRemoveClick.bind(this);
-    this.handleEditClick   = this.handleEditClick.bind(this);
-    this.handleViewClick   = this.handleViewClick.bind(this);
-    this.resetSendAsState  = this.resetSendAsState.bind(this);
+    this.handleRemoveClick   = this.handleRemoveClick.bind(this);
+    this.handleRemoveConfirm = this.handleRemoveConfirm.bind(this);
+    this.handleEditClick     = this.handleEditClick.bind(this);
+    this.handleViewClick     = this.handleViewClick.bind(this);
+    this.resetSendAsState    = this.resetSendAsState.bind(this);
   }
 
   handleRemoveClick (charId, e){
@@ -49,15 +53,22 @@ class Char extends Component {
       title:        'Delete Character',
       displayClose: false,
       confirmText:  `Are you sure you want to delete ${this.props.charData.general.name}?`,
-      accept: [
-        this.props.removeChar.bind(null, this.props.charData.charId),
-        this.props.removeMapChar.bind(null, this.props.charData.charId),
-        this.resetSendAsState,
-        socket.emit.bind(socket, 'delChar', this.props.global.roomId, this.props.charData.charId),
-        this.props.hideModal
-      ],
-      decline: this.props.hideModal
+      accept:       this.handleRemoveConfirm,
+      decline:      this.props.hideModal
     });
+  }
+
+  handleRemoveConfirm (){
+    this.props.mapSetting.forEach(map => {
+      if (map.charDots.some(char => char.charId === this.props.charData.charId)){
+        this.props.removeMapChar(map.mapId, this.props.charData.charId);
+        socket.emit('removeMapChar', this.props.global.roomId, map.mapId, this.props.charData.charId)
+      }
+    });
+    this.props.removeChar(this.props.charData.charId);
+    this.resetSendAsState();
+    socket.emit('delChar', this.props.global.roomId, this.props.charData.charId);
+    this.props.hideModal();
   }
 
   resetSendAsState (){

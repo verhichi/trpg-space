@@ -4,8 +4,9 @@ import { CHAT_TYPE_HOST, CHAT_TYPE_LEAVE, CHAT_TYPE_JOIN, CHAR_PRIVACY_LEVEL_THR
 import { setUserId, setRoomId } from '../../../redux/actions/global';
 import { addUser, editUser, removeUser, newHost } from '../../../redux/actions/user';
 import { addChat } from '../../../redux/actions/chatLog';
-import { addChar, editChar, removeChar, addMapChar, editMapChar, removeMapChar, removeAllMapChar } from '../../../redux/actions/char';
-import { editMapImage } from '../../../redux/actions/map';
+import { setDisplayMap } from '../../../redux/actions/display';
+import { addChar, editChar, removeChar } from '../../../redux/actions/char';
+import { addMap, editMap, removeMap, addMapChar, editMapChar, removeMapChar, setMapMode, setCharToPlace } from '../../../redux/actions/map';
 import { lockNote, unlockNote, editNote } from '../../../redux/actions/note';
 import { removeSendMsgUser, checkSendMsgToAll } from '../../../redux/actions/chatSetting';
 import socket from '../../../socket/socketClient';
@@ -21,38 +22,43 @@ import Bottom from './bottom/bottom';
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
-    global:      state.global,
-    userList:    state.userList,
-    charList:    state.charList,
-    mapSetting:  state.mapSetting,
-    chatSetting: state.chatSetting,
-    noteSetting: state.noteSetting
+    global:         state.global,
+    userList:       state.userList,
+    charList:       state.charList,
+    displaySetting: state.displaySetting,
+    mapSetting:     state.mapSetting,
+    chatSetting:    state.chatSetting,
+    noteSetting:    state.noteSetting
   };
 };
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    addUser:            (user)      => dispatch(addUser(user)),
-    editUser:           (user)      => dispatch(editUser(user)),
-    removeUser:         (userId)    => dispatch(removeUser(userId)),
-    setRoomId:          (roomId)    => dispatch(setRoomId(roomId)),
-    setUserId:          (userId)    => dispatch(setUserId(userId)),
-    addChat:            (content)   => dispatch(addChat(content)),
-    newHost:            (id)        => dispatch(newHost(id)),
-    editMapImage:       (src)       => dispatch(editMapImage(src)),
-    addMapChar:         (charData)  => dispatch(addMapChar(charData)),
-    editMapChar:        (charData)  => dispatch(editMapChar(charData)),
-    removeMapChar:      (charId)    => dispatch(removeMapChar(charId)),
-    removeAllMapChar:   ()          => dispatch(removeAllMapChar()),
-    editNote:           (notes)     => dispatch(editNote(notes)),
-    lockNote:           (userId)    => dispatch(lockNote(userId)),
-    unlockNote:         ()          => dispatch(unlockNote()),
-    removeSendMsgUser:  (userId)    => dispatch(removeSendMsgUser(userId)),
-    checkSendMsgToAll:  ()          => dispatch(checkSendMsgToAll()),
-    editChar:           (charData)  => dispatch(editChar(charData)),
-    addChar:            (charData)  => dispatch(addChar(charData)),
-    removeChar:         (charId)    => dispatch(removeChar(charId)),
+    addUser:           (user)             => dispatch(addUser(user)),
+    editUser:          (user)             => dispatch(editUser(user)),
+    removeUser:        (userId)           => dispatch(removeUser(userId)),
+    setRoomId:         (roomId)           => dispatch(setRoomId(roomId)),
+    setUserId:         (userId)           => dispatch(setUserId(userId)),
+    addChat:           (content)          => dispatch(addChat(content)),
+    newHost:           (id)               => dispatch(newHost(id)),
+    addMapChar:        (mapId, charData)  => dispatch(addMapChar(mapId, charData)),
+    editMapChar:       (mapId, charData)  => dispatch(editMapChar(mapId, charData)),
+    removeMapChar:     (mapId, charId)    => dispatch(removeMapChar(mapId, charId)),
+    editNote:          (notes)            => dispatch(editNote(notes)),
+    lockNote:          (userId)           => dispatch(lockNote(userId)),
+    unlockNote:        ()                 => dispatch(unlockNote()),
+    removeSendMsgUser: (userId)           => dispatch(removeSendMsgUser(userId)),
+    checkSendMsgToAll: ()                 => dispatch(checkSendMsgToAll()),
+    editChar:          (charData)         => dispatch(editChar(charData)),
+    addChar:           (charData)         => dispatch(addChar(charData)),
+    removeChar:        (charId)           => dispatch(removeChar(charId)),
+    addMap:            (mapData)          => dispatch(addMap(mapData)),
+    editMap:           (mapData)          => dispatch(editMap(mapData)),
+    removeMap:         (mapId)            => dispatch(removeMap(mapId)),
+    setDisplayMap:     (mapId)            => dispatch(setDisplayMap(mapId)),
+    setMapMode:        (mapId, mode)      => dispatch(setMapMode(mapId, mode)),
+    setCharToPlace:    (mapId, charId)    => dispatch(setCharToPlace(mapId, charId))
   };
 };
 
@@ -108,8 +114,19 @@ class Room extends Component {
     });
 
     socket.on('delChar', (charId) => {
+      this.props.mapSetting.forEach(map => {
+        if (map.charToPlace === charId){
+          this.props.setCharToPlace(map.mapId, '');
+          this.props.setMapMode(map.mapId, '');
+        }
+
+        map.charDots.forEach(char => {
+          if (charId === char.charId){
+            this.props.removeMapChar(map.mapId, charId);
+          }
+        });
+      });
       this.props.removeChar(charId);
-      this.props.removeMapChar(charId);
     });
 
     socket.on('chat', (content) => {
@@ -120,12 +137,31 @@ class Room extends Component {
       this.props.addUser(content);
       socket.emit('user', this.props.global.roomId, this.props.userList.find(user => user.id === this.props.global.id));
 
-      socket.emit('mapImage', this.props.global.roomId, this.props.mapSetting.image);
       socket.emit('editNote', this.props.global.roomId, this.props.noteSetting.notes);
 
       this.props.charList.forEach((char) => {
         if (char.ownerId === this.props.global.id && char.general.privacy !== CHAR_PRIVACY_LEVEL_THREE){
           socket.emit('char', this.props.global.roomId, char);
+        }
+      });
+
+      this.props.mapSetting.forEach(map => {
+        if (map.ownerId === this.props.global.id && map.shareWithAll){
+          socket.emit('map', this.props.global.roomId, {
+            mapId:        map.mapId,
+            ownerId:      map.ownerId,
+            src:          map.src,
+            name:         map.name,
+            shareWithAll: map.shareWithAll
+          });
+        }
+
+        if (map.shareWithAll){
+          map.charDots.forEach(char => {
+            if (char.ownerId === this.props.global.id && char.privacy !== CHAR_PRIVACY_LEVEL_THREE){
+              socket.emit('mapChar', this.props.global.roomId, map.mapId, char);
+            }
+          });
         }
       });
     });
@@ -144,6 +180,23 @@ class Room extends Component {
 
         this.props.newHost(leaveData.newHost);
       }
+
+      this.props.mapSetting.forEach(map => {
+        if (map.ownerId === leaveData.id){
+          if (map.mapId === this.props.displaySetting.displayMap){
+            this.props.setDisplayMap('');
+          }
+          this.props.removeMap(map.mapId);
+        }
+      });
+
+      this.props.mapSetting.forEach(map => {
+        map.charDots.forEach(char => {
+          if (char.ownerId === leaveData.id){
+            this.props.removeMapChar(map.mapId, char.charId);
+          }
+        });
+      });
 
       this.props.charList.forEach(char => {
         if (char.ownerId === leaveData.id){
@@ -165,23 +218,31 @@ class Room extends Component {
       this.props.removeUser(leaveData.id);
     });
 
-    socket.on('mapImage', (imageData) => {
-      if (this.props.mapSetting.image.id !== imageData.id){
-        this.props.editMapImage(imageData);
-        this.props.removeAllMapChar();
-      }
-    });
-
-    socket.on('mapChar', (charData) => {
-      if (this.props.charList.some(char => char.charId === charData.charId && char.onMap)){
-        this.props.editMapChar(charData);
+    socket.on('map', mapData => {
+      if (this.props.mapSetting.some(map => map.mapId === mapData.mapId)){
+        this.props.editMap(mapData);
       } else {
-        this.props.addMapChar(charData);
+        this.props.addMap(mapData);
       }
     });
 
-    socket.on('removeMapChar', (charId) => {
-      this.props.removeMapChar(charId);
+    socket.on('delMap', mapId => {
+      if (mapId === this.props.displaySetting.displayMap){
+        this.props.setDisplayMap('');
+      }
+      this.props.removeMap(mapId);
+    });
+
+    socket.on('mapChar', (mapId, charData) => {
+      if (this.props.mapSetting.find(map => map.mapId === mapId).charDots.some(char => char.charId === charData.charId)){
+        this.props.editMapChar(mapId, charData);
+      } else {
+        this.props.addMapChar(mapId, charData);
+      }
+    });
+
+    socket.on('removeMapChar', (mapId, charId) => {
+      this.props.removeMapChar(mapId, charId);
     });
 
     socket.on('lockNote', (userId) => {
@@ -203,8 +264,6 @@ class Room extends Component {
           name: this.props.userList.find(user => user.id === this.props.global.id).name
         });
       });
-
-
   }
 
   componentWillUnmount (){

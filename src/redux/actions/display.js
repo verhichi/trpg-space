@@ -12,7 +12,8 @@ import {
   SHOW_MAP_SCALE,
   HIDE_MAP_SCALE,
   SET_SIDEBAR_CHAR,
-  SET_SIDEBAR_NOTE
+  SET_SIDEBAR_NOTE,
+  SET_DISPLAY_MAP
 } from '../../constants/actionTypes';
 
 export const showDiceBubble = () => {
@@ -69,4 +70,11 @@ export const showMapScale = () => {
 
 export const hideMapScale = () => {
   return { type: HIDE_MAP_SCALE };
+};
+
+export const setDisplayMap = (mapId) => {
+  return {
+    type: SET_DISPLAY_MAP,
+    mapId
+  };
 };

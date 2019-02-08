@@ -111,23 +111,23 @@ io.on('connection', (socket) => {
   });
 
   // Logic for when a user changes map's background
-  socket.on('mapImage', (roomId, imageData) => {
-    socket.broadcast.to(roomId).emit('mapImage', imageData);
+  socket.on('map', (roomId, mapData) => {
+    socket.broadcast.to(roomId).emit('map', mapData);
+  });
+
+  // Logic for when a user changes map's background
+  socket.on('delMap', (roomId, mapId) => {
+    socket.broadcast.to(roomId).emit('delMap', mapId);
   });
 
   // Logic for when a user adds or edits a
-  socket.on('mapChar', (roomId, charData) => {
-    socket.broadcast.to(roomId).emit('mapChar', charData);
+  socket.on('mapChar', (roomId, mapId, charData) => {
+    socket.broadcast.to(roomId).emit('mapChar', mapId, charData);
   });
 
   // Logic for when a user adds or edits a character to place on the map
-  socket.on('removeMapChar', (roomId, charId) => {
-    socket.broadcast.to(roomId).emit('removeMapChar', charId);
-  });
-
-  // Logic for when a user adds or edits a character to place on the map
-  socket.on('removeAllMapChar', (roomId) => {
-    socket.broadcast.to(roomId).emit('removeAllMapChar');
+  socket.on('removeMapChar', (roomId, mapId, charId) => {
+    socket.broadcast.to(roomId).emit('removeMapChar', mapId, charId);
   });
 
   // Logic for when a user edits shared notes
