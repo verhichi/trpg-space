@@ -7,9 +7,6 @@ import {
   EDIT_MAP_SCALE,
   TOGGLE_MAP_GRID,
   SET_CHAR_TO_PLACE,
-  ADD_MAP_CHAR,
-  EDIT_MAP_CHAR,
-  REMOVE_MAP_CHAR
 } from '../../../constants/actionTypes';
 
 const initialState = [
@@ -23,16 +20,7 @@ const initialState = [
 //     charToPlace:    characterIdToPlace,
 //     src:            src of map image,
 //     name:           name of map,
-//     shareWithAll:   true/false,
-//     charDots: [
-//       {
-//         ownerId: ownerId,
-//         charId:  charId,
-//         privacy: 0/1/2/3,
-//         left:    x position of charDot,
-//         top:     y position of charDot
-//       }
-//     ],
+//     private:        true/false,
 //   }
 ];
 
@@ -51,8 +39,7 @@ const mapReducer = (state = initialState, action) => {
           charToPlace:    '',
           src:            action.mapData.src,
           name:           action.mapData.name,
-          shareWithAll:   action.mapData.shareWithAll,
-          charDots:       [],
+          private:        action.mapData.private,
         } ];
       } else {
         return state;
@@ -63,10 +50,9 @@ const mapReducer = (state = initialState, action) => {
         if (map.mapId === action.mapData.mapId){
           return {
             ...map,
-            src:          action.mapData.src,
-            name:         action.mapData.name,
-            shareWithAll: action.mapData.shareWithAll,
-            shareWith:    action.mapData.shareWith,
+            src:     action.mapData.src,
+            name:    action.mapData.name,
+            private: action.mapData.private,
           };
         } else {
           return map;
@@ -131,48 +117,6 @@ const mapReducer = (state = initialState, action) => {
           return {
             ...map,
             charToPlace: action.charId
-          };
-        } else {
-          return map;
-        }
-      });
-
-    case ADD_MAP_CHAR:
-      return state.map(map => {
-        if (map.mapId === action.mapId){
-          return {
-            ...map,
-            charDots: [...map.charDots, action.charData]
-          };
-        } else {
-          return map;
-        }
-      });
-
-    case EDIT_MAP_CHAR:
-      return state.map(map => {
-        if (map.mapId === action.mapId){
-          return {
-            ...map,
-            charDots: map.charDots.map(char => {
-              if (action.charData.charId === char.charId){
-                return action.charData;
-              } else {
-                return char;
-              }
-            })
-          };
-        } else {
-          return map;
-        }
-      });
-
-    case REMOVE_MAP_CHAR:
-      return state.map(map => {
-        if (map.mapId === action.mapId){
-          return {
-            ...map,
-            charDots: map.charDots.filter(char => char.charId !== action.charId)
           };
         } else {
           return map;

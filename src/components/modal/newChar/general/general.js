@@ -57,7 +57,7 @@ class General extends Component {
   }
 
   componentWillUnmount (){
-    window.removeEventListener('click', this.handleOutsideClick, false);
+    document.removeEventListener('click', this.handleOutsideClick, false);
   }
 
   handleOutsideClick (e){

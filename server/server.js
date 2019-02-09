@@ -121,8 +121,8 @@ io.on('connection', (socket) => {
   });
 
   // Logic for when a user adds or edits a
-  socket.on('mapChar', (roomId, mapId, charData) => {
-    socket.broadcast.to(roomId).emit('mapChar', mapId, charData);
+  socket.on('mapChar', (roomId, mapCharData) => {
+    socket.broadcast.to(roomId).emit('mapChar', mapCharData);
   });
 
   // Logic for when a user adds or edits a character to place on the map

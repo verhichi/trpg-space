@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, MODAL_TYPE_VIEW_CHAR, MODAL_TYPE_CONFIRM, MODAL_TYPE_EDIT_CHAR, STATUS_TYPE_VALUE, STATUS_TYPE_PARAM } from '../../../../../../../constants/constants'
 import { showModal, hideModal } from '../../../../../../../redux/actions/modal';
-import { removeMapChar } from '../../../../../../../redux/actions/map';
+import { removeMapChar, removeSelCharFromAllMap } from '../../../../../../../redux/actions/mapChar';
 import { removeChar } from '../../../../../../../redux/actions/char';
 import { checkSendAsUser, editSendAs } from '../../../../../../../redux/actions/chatSetting';
 
@@ -28,12 +28,13 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    showModal:       (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
-    hideModal:       ()                     => dispatch(hideModal()),
-    removeChar:      (charId)               => dispatch(removeChar(charId)),
-    removeMapChar:   (mapId, charId)        => dispatch(removeMapChar(mapId, charId)),
-    checkSendAsUser: ()                     => dispatch(checkSendAsUser()),
-    editSendAs:      (charId)               => dispatch(editSendAs(charId))
+    showModal:               (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
+    hideModal:               ()                     => dispatch(hideModal()),
+    removeChar:              (charId)               => dispatch(removeChar(charId)),
+    removeMapChar:           (mapId, charId)        => dispatch(removeMapChar(mapId, charId)),
+    checkSendAsUser:         ()                     => dispatch(checkSendAsUser()),
+    editSendAs:              (charId)               => dispatch(editSendAs(charId)),
+    removeSelCharFromAllMap: (charId)               => dispatch(removeSelCharFromAllMap(charId))
   };
 };
 
@@ -59,13 +60,9 @@ class Char extends Component {
   }
 
   handleRemoveConfirm (){
-    this.props.mapSetting.forEach(map => {
-      if (map.charDots.some(char => char.charId === this.props.charData.charId)){
-        this.props.removeMapChar(map.mapId, this.props.charData.charId);
-        socket.emit('removeMapChar', this.props.global.roomId, map.mapId, this.props.charData.charId)
-      }
-    });
+    this.props.removeSelCharFromAllMap(this.props.charData.charId);
     this.props.removeChar(this.props.charData.charId);
+    
     this.resetSendAsState();
     socket.emit('delChar', this.props.global.roomId, this.props.charData.charId);
     this.props.hideModal();

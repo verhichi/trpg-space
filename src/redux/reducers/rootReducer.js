@@ -6,6 +6,7 @@ import chatSettingReducer from './sliceReducers/chatSetting';
 import displayReducer     from './sliceReducers/display';
 import globalReducer      from './sliceReducers/global';
 import mapReducer         from './sliceReducers/map';
+import mapCharReducer     from './sliceReducers/mapChar';
 import modalReducer       from './sliceReducers/modal';
 import noteReducer        from './sliceReducers/note';
 import userReducer        from './sliceReducers/user';
@@ -19,6 +20,7 @@ const appReducer = combineReducers({
   displaySetting: displayReducer,
   global:         globalReducer,
   mapSetting:     mapReducer,
+  mapCharList:    mapCharReducer,
   modalSetting:   modalReducer,
   noteSetting:    noteReducer,
   userList:       userReducer,

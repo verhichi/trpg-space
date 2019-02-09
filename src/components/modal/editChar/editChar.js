@@ -24,7 +24,8 @@ const mapStateToProps = (state) => {
     global:       state.global,
     charList:     state.charList,
     modalSetting: state.modalSetting,
-    mapSetting:   state.mapSetting
+    mapSetting:   state.mapSetting,
+    mapCharList:  state.mapCharList
   };
 };
 
@@ -40,15 +41,13 @@ const mapDispatchToProps = (dispatch) => {
 class EditChar extends Component {
   constructor (props){
     super(props);
-    const char = this.props.charList.find((char) => char.charId === this.props.modalSetting.modalProp.charId);
-
+    this.previousCharData  = this.props.charList.find((char) => char.charId === this.props.modalSetting.modalProp.charId);
     this.state = {
       submitted: false,
       tabMode:   CHAR_MODAL_TAB_GENERAL,
-      general:   char.general,
-      status:    char.status,
-      detail:    char.detail,
-      map:       char.map
+      general:   this.previousCharData.general,
+      status:    this.previousCharData.status,
+      detail:    this.previousCharData.detail,
     };
 
     this.returnStatusValue     = this.returnStatusValue.bind(this);
@@ -125,7 +124,6 @@ class EditChar extends Component {
         general: this.state.general,
         status:  this.state.status,
         detail:  this.state.detail,
-        map:     this.state.map
       };
 
       this.props.editChar(charData);
@@ -133,15 +131,15 @@ class EditChar extends Component {
       if (this.state.general.privacy !== CHAR_PRIVACY_LEVEL_THREE){
         socket.emit('char', this.props.global.roomId, charData);
 
-        this.props.mapSetting.forEach(map => {
-          if (map.shareWithAll){
-            map.charDots.forEach(charDot => {
-              if (charDot.charId === this.props.modalSetting.modalProp.charId){
-                socket.emit('mapChar', this.props.global.roomId, map.mapId, charDot);
+        if (this.previousCharData.general.privacy === CHAR_PRIVACY_LEVEL_THREE){
+          this.props.mapCharList.forEach(mapChar => {
+            if (mapChar.charId === this.props.modalSetting.modalProp.charId){
+              if (!this.props.mapSetting.find(map => map.mapId === mapChar.mapId).private){
+                socket.emit('mapChar', this.props.global.roomId, mapChar);
               }
-            });
-          }
-        });
+            }
+          });
+        }
       } else {
         socket.emit('delChar', this.props.global.roomId, this.props.modalSetting.modalProp.charId);
       }

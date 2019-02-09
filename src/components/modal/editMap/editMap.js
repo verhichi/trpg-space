@@ -16,8 +16,10 @@ import './editMap.scss';
 const mapStateToProps = (state) => {
   return {
     global:       state.global,
+    charList:     state.charList,
     mapSetting:   state.mapSetting,
     modalSetting: state.modalSetting,
+    mapCharList:  state.mapCharList,
     userList:     state.userList
   };
 };
@@ -39,7 +41,7 @@ class EditMap extends Component {
       submitted:     false,
       src:           this.previousMapData.src,
       name:          this.previousMapData.name,
-      shareWithAll:  this.previousMapData.shareWithAll,
+      private:       this.previousMapData.private,
       fileExist:     true,
       fileSizeError: false,
       fileTypeError: false,
@@ -57,9 +59,9 @@ class EditMap extends Component {
   }
 
   handleAllCheckChange (e){
-    this.state.shareWithAll
-      ? this.setState({ shareWithAll: false })
-      : this.setState({ shareWithAll: true  });
+    this.state.private
+      ? this.setState({ private: false })
+      : this.setState({ private: true  });
   }
 
   handleFileChange (e){
@@ -90,24 +92,24 @@ class EditMap extends Component {
       this.setState({ submitted: true });
 
       const mapData = {
-        mapId:        this.props.modalSetting.modalProp.mapId,
-        ownerId:      this.props.global.id,
-        src:          this.state.src,
-        name:         this.state.name.trim(),
-        shareWithAll: this.state.shareWithAll,
+        mapId:   this.props.modalSetting.modalProp.mapId,
+        ownerId: this.props.global.id,
+        src:     this.state.src,
+        name:    this.state.name.trim(),
+        private: this.state.private,
       };
 
       this.props.editMap(mapData);
 
-      if (!this.state.shareWithAll){
+      if (this.state.private){
         socket.emit('delMap', this.props.global.roomId, this.props.modalSetting.modalProp.mapId);
       } else {
         socket.emit('map', this.props.global.roomId, mapData);
 
-        if (!this.previousMapData.shareWithAll){
-          this.previousMapData.charDots.forEach(charDot => {
-            if (charDot.privacy !== CHAR_PRIVACY_LEVEL_THREE){
-              socket.emit('mapChar', this.props.global.roomId, this.props.modalSetting.modalProp.mapId, charDot);
+        if (this.previousMapData.private){
+          this.props.mapCharList.forEach(mapChar => {
+            if (mapChar.mapId === this.props.modalSetting.modalProp.mapId && this.props.charList.find(char => char.charId === mapChar.charId).general.privacy !== CHAR_PRIVACY_LEVEL_THREE){
+              socket.emit('mapChar', this.props.global.roomId, mapChar);
             }
           });
         }
@@ -146,7 +148,7 @@ class EditMap extends Component {
           </div>
 
           <div className="mb-2 d-flex">
-            <div className="map-user one-line-ellipsis"><label><input type="checkbox" checked={this.state.shareWithAll} onChange={this.handleAllCheckChange}/>{mapPrivacyLabel[this.props.global.lang]}</label></div>
+            <div className="map-user one-line-ellipsis"><label><input type="checkbox" checked={!this.state.private} onChange={this.handleAllCheckChange}/>{mapPrivacyLabel[this.props.global.lang]}</label></div>
           </div>
         </div>
 

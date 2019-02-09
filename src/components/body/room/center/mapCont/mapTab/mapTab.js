@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { MODAL_TYPE_CONFIRM, MODAL_TYPE_NEW_MAP, MODAL_TYPE_EDIT_MAP } from '../../../../../../constants/constants';
 import { showModal, hideModal } from '../../../../../../redux/actions/modal';
 import { removeMap } from '../../../../../../redux/actions/map';
+import { removeAllCharFromSelMap } from '../../../../../../redux/actions/mapChar';
 import { setDisplayMap } from '../../../../../../redux/actions/display';
 import socket from '../../../../../../socket/socketClient';
 
@@ -24,10 +25,11 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    setDisplayMap: (mapId)                => dispatch(setDisplayMap(mapId)),
-    hideModal:     ()                     => dispatch(hideModal()),
-    removeMap:     (mapId)                => dispatch(removeMap(mapId)),
-    showModal:     (modalType, modalProp) => dispatch(showModal(modalType, modalProp))
+    setDisplayMap:           (mapId)                => dispatch(setDisplayMap(mapId)),
+    hideModal:               ()                     => dispatch(hideModal()),
+    removeMap:               (mapId)                => dispatch(removeMap(mapId)),
+    showModal:               (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
+    removeAllCharFromSelMap: (mapId)                => dispatch(removeAllCharFromSelMap(mapId))
   };
 };
 
@@ -73,6 +75,7 @@ class MapTab extends Component {
       confirmText:  'Are you sure you want to delete map?',
       accept:       [
         this.props.setDisplayMap.bind(this, ''),
+        this.props.removeAllCharFromSelMap.bind(this, mapId),
         this.props.removeMap.bind(this, mapId),
         socket.emit.bind(socket, 'delMap', this.props.global.roomId, mapId),
         this.props.hideModal

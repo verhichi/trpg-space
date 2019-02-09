@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { hideRemoveChar } from '../../../../../../../../redux/actions/display';
-import { setMapMode, removeMapChar } from '../../../../../../../../redux/actions/map';
+import { removeMapChar } from '../../../../../../../../redux/actions/mapChar';
+import { setMapMode } from '../../../../../../../../redux/actions/map';
 import socket from '../../../../../../../../socket/socketClient';
 import { removeSelectLabel, removeCharBtnLabel } from './removeCharBalloon.i18n';
 
@@ -14,7 +15,8 @@ const mapStateToProps = (state) => {
     global:         state.global,
     charList:       state.charList,
     displaySetting: state.displaySetting,
-    mapSetting:     state.mapSetting
+    mapSetting:     state.mapSetting,
+    mapCharList:    state.mapCharList
   };
 };
 
@@ -51,7 +53,7 @@ class RemoveCharBalloon extends Component {
     const isDisabled = this.state.charIdToRemove.length === 0 || !this.props.charList.some(char => char.charId === this.state.charIdToRemove);
     const toggleRemoveChar = this.props.displaySetting.displayRemoveChar ? 'is-active' : '';
 
-    const charOpt = this.props.mapSetting.find(map => map.mapId === this.props.displaySetting.displayMap).charDots.map(mapChar => {
+    const charOpt = this.props.mapCharList.filter(mapChar => mapChar.mapId === this.props.displaySetting.displayMap).map(mapChar => {
       const name = this.props.charList.find(char => char.charId === mapChar.charId).general.name;
       return (<option key={mapChar.charId} value={mapChar.charId}>{name}</option>);
     });

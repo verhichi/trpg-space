@@ -38,7 +38,7 @@ class NewMap extends Component {
       submitted:     false,
       src:           '',
       name:          '',
-      shareWithAll:  true,
+      private:       false,
       fileExist:     false,
       fileSizeError: false,
       fileTypeError: false,
@@ -56,9 +56,9 @@ class NewMap extends Component {
   }
 
   handleAllCheckChange (e){
-    this.state.shareWithAll
-      ? this.setState({ shareWithAll: false })
-      : this.setState({ shareWithAll: true  });
+    this.state.private
+      ? this.setState({ private: false })
+      : this.setState({ private: true  });
   }
 
   handleFileChange (e){
@@ -89,17 +89,17 @@ class NewMap extends Component {
       this.setState({ submitted: true });
 
       const mapData = {
-        mapId:        uuid.v4(),
-        ownerId:      this.props.global.id,
-        src:          this.state.src,
-        name:         this.state.name.trim(),
-        shareWithAll: this.state.shareWithAll,
+        mapId:   uuid.v4(),
+        ownerId: this.props.global.id,
+        src:     this.state.src,
+        name:    this.state.name.trim(),
+        private: this.state.private,
       };
 
       this.props.addMap(mapData);
       this.props.setDisplayMap(mapData.mapId);
 
-      if (this.state.shareWithAll){
+      if (!this.state.private){
         socket.emit('map', this.props.global.roomId, mapData);
       }
     }
@@ -134,7 +134,7 @@ class NewMap extends Component {
           </div>
 
           <div className="mb-2 d-flex">
-            <div className="map-user one-line-ellipsis"><label><input type="checkbox" checked={this.state.shareWithAll} onChange={this.handleAllCheckChange}/>{mapPrivacyLabel[this.props.global.lang]}</label></div>
+            <div className="map-user one-line-ellipsis"><label><input type="checkbox" checked={!this.state.private} onChange={this.handleAllCheckChange}/>{mapPrivacyLabel[this.props.global.lang]}</label></div>
           </div>
         </div>
 

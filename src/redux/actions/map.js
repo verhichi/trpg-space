@@ -1,52 +1,3 @@
-// import {
-//   EDIT_MAP_IMAGE,
-//   SET_MAP_MODE,
-//   EDIT_MAP_POSITION,
-//   EDIT_MAP_SCALE,
-//   TOGGLE_MAP_GRID,
-//   SET_CHAR_TO_PLACE
-// } from '../../constants/actionTypes';
-//
-// export const editMapImage = (imageData) => {
-//   return {
-//     type: EDIT_MAP_IMAGE,
-//     imageData
-//   };
-// };
-//
-// export const setMapMode = (mode) => {
-//   return {
-//     type: SET_MAP_MODE,
-//     mode
-//   };
-// };
-//
-// export const editMapPosition = (left, top) => {
-//   return {
-//     type: EDIT_MAP_POSITION,
-//     left,
-//     top
-//   };
-// };
-//
-// export const editMapScale = (scale) => {
-//   return {
-//     type: EDIT_MAP_SCALE,
-//     scale
-//   }
-// };
-//
-// export const toggleMapGrid = () => {
-//   return { type: TOGGLE_MAP_GRID };
-// };
-//
-// export const setCharToPlace = (charId) => {
-//   return {
-//     type: SET_CHAR_TO_PLACE,
-//     charId
-//   };
-// };
-
 import {
   ADD_MAP,
   EDIT_MAP,
@@ -55,10 +6,7 @@ import {
   EDIT_MAP_POSITION,
   EDIT_MAP_SCALE,
   TOGGLE_MAP_GRID,
-  SET_CHAR_TO_PLACE,
-  ADD_MAP_CHAR,
-  EDIT_MAP_CHAR,
-  REMOVE_MAP_CHAR
+  SET_CHAR_TO_PLACE
 } from '../../constants/actionTypes';
 
 export const addMap = (mapData) => {
@@ -117,30 +65,6 @@ export const toggleMapGrid = (mapId) => {
 export const setCharToPlace = (mapId, charId) => {
   return {
     type: SET_CHAR_TO_PLACE,
-    mapId,
-    charId
-  };
-};
-
-export const addMapChar = (mapId, charData) => {
-  return {
-    type: ADD_MAP_CHAR,
-    mapId,
-    charData
-  };
-};
-
-export const editMapChar = (mapId, charData) => {
-  return {
-    type: EDIT_MAP_CHAR,
-    mapId,
-    charData
-  };
-};
-
-export const removeMapChar = (mapId, charId) => {
-  return {
-    type: REMOVE_MAP_CHAR,
     mapId,
     charId
   };
