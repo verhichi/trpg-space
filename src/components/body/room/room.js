@@ -27,7 +27,7 @@ const mapStateToProps = (state) => {
     userList:       state.userList,
     charList:       state.charList,
     displaySetting: state.displaySetting,
-    mapSetting:     state.mapSetting,
+    mapList:        state.mapList,
     mapCharList:    state.mapCharList,
     chatSetting:    state.chatSetting,
     noteSetting:    state.noteSetting
@@ -118,7 +118,7 @@ class Room extends Component {
     });
 
     socket.on('delChar', (charId) => {
-      this.props.mapSetting.forEach(map => {
+      this.props.mapList.forEach(map => {
         if (map.charToPlace === charId){
           this.props.setCharToPlace(map.mapId, '');
           this.props.setMapMode(map.mapId, '');
@@ -145,7 +145,7 @@ class Room extends Component {
         }
       });
 
-      this.props.mapSetting.forEach(map => {
+      this.props.mapList.forEach(map => {
         if (map.ownerId === this.props.global.id && !map.private){
           socket.emit('map', this.props.global.roomId, {
             mapId:   map.mapId,
@@ -181,7 +181,7 @@ class Room extends Component {
         this.props.newHost(leaveData.newHost);
       }
 
-      this.props.mapSetting.forEach(map => {
+      this.props.mapList.forEach(map => {
         if (map.ownerId === leaveData.id){
           if (map.mapId === this.props.displaySetting.displayMap){
             this.props.setDisplayMap('');
@@ -213,7 +213,7 @@ class Room extends Component {
     });
 
     socket.on('map', mapData => {
-      if (this.props.mapSetting.some(map => map.mapId === mapData.mapId)){
+      if (this.props.mapList.some(map => map.mapId === mapData.mapId)){
         this.props.editMap(mapData);
       } else {
         this.props.addMap(mapData);

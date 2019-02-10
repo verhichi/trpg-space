@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
   return {
     global:       state.global,
     charList:     state.charList,
-    mapSetting:   state.mapSetting,
+    mapList:      state.mapList,
     modalSetting: state.modalSetting,
     mapCharList:  state.mapCharList,
     userList:     state.userList
@@ -36,7 +36,7 @@ const mapDispatchToProps = (dispatch) => {
 class EditMap extends Component {
   constructor (props){
     super(props);
-    this.previousMapData = this.props.mapSetting.find(mapData => this.props.modalSetting.modalProp.mapId === mapData.mapId);
+    this.previousMapData = this.props.mapList.find(mapData => this.props.modalSetting.modalProp.mapId === mapData.mapId);
     this.state = {
       submitted:     false,
       src:           this.previousMapData.src,

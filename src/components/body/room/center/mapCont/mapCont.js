@@ -15,14 +15,14 @@ const mapStateToProps = (state) => {
   return {
     chatLog:        state.chatLog,
     displaySetting: state.displaySetting,
-    mapSetting:     state.mapSetting
+    mapList:        state.mapList
   };
 };
 
 class MapCont extends Component {
   render() {
     const miniChatLog = this.props.chatLog.slice(-3);
-    const mapData     = this.props.mapSetting.find(map => map.mapId === this.props.displaySetting.displayMap);
+    const mapData     = this.props.mapList.find(map => map.mapId === this.props.displaySetting.displayMap);
 
     return (
       <div className="map-cont d-flex f-dir-col f-grow-1">

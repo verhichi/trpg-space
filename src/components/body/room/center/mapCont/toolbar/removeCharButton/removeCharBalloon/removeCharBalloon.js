@@ -15,7 +15,6 @@ const mapStateToProps = (state) => {
     global:         state.global,
     charList:       state.charList,
     displaySetting: state.displaySetting,
-    mapSetting:     state.mapSetting,
     mapCharList:    state.mapCharList
   };
 };

@@ -10,7 +10,7 @@ import './scaleMapBalloon.scss';
 const mapStateToProps = (state) => {
   return {
     displaySetting: state.displaySetting,
-    mapSetting:     state.mapSetting
+    mapList:        state.mapList
   };
 };
 
@@ -38,9 +38,9 @@ class ScaleMapBalloon extends Component {
 
     return (
       <div className={`map-scale-balloon cursor-default ${toggleClass}`}>
-        <div>Scale ({parseFloat(this.props.mapSetting.find(map => map.mapId === this.props.displaySetting.displayMap).scale).toFixed(1)}):</div>
+        <div>Scale ({parseFloat(this.props.mapList.find(map => map.mapId === this.props.displaySetting.displayMap).scale).toFixed(1)}):</div>
         <div>
-          <input className="map-scale-inp" type="range" min="0.1" max="2.0" step="0.1" value={this.props.mapSetting.find(map => map.mapId === this.props.displaySetting.displayMap).scale} onChange={this.handleMapScaleChange}/>
+          <input className="map-scale-inp" type="range" min="0.1" max="2.0" step="0.1" value={this.props.mapList.find(map => map.mapId === this.props.displaySetting.displayMap).scale} onChange={this.handleMapScaleChange}/>
         </div>
       </div>
     );

@@ -19,7 +19,7 @@ const appReducer = combineReducers({
   chatSetting:    chatSettingReducer,
   displaySetting: displayReducer,
   global:         globalReducer,
-  mapSetting:     mapReducer,
+  mapList:        mapReducer,
   mapCharList:    mapCharReducer,
   modalSetting:   modalReducer,
   noteSetting:    noteReducer,

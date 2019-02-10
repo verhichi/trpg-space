@@ -18,7 +18,7 @@ const mapStateToProps = (state) => {
   return {
     displaySetting: state.displaySetting,
     global:         state.global,
-    mapSetting:     state.mapSetting
+    mapList:        state.mapList
   };
 };
 
@@ -101,7 +101,7 @@ class MapTab extends Component {
   render() {
     const hideScrollClass = this.props.global.isMobile ? '' : 'hide-scroll';
 
-    const mapTabList = this.props.mapSetting.map(mapTab => {
+    const mapTabList = this.props.mapList.map(mapTab => {
       const activeClass = this.props.displaySetting.displayMap === mapTab.mapId
                             ? 'is-active'
                             : '';

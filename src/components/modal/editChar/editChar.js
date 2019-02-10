@@ -24,7 +24,7 @@ const mapStateToProps = (state) => {
     global:       state.global,
     charList:     state.charList,
     modalSetting: state.modalSetting,
-    mapSetting:   state.mapSetting,
+    mapList:      state.mapList,
     mapCharList:  state.mapCharList
   };
 };
@@ -134,7 +134,7 @@ class EditChar extends Component {
         if (this.previousCharData.general.privacy === CHAR_PRIVACY_LEVEL_THREE){
           this.props.mapCharList.forEach(mapChar => {
             if (mapChar.charId === this.props.modalSetting.modalProp.charId){
-              if (!this.props.mapSetting.find(map => map.mapId === mapChar.mapId).private){
+              if (!this.props.mapList.find(map => map.mapId === mapChar.mapId).private){
                 socket.emit('mapChar', this.props.global.roomId, mapChar);
               }
             }
