@@ -33,6 +33,11 @@ export const REMOVE_MAP_CHAR              = 'REMOVE_MAP_CHAR';
 export const REMOVE_ALL_CHAR_FROM_SEL_MAP = 'REMOVE_ALL_CHAR_FROM_SEL_MAP';
 export const REMOVE_SEL_CHAR_FROM_ALL_MAP = 'REMOVE_SEL_CHAR_FROM_ALL_MAP';
 
+// GEO
+export const ADD_GEO    = 'ADD_GEO';
+export const EDIT_GEO   = 'EDIT_GEO';
+export const REMOVE_GEO = 'REMOVE_GEO';
+
 // Chat
 export const ADD_CHAT = 'ADD_CHAT';
 
