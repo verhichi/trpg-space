@@ -11,6 +11,8 @@ import {
   HIDE_REMOVE_CHAR,
   SHOW_MAP_SCALE,
   HIDE_MAP_SCALE,
+  SHOW_MAP_GEO,
+  HIDE_MAP_GEO,
   SET_SIDEBAR_CHAR,
   SET_SIDEBAR_NOTE,
   SET_DISPLAY_MAP
@@ -29,6 +31,7 @@ const initialState = {
   displayPlaceChar:   false,
   displayRemoveChar:  false,
   displayMapScale:    false,
+  displayMapGeo:      false,
   sidebarTabMode:     SIDEBAR_MODE_CHAR,
   centerMode:         CENTER_MODE_CHAT,
   displayMap:         ''
@@ -106,6 +109,18 @@ const displayReducer = (state = initialState, action) => {
       return {
         ...state,
         displayMapScale: false
+      };
+
+    case SHOW_MAP_GEO:
+      return {
+        ...state,
+        displayMapGeo: true
+      };
+
+    case HIDE_MAP_GEO:
+      return {
+        ...state,
+        displayMapGeo: false
       };
 
     case SET_SIDEBAR_CHAR:

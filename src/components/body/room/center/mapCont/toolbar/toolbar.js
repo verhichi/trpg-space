@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { showModal } from '../../../../../../redux/actions/modal';
-import { showRemoveChar, hideRemoveChar, showPlaceChar, hidePlaceChar } from '../../../../../../redux/actions/display';
 import { toggleMapGrid, editMapPosition } from '../../../../../../redux/actions/map';
 
 // Font Awesome Component
@@ -11,9 +10,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './toolbar.scss';
 
 // Component
-import PlaceCharButton from './placeCharButton/placeCharButton';
+import PlaceCharButton  from './placeCharButton/placeCharButton';
 import RemoveCharButton from './removeCharButton/removeCharButton';
-import ScaleMapButton from './scaleMapButton/scaleMapButton';
+import ScaleMapButton   from './scaleMapButton/scaleMapButton';
+import PlaceGeoButton   from './placeGeoButton/placeGeoButton';
 
 // Redux Map State to Props
 const mapStateToProps = (state) => {
@@ -24,10 +24,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     showModal:       (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
-    showPlaceChar:   ()                     => dispatch(showPlaceChar()),
-    hidePlaceChar:   ()                     => dispatch(hidePlaceChar()),
-    showRemoveChar:  ()                     => dispatch(showRemoveChar()),
-    hideRemoveChar:  ()                     => dispatch(hideRemoveChar()),
     toggleMapGrid:   (mapId)                => dispatch(toggleMapGrid(mapId)),
     editMapPosition: (mapId, left, top)     => dispatch(editMapPosition(mapId, left, top))
   };
@@ -65,6 +61,7 @@ class Toolbar extends Component {
           </div>
         </div>
         <ScaleMapButton/>
+        <PlaceGeoButton/>
       </div>
     );
   }

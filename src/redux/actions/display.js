@@ -11,6 +11,8 @@ import {
   HIDE_REMOVE_CHAR,
   SHOW_MAP_SCALE,
   HIDE_MAP_SCALE,
+  SHOW_MAP_GEO,
+  HIDE_MAP_GEO,
   SET_SIDEBAR_CHAR,
   SET_SIDEBAR_NOTE,
   SET_DISPLAY_MAP
@@ -62,6 +64,14 @@ export const showRemoveChar = () => {
 
 export const hideRemoveChar = () => {
   return { type: HIDE_REMOVE_CHAR };
+};
+
+export const showMapGeo = () => {
+  return { type: SHOW_MAP_GEO };
+};
+
+export const hideMapGeo = () => {
+  return { type: HIDE_MAP_GEO };
 };
 
 export const showMapScale = () => {

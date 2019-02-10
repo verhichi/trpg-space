@@ -24,6 +24,17 @@
     z-index: 65;
   }
 
+  &.is-place-geo-active::before{
+    background: rgba(0, 0, 0, 0.5);
+    content: "Click to place Square";
+    color: $white-clr;
+    height: 100%;
+    padding-top: 50%;
+    position: absolute;
+    width: 100%;
+    z-index: 65;
+  }
+
   &.is-grid-active::after{
     background-image:
       linear-gradient(

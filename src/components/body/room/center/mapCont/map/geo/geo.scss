@@ -1,0 +1,12 @@
+@import '../../../../../../../styles/partials/mediaQueries';
+@import '../../../../../../../styles/partials/variables';
+
+.map-geo{
+  background: $disabled-clr;
+  border: 3px solid $black-clr;
+  z-index: 55;
+
+  &.is-selected{
+    border: 3px solid $hot-clr;
+  }
+}

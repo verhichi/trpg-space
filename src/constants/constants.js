@@ -22,6 +22,7 @@ export const CHAT_TYPE_HOST  = 'host';
 
 // Map mode
 export const MAP_MODE_PLACE_CHAR = 'PLACE_CHAR';
+export const MAP_MODE_PLACE_GEO  = 'PLACE_GEO';
 
 // Character Privacy Level
 export const CHAR_PRIVACY_LEVEL_ZERO  = '0';

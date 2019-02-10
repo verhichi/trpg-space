@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { MAP_MODE_PLACE_CHAR,  CHAR_PRIVACY_LEVEL_THREE } from '../../../../../../constants/constants';
+import { MAP_MODE_PLACE_CHAR, MAP_MODE_PLACE_GEO, CHAR_PRIVACY_LEVEL_THREE } from '../../../../../../constants/constants';
 import { setMapMode, setCharToPlace, editMapPosition, editMapScale } from '../../../../../../redux/actions/map';
 import { addMapChar, editMapChar } from '../../../../../../redux/actions/mapChar';
+import { addGeo } from '../../../../../../redux/actions/geo';
 import socket from '../../../../../../socket/socketClient';
+import uuid from 'uuid';
 
 // Style
 import './map.scss';
 
 // Component
 import CharDot from './charDot/charDot';
+import Geo     from './geo/geo';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -17,7 +20,8 @@ const mapStateToProps = (state) => {
     global:         state.global,
     charList:       state.charList,
     mapCharList:    state.mapCharList,
-    displaySetting: state.displaySetting
+    displaySetting: state.displaySetting,
+    geoList:        state.geoList
   };
 };
 
@@ -29,7 +33,8 @@ const mapDispatchToProps = (dispatch) => {
     editMapChar:     (mapCharData)      => dispatch(editMapChar(mapCharData)),
     setCharToPlace:  (mapId, charId)    => dispatch(setCharToPlace(mapId, charId)),
     editMapPosition: (mapId, left, top) => dispatch(editMapPosition(mapId, left, top)),
-    editMapScale:    (mapId, scale)     => dispatch(editMapScale(mapId, scale))
+    editMapScale:    (mapId, scale)     => dispatch(editMapScale(mapId, scale)),
+    addGeo:          (mapId, geoData)   => dispatch(addGeo(mapId, geoData))
   };
 };
 
@@ -179,6 +184,17 @@ class Map extends Component {
       if (charData.general.privacy !== CHAR_PRIVACY_LEVEL_THREE && !this.props.mapData.private){
         socket.emit('mapChar', this.props.global.roomId, mapCharData);
       }
+    } else if (this.props.mapData.mode === MAP_MODE_PLACE_GEO){
+      const geoData = {
+        geoId:  uuid.v4(),
+        mapId:  this.props.mapData.mapId,
+        left:   e.nativeEvent.offsetX,
+        top:    e.nativeEvent.offsetY,
+        width:  100,
+        height: 100
+      };
+
+      this.props.addGeo(geoData);
     }
 
     this.props.setCharToPlace(this.props.mapData.mapId, '');
@@ -187,15 +203,21 @@ class Map extends Component {
 
   render() {
     const togglePlaceCharClass = this.props.mapData.mode === MAP_MODE_PLACE_CHAR ? 'is-place-char-active' : '';
+    const togglePlaceGeoClass  = this.props.mapData.mode === MAP_MODE_PLACE_GEO ? 'is-place-geo-active' : '';
     const toggleMapGridClass   = this.props.mapData.displayMapGrid ? 'is-grid-active' : '';
 
     const mapChar = this.props.mapCharList.filter(mapChar => mapChar.mapId === this.props.mapData.mapId).map(mapChar => {
       return <CharDot key={mapChar.charId} mapScale={this.props.mapData.scale} mapPrivate={this.props.mapData.private} charPlot={mapChar} charData={this.props.charList.find(char => mapChar.charId === char.charId)}/>;
     });
 
+    const geo = this.props.geoList.filter(geo => geo.mapId === this.props.mapData.mapId).map(geo => {
+      return <Geo key={geo.geoId} geoData={geo}/>;
+    });
+
     return (
       <div className="map-img-cont p-relative f-grow-1 p-1" onWheel={this.handleWheel}>
-        <div className={`map-img-overlay font-size-lg font-weight-bold d-inline-block p-absolute align-center ${togglePlaceCharClass} ${toggleMapGridClass}`}  onClick={this.handleImageClick} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} onTouchStart={this.handleTouchStart} onTouchEnd={this.handleTouchEnd} style={{ left: this.props.mapData.left, top: this.props.mapData.top, transform: `scale(${this.props.mapData.scale})`}}>
+        <div className={`map-img-overlay font-size-lg font-weight-bold d-inline-block p-absolute align-center ${togglePlaceCharClass} ${togglePlaceGeoClass} ${toggleMapGridClass}`} onClick={this.handleImageClick} onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} onTouchStart={this.handleTouchStart} onTouchEnd={this.handleTouchEnd} style={{ left: this.props.mapData.left, top: this.props.mapData.top, transform: `scale(${this.props.mapData.scale})`}}>
+          {geo}
           {mapChar}
           <img className="map-img p-relative align-center" src={this.props.mapData.src} alt={this.props.mapData.name}/>
         </div>

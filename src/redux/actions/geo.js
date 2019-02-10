@@ -2,7 +2,7 @@ import {
   ADD_GEO,
   EDIT_GEO,
   REMOVE_GEO,
-} from '../../../constants/actionTypes';
+} from '../../constants/actionTypes';
 
 export const addGeo = (geoData) => {
   return {

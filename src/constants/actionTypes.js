@@ -33,7 +33,7 @@ export const REMOVE_MAP_CHAR              = 'REMOVE_MAP_CHAR';
 export const REMOVE_ALL_CHAR_FROM_SEL_MAP = 'REMOVE_ALL_CHAR_FROM_SEL_MAP';
 export const REMOVE_SEL_CHAR_FROM_ALL_MAP = 'REMOVE_SEL_CHAR_FROM_ALL_MAP';
 
-// GEO
+// Geo
 export const ADD_GEO    = 'ADD_GEO';
 export const EDIT_GEO   = 'EDIT_GEO';
 export const REMOVE_GEO = 'REMOVE_GEO';
@@ -72,6 +72,8 @@ export const SHOW_REMOVE_CHAR = 'SHOW_REMOVE_CHAR';
 export const HIDE_REMOVE_CHAR = 'HIDE_REMOVE_CHAR';
 export const SHOW_MAP_SCALE   = 'SHOW_MAP_SCALE';
 export const HIDE_MAP_SCALE   = 'HIDE_MAP_SCALE';
+export const SHOW_MAP_GEO     = 'SHOW_MAP_GEO';
+export const HIDE_MAP_GEO     = 'HIDE_MAP_GEO';
 export const SET_SIDEBAR_CHAR = 'SET_SIDEBAR_CHAR';
 export const SET_SIDEBAR_NOTE = 'SET_SIDEBAR_NOTE';
 export const SET_DISPLAY_MAP  = 'SET_DISPLAY_MAP';
