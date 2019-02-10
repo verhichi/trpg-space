@@ -1,12 +1,46 @@
 @import '../../../../../../../styles/partials/mediaQueries';
 @import '../../../../../../../styles/partials/variables';
 
+$corner-size:   20px;
+$corner-offset: -10px;
+
 .map-geo{
   background: $disabled-clr;
   border: 3px solid $black-clr;
+  position: absolute;
   z-index: 55;
 
-  &.is-selected{
-    border: 3px solid $hot-clr;
+  &:hover .map-geo-corner{
+    display: block;
   }
+}
+
+.map-geo-corner{
+  background: #EEE;
+  border: 2px solid $black-clr;
+  border-radius: 50%;
+  display: none;
+  height: $corner-size;
+  position: absolute;
+  width: $corner-size;
+}
+
+.map-geo-corner-top-left{
+  top:  $corner-offset;
+  left: $corner-offset;
+}
+
+.map-geo-corner-top-right{
+  top:   $corner-offset;
+  right: $corner-offset;
+}
+
+.map-geo-corner-bottom-left{
+  bottom: $corner-offset;
+  left:   $corner-offset;
+}
+
+.map-geo-corner-bottom-right{
+  bottom: $corner-offset;
+  right:  $corner-offset;
 }

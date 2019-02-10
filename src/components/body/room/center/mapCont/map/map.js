@@ -211,7 +211,7 @@ class Map extends Component {
     });
 
     const geo = this.props.geoList.filter(geo => geo.mapId === this.props.mapData.mapId).map(geo => {
-      return <Geo key={geo.geoId} geoData={geo}/>;
+      return <Geo key={geo.geoId} mapScale={this.props.mapData.scale} geoData={geo}/>;
     });
 
     return (
