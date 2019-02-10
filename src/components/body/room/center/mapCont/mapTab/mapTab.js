@@ -37,13 +37,15 @@ class MapTab extends Component {
   constructor (props){
     super(props);
 
-    this.handleTouchMove      = this.handleTouchMove.bind(this);
-    this.handleNewMapClick    = this.handleNewMapClick.bind(this);
+    this.mapTabWrapRef          = React.createRef();
+    this.handleRightScrollClick = this.handleRightScrollClick.bind(this);
+    this.handleLeftScrollClick  = this.handleLeftScrollClick.bind(this);
+    this.handleTouchMove        = this.handleTouchMove.bind(this);
+    this.handleNewMapClick      = this.handleNewMapClick.bind(this);
   }
 
   handleTabClick (e, mapId){
     e.stopPropagation();
-
     this.props.setDisplayMap(mapId);
   }
 
@@ -54,6 +56,14 @@ class MapTab extends Component {
       title:        'Create New Map',
       displayClose: true
     });
+  }
+
+  handleLeftScrollClick (e){
+    this.mapTabWrapRef.current.scrollLeft -= 175;
+  }
+
+  handleRightScrollClick (e){
+    this.mapTabWrapRef.current.scrollLeft += 175;
   }
 
   handleEditMapClick (e, mapId){
@@ -113,10 +123,19 @@ class MapTab extends Component {
     return (
       <div className="map-tab-cont d-flex">
         <div className="map-tab-new p-1 f-shrink-0 align-center cursor-pointer" onClick={this.handleNewMapClick}>
-          <FontAwesomeIcon icon="plus"/>
+          <span className="fa-layers fa-fw">
+            <FontAwesomeIcon icon="plus" transform="shrink-8 up-7"/>
+            <FontAwesomeIcon icon="map" transform="shrink-3 down-3"/>
+          </span>
         </div>
-        <div className={`map-tab-wrap f-grow-1 ${hideScrollClass}`} onTouchMove={this.handleTouchMove}>
+        <div className="map-tab-scroll p-1 f-shrink-0 align-center cursor-pointer" onClick={this.handleLeftScrollClick}>
+          <FontAwesomeIcon icon="angle-left"/>
+        </div>
+        <div className={`map-tab-wrap f-grow-1 ${hideScrollClass}`} onTouchMove={this.handleTouchMove} ref={this.mapTabWrapRef}>
           { mapTabList }
+        </div>
+        <div className="map-tab-scroll p-1 f-shrink-0 align-center cursor-pointer" onClick={this.handleRightScrollClick}>
+          <FontAwesomeIcon icon="angle-right"/>
         </div>
       </div>
     );

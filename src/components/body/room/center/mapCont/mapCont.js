@@ -29,7 +29,7 @@ class MapCont extends Component {
         <MapTab/>
         { this.props.displaySetting.displayMap.length !== 0 && <Toolbar/> }
         { this.props.displaySetting.displayMap.length !== 0 && <Map mapData={mapData}/>}
-        { miniChatLog.length !== 0 && <MiniChatLog miniChatLog={miniChatLog}/>}
+        { miniChatLog.length > 1 && <MiniChatLog miniChatLog={miniChatLog}/>}
       </div>
     );
   }

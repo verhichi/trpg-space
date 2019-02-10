@@ -11,6 +11,7 @@
   top: 0;
   transform: scale(1);
   transform-origin: top left;
+  z-index: 50;
 
   &.is-place-char-active::before{
     background: rgba(0, 0, 0, 0.5);
@@ -50,4 +51,5 @@
   tap-highlight-color: rgba(0,0,0,0);
   touch-callout: none;
   user-select: none;
+  z-index: 50;
 }
