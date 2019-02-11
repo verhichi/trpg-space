@@ -52,24 +52,12 @@ class CharDot extends Component {
 
     this.setState({
       isCharMoveMode: true,
-      offsetX: Math.floor(adjustOffsetX * this.props.mapScale),
-      offsetY: Math.floor(adjustOffsetY * this.props.mapScale)
+      offsetX:        adjustOffsetX,
+      offsetY:        adjustOffsetY
     });
 
     document.querySelector('.map-img-overlay').addEventListener('mousemove', this.handleMouseMove);
     document.querySelector('.map-img-cont').addEventListener('mouseleave', this.handleMouseLeave);
-  }
-
-  handleTouchStart (e){
-    e.stopPropagation();
-
-    this.setState({
-      isCharMoveMode: true,
-      offsetX: Math.floor(e.target.offsetWidth / 2),
-      offsetY: Math.floor(e.target.offsetHeight / 2)
-    });
-
-    document.querySelector('.map-img-overlay').addEventListener('touchmove', this.handleTouchMove);
   }
 
   handleMouseMove (e){
@@ -80,22 +68,8 @@ class CharDot extends Component {
       this.props.editMapChar({
         mapId:  this.props.displaySetting.displayMap,
         charId: this.props.charData.charId,
-        left:   Math.floor((e.pageX - document.querySelector('.map-img-overlay').getBoundingClientRect().left - this.state.offsetX) / this.props.mapScale),
-        top:    Math.floor((e.pageY - document.querySelector('.map-img-overlay').getBoundingClientRect().top - this.state.offsetY) / this.props.mapScale)
-      });
-    }
-  }
-
-  handleTouchMove (e){
-    e.stopPropagation();
-    e.preventDefault();
-
-    if (this.state.isCharMoveMode){
-      this.props.editMapChar({
-        mapId:  this.props.displaySetting.displayMap,
-        charId: this.props.charData.charId,
-        left:    Math.floor((e.touches[0].pageX - document.querySelector('.map-img-overlay').getBoundingClientRect().left - this.state.offsetX) / this.props.mapScale),
-        top:     Math.floor((e.touches[0].pageY - document.querySelector('.map-img-overlay').getBoundingClientRect().top - this.state.offsetY) / this.props.mapScale)
+        left:   Math.floor((e.pageX - document.querySelector('.map-img-overlay').getBoundingClientRect().left) / this.props.mapScale) - this.state.offsetX,
+        top:    Math.floor((e.pageY - document.querySelector('.map-img-overlay').getBoundingClientRect().top)  / this.props.mapScale) - this.state.offsetY
       });
     }
   }
@@ -117,20 +91,6 @@ class CharDot extends Component {
     this.setState({ isCharMoveMode: false });
   }
 
-  handleTouchEnd (e){
-    e.stopPropagation();
-
-    if (this.state.isCharMoveMode && this.props.charData.general.privacy !== CHAR_PRIVACY_LEVEL_THREE && !this.props.mapPrivate){
-      socket.emit('mapChar', this.props.global.roomId, {
-        mapId:  this.props.displaySetting.displayMap,
-        charId: this.props.charData.charId,
-        left:   this.props.charPlot.left,
-        top:    this.props.charPlot.top
-      });
-    }
-    document.querySelector('.map-img-overlay').removeEventListener('touchmove', this.handleTouchMove);
-    this.setState({ isCharMoveMode: false });
-  }
 
   handleMouseLeave (e){
     e.stopPropagation();
@@ -148,6 +108,47 @@ class CharDot extends Component {
     this.setState({ isCharMoveMode: false });
     document.querySelector('.map-img-overlay').removeEventListener('mousemove', this.handleMouseMove);
     document.querySelector('.map-img-cont').removeEventListener('mouseleave', this.handleMouseLeave);
+  }
+
+  handleTouchStart (e){
+    e.stopPropagation();
+
+    this.setState({
+      isCharMoveMode: true,
+      offsetX: Math.floor(e.target.offsetWidth / 2),
+      offsetY: Math.floor(e.target.offsetHeight / 2)
+    });
+
+    document.querySelector('.map-img-overlay').addEventListener('touchmove', this.handleTouchMove);
+  }
+
+  handleTouchMove (e){
+    e.stopPropagation();
+    e.preventDefault();
+
+    if (this.state.isCharMoveMode){
+      this.props.editMapChar({
+        mapId:  this.props.displaySetting.displayMap,
+        charId: this.props.charData.charId,
+        left:    Math.floor((e.touches[0].pageX - document.querySelector('.map-img-overlay').getBoundingClientRect().left - this.state.offsetX) / this.props.mapScale),
+        top:     Math.floor((e.touches[0].pageY - document.querySelector('.map-img-overlay').getBoundingClientRect().top - this.state.offsetY) / this.props.mapScale)
+      });
+    }
+  }
+
+  handleTouchEnd (e){
+    e.stopPropagation();
+
+    if (this.state.isCharMoveMode && this.props.charData.general.privacy !== CHAR_PRIVACY_LEVEL_THREE && !this.props.mapPrivate){
+      socket.emit('mapChar', this.props.global.roomId, {
+        mapId:  this.props.displaySetting.displayMap,
+        charId: this.props.charData.charId,
+        left:   this.props.charPlot.left,
+        top:    this.props.charPlot.top
+      });
+    }
+    document.querySelector('.map-img-overlay').removeEventListener('touchmove', this.handleTouchMove);
+    this.setState({ isCharMoveMode: false });
   }
 
   render() {

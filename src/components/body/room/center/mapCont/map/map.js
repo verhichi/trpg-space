@@ -82,6 +82,36 @@ class Map extends Component {
     document.querySelector('.map-img-cont').addEventListener('mouseleave', this.handleMouseLeave);
   }
 
+  handleMouseMove (e){
+    e.stopPropagation();
+    e.preventDefault();
+
+    if (this.state.isMapMoveMode){
+      this.props.editMapPosition(
+        this.props.displaySetting.displayMap,
+        e.pageX - document.querySelector('.map-img-cont').getBoundingClientRect().left - this.state.mouseOffset.offsetX,
+        e.pageY - document.querySelector('.map-img-cont').getBoundingClientRect().top - this.state.mouseOffset.offsetY
+      );
+    }
+  }
+
+  handleMouseUp (e){
+    e.stopPropagation();
+    e.preventDefault();
+
+    this.setState({ isMapMoveMode: false });
+    document.querySelector('.map-img-cont').removeEventListener('mousemove', this.handleMouseMove);
+  }
+
+  handleMouseLeave (e){
+    e.stopPropagation();
+    e.preventDefault();
+
+    this.setState({ isMapMoveMode: false });
+    document.querySelector('.map-img-cont').removeEventListener('mousemove', this.handleMouseMove);
+    document.querySelector('.map-img-cont').removeEventListener('mouseleave', this.handleMouseLeave);
+  }
+
   handleTouchStart (e){
     if (this.props.mapData.mode === ''){
       const sidebar      = document.querySelector('.list-cont');
@@ -106,19 +136,6 @@ class Map extends Component {
     }
   }
 
-  handleMouseMove (e){
-    e.stopPropagation();
-    e.preventDefault();
-
-    if (this.state.isMapMoveMode){
-      this.props.editMapPosition(
-        this.props.displaySetting.displayMap,
-        e.pageX - document.querySelector('.map-img-cont').getBoundingClientRect().left - this.state.mouseOffset.offsetX,
-        e.pageY - document.querySelector('.map-img-cont').getBoundingClientRect().top - this.state.mouseOffset.offsetY
-      );
-    }
-  }
-
   handleTouchMove (e){
     e.stopPropagation();
     e.preventDefault();
@@ -132,27 +149,12 @@ class Map extends Component {
     }
   }
 
-  handleMouseUp (e){
-    e.stopPropagation();
-    e.preventDefault();
-
-    this.setState({ isMapMoveMode: false });
-    document.querySelector('.map-img-cont').removeEventListener('mousemove', this.handleMouseMove);
-  }
 
   handleTouchEnd (e){
     this.setState({ isMapMoveMode: false });
     document.querySelector('.map-img-cont').removeEventListener('touchmove', this.handleTouchMove);
   }
 
-  handleMouseLeave (e){
-    e.stopPropagation();
-    e.preventDefault();
-
-    this.setState({ isMapMoveMode: false });
-    document.querySelector('.map-img-cont').removeEventListener('mousemove', this.handleMouseMove);
-    document.querySelector('.map-img-cont').removeEventListener('mouseleave', this.handleMouseLeave);
-  }
 
   handleWheel (e){
     let curScale = parseFloat(this.props.mapData.scale);
@@ -211,7 +213,7 @@ class Map extends Component {
     });
 
     const geo = this.props.geoList.filter(geo => geo.mapId === this.props.mapData.mapId).map(geo => {
-      return <Geo key={geo.geoId} mapScale={this.props.mapData.scale} geoData={geo}/>;
+      return <Geo key={geo.geoId} mapData={this.props.mapData} geoData={geo}/>;
     });
 
     return (
