@@ -59,3 +59,6 @@ export const STATUS_TYPE_PARAM = 'PARAM';
 // Language
 export const APP_LANG_EN = 'EN';
 export const APP_LANG_JP = 'JP';
+
+// Geo
+export const MIN_GEO_LENGTH = 50;

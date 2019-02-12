@@ -58,8 +58,6 @@ class Geo extends Component {
       isGeoMoveMode: true,
       offsetX:       e.nativeEvent.offsetX,
       offsetY:       e.nativeEvent.offsetY
-      // offsetX: Math.floor(e.nativeEvent.offsetX * this.props.mapData.scale),
-      // offsetY: Math.floor(e.nativeEvent.offsetY * this.props.mapData.scale)
     });
 
     document.querySelector('.map-img-cont').addEventListener('mousemove', this.handleMouseMove);

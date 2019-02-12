@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { editGeo } from '../../../../../../../../redux/actions/geo';
+import { MIN_GEO_LENGTH } from '../../../../../../../../constants/constants';
 // import socket from '../../../../../../../socket/socketClient';
 
 // Redux Map State To Prop
@@ -75,13 +76,34 @@ class GeoCornerTopLeft extends Component {
       const mapOffsetHeight = header.offsetHeight + roomTopCont.offsetHeight + mapToolbar.offsetHeight + mapTabCont.offsetHeight;
       const sidebarWidth    = this.props.displaySetting.displaySidebar ? document.querySelector('.list-cont').offsetWidth : 0;
 
+      const calcLeft   = Math.floor((e.pageX - this.props.mapData.left - sidebarWidth) / this.props.mapData.scale);
+      const calcWidth  = this.state.originalWidth + this.state.originalLeft + Math.floor((this.props.mapData.left - (e.pageX - sidebarWidth)) / this.props.mapData.scale);
+      const calcHeight = this.state.originalHeight + this.state.originalTop + Math.floor((this.props.mapData.top - (e.pageY - mapOffsetHeight)) / this.props.mapData.scale);
+      const calcTop    = Math.floor((e.pageY - this.props.mapData.top - mapOffsetHeight) / this.props.mapData.scale);
+
+      const newWidth   = calcWidth < MIN_GEO_LENGTH
+                          ? MIN_GEO_LENGTH
+                          : calcWidth;
+
+      const newLeft  = calcWidth < MIN_GEO_LENGTH
+                         ? this.props.geoData.left
+                         : calcLeft;
+
+      const newHeight = calcHeight < MIN_GEO_LENGTH
+                          ? MIN_GEO_LENGTH
+                          : calcHeight;
+
+      const newTop    = calcHeight < MIN_GEO_LENGTH
+                          ? this.props.geoData.top
+                          : calcTop;
+
       this.props.editGeo({
         geoId:  this.props.geoData.geoId,
         mapId:  this.props.geoData.mapId,
-        left:   Math.floor((e.pageX - this.props.mapData.left - sidebarWidth) / this.props.mapData.scale),
-        top:    Math.floor((e.pageY - this.props.mapData.top - mapOffsetHeight) / this.props.mapData.scale),
-        width:  this.state.originalWidth + this.state.originalLeft + Math.floor((this.props.mapData.left - (e.pageX - sidebarWidth)) / this.props.mapData.scale),
-        height: this.state.originalHeight + this.state.originalTop + Math.floor((this.props.mapData.top - (e.pageY - mapOffsetHeight)) / this.props.mapData.scale)
+        left:   newLeft,
+        top:    newTop,
+        width:  newWidth,
+        height: newHeight
       });
     }
   }
@@ -138,13 +160,34 @@ class GeoCornerTopLeft extends Component {
         const mapOffsetHeight = header.offsetHeight + roomTopCont.offsetHeight + mapToolbar.offsetHeight + mapTabCont.offsetHeight;
         const sidebarWidth    = this.props.displaySetting.displaySidebar ? document.querySelector('.list-cont').offsetWidth : 0;
 
+        const calcLeft   = Math.floor((e.touches[0].pageX - this.props.mapData.left - sidebarWidth) / this.props.mapData.scale);
+        const calcWidth  = this.state.originalWidth + this.state.originalLeft + Math.floor((this.props.mapData.left - (e.touches[0].pageX - sidebarWidth)) / this.props.mapData.scale);
+        const calcTop    = Math.floor((e.touches[0].pageY - this.props.mapData.top - mapOffsetHeight) / this.props.mapData.scale);
+        const calcHeight = this.state.originalHeight + this.state.originalTop + Math.floor((this.props.mapData.top - (e.touches[0].pageY - mapOffsetHeight)) / this.props.mapData.scale);
+
+        const newHeight = calcHeight < MIN_GEO_LENGTH
+                            ? MIN_GEO_LENGTH
+                            : calcHeight;
+
+        const newWidth  = calcWidth < MIN_GEO_LENGTH
+                            ? MIN_GEO_LENGTH
+                            : calcWidth;
+
+        const newLeft   = calcWidth < MIN_GEO_LENGTH
+                            ? this.props.geoData.left
+                            : calcLeft;
+
+        const newTop    = calcHeight < MIN_GEO_LENGTH
+                            ? this.props.geoData.top
+                            : calcTop;
+
         this.props.editGeo({
           geoId:  this.props.geoData.geoId,
           mapId:  this.props.geoData.mapId,
-          left:   Math.floor((e.touches[0].pageX - this.props.mapData.left - sidebarWidth) / this.props.mapData.scale),
-          top:    Math.floor((e.touches[0].pageY - this.props.mapData.top - mapOffsetHeight) / this.props.mapData.scale),
-          width:  this.state.originalWidth + this.state.originalLeft + Math.floor((this.props.mapData.left - (e.touches[0].pageX - sidebarWidth)) / this.props.mapData.scale),
-          height: this.state.originalHeight + this.state.originalTop + Math.floor((this.props.mapData.top - (e.touches[0].pageY - mapOffsetHeight)) / this.props.mapData.scale)
+          left:   newLeft,
+          top:    newTop,
+          width:  newWidth,
+          height: newHeight
         });
       }
     }

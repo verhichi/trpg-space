@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { editGeo } from '../../../../../../../../redux/actions/geo';
+import { MIN_GEO_LENGTH } from '../../../../../../../../constants/constants';
 // import socket from '../../../../../../../socket/socketClient';
 
 // Redux Map State To Prop
@@ -65,13 +66,29 @@ class GeoCornerBottomLeft extends Component {
       const mapOffsetHeight = header.offsetHeight + roomTopCont.offsetHeight + mapToolbar.offsetHeight + mapTabCont.offsetHeight;
       const sidebarWidth    = this.props.displaySetting.displaySidebar ? document.querySelector('.list-cont').offsetWidth : 0;
 
+      const calcLeft   = Math.floor((e.pageX - this.props.mapData.left - sidebarWidth) / this.props.mapData.scale);
+      const calcWidth  = this.state.originalWidth + this.state.originalLeft + Math.floor((this.props.mapData.left - (e.pageX - sidebarWidth)) / this.props.mapData.scale);
+      const calcHeight = Math.floor((e.pageY - this.props.mapData.top - mapOffsetHeight) / this.props.mapData.scale) - this.props.geoData.top;
+
+      const newHeight = calcHeight < MIN_GEO_LENGTH
+                          ? MIN_GEO_LENGTH
+                          : calcHeight;
+
+      const newWidth = calcWidth < MIN_GEO_LENGTH
+                         ? MIN_GEO_LENGTH
+                         : calcWidth;
+
+      const newLeft  = calcWidth < MIN_GEO_LENGTH
+                         ? this.props.geoData.left
+                         : calcLeft;
+
       this.props.editGeo({
         geoId:  this.props.geoData.geoId,
         mapId:  this.props.geoData.mapId,
-        left:   Math.floor((e.pageX - this.props.mapData.left - sidebarWidth) / this.props.mapData.scale),
+        left:   newLeft,
         top:    this.props.geoData.top,
-        width:  this.state.originalWidth + this.state.originalLeft + Math.floor((this.props.mapData.left - (e.pageX - sidebarWidth)) / this.props.mapData.scale),
-        height: Math.floor((e.pageY - this.props.mapData.top - mapOffsetHeight) / this.props.mapData.scale) - this.props.geoData.top
+        width:  newWidth,
+        height: newHeight
       });
     }
   }
@@ -125,13 +142,29 @@ class GeoCornerBottomLeft extends Component {
       const mapOffsetHeight = header.offsetHeight + roomTopCont.offsetHeight + mapToolbar.offsetHeight + mapTabCont.offsetHeight;
       const sidebarWidth    = this.props.displaySetting.displaySidebar ? document.querySelector('.list-cont').offsetWidth : 0;
 
+      const calcLeft   = Math.floor((e.touches[0].pageX - this.props.mapData.left - sidebarWidth) / this.props.mapData.scale);
+      const calcWidth  = this.state.originalWidth + this.state.originalLeft + Math.floor((this.props.mapData.left - (e.touches[0].pageX - sidebarWidth)) / this.props.mapData.scale);
+      const calcHeight = Math.floor((e.touches[0].pageY - this.props.mapData.top - mapOffsetHeight) / this.props.mapData.scale) - this.props.geoData.top;
+
+      const newHeight = calcHeight < MIN_GEO_LENGTH
+                          ? MIN_GEO_LENGTH
+                          : calcHeight;
+
+      const newWidth = calcWidth < MIN_GEO_LENGTH
+                         ? MIN_GEO_LENGTH
+                         : calcWidth;
+
+      const newLeft  = calcWidth < MIN_GEO_LENGTH
+                         ? this.props.geoData.left
+                         : calcLeft;
+
       this.props.editGeo({
         geoId:  this.props.geoData.geoId,
         mapId:  this.props.geoData.mapId,
-        left:   Math.floor((e.touches[0].pageX - this.props.mapData.left - sidebarWidth) / this.props.mapData.scale),
+        left:   newLeft,
         top:    this.props.geoData.top,
-        width:  this.state.originalWidth + this.state.originalLeft + Math.floor((this.props.mapData.left - (e.touches[0].pageX - sidebarWidth)) / this.props.mapData.scale),
-        height: Math.floor((e.touches[0].pageY - this.props.mapData.top - mapOffsetHeight) / this.props.mapData.scale) - this.props.geoData.top
+        width:  newWidth,
+        height: newHeight
       });
     }
   }

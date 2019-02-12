@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { editGeo } from '../../../../../../../../redux/actions/geo';
+import { MIN_GEO_LENGTH } from '../../../../../../../../constants/constants';
 // import socket from '../../../../../../../socket/socketClient';
 
 // Redux Map State To Prop
@@ -71,13 +72,29 @@ class GeoCornerTopRight extends Component {
       const mapOffsetHeight = header.offsetHeight + roomTopCont.offsetHeight + mapToolbar.offsetHeight + mapTabCont.offsetHeight;
       const sidebarWidth    = this.props.displaySetting.displaySidebar ? document.querySelector('.list-cont').offsetWidth : 0;
 
+      const calcWidth  = Math.floor((e.pageX - this.props.mapData.left - sidebarWidth) / this.props.mapData.scale) - this.props.geoData.left;
+      const calcHeight = this.state.originalHeight + this.state.originalTop + Math.floor((this.props.mapData.top - (e.pageY - mapOffsetHeight)) / this.props.mapData.scale);
+      const calcTop    = Math.floor((e.pageY - this.props.mapData.top - mapOffsetHeight) / this.props.mapData.scale);
+
+      const newWidth   = calcWidth < MIN_GEO_LENGTH
+                          ? MIN_GEO_LENGTH
+                          : calcWidth;
+
+      const newHeight = calcHeight < MIN_GEO_LENGTH
+                          ? MIN_GEO_LENGTH
+                          : calcHeight;
+
+      const newTop    = calcHeight < MIN_GEO_LENGTH
+                          ? this.props.geoData.top
+                          : calcTop;
+
       this.props.editGeo({
         geoId:  this.props.geoData.geoId,
         mapId:  this.props.geoData.mapId,
         left:   this.props.geoData.left,
-        top:    Math.floor((e.pageY - this.props.mapData.top - mapOffsetHeight) / this.props.mapData.scale),
-        width:  Math.floor((e.pageX - this.props.mapData.left - sidebarWidth)   / this.props.mapData.scale) - this.props.geoData.left,
-        height: this.state.originalHeight + this.state.originalTop + Math.floor((this.props.mapData.top - (e.pageY - mapOffsetHeight)) / this.props.mapData.scale)
+        top:    newTop,
+        width:  newWidth,
+        height: newHeight
       });
     }
   }
@@ -131,13 +148,29 @@ class GeoCornerTopRight extends Component {
       const mapOffsetHeight = header.offsetHeight + roomTopCont.offsetHeight + mapToolbar.offsetHeight + mapTabCont.offsetHeight;
       const sidebarWidth    = this.props.displaySetting.displaySidebar ? document.querySelector('.list-cont').offsetWidth : 0;
 
+      const calcTop    = Math.floor((e.touches[0].pageY - this.props.mapData.top - mapOffsetHeight) / this.props.mapData.scale)
+      const calcWidth  = Math.floor((e.touches[0].pageX - this.props.mapData.left - sidebarWidth)   / this.props.mapData.scale) - this.props.geoData.left
+      const calcHeight = this.state.originalHeight + this.state.originalTop + Math.floor((this.props.mapData.top - (e.touches[0].pageY - mapOffsetHeight)) / this.props.mapData.scale)
+
+      const newWidth   = calcWidth < MIN_GEO_LENGTH
+                          ? MIN_GEO_LENGTH
+                          : calcWidth;
+
+      const newHeight = calcHeight < MIN_GEO_LENGTH
+                          ? MIN_GEO_LENGTH
+                          : calcHeight;
+
+      const newTop    = calcHeight < MIN_GEO_LENGTH
+                          ? this.props.geoData.top
+                          : calcTop;
+
       this.props.editGeo({
         geoId:  this.props.geoData.geoId,
         mapId:  this.props.geoData.mapId,
         left:   this.props.geoData.left,
-        top:    Math.floor((e.touches[0].pageY - this.props.mapData.top - mapOffsetHeight) / this.props.mapData.scale),
-        width:  Math.floor((e.touches[0].pageX - this.props.mapData.left - sidebarWidth)   / this.props.mapData.scale) - this.props.geoData.left,
-        height: this.state.originalHeight + this.state.originalTop + Math.floor((this.props.mapData.top - (e.touches[0].pageY - mapOffsetHeight)) / this.props.mapData.scale)
+        top:    newTop,
+        width:  newWidth,
+        height: newHeight
       });
     }
   }
