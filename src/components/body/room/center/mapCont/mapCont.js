@@ -6,9 +6,11 @@ import './mapCont.scss';
 
 // Component
 import Map         from './map/map';
+import NoMap       from './noMap/noMap';
 import MapTab      from './mapTab/mapTab';
 import Toolbar     from './toolbar/toolbar';
 import MiniChatLog from './miniChatLog/miniChatLog';
+
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -28,7 +30,7 @@ class MapCont extends Component {
       <div className="map-cont d-flex f-dir-col f-grow-1">
         <MapTab/>
         { this.props.displaySetting.displayMap.length !== 0 && <Toolbar mapData={mapData}/> }
-        { this.props.displaySetting.displayMap.length !== 0 && <Map mapData={mapData}/>}
+        { this.props.displaySetting.displayMap.length !== 0 ? <Map mapData={mapData}/> : <NoMap/>}
         { miniChatLog.length > 1 && <MiniChatLog miniChatLog={miniChatLog}/>}
       </div>
     );

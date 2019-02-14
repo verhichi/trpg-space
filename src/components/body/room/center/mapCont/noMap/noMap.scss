@@ -1,0 +1,17 @@
+@import '../../../../../../styles/partials/variables';
+@import '../../../../../../styles/partials/mediaQueries';
+
+.no-map-cont{
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  padding: 5px;
+}
+
+.no-map-help{
+  background: $secondary-clr;
+  color: $white-clr;
+  padding: 5px;
+  text-align: left;
+}
