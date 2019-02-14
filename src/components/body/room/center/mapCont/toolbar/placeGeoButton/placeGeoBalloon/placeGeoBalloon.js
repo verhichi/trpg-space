@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { hideMapGeo } from '../../../../../../../../redux/actions/display';
 import { setMapMode } from '../../../../../../../../redux/actions/map';
 import { MAP_MODE_PLACE_GEO } from '../../../../../../../../constants/constants';
+import { geoHelpLabel, geoPlaceBtnLabel } from './placeGeoBalloon.i18n';
 
 // Style
 import './placeGeoBalloon.scss';
@@ -40,9 +41,9 @@ class PlaceGeoBalloon extends Component {
 
     return (
       <div className={`place-geo-balloon cursor-default ${togglePlaceGeo}`}>
-        <div className="font-size-sm">Squares are used to hide areas on maps.</div>
+        <div className="font-size-sm">{geoHelpLabel[this.props.global.lang]}</div>
         <button className="btn btn-hot w-100 cursor-pointer" disabled={this.props.mapData.isGeoEdit} onClick={this.handlePlaceGeoButtonClick}>
-          <div className="btn-text font-weight-bold">Place Square</div>
+          <div className="btn-text font-weight-bold">{geoPlaceBtnLabel[this.props.global.lang]}</div>
         </button>
       </div>
     );
