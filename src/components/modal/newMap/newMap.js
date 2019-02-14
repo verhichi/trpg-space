@@ -39,6 +39,7 @@ class NewMap extends Component {
       src:           '',
       name:          '',
       private:       false,
+      fileName:      '',
       fileExist:     false,
       fileSizeError: false,
       fileTypeError: false,
@@ -71,6 +72,7 @@ class NewMap extends Component {
 
     reader.onload = () => {
       this.setState({
+        fileName:      file.name,
         fileTypeError: !imagePattern.test(file.name),
         fileSizeError: file.size > 1000000,
       }, () => {
@@ -89,11 +91,12 @@ class NewMap extends Component {
       this.setState({ submitted: true });
 
       const mapData = {
-        mapId:   uuid.v4(),
-        ownerId: this.props.global.id,
-        src:     this.state.src,
-        name:    this.state.name.trim(),
-        private: this.state.private,
+        mapId:    uuid.v4(),
+        ownerId:  this.props.global.id,
+        src:      this.state.src,
+        name:     this.state.name.trim(),
+        fileName: this.state.fileName,
+        private:  this.state.private
       };
 
       this.props.addMap(mapData);
@@ -117,7 +120,7 @@ class NewMap extends Component {
             <div>{fileInpLabel[this.props.global.lang]}:</div>
             <label class="inp-file-cont d-flex w-100 cursor-pointer">
               <FontAwesomeIcon icon="upload"/>
-              <div className="inp-file-text f-grow-1 pl-3">Choose an image...</div>
+              <div className="inp-file-text f-grow-1 pl-3">{this.state.fileName.length === 0 ? 'Choose an image...' : this.state.fileName}</div>
               <input id="imageInput" className="d-none" type="file" accept="image/*" ref={this.fileInput} onChange={this.handleFileChange}/>
             </label>
             {this.state.fileTypeError

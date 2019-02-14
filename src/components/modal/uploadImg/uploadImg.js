@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import uuid from 'uuid';
 import { CHAT_TYPE_IMAGE } from '../../../constants/constants';
 import { addChat } from '../../../redux/actions/chatLog';
 import { hideModal } from '../../../redux/actions/modal';
@@ -27,11 +26,8 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    hideModal:        ()          => dispatch(hideModal()),
-    addChat:          (content)   => dispatch(addChat(content)),
-    // editMapImage:     (src)       => dispatch(editMapImage(src)),
-    // editMapPosition:  (left, top) => dispatch(editMapPosition(left, top)),
-    // removeAllMapChar: ()          => dispatch(removeAllMapChar())
+    hideModal: ()        => dispatch(hideModal()),
+    addChat:   (content) => dispatch(addChat(content))
   };
 };
 
@@ -44,6 +40,7 @@ class UploadImg extends Component {
       fileExist:     false,
       fileSizeError: false,
       fileTypeError: false,
+      fileName:      '',
       src:           '',
       height:        0,
       width:         0
@@ -84,17 +81,18 @@ class UploadImg extends Component {
 
     reader.onload = () => {
       this.setState({
-        fileExist: file.name.length !== 0,
+        fileExist:     file.name.length !== 0,
         fileTypeError: !imagePattern.test(file.name),
         fileSizeError: file.size > 1000000,
+        fileName:      file.name
       });
 
       const image = new Image();
       image.onload = () => {
         this.setState({
-          src: reader.result,
+          src:    reader.result,
           height: image.height,
-          width: image.width,
+          width:  image.width,
         });
       };
       image.src = reader.result;
@@ -110,7 +108,7 @@ class UploadImg extends Component {
           <div>{fileInpLabel[this.props.global.lang]}:</div>
           <label class="inp-file-cont d-flex w-100 cursor-pointer">
             <FontAwesomeIcon icon="upload"/>
-            <div className="inp-file-text f-grow-1 pl-3">Choose an image...</div>
+            <div className="inp-file-text f-grow-1 pl-3">{this.state.fileName.length === 0 ? 'Choose an image...' : this.state.fileName}</div>
             <input id="imageInput" className="d-none" type="file" accept="image/*" ref={this.fileInput} onChange={this.handleFileChange}/>
           </label>
           {this.state.fileTypeError

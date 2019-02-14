@@ -43,6 +43,7 @@ class EditMap extends Component {
       src:           this.previousMapData.src,
       name:          this.previousMapData.name,
       private:       this.previousMapData.private,
+      fileName:      this.previousMapData.fileName,
       fileExist:     true,
       fileSizeError: false,
       fileTypeError: false,
@@ -60,9 +61,7 @@ class EditMap extends Component {
   }
 
   handleAllCheckChange (e){
-    this.state.private
-      ? this.setState({ private: false })
-      : this.setState({ private: true  });
+    this.setState({ private: !this.state.private });
   }
 
   handleFileChange (e){
@@ -75,6 +74,7 @@ class EditMap extends Component {
 
     reader.onload = () => {
       this.setState({
+        fileName:      file.name,
         fileTypeError: !imagePattern.test(file.name),
         fileSizeError: file.size > 1000000,
       }, () => {
@@ -93,11 +93,12 @@ class EditMap extends Component {
       this.setState({ submitted: true });
 
       const mapData = {
-        mapId:   this.props.modalSetting.modalProp.mapId,
-        ownerId: this.props.global.id,
-        src:     this.state.src,
-        name:    this.state.name.trim(),
-        private: this.state.private,
+        mapId:    this.props.modalSetting.modalProp.mapId,
+        ownerId:  this.props.global.id,
+        src:      this.state.src,
+        name:     this.state.name.trim(),
+        fileName: this.state.fileName,
+        private:  this.state.private,
       };
 
       this.props.editMap(mapData);
@@ -138,7 +139,7 @@ class EditMap extends Component {
             <div>{fileInpLabel[this.props.global.lang]}:</div>
             <label class="inp-file-cont d-flex w-100 cursor-pointer">
               <FontAwesomeIcon icon="upload"/>
-              <div className="inp-file-text f-grow-1 pl-3">Choose an image...</div>
+              <div className="inp-file-text f-grow-1 pl-3">{this.state.fileName.length === 0 ? 'Choose an image...' : this.state.fileName}</div>
               <input id="imageInput" className="d-none" type="file" accept="image/*" ref={this.fileInput} onChange={this.handleFileChange}/>
             </label>
             {this.state.fileTypeError

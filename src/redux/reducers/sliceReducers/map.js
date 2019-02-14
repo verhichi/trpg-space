@@ -25,6 +25,7 @@ const initialState = [
 //     isGeoEdit:      true/false,
 //     src:            src of map image,
 //     name:           name of map,
+//     fileName:       name of file,
 //     private:        true/false,
 //   }
 ];
@@ -46,7 +47,8 @@ const mapReducer = (state = initialState, action) => {
           isGeoEdit:      false,
           src:            action.mapData.src,
           name:           action.mapData.name,
-          private:        action.mapData.private,
+          fileName:       action.mapData.fileName,
+          private:        action.mapData.private
         } ];
       } else {
         return state;
@@ -57,9 +59,10 @@ const mapReducer = (state = initialState, action) => {
         if (map.mapId === action.mapData.mapId){
           return {
             ...map,
-            src:     action.mapData.src,
-            name:    action.mapData.name,
-            private: action.mapData.private,
+            src:      action.mapData.src,
+            name:     action.mapData.name,
+            fileName: action.mapData.fileName,
+            private:  action.mapData.private
           };
         } else {
           return map;
