@@ -104,7 +104,7 @@ class Geo extends Component {
     this.props.editGeoOff(this.props.mapData.mapId);
     this.props.removeGeo(this.props.geoData.geoId, this.props.mapData.mapId);
     if (!this.props.mapData.private){
-      socket.emit('geo', this.props.global.roomId, this.props.geoData.geoId, this.props.mapData.mapId);
+      socket.emit('delGeo', this.props.global.roomId, this.props.geoData.geoId, this.props.mapData.mapId);
     }
   }
 
