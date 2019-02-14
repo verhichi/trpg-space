@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MAP_MODE_PLACE_CHAR, MAP_MODE_PLACE_GEO, CHAR_PRIVACY_LEVEL_THREE } from '../../../../../../constants/constants';
-import { setMapMode, setCharToPlace, editMapPosition, editMapScale } from '../../../../../../redux/actions/map';
+import { setMapMode, setCharToPlace, editMapPosition, editMapScale, setSelGeo } from '../../../../../../redux/actions/map';
 import { addMapChar, editMapChar } from '../../../../../../redux/actions/mapChar';
 import { addGeo } from '../../../../../../redux/actions/geo';
 import socket from '../../../../../../socket/socketClient';
@@ -32,6 +32,7 @@ const mapDispatchToProps = (dispatch) => {
     addMapChar:      (mapCharData)      => dispatch(addMapChar(mapCharData)),
     editMapChar:     (mapCharData)      => dispatch(editMapChar(mapCharData)),
     setCharToPlace:  (mapId, charId)    => dispatch(setCharToPlace(mapId, charId)),
+    setSelGeo:       (mapId, geoId)     => dispatch(setSelGeo(mapId, geoId)),
     editMapPosition: (mapId, left, top) => dispatch(editMapPosition(mapId, left, top)),
     editMapScale:    (mapId, scale)     => dispatch(editMapScale(mapId, scale)),
     addGeo:          (mapId, geoData)   => dispatch(addGeo(mapId, geoData))
@@ -43,10 +44,8 @@ class Map extends Component {
     super(props);
     this.state = {
       isMapMoveMode: false,
-      mouseOffset: {
-        offsetX: 0,
-        offsetY: 0
-      }
+      offsetX:       0,
+      offsetY:       0
     };
 
     this.handleImageClick = this.handleImageClick.bind(this);
@@ -60,27 +59,36 @@ class Map extends Component {
     this.handleWheel      = this.handleWheel.bind(this);
   }
 
+
   componentWillUnmount (){
     document.querySelector('.map-img-cont').removeEventListener('mousemove', this.handleMouseMove);
     document.querySelector('.map-img-cont').removeEventListener('touchmove', this.handleTouchMove);
     document.querySelector('.map-img-cont').removeEventListener('mouseleave', this.handleMouseLeave);
   }
 
+
   handleMouseDown (e){
     e.stopPropagation();
     e.preventDefault();
 
+    const header      = document.querySelector('header');
+    const roomTopCont = document.querySelector('.room-top-cont');
+    const mapTabCont  = document.querySelector('.map-tab-cont');
+    const mapToolbar  = document.querySelector('.map-toolbar');
+
+    const mapOffsetHeight = header.offsetHeight + roomTopCont.offsetHeight + mapToolbar.offsetHeight + mapTabCont.offsetHeight;
+    const sidebarWidth    = this.props.displaySetting.displaySidebar ? document.querySelector('.list-cont').offsetWidth : 0;
+
     this.setState({
       isMapMoveMode: true,
-      mouseOffset: {
-        offsetX: Math.floor(e.nativeEvent.offsetX * this.props.mapData.scale),
-        offsetY: Math.floor(e.nativeEvent.offsetY * this.props.mapData.scale)
-      }
+      offsetX:       e.pageX - this.props.mapData.left - sidebarWidth,
+      offsetY:       e.pageY - this.props.mapData.top  - mapOffsetHeight
     });
 
     document.querySelector('.map-img-cont').addEventListener('mousemove', this.handleMouseMove);
     document.querySelector('.map-img-cont').addEventListener('mouseleave', this.handleMouseLeave);
   }
+
 
   handleMouseMove (e){
     e.stopPropagation();
@@ -89,11 +97,12 @@ class Map extends Component {
     if (this.state.isMapMoveMode){
       this.props.editMapPosition(
         this.props.displaySetting.displayMap,
-        e.pageX - document.querySelector('.map-img-cont').getBoundingClientRect().left - this.state.mouseOffset.offsetX,
-        e.pageY - document.querySelector('.map-img-cont').getBoundingClientRect().top - this.state.mouseOffset.offsetY
+        e.pageX - document.querySelector('.map-img-cont').getBoundingClientRect().left - this.state.offsetX,
+        e.pageY - document.querySelector('.map-img-cont').getBoundingClientRect().top - this.state.offsetY
       );
     }
   }
+
 
   handleMouseUp (e){
     e.stopPropagation();
@@ -103,6 +112,7 @@ class Map extends Component {
     document.querySelector('.map-img-cont').removeEventListener('mousemove', this.handleMouseMove);
   }
 
+
   handleMouseLeave (e){
     e.stopPropagation();
     e.preventDefault();
@@ -111,6 +121,7 @@ class Map extends Component {
     document.querySelector('.map-img-cont').removeEventListener('mousemove', this.handleMouseMove);
     document.querySelector('.map-img-cont').removeEventListener('mouseleave', this.handleMouseLeave);
   }
+
 
   handleTouchStart (e){
     if (this.props.mapData.mode === ''){
@@ -126,15 +137,14 @@ class Map extends Component {
 
       this.setState({
         isMapMoveMode: true,
-        mouseOffset: {
-          offsetX: e.touches[0].pageX - parseInt(e.target.style.left) - sidebarWidth,
-          offsetY: e.touches[0].pageY - parseInt(e.target.style.top) - mapOffsetHeight
-        }
+        offsetX:       e.touches[0].pageX - this.props.mapData.left - sidebarWidth,
+        offsetY:       e.touches[0].pageY - this.props.mapData.top  - mapOffsetHeight
       });
 
       document.querySelector('.map-img-cont').addEventListener('touchmove', this.handleTouchMove);
     }
   }
+
 
   handleTouchMove (e){
     e.stopPropagation();
@@ -143,8 +153,8 @@ class Map extends Component {
     if (this.state.isMapMoveMode){
       this.props.editMapPosition(
         this.props.displaySetting.displayMap,
-        e.touches[0].pageX - document.querySelector('.map-img-cont').getBoundingClientRect().left - this.state.mouseOffset.offsetX,
-        e.touches[0].pageY - document.querySelector('.map-img-cont').getBoundingClientRect().top - this.state.mouseOffset.offsetY
+        e.touches[0].pageX - document.querySelector('.map-img-cont').getBoundingClientRect().left - this.state.offsetX,
+        e.touches[0].pageY - document.querySelector('.map-img-cont').getBoundingClientRect().top - this.state.offsetY
       );
     }
   }
@@ -195,8 +205,11 @@ class Map extends Component {
         width:  100,
         height: 100
       };
-
+      this.props.setSelGeo(this.props.mapData.mapId, geoData.geoId);
       this.props.addGeo(geoData);
+      if (!this.props.mapData.private){
+        socket.emit('geo', this.props.global.roomId, geoData);
+      }
     }
 
     this.props.setCharToPlace(this.props.mapData.mapId, '');

@@ -7,6 +7,9 @@ import {
   EDIT_MAP_SCALE,
   TOGGLE_MAP_GRID,
   SET_CHAR_TO_PLACE,
+  SET_SEL_GEO,
+  EDIT_GEO_ON,
+  EDIT_GEO_OFF
 } from '../../../constants/actionTypes';
 
 const initialState = [
@@ -18,6 +21,8 @@ const initialState = [
 //     top:            y coordinate of map itself,
 //     mode:           mapMode,
 //     charToPlace:    characterIdToPlace,
+//     selGeo:         id of selected geo,
+//     isGeoEdit:      true/false,
 //     src:            src of map image,
 //     name:           name of map,
 //     private:        true/false,
@@ -37,6 +42,8 @@ const mapReducer = (state = initialState, action) => {
           scale:          1.0,
           mode:           '',
           charToPlace:    '',
+          selGeo:         '',
+          isGeoEdit:      false,
           src:            action.mapData.src,
           name:           action.mapData.name,
           private:        action.mapData.private,
@@ -117,6 +124,42 @@ const mapReducer = (state = initialState, action) => {
           return {
             ...map,
             charToPlace: action.charId
+          };
+        } else {
+          return map;
+        }
+      });
+
+    case SET_SEL_GEO:
+      return state.map(map => {
+        if (map.mapId === action.mapId){
+          return {
+            ...map,
+            selGeo: action.geoId
+          };
+        } else {
+          return map;
+        }
+      });
+
+    case EDIT_GEO_ON:
+      return state.map(map => {
+        if (map.mapId === action.mapId){
+          return {
+            ...map,
+            isGeoEdit: true
+          };
+        } else {
+          return map;
+        }
+      });
+
+    case EDIT_GEO_OFF:
+      return state.map(map => {
+        if (map.mapId === action.mapId){
+          return {
+            ...map,
+            isGeoEdit: false
           };
         } else {
           return map;

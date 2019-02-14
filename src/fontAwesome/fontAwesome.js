@@ -54,7 +54,8 @@ import {
   faPlus,
   faAngleLeft,
   faAngleRight,
-  faVectorSquare
+  faVectorSquare,
+  faArrowsAlt
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -109,5 +110,6 @@ library.add(
   faPlus,
   faAngleLeft,
   faAngleRight,
-  faVectorSquare
+  faVectorSquare,
+  faArrowsAlt
 );

@@ -17,6 +17,7 @@ const mapStateToProps = (state) => {
   return {
     global:       state.global,
     charList:     state.charList,
+    geoList:      state.geoList,
     mapList:      state.mapList,
     modalSetting: state.modalSetting,
     mapCharList:  state.mapCharList,
@@ -107,6 +108,12 @@ class EditMap extends Component {
         socket.emit('map', this.props.global.roomId, mapData);
 
         if (this.previousMapData.private){
+          this.props.geoList.forEach(geo => {
+            if (geo.mapId === this.props.modalSetting.modalProp.mapId){
+              socket.emit('geo', this.props.global.roomId, geo);
+            }
+          });
+
           this.props.mapCharList.forEach(mapChar => {
             if (mapChar.mapId === this.props.modalSetting.modalProp.mapId && this.props.charList.find(char => char.charId === mapChar.charId).general.privacy !== CHAR_PRIVACY_LEVEL_THREE){
               socket.emit('mapChar', this.props.global.roomId, mapChar);

@@ -10,6 +10,7 @@ import { addMap, editMap, removeMap, setMapMode, setCharToPlace } from '../../..
 import { addMapChar, editMapChar, removeMapChar, removeAllCharFromSelMap, removeSelCharFromAllMap } from '../../../redux/actions/mapChar';
 import { lockNote, unlockNote, editNote } from '../../../redux/actions/note';
 import { removeSendMsgUser, checkSendMsgToAll } from '../../../redux/actions/chatSetting';
+import { addGeo, editGeo, removeGeo, removeAllGeoFromSelMap } from '../../../redux/actions/geo';
 import socket from '../../../socket/socketClient';
 
 // Style
@@ -27,6 +28,7 @@ const mapStateToProps = (state) => {
     userList:       state.userList,
     charList:       state.charList,
     displaySetting: state.displaySetting,
+    geoList:        state.geoList,
     mapList:        state.mapList,
     mapCharList:    state.mapCharList,
     chatSetting:    state.chatSetting,
@@ -62,7 +64,11 @@ const mapDispatchToProps = (dispatch) => {
     setMapMode:              (mapId, mode)   => dispatch(setMapMode(mapId, mode)),
     setCharToPlace:          (mapId, charId) => dispatch(setCharToPlace(mapId, charId)),
     removeSelCharFromAllMap: (charId)        => dispatch(removeSelCharFromAllMap(charId)),
-    removeAllCharFromSelMap: (mapId)         => dispatch(removeAllCharFromSelMap(mapId))
+    removeAllCharFromSelMap: (mapId)         => dispatch(removeAllCharFromSelMap(mapId)),
+    addGeo:                  (geoData)       => dispatch(addGeo(geoData)),
+    editGeo:                 (geoData)       => dispatch(editGeo(geoData)),
+    removeGeo:               (geoId, mapId)  => dispatch(removeGeo(geoId, mapId)),
+    removeAllGeoFromSelMap:  (mapId)         => dispatch(removeAllGeoFromSelMap(mapId)),
   };
 };
 
@@ -146,23 +152,30 @@ class Room extends Component {
       });
 
       this.props.mapList.forEach(map => {
-        if (map.ownerId === this.props.global.id && !map.private){
-          socket.emit('map', this.props.global.roomId, {
-            mapId:   map.mapId,
-            ownerId: map.ownerId,
-            src:     map.src,
-            name:    map.name,
-            private: map.private
-          });
-        }
-
         if (!map.private){
+          if (map.ownerId === this.props.global.id){
+            socket.emit('map', this.props.global.roomId, {
+              mapId:   map.mapId,
+              ownerId: map.ownerId,
+              src:     map.src,
+              name:    map.name,
+              private: map.private
+            });
+
+            this.props.geoList.forEach(geo => {
+              if (geo.mapId === map.mapId){
+                socket.emit('geo', this.props.global.roomId, geo);
+              }
+            });
+          }
+
           this.props.mapCharList.forEach(mapChar => {
             if (mapChar.mapId === map.mapId && this.props.charList.find(char => char.charId === mapChar.charId).general.privacy !== CHAR_PRIVACY_LEVEL_THREE){
               socket.emit('mapChar', this.props.global.roomId, mapChar);
             }
           });
         }
+
       });
     });
 
@@ -186,6 +199,7 @@ class Room extends Component {
           if (map.mapId === this.props.displaySetting.displayMap){
             this.props.setDisplayMap('');
           }
+          this.props.removeAllGeoFromSelMap(map.mapId);
           this.props.removeAllCharFromSelMap(map.mapId);
           this.props.removeMap(map.mapId);
         }
@@ -225,6 +239,7 @@ class Room extends Component {
         this.props.setDisplayMap('');
       }
 
+      this.props.removeAllGeoFromSelMap(mapId);
       this.props.removeAllCharFromSelMap(mapId);
       this.props.removeMap(mapId);
     });
@@ -239,6 +254,18 @@ class Room extends Component {
 
     socket.on('removeMapChar', (mapId, charId) => {
       this.props.removeMapChar(mapId, charId);
+    });
+
+    socket.on('geo', geoData => {
+      if (this.props.geoList.some(geo => geo.geoId === geoData.geoId && geo.mapId === geoData.mapId)){
+        this.props.editGeo(geoData);
+      } else {
+        this.props.addGeo(geoData);
+      }
+    });
+
+    socket.on('delGeo', (geoId, mapId) => {
+      this.props.removeGeo(geoId, mapId);
     });
 
     socket.on('lockNote', (userId) => {

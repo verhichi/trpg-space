@@ -30,6 +30,10 @@ class PlaceGeoButton extends Component {
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
   }
 
+  componentWillUnmount (){
+    window.removeEventListener('click', this.handleOutsideClick, false);
+  }
+
   handleButtonClick (e){
     if (this.props.displaySetting.displayMapGeo){
       window.removeEventListener('click', this.handleOutsideClick, false);
@@ -51,7 +55,7 @@ class PlaceGeoButton extends Component {
   render() {
     return (
       <div className="map-toolbar-btn p-relative d-inline-block" ref={this.placeGeoRef}>
-        <PlaceGeoBalloon/>
+        <PlaceGeoBalloon mapData={this.props.mapData}/>
         <div className="p-2 cursor-pointer align-center" onClick={this.handleButtonClick}>
           <FontAwesomeIcon icon="vector-square"/>
         </div>

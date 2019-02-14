@@ -130,6 +130,16 @@ io.on('connection', (socket) => {
     socket.broadcast.to(roomId).emit('removeMapChar', mapId, charId);
   });
 
+  // Logic for when a user changes map's background
+  socket.on('geo', (roomId, geoData) => {
+    socket.broadcast.to(roomId).emit('geo', geoData);
+  });
+
+  // Logic for when a user changes map's background
+  socket.on('delGeo', (roomId, geoId, mapId) => {
+    socket.broadcast.to(roomId).emit('delGeo', geoId, mapId);
+  });
+
   // Logic for when a user edits shared notes
   socket.on('editNote', (roomId, notes) => {
     socket.broadcast.to(roomId).emit('editNote', notes);

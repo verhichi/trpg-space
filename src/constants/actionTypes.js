@@ -25,6 +25,9 @@ export const EDIT_MAP_SCALE    = 'EDIT_MAP_SCALE';
 export const SET_MAP_MODE      = 'SET_MAP_MODE';
 export const SET_CHAR_TO_PLACE = 'SET_CHAR_TO_PLACE';
 export const TOGGLE_MAP_GRID   = 'TOGGLE_MAP_GRID';
+export const SET_SEL_GEO       = 'SET_SEL_GEO';
+export const EDIT_GEO_ON       = 'EDIT_GEO_ON';
+export const EDIT_GEO_OFF      = 'EDIT_GEO_OFF';
 
 // MapChar
 export const ADD_MAP_CHAR                 = 'ADD_MAP_CHAR';
@@ -34,9 +37,10 @@ export const REMOVE_ALL_CHAR_FROM_SEL_MAP = 'REMOVE_ALL_CHAR_FROM_SEL_MAP';
 export const REMOVE_SEL_CHAR_FROM_ALL_MAP = 'REMOVE_SEL_CHAR_FROM_ALL_MAP';
 
 // Geo
-export const ADD_GEO    = 'ADD_GEO';
-export const EDIT_GEO   = 'EDIT_GEO';
-export const REMOVE_GEO = 'REMOVE_GEO';
+export const ADD_GEO                     = 'ADD_GEO';
+export const EDIT_GEO                    = 'EDIT_GEO';
+export const REMOVE_GEO                  = 'REMOVE_GEO';
+export const REMOVE_ALL_GEO_FROM_SEL_MAP = 'REMOVE_ALL_GEO_FROM_SEL_MAP';
 
 // Chat
 export const ADD_CHAT = 'ADD_CHAT';
@@ -77,11 +81,3 @@ export const HIDE_MAP_GEO     = 'HIDE_MAP_GEO';
 export const SET_SIDEBAR_CHAR = 'SET_SIDEBAR_CHAR';
 export const SET_SIDEBAR_NOTE = 'SET_SIDEBAR_NOTE';
 export const SET_DISPLAY_MAP  = 'SET_DISPLAY_MAP';
-
-// export const HIDE_USER_LIST = 'HIDE_USER_LIST';
-// export const SHOW_USER_LIST = 'SHOW_USER_LIST';
-//
-// export const USER_CLEANUP = 'USER_CLEANUP';
-// export const EDIT_MAP_IMAGE = 'EDIT_MAP_IMAGE';
-// export const TOGGLE_REMOVE_CHAR = 'TOGGLE_REMOVE_CHAR';
-// export const SET_SIDEBAR_TAB_MODE = 'SET_SIDEBAR_TAB_MODE';

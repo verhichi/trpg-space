@@ -41,7 +41,7 @@ class PlaceGeoBalloon extends Component {
     return (
       <div className={`place-geo-balloon cursor-default ${togglePlaceGeo}`}>
         <div className="font-size-sm">Squares are used to hide areas on maps.</div>
-        <button className="btn btn-hot w-100 cursor-pointer" onClick={this.handlePlaceGeoButtonClick}>
+        <button className="btn btn-hot w-100 cursor-pointer" disabled={this.props.mapData.isGeoEdit} onClick={this.handlePlaceGeoButtonClick}>
           <div className="btn-text font-weight-bold">Place Square</div>
         </button>
       </div>

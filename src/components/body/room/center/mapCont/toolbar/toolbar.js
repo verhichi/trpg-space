@@ -17,7 +17,10 @@ import PlaceGeoButton   from './placeGeoButton/placeGeoButton';
 
 // Redux Map State to Props
 const mapStateToProps = (state) => {
-  return { displaySetting: state.displaySetting };
+  return {
+    global:         state.global,
+    displaySetting: state.displaySetting
+  };
 };
 
 // Redux Map Dispatch To Props
@@ -61,7 +64,7 @@ class Toolbar extends Component {
           </div>
         </div>
         <ScaleMapButton/>
-        <PlaceGeoButton/>
+        {this.props.mapData.ownerId === this.props.global.id && <PlaceGeoButton mapData={this.props.mapData}/>}
       </div>
     );
   }

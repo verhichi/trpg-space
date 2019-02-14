@@ -2,6 +2,7 @@ import {
   ADD_GEO,
   EDIT_GEO,
   REMOVE_GEO,
+  REMOVE_ALL_GEO_FROM_SEL_MAP
 } from '../../../constants/actionTypes';
 
 const initialState = [
@@ -37,6 +38,9 @@ const geoReducer = (state = initialState, action) => {
 
     case REMOVE_GEO:
       return state.filter(geo => !(geo.geoId === action.geoId && geo.mapId === action.mapId));
+
+    case REMOVE_ALL_GEO_FROM_SEL_MAP:
+      return state.filter(geo => geo.mapId !== action.mapId);
 
     default:
       return state;

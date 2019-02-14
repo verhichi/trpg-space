@@ -4,14 +4,33 @@
 $corner-size:   20px;
 $corner-offset: -10px;
 
-.map-geo{
+.map-geo-cont{
   background: $disabled-clr;
+  background-image: url("../../../../../../../styles/images/geo.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
   border: 3px solid $black-clr;
   position: absolute;
-  z-index: 55;
+  z-index: 59;
 
-  &:hover .map-geo-corner{
-    display: block;
+  &.is-editable {
+    background-image: none;
+    background: rgba(0, 0, 0, 0.7);
+
+    .map-geo-corner{
+      border: 2px solid $hot-clr;
+      display: block;
+    }
+  }
+
+  &.is-selected {
+    border: 3px solid $hot-clr;
+    z-index: 100;
+
+    .map-geo-toolbar{
+      display: flex;
+    }
   }
 }
 
@@ -43,4 +62,15 @@ $corner-offset: -10px;
 .map-geo-corner-bottom-right{
   bottom: $corner-offset;
   right:  $corner-offset;
+}
+
+.map-geo-toolbar{
+  background: rgba(0, 0, 0, 0.7);
+  color: $white-clr;
+  display: none;
+  flex-direction: column;
+  font-size: $font-size-lg;
+  position: absolute;
+  right: -45px;
+  text-align: center;
 }

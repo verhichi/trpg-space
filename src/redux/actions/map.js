@@ -6,7 +6,10 @@ import {
   EDIT_MAP_POSITION,
   EDIT_MAP_SCALE,
   TOGGLE_MAP_GRID,
-  SET_CHAR_TO_PLACE
+  SET_CHAR_TO_PLACE,
+  SET_SEL_GEO,
+  EDIT_GEO_ON,
+  EDIT_GEO_OFF
 } from '../../constants/actionTypes';
 
 export const addMap = (mapData) => {
@@ -67,5 +70,27 @@ export const setCharToPlace = (mapId, charId) => {
     type: SET_CHAR_TO_PLACE,
     mapId,
     charId
+  };
+};
+
+export const setSelGeo = (mapId, geoId) => {
+  return {
+    type: SET_SEL_GEO,
+    mapId,
+    geoId
+  };
+};
+
+export const editGeoOn = (mapId) => {
+  return {
+    type: EDIT_GEO_ON,
+    mapId
+  };
+};
+
+export const editGeoOff = (mapId) => {
+  return {
+    type: EDIT_GEO_OFF,
+    mapId
   };
 };
