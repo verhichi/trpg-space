@@ -12,6 +12,11 @@
 .no-map-help{
   background: $secondary-clr;
   color: $white-clr;
+  font-size: $font-size-sm;
   padding: 5px;
   text-align: left;
+
+  @include md{
+    font-size: $font-size-md;
+  }
 }

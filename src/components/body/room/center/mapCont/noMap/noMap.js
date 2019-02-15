@@ -20,15 +20,15 @@ class NoMap extends Component {
         <div className="no-map-help">
           <div className="font-weight-bold">This area is used to display map images.</div>
           <div className="font-weight-bold">Users can place characters on the map and share its position.</div>
-          <div className="font-weight-bold pb-1">Map images are separated by tabs, click on the tab to toggle them into view.</div>
+          <div className="font-weight-bold pb-1">Maps are separated by tabs, click on the tabs to change maps.</div>
           <div className="pb-2">
             <span className="fa-layers fa-fw">
               <FontAwesomeIcon icon="plus" transform="shrink-8 up-7"/>
               <FontAwesomeIcon icon="map" transform="shrink-3 down-3"/>
             </span>
-            to create new map images.
+            to create new map.
           </div>
-          <div className="font-weight-bold pb-1">Once a map image is in view, buttons with the following icon and functionality will be available.</div>
+          <div className="font-weight-bold pb-1">Once map is in view, buttons with the following icon and functionality will be available.</div>
           <div className="pb-1">
             <span className="fa-layers fa-fw">
               <FontAwesomeIcon icon="arrow-down" transform="shrink-9 up-8"/>

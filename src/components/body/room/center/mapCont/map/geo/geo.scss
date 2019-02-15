@@ -15,8 +15,9 @@ $corner-offset: -10px;
   z-index: 59;
 
   &.is-editable {
-    background-image: none;
     background: rgba(0, 0, 0, 0.7);
+    background-image: none;
+    cursor: move;
 
     .map-geo-corner{
       border: 2px solid $hot-clr;
@@ -45,22 +46,26 @@ $corner-offset: -10px;
 }
 
 .map-geo-corner-top-left{
-  top:  $corner-offset;
-  left: $corner-offset;
+  cursor: nwse-resize;
+  top:   $corner-offset;
+  left:  $corner-offset;
 }
 
 .map-geo-corner-top-right{
-  top:   $corner-offset;
-  right: $corner-offset;
+  cursor: nesw-resize;
+  top:    $corner-offset;
+  right:  $corner-offset;
 }
 
 .map-geo-corner-bottom-left{
   bottom: $corner-offset;
+  cursor: nesw-resize;
   left:   $corner-offset;
 }
 
 .map-geo-corner-bottom-right{
   bottom: $corner-offset;
+  cursor: nwse-resize;
   right:  $corner-offset;
 }
 
