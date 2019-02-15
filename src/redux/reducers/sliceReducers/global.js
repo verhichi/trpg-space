@@ -1,5 +1,14 @@
-import { SET_ROOM_ID, SET_USER_ID, SET_APP_LANG } from '../../../constants/actionTypes';
-import { APP_LANG_EN, APP_LANG_JP } from '../../../constants/constants';
+import {
+  SET_ROOM_ID,
+  SET_USER_ID,
+  SET_APP_LANG,
+  SET_ROOM_EXPIRE
+} from '../../../constants/actionTypes';
+
+import {
+  APP_LANG_EN,
+  APP_LANG_JP
+} from '../../../constants/constants';
 
 const getBrowserLang = () => {
   return /ja/.test(navigator.language)
@@ -8,10 +17,12 @@ const getBrowserLang = () => {
 };
 
 const initialState = {
-  lang:     getBrowserLang(),
-  isMobile: /Mobile/.test(navigator.userAgent),
-  id:       '',
-  roomId:   ''
+  lang:                  getBrowserLang(),
+  isMobile:              /Mobile/.test(navigator.userAgent),
+  id:                    '',
+  roomId:                '',
+  roomExpireSettingHour: null,
+  roomExpireTimestamp:   null
 };
 
 const generalReducer = (state = initialState, action) => {
@@ -32,6 +43,13 @@ const generalReducer = (state = initialState, action) => {
       return {
         ...state,
         lang: action.lang
+      };
+
+    case SET_ROOM_EXPIRE:
+      return {
+        ...state,
+        roomExpireSettingHour: action.roomExpireSettingHour,
+        roomExpireTimestamp:   action.roomExpireTimestamp
       };
 
     default:

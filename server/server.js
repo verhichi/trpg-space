@@ -45,7 +45,6 @@ app.get('/newRoomId', (req, res) => {
 
 // GET check if room id to join exists
 app.get('/checkRoomId', (req, res) => {
-  console.log(req.query);
   let roomExists = true;
   if(!io.sockets.adapter.rooms[req.query.roomId]){
     roomExists = false;
@@ -153,6 +152,11 @@ io.on('connection', (socket) => {
   // Logic for when a user unlocks a note
   socket.on('unlockNote', (roomId) => {
     socket.broadcast.to(roomId).emit('unlockNote');
+  });
+
+  // Logic to send room expiration information
+  socket.on('roomExpire', (roomId, roomExpireSetting) => {
+    socket.broadcast.to(roomId).emit('roomExpire', roomExpireSetting);
   });
 
 });

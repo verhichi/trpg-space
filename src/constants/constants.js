@@ -1,3 +1,6 @@
+// Global Setting
+export const DEFAULT_ROOM_EXPIRE_SETTING_HOUR = 3;
+
 // Center mode
 export const CENTER_MODE_CHAT = 'chat';
 export const CENTER_MODE_MAP  = 'map';
