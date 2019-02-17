@@ -5,7 +5,8 @@ import uuid from 'uuid';
 import { MODAL_TYPE_ALERT, MODAL_TYPE_REQUESTING, DEFAULT_ROOM_EXPIRE_SETTING_HOUR } from '../../../constants/constants';
 import { showModal, hideModal} from '../../../redux/actions/modal';
 import { addUser } from '../../../redux/actions/user';
-import { setUserId, setRoomId, setRoomExpire } from '../../../redux/actions/global';
+import { setUserId, setRoomId } from '../../../redux/actions/global';
+import { setRoomExpireTime } from '../../../redux/actions/expire';
 import { newUserHelpText, displayNameInpLabel, submitBtnLabel, roomNotExistText } from './newUser.i18n';
 
 // Font Awesome Component
@@ -30,7 +31,7 @@ const mapDispatchToProps = (dispatch) => {
     showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
     setUserId: (userId)               => dispatch(setUserId(userId)),
     setRoomId: (roomId)               => dispatch(setRoomId(roomId)),
-    setRoomExpire: (roomExpireSettingHour, roomExpireTimestamp) => dispatch(setRoomExpire(roomExpireSettingHour, roomExpireTimestamp))
+    setRoomExpireTime: (roomExpireSettingHour, roomExpireTimestamp) => dispatch(setRoomExpireTime(roomExpireSettingHour, roomExpireTimestamp))
   };
 };
 
@@ -76,7 +77,7 @@ class NewUser extends Component {
 
           this.props.setUserId(id);
           this.props.setRoomId(result.data.roomId);
-          this.props.setRoomExpire(DEFAULT_ROOM_EXPIRE_SETTING_HOUR, roomExpireTimestamp);
+          this.props.setRoomExpireTime(DEFAULT_ROOM_EXPIRE_SETTING_HOUR, roomExpireTimestamp);
 
           this.props.addUser({
             id: id,

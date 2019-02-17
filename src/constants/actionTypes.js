@@ -4,7 +4,9 @@ export const RESET_STATE = 'RESET_STATE';
 export const SET_ROOM_ID     = 'SET_ROOM_ID';
 export const SET_USER_ID     = 'SET_USER_ID';
 export const SET_APP_LANG    = 'SET_APP_LANG';
-export const SET_ROOM_EXPIRE = 'SET_ROOM_EXPIRE';
+
+// Expire
+export const SET_ROOM_EXPIRE_TIME = 'SET_ROOM_EXPIRE_TIME';
 
 // User
 export const ADD_USER    = 'ADD_USER';

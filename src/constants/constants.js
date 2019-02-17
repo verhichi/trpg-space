@@ -1,4 +1,4 @@
-// Global Setting
+// Expire
 export const DEFAULT_ROOM_EXPIRE_SETTING_HOUR = 3;
 
 // Center mode

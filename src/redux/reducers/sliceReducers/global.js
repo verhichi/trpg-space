@@ -2,7 +2,6 @@ import {
   SET_ROOM_ID,
   SET_USER_ID,
   SET_APP_LANG,
-  SET_ROOM_EXPIRE
 } from '../../../constants/actionTypes';
 
 import {
@@ -20,9 +19,7 @@ const initialState = {
   lang:                  getBrowserLang(),
   isMobile:              /Mobile/.test(navigator.userAgent),
   id:                    '',
-  roomId:                '',
-  roomExpireSettingHour: null,
-  roomExpireTimestamp:   null
+  roomId:                ''
 };
 
 const generalReducer = (state = initialState, action) => {
@@ -44,14 +41,7 @@ const generalReducer = (state = initialState, action) => {
         ...state,
         lang: action.lang
       };
-
-    case SET_ROOM_EXPIRE:
-      return {
-        ...state,
-        roomExpireSettingHour: action.roomExpireSettingHour,
-        roomExpireTimestamp:   action.roomExpireTimestamp
-      };
-
+      
     default:
       return state;
   }

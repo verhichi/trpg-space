@@ -11,9 +11,11 @@ class socketAPI {
   }
 
   disconnect() {
-    this.socket.disconnect(() => {
-      this.socket = null;
-    });
+    this.socket.disconnect();
+  }
+
+  isConnected() {
+    return this.socket.connected;
   }
 
   emit(event, ...data) {

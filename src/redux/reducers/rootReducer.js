@@ -4,6 +4,7 @@ import charReducer        from './sliceReducers/char';
 import chatLogReducer     from './sliceReducers/chatLog';
 import chatSettingReducer from './sliceReducers/chatSetting';
 import displayReducer     from './sliceReducers/display';
+import expireReducer      from './sliceReducers/expire';
 import geoReducer         from './sliceReducers/geo';
 import globalReducer      from './sliceReducers/global';
 import mapReducer         from './sliceReducers/map';
@@ -19,6 +20,7 @@ const appReducer = combineReducers({
   chatLog:        chatLogReducer,
   chatSetting:    chatSettingReducer,
   displaySetting: displayReducer,
+  expireSetting:  expireReducer,
   geoList:        geoReducer,
   global:         globalReducer,
   mapList:        mapReducer,
