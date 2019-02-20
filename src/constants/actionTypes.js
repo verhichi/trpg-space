@@ -7,6 +7,7 @@ export const SET_APP_LANG    = 'SET_APP_LANG';
 
 // Expire
 export const SET_ROOM_EXPIRE_TIME = 'SET_ROOM_EXPIRE_TIME';
+export const SET_ROOM_EXPIRE      = 'SET_ROOM_EXPIRE';
 
 // User
 export const ADD_USER    = 'ADD_USER';

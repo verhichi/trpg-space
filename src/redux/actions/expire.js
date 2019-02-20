@@ -1,4 +1,7 @@
-import { SET_ROOM_EXPIRE_TIME } from '../../constants/actionTypes';
+import {
+  SET_ROOM_EXPIRE_TIME,
+  SET_ROOM_EXPIRE
+} from '../../constants/actionTypes';
 
 export const setRoomExpireTime = (roomExpireSettingHour, roomExpireTimestamp) => {
   return {
@@ -6,4 +9,8 @@ export const setRoomExpireTime = (roomExpireSettingHour, roomExpireTimestamp) =>
     roomExpireSettingHour,
     roomExpireTimestamp
   };
+};
+
+export const setRoomExpire = () => {
+  return { type: SET_ROOM_EXPIRE };
 };
