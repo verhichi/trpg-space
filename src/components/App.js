@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 
 // Font Awesome Library
 import '../fontAwesome/fontAwesome.js';
@@ -9,8 +10,14 @@ import '../styles/styles.scss';
 
 // Components
 import Header from './header/header';
-import Body from './body/body';
-import Modal from './modal/modal';
+import Body   from './body/body';
+import Modal  from './modal/modal';
+import Notice from './notice/notice';
+
+// Redux Map State To Prop
+const mapStateToProps = (state) => {
+  return { noticeSetting: state.noticeSetting };
+};
 
 class App extends Component {
   constructor (props){
@@ -30,9 +37,10 @@ class App extends Component {
         <Header/>
         <Body/>
         <Modal/>
+        {this.props.noticeSetting.display && <Notice/>}
       </Fragment>
     );
   }
 }
 
-export default App;
+export default connect(mapStateToProps)(App);

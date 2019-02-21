@@ -1,0 +1,10 @@
+@import '../../../styles/partials/variables';
+@import '../../../styles/partials/mediaQueries';
+
+.notice-icon{
+  font-size: $font-size-lg;
+  
+  @include md{
+    font-size: $font-size-xl;
+  }
+}

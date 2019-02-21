@@ -11,6 +11,7 @@ import mapReducer         from './sliceReducers/map';
 import mapCharReducer     from './sliceReducers/mapChar';
 import modalReducer       from './sliceReducers/modal';
 import noteReducer        from './sliceReducers/note';
+import noticeReducer      from './sliceReducers/notice';
 import userReducer        from './sliceReducers/user';
 
 import { RESET_STATE } from '../../constants/actionTypes';
@@ -27,6 +28,7 @@ const appReducer = combineReducers({
   mapCharList:    mapCharReducer,
   modalSetting:   modalReducer,
   noteSetting:    noteReducer,
+  noticeSetting:  noticeReducer,
   userList:       userReducer,
 });
 

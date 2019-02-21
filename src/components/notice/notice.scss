@@ -1,0 +1,21 @@
+@import '../../styles/partials/variables';
+@import '../../styles/partials/mediaQueries';
+
+.room-notice{
+  background: #FFF720;
+  border: none;
+  color: $black-clr;
+  display: inline-flex;
+  font-size: $font-size-sm;
+  left: 50%;
+  padding: 5px 10px;
+  position: absolute;
+  text-align: left;
+  top: 10px;
+  transform: translateX(-50%);
+  z-index: 100;
+
+  @include md{
+    font-size: $font-size-md;
+  }
+}

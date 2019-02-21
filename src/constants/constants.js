@@ -55,6 +55,9 @@ export const MODAL_TYPE_ROOM_SETTING = 'ROOM_SETTING';
 export const MODAL_TYPE_UPLOAD_IMG   = 'UPLOAD_IMG';
 export const MODAL_TYPE_VIEW_CHAR    = 'VIEW_CHAR';
 
+// Notice Type
+export const NOTICE_TYPE_EXPIRE = 'NOTICE_TYPE_EXPIRE';
+
 // Status Type
 export const STATUS_TYPE_VALUE = 'VALUE';
 export const STATUS_TYPE_PARAM = 'PARAM';
