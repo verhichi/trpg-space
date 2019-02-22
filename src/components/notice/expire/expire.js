@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { hideNotice } from '../../../redux/actions/notice';
+import { oneHourLeftMsg, hostExtendMsg } from './expire.i18n';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,6 +10,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './expire.scss';
 
 // Redux Map State To Prop
+const mapStateToProps = (state) => {
+  return { global: state.global };
+};
+
+// Redux Map Dispatch To Prop
 const mapDispatchToProps = (dispatch) => {
   return { hideNotice: () => dispatch(hideNotice()) };
 };
@@ -31,8 +37,8 @@ class Expire extends Component {
           <FontAwesomeIcon icon="exclamation-circle"/>
         </div>
         <div>
-          This room will expire in 1 hour.<br/>
-          You can extend this at room settings.
+          <div>{oneHourLeftMsg[this.props.global.lang]}</div>
+          <div>{hostExtendMsg[this.props.global.lang]}</div>
         </div>
         <div className="notice-icon p-1 pl-2 cursor-pointer" onClick={this.handleClick}>
           <FontAwesomeIcon icon="times"/>
@@ -42,4 +48,4 @@ class Expire extends Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Expire);
+export default connect(mapStateToProps, mapDispatchToProps)(Expire);

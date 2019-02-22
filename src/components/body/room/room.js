@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CHAT_TYPE_HOST, CHAT_TYPE_LEAVE, CHAT_TYPE_JOIN, CHAR_PRIVACY_LEVEL_THREE } from '../../../constants/constants';
 import { setUserId, setRoomId } from '../../../redux/actions/global';
-import { setRoomExpireTime } from '../../../redux/actions/expire';
+import { setRoomExpireTime, setRoomExpireNoticeFalse } from '../../../redux/actions/expire';
 import { addUser, editUser, removeUser, newHost } from '../../../redux/actions/user';
 import { addChat } from '../../../redux/actions/chatLog';
 import { setDisplayMap } from '../../../redux/actions/display';
@@ -41,37 +41,38 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    addUser:                 (user)          => dispatch(addUser(user)),
-    editUser:                (user)          => dispatch(editUser(user)),
-    removeUser:              (userId)        => dispatch(removeUser(userId)),
-    setRoomId:               (roomId)        => dispatch(setRoomId(roomId)),
-    setUserId:               (userId)        => dispatch(setUserId(userId)),
-    addChat:                 (content)       => dispatch(addChat(content)),
-    newHost:                 (id)            => dispatch(newHost(id)),
-    addMapChar:              (mapCharData)   => dispatch(addMapChar(mapCharData)),
-    editMapChar:             (mapCharData)   => dispatch(editMapChar(mapCharData)),
-    removeMapChar:           (mapId, charId) => dispatch(removeMapChar(mapId, charId)),
-    editNote:                (notes)         => dispatch(editNote(notes)),
-    lockNote:                (userId)        => dispatch(lockNote(userId)),
-    unlockNote:              ()              => dispatch(unlockNote()),
-    removeSendMsgUser:       (userId)        => dispatch(removeSendMsgUser(userId)),
-    checkSendMsgToAll:       ()              => dispatch(checkSendMsgToAll()),
-    editChar:                (charData)      => dispatch(editChar(charData)),
-    addChar:                 (charData)      => dispatch(addChar(charData)),
-    removeChar:              (charId)        => dispatch(removeChar(charId)),
-    addMap:                  (mapData)       => dispatch(addMap(mapData)),
-    editMap:                 (mapData)       => dispatch(editMap(mapData)),
-    removeMap:               (mapId)         => dispatch(removeMap(mapId)),
-    setDisplayMap:           (mapId)         => dispatch(setDisplayMap(mapId)),
-    setMapMode:              (mapId, mode)   => dispatch(setMapMode(mapId, mode)),
-    setCharToPlace:          (mapId, charId) => dispatch(setCharToPlace(mapId, charId)),
-    removeSelCharFromAllMap: (charId)        => dispatch(removeSelCharFromAllMap(charId)),
-    removeAllCharFromSelMap: (mapId)         => dispatch(removeAllCharFromSelMap(mapId)),
-    addGeo:                  (geoData)       => dispatch(addGeo(geoData)),
-    editGeo:                 (geoData)       => dispatch(editGeo(geoData)),
-    removeGeo:               (geoId, mapId)  => dispatch(removeGeo(geoId, mapId)),
-    removeAllGeoFromSelMap:  (mapId)         => dispatch(removeAllGeoFromSelMap(mapId)),
-    setRoomExpireTime: (roomExpireSettingHour, roomExpireTimestamp) => dispatch(setRoomExpireTime(roomExpireSettingHour, roomExpireTimestamp))
+    addUser:                  (user)          => dispatch(addUser(user)),
+    editUser:                 (user)          => dispatch(editUser(user)),
+    removeUser:               (userId)        => dispatch(removeUser(userId)),
+    setRoomId:                (roomId)        => dispatch(setRoomId(roomId)),
+    setUserId:                (userId)        => dispatch(setUserId(userId)),
+    addChat:                  (content)       => dispatch(addChat(content)),
+    newHost:                  (id)            => dispatch(newHost(id)),
+    addMapChar:               (mapCharData)   => dispatch(addMapChar(mapCharData)),
+    editMapChar:              (mapCharData)   => dispatch(editMapChar(mapCharData)),
+    removeMapChar:            (mapId, charId) => dispatch(removeMapChar(mapId, charId)),
+    editNote:                 (notes)         => dispatch(editNote(notes)),
+    lockNote:                 (userId)        => dispatch(lockNote(userId)),
+    unlockNote:               ()              => dispatch(unlockNote()),
+    removeSendMsgUser:        (userId)        => dispatch(removeSendMsgUser(userId)),
+    checkSendMsgToAll:        ()              => dispatch(checkSendMsgToAll()),
+    editChar:                 (charData)      => dispatch(editChar(charData)),
+    addChar:                  (charData)      => dispatch(addChar(charData)),
+    removeChar:               (charId)        => dispatch(removeChar(charId)),
+    addMap:                   (mapData)       => dispatch(addMap(mapData)),
+    editMap:                  (mapData)       => dispatch(editMap(mapData)),
+    removeMap:                (mapId)         => dispatch(removeMap(mapId)),
+    setDisplayMap:            (mapId)         => dispatch(setDisplayMap(mapId)),
+    setMapMode:               (mapId, mode)   => dispatch(setMapMode(mapId, mode)),
+    setCharToPlace:           (mapId, charId) => dispatch(setCharToPlace(mapId, charId)),
+    removeSelCharFromAllMap:  (charId)        => dispatch(removeSelCharFromAllMap(charId)),
+    removeAllCharFromSelMap:  (mapId)         => dispatch(removeAllCharFromSelMap(mapId)),
+    addGeo:                   (geoData)       => dispatch(addGeo(geoData)),
+    editGeo:                  (geoData)       => dispatch(editGeo(geoData)),
+    removeGeo:                (geoId, mapId)  => dispatch(removeGeo(geoId, mapId)),
+    removeAllGeoFromSelMap:   (mapId)         => dispatch(removeAllGeoFromSelMap(mapId)),
+    setRoomExpireNoticeFalse: ()              => dispatch(setRoomExpireNoticeFalse()),
+    setRoomExpireTime: (roomExpireSettingHour, roomExpireTimestamp) => dispatch(setRoomExpireTime(roomExpireSettingHour, roomExpireTimestamp)),
   };
 };
 
@@ -298,6 +299,13 @@ class Room extends Component {
         const timeDif      = roomExpireSettingData.hostCurTimestamp - curTimestamp;
         this.props.setRoomExpireTime(roomExpireSettingData.roomExpireSettingHour, roomExpireSettingData.roomExpireTimestamp - timeDif);
       }
+    });
+
+    socket.on('extendRoomExpire', () => {
+      const newRoomExpireSettingHour = this.props.expireSetting.roomExpireSettingHour + 1;
+      const newExpireTimestamp       = this.props.expireSetting.roomExpireTimestamp + (60 * 60 * 1000);
+      this.props.setRoomExpireTime(newRoomExpireSettingHour, newExpireTimestamp);
+      this.props.setRoomExpireNoticeFalse();
     });
 
     socket.emit('join', this.props.match.params.roomId, this.props.userList.find((user) => user.id === this.props.global.id))

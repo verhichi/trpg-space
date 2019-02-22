@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { CHAT_TYPE_IMAGE } from '../../../constants/constants';
 import { addChat } from '../../../redux/actions/chatLog';
 import { hideModal } from '../../../redux/actions/modal';
-// import { removeAllMapChar } from '../../../redux/actions/char';
-// import { editMapImage, editMapPosition } from '../../../redux/actions/map';
 import socket from '../../../socket/socketClient';
 import { fileInpLabel, fileTypeError, fileSizeError, submitBtnLabel } from './uploadImg.i18n';
 

@@ -159,4 +159,9 @@ io.on('connection', (socket) => {
     socket.broadcast.to(roomId).emit('roomExpire', roomExpireSetting);
   });
 
+  // Logic to extend room expiration
+  socket.on('extendRoomExpire', roomId => {
+    socket.broadcast.to(roomId).emit('extendRoomExpire');
+  });
+
 });

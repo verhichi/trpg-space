@@ -22,7 +22,7 @@ export const customMiddleware = store => next => action => {
     }));
   }
 
-  if (!displayedExpireNotice && !hasRoomExpired && roomExpireTimestamp && roomExpireTimestamp - curTimestamp <= 60 * 1000){
+  if (!displayedExpireNotice && !hasRoomExpired && roomExpireTimestamp && roomExpireTimestamp - curTimestamp <= 60 * 60 * 1000){
     next(setRoomExpireNoticeTrue());
     next(showNotice(NOTICE_TYPE_EXPIRE));
   }

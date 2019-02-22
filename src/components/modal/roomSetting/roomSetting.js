@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { roomSettingLabel, userRoomLabel, extendRoomLifeBtnLabel } from './roomSetting.i18n';
 import { setRoomExpireTime, setRoomExpireNoticeFalse } from '../../../redux/actions/expire';
+import socket from '../../../socket/socketClient';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -43,8 +44,9 @@ class RoomSetting extends Component {
       this.setState({ submitted: true });
       const newRoomExpireSettingHour = this.props.expireSetting.roomExpireSettingHour + 1;
       const newExpireTimestamp       = this.props.expireSetting.roomExpireTimestamp + (60 * 60 * 1000);
-      this.props.setRoomExpireNoticeFalse();
       this.props.setRoomExpireTime(newRoomExpireSettingHour, newExpireTimestamp);
+      this.props.setRoomExpireNoticeFalse();
+      socket.emit('extendRoomExpire', this.props.global.roomId);
     }
   }
 
@@ -54,6 +56,7 @@ class RoomSetting extends Component {
     });
 
     const hostName = this.props.userList.find(user => user.host).name;
+    const isHost   = this.props.userList.find(user => user.id === this.props.global.id).host;
 
     const curDate      = new Date();
     const curTimestamp = curDate.getTime();
@@ -71,10 +74,10 @@ class RoomSetting extends Component {
           <div className="setting-detail">Room Host: {hostName}</div>
           <div className="setting-detail">Room Expires in: {timeLeft}</div>
         </div>
-        <button type="button" className="btn btn-hot w-100 cursor-pointer f-shrink-0 f-align-self-end mb-3" disabled={isDisabled} onClick={this.handleButtonClick}>
+        {isHost && (<button type="button" className="btn btn-hot w-100 cursor-pointer f-shrink-0 f-align-self-end mb-3" disabled={isDisabled} onClick={this.handleButtonClick}>
           <FontAwesomeIcon icon="plus"/>
           <div className="btn-text">{extendRoomLifeBtnLabel[this.props.global.lang]}</div>
-        </button>
+        </button>)}
         <div>
           <div className="setting-title font-weight-bold mb-2">{userRoomLabel[this.props.global.lang]}</div>
           { userList }

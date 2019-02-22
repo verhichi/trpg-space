@@ -71,8 +71,8 @@ class NewUser extends Component {
       if (this.props.modalSetting.modalProp.host){
         axios.get('/newRoomId')
         .then((result) => {
-          const id = uuid.v4();
-          const curDate = new Date();
+          const id                  = uuid.v4();
+          const curDate             = new Date();
           const roomExpireTimestamp = curDate.getTime() + (DEFAULT_ROOM_EXPIRE_SETTING_HOUR * 60 * 60 * 1000);
 
           this.props.setUserId(id);
