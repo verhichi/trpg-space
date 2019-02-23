@@ -37,7 +37,7 @@ class App extends Component {
         <Header/>
         <Body/>
         <Modal/>
-        {this.props.noticeSetting.display && <Notice/>}
+        <Notice/>
       </Fragment>
     );
   }

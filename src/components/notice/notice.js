@@ -18,8 +18,10 @@ class Notice extends Component {
       [NOTICE_TYPE_EXPIRE]: <Expire/>
     };
 
+    const toggleClass = this.props.noticeSetting.display ? 'is-active' : '';
+
     return (
-      <div className="room-notice">
+      <div className={`room-notice ${toggleClass}`}>
         {noticeBody[this.props.noticeSetting.noticeType]}
       </div>
     );

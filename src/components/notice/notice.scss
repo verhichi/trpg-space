@@ -11,11 +11,16 @@
   padding: 5px 10px;
   position: absolute;
   text-align: left;
-  top: 10px;
+  top: -100%;
   transform: translateX(-50%);
+  transition: top 0.3s;
   z-index: 100;
 
   @include md{
     font-size: $font-size-md;
+  }
+
+  &.is-active{
+    top: 10px;
   }
 }

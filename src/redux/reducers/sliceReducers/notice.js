@@ -18,8 +18,8 @@ const noticeReducer = (state = initialState, action) => {
 
     case HIDE_NOTICE:
       return {
+        ...state,
         display:    false,
-        noticeType: ''
       };
 
     default:
