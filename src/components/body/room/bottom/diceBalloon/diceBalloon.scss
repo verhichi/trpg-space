@@ -4,10 +4,13 @@
 // HELP BALLOON
 .dice-help-balloon{
   background: $tertiary-clr;
-  bottom: calc(100% + 15px);
+  bottom: 100%;
   color: $white-clr;
+  opacity: 0;
   padding: 15px;
   position: absolute;
+  transition: all 0.3s;
+  visibility: hidden;
   width: 200px;
   z-index: 100;
 
@@ -17,6 +20,12 @@
     content: "";
     position: absolute;
     top: 100%;
+  }
+
+  &.is-active{
+    bottom: calc(100% + 15px);
+    opacity: 1;
+    visibility: visible;
   }
 }
 

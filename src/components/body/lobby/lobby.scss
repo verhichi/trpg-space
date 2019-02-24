@@ -9,7 +9,6 @@
 }
 
 .lobby-animate-cont{
-  margin: 10px 0;
   overflow: hidden;
   position: relative;
 
@@ -49,6 +48,7 @@
 .lobby-inp-cont{
   animation: contReveal 1s linear 0.5s 1 normal both;
   background: #303030;
+  margin: 10px 0;
   padding: 10px 15px;
 }
 
