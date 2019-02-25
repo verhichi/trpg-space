@@ -8,8 +8,9 @@
   color: $white-clr;
   flex-basis: 35px;
   overflow: hidden;
+  position: relative;
   width: 100%;
-  z-index: 60;
+  z-index: 70;
 }
 
 .map-tab-wrap{
