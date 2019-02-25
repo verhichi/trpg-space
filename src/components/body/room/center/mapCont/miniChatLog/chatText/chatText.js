@@ -23,7 +23,7 @@ class ChatText extends Component {
           <div className="mini-chat-icon">
             <FontAwesomeIcon icon="comment"/>
           </div>
-          {this.props.chatData.private && <div>[PRIVATE]</div>}
+          {this.props.chatData.private && <div className="d-inline-block">[PRIVATE]</div>}
           [{this.props.chatData.name}] {this.props.chatData.text}
         </div>
       );

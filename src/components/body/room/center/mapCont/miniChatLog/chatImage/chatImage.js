@@ -11,7 +11,7 @@ class ChatImage extends Component {
         <div className="mini-chat-icon">
           <FontAwesomeIcon icon="file-image"/>
         </div>
-        <div>[{this.props.chatData.name}] -Check chat to view image-</div>
+        <div className="d-inline-block">[{this.props.chatData.name}] -Check chat to view image-</div>
       </div>
     );
 

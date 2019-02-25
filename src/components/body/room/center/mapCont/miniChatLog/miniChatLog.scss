@@ -16,19 +16,6 @@
   }
 }
 
-.mini-chat{
-  color: $white-clr;
-  display: flex;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.mini-chat-icon{
-  flex-basis: 25px;
-  text-align: center;
-}
-
 @keyframes fadeout{
   0%{
     visibility: visible;
@@ -38,4 +25,17 @@
     visibility: hidden;
     opacity: 0;
   }
+}
+
+.mini-chat{
+  color: $white-clr;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mini-chat-icon{
+  display: inline-block;
+  text-align: center;
+  width: 25px;
 }
