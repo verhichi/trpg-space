@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, MODAL_TYPE_VIEW_CHAR, MODAL_TYPE_CONFIRM, MODAL_TYPE_EDIT_CHAR, STATUS_TYPE_VALUE, STATUS_TYPE_PARAM } from '../../../../../../../constants/constants'
+import uuid from 'uuid';
+import { CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, CHAR_PRIVACY_LEVEL_THREE, MODAL_TYPE_VIEW_CHAR, MODAL_TYPE_CONFIRM, MODAL_TYPE_EDIT_CHAR, STATUS_TYPE_VALUE, STATUS_TYPE_PARAM } from '../../../../../../../constants/constants'
 import { showModal, hideModal } from '../../../../../../../redux/actions/modal';
 import { removeMapChar, removeSelCharFromAllMap } from '../../../../../../../redux/actions/mapChar';
-import { removeChar } from '../../../../../../../redux/actions/char';
+import { addChar, removeChar } from '../../../../../../../redux/actions/char';
 import { checkSendAsUser, editSendAs } from '../../../../../../../redux/actions/chatSetting';
 
 import socket from '../../../../../../../socket/socketClient';
@@ -30,6 +31,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     showModal:               (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
     hideModal:               ()                     => dispatch(hideModal()),
+    addChar:                 (charData)             => dispatch(addChar(charData)),
     removeChar:              (charId)               => dispatch(removeChar(charId)),
     removeMapChar:           (mapId, charId)        => dispatch(removeMapChar(mapId, charId)),
     checkSendAsUser:         ()                     => dispatch(checkSendAsUser()),
@@ -47,6 +49,8 @@ class Char extends Component {
     this.handleEditClick     = this.handleEditClick.bind(this);
     this.handleViewClick     = this.handleViewClick.bind(this);
     this.resetSendAsState    = this.resetSendAsState.bind(this);
+    this.handleCopyClick     = this.handleCopyClick.bind(this);
+    this.handleCopyConfirm   = this.handleCopyConfirm.bind(this);
   }
 
   handleRemoveClick (charId, e){
@@ -91,6 +95,27 @@ class Char extends Component {
     });
   }
 
+  handleCopyClick (e){
+    this.props.showModal(MODAL_TYPE_CONFIRM, {
+      title:        'Copy Character',
+      displayClose: false,
+      confirmText:  `Create a copy of ${this.props.charData.general.name}?`,
+      accept:       this.handleCopyConfirm,
+      decline:      this.props.hideModal
+    });
+  }
+
+  handleCopyConfirm (){
+    const newCharData = { ...this.props.charData, charId: uuid.v4()};
+    this.props.addChar(newCharData);
+
+    if (this.props.charData.general.privacy !== CHAR_PRIVACY_LEVEL_THREE){
+      socket.emit('char', this.props.global.roomId, newCharData);
+    }
+
+    this.props.hideModal();
+  }
+
   render() {
     const showName = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ONE || this.props.charData.ownerId === this.props.global.id;
     const showStat = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ZERO || this.props.charData.ownerId === this.props.global.id;
@@ -127,6 +152,10 @@ class Char extends Component {
                </div>)
             : (<div className="cursor-pointer char-btn align-center f-shrink-0" onClick={this.handleViewClick}>
                  <FontAwesomeIcon icon="eye"/>
+               </div>)}
+          {this.props.charData.ownerId === this.props.global.id
+            && (<div className="cursor-pointer char-btn align-center f-shrink-0" onClick={this.handleCopyClick}>
+                 <FontAwesomeIcon icon="copy"/>
                </div>)}
         </div>
       </div>
