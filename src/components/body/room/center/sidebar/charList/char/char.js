@@ -62,7 +62,7 @@ class Char extends Component {
   handleRemoveConfirm (){
     this.props.removeSelCharFromAllMap(this.props.charData.charId);
     this.props.removeChar(this.props.charData.charId);
-    
+
     this.resetSendAsState();
     socket.emit('delChar', this.props.global.roomId, this.props.charData.charId);
     this.props.hideModal();
@@ -128,11 +128,6 @@ class Char extends Component {
             : (<div className="cursor-pointer char-btn align-center f-shrink-0" onClick={this.handleViewClick}>
                  <FontAwesomeIcon icon="eye"/>
                </div>)}
-          {this.props.charData.general.link.length !== 0
-            ? (<a className="char-btn text-dec-none align-center f-shrink-0 remove-link-dec" href={this.props.charData.general.link} target="_blank" rel='noreferrer noopener'>
-                 <div className="cursor-pointer"><FontAwesomeIcon icon="link"/></div>
-               </a>)
-            : null}
         </div>
       </div>
     );

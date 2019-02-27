@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CHAR_TYPE_ALLY, CHAR_TYPE_ENEMY, CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, CHAR_PRIVACY_LEVEL_TWO, CHAR_PRIVACY_LEVEL_THREE } from '../../../../constants/constants';
 import { GithubPicker } from 'react-color';
-import { optionalLabel, charImageLabel, charTypeLabel, charTypeAllyLabel, charTypeEnemyLabel, charNameLabel, charColorLabel, charPrivacyLabel, charLinkLabel, privacyLevelZeroLabel, privacyLevelOneLabel, privacyLevelTwoLabel, privacyLevelThreeLabel } from './general.i18n';
+import { optionalLabel, charImageLabel, charTypeLabel, charTypeAllyLabel, charTypeEnemyLabel, charNameLabel, charColorLabel, charPrivacyLabel, privacyLevelZeroLabel, privacyLevelOneLabel, privacyLevelTwoLabel, privacyLevelThreeLabel } from './general.i18n';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -26,7 +26,6 @@ class General extends Component {
         color:   '#ff0000',
         privacy: CHAR_PRIVACY_LEVEL_ZERO,
         image:   '',
-        link:    ''
       },
       file: {
         fileSizeError: false,
@@ -48,7 +47,6 @@ class General extends Component {
     this.handleTypeChange      = this.handleTypeChange.bind(this);
     this.handlePrivacyChange   = this.handlePrivacyChange.bind(this);
     this.handleFileChange      = this.handleFileChange.bind(this);
-    this.handleLinkChange      = this.handleLinkChange.bind(this);
     this.handleFileRemoveClick = this.handleFileRemoveClick.bind(this);
   }
 
@@ -91,12 +89,6 @@ class General extends Component {
 
   handlePrivacyChange (e){
     this.setState({ charData: {...this.state.charData, privacy: e.target.value} }, () => {
-      this.props.returnGeneralValue(this.state.charData);
-    });
-  }
-
-  handleLinkChange (e){
-    this.setState({ charData: {...this.state.charData, link: e.target.value} }, () => {
       this.props.returnGeneralValue(this.state.charData);
     });
   }
@@ -197,17 +189,6 @@ class General extends Component {
             </select>
           </div>
         </div>
-
-        <div className="mb-2 d-flex">
-          <div className="char-inp-link-label pr-1">
-            <div>{charLinkLabel[this.props.global.lang]}:</div>
-            <span className="font-size-sm text-optional">({optionalLabel[this.props.global.lang]})</span>
-          </div>
-          <input className="inp f-grow-1" type="text" placeholder="http(s)://..." value={this.state.charData.link} onChange={this.handleLinkChange}/>
-        </div>
-        {this.state.charData.link.trim().length !== 0 && !/^http(s)?:\/\/.+/.test(this.state.charData.link.trim())
-          ? (<div className="text-danger">Link must start with "http(s)://""</div>)
-          : null}
 
       </div>
     );

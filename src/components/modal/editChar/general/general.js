@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CHAR_TYPE_ALLY, CHAR_TYPE_ENEMY, CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, CHAR_PRIVACY_LEVEL_TWO, CHAR_PRIVACY_LEVEL_THREE } from '../../../../constants/constants';
 import { GithubPicker } from 'react-color';
-import { optionalLabel, charImageLabel, charTypeLabel, charTypeAllyLabel, charTypeEnemyLabel, charNameLabel, charColorLabel, charPrivacyLabel, charLinkLabel, privacyLevelZeroLabel, privacyLevelOneLabel, privacyLevelTwoLabel, privacyLevelThreeLabel } from './general.i18n';
+import { optionalLabel, charImageLabel, charTypeLabel, charTypeAllyLabel, charTypeEnemyLabel, charNameLabel, charColorLabel, charPrivacyLabel, privacyLevelZeroLabel, privacyLevelOneLabel, privacyLevelTwoLabel, privacyLevelThreeLabel } from './general.i18n';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -36,14 +36,13 @@ class General extends Component {
       '#FF7F7F', '#FFCF7F', '#FFFF7F', '#7FFF7F', '#7FFFCF', '#7FFFFF', '#7F7FFF', '#CF7FFF', '#FF7FFF',
     ];
 
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleColorChange = this.handleColorChange.bind(this);
-    this.handleColorClick = this.handleColorClick.bind(this);
-    this.handleOutsideClick = this.handleOutsideClick.bind(this);
-    this.handleTypeChange = this.handleTypeChange.bind(this);
-    this.handlePrivacyChange = this.handlePrivacyChange.bind(this);
-    this.handleFileChange = this.handleFileChange.bind(this);
-    this.handleLinkChange = this.handleLinkChange.bind(this);
+    this.handleNameChange      = this.handleNameChange.bind(this);
+    this.handleColorChange     = this.handleColorChange.bind(this);
+    this.handleColorClick      = this.handleColorClick.bind(this);
+    this.handleOutsideClick    = this.handleOutsideClick.bind(this);
+    this.handleTypeChange      = this.handleTypeChange.bind(this);
+    this.handlePrivacyChange   = this.handlePrivacyChange.bind(this);
+    this.handleFileChange      = this.handleFileChange.bind(this);
     this.handleFileRemoveClick = this.handleFileRemoveClick.bind(this);
   }
 
@@ -86,12 +85,6 @@ class General extends Component {
 
   handlePrivacyChange (e){
     this.setState({ charData: {...this.state.charData, privacy: e.target.value} }, () => {
-      this.props.returnGeneralValue(this.state.charData);
-    });
-  }
-
-  handleLinkChange (e){
-    this.setState({ charData: {...this.state.charData, link: e.target.value} }, () => {
       this.props.returnGeneralValue(this.state.charData);
     });
   }
@@ -142,67 +135,56 @@ class General extends Component {
     return (
       <div className={`char-modal f-grow-1 ${toggleActiveClass} ${toggleScrollClass}`}>
 
-      <div className="mb-2">
-        <div>{charImageLabel[this.props.global.lang]} <span className="font-size-sm text-optional">({optionalLabel[this.props.global.lang]})</span>:</div>
-        <div className="d-flex p-relative">
-          <label className="profile-circle cursor-pointer p-relative" style={imageStyle}>
-            <div className="profile-side-btn align-center p-absolute"><FontAwesomeIcon icon="camera"/></div>
-            <input id="imageInput" className="d-none" type="file" accept="image/*" ref={this.fileInput} onChange={this.handleFileChange}/>
-          </label>
-          <div className="profile-remove-btn p-absolute align-center cursor-pointer" onClick={this.handleFileRemoveClick}><FontAwesomeIcon icon="trash"/></div>
+        <div className="mb-2">
+          <div>{charImageLabel[this.props.global.lang]} <span className="font-size-sm text-optional">({optionalLabel[this.props.global.lang]})</span>:</div>
+          <div className="d-flex p-relative">
+            <label className="profile-circle cursor-pointer p-relative" style={imageStyle}>
+              <div className="profile-side-btn align-center p-absolute"><FontAwesomeIcon icon="camera"/></div>
+              <input id="imageInput" className="d-none" type="file" accept="image/*" ref={this.fileInput} onChange={this.handleFileChange}/>
+            </label>
+            <div className="profile-remove-btn p-absolute align-center cursor-pointer" onClick={this.handleFileRemoveClick}><FontAwesomeIcon icon="trash"/></div>
+          </div>
+          {this.state.file.fileTypeError
+            ? (<div className="text-danger">File must be in jpg/png/gif format</div>)
+            : null}
+          {this.state.file.fileSizeError
+            ? (<div className="text-danger">File must be smaller than 1MB</div>)
+            : null}
         </div>
-        {this.state.file.fileTypeError
-          ? (<div className="text-danger">File must be in jpg/png/gif format</div>)
-          : null}
-        {this.state.file.fileSizeError
-          ? (<div className="text-danger">File must be smaller than 1MB</div>)
-          : null}
-      </div>
 
-      <div className="mb-2 d-flex">
-        <div className="char-inp-label pr-1">{charNameLabel[this.props.global.lang]}:</div>
-        <input className="inp f-grow-1" type="text" value={this.state.charData.name} onChange={this.handleNameChange}/>
-      </div>
+        <div className="mb-2 d-flex">
+          <div className="char-inp-label pr-1">{charNameLabel[this.props.global.lang]}:</div>
+          <input className="inp f-grow-1" type="text" value={this.state.charData.name} onChange={this.handleNameChange}/>
+        </div>
 
-      <div className="mb-2 d-flex">
-        <div className="char-inp-label pr-1">{charTypeLabel[this.props.global.lang]}:</div>
-        <label className="char-inp-radio pr-1"><input className="inp-radio" type="radio" value={CHAR_TYPE_ALLY} checked={this.state.charData.type === CHAR_TYPE_ALLY} onChange={this.handleTypeChange}/>{charTypeAllyLabel[this.props.global.lang]}</label>
-        <label className="char-inp-radio"><input className="inp-radio" type="radio" value={CHAR_TYPE_ENEMY} checked={this.state.charData.type === CHAR_TYPE_ENEMY} onChange={this.handleTypeChange}/>{charTypeEnemyLabel[this.props.global.lang]}</label>
-      </div>
+        <div className="mb-2 d-flex">
+          <div className="char-inp-label pr-1">{charTypeLabel[this.props.global.lang]}:</div>
+          <label className="char-inp-radio pr-1"><input className="inp-radio" type="radio" value={CHAR_TYPE_ALLY} checked={this.state.charData.type === CHAR_TYPE_ALLY} onChange={this.handleTypeChange}/>{charTypeAllyLabel[this.props.global.lang]}</label>
+          <label className="char-inp-radio"><input className="inp-radio" type="radio" value={CHAR_TYPE_ENEMY} checked={this.state.charData.type === CHAR_TYPE_ENEMY} onChange={this.handleTypeChange}/>{charTypeEnemyLabel[this.props.global.lang]}</label>
+        </div>
 
-      <div className="mb-2 d-flex">
-        <div className="char-inp-label pr-1">{charColorLabel[this.props.global.lang]}:</div>
-        <div className="d-flex p-relative f-grow-1" onClick={this.handleColorClick} ref={ this.colorRef }>
-          <div className="inp-clr-circle f-shrink-0" style={{background: this.state.charData.color}}></div>
-          <div className="pseudo-inp f-grow-1">{this.state.charData.color}</div>
-          <div className={`p-absolute t-100 ${toggleColorPickerClass}`}>
-            <GithubPicker color={this.state.charData.color} colors={this.colorList} onChange={this.handleColorChange} triangle={'hide'} width={240}/>
+        <div className="mb-2 d-flex">
+          <div className="char-inp-label pr-1">{charColorLabel[this.props.global.lang]}:</div>
+          <div className="d-flex p-relative f-grow-1" onClick={this.handleColorClick} ref={ this.colorRef }>
+            <div className="inp-clr-circle f-shrink-0" style={{background: this.state.charData.color}}></div>
+            <div className="pseudo-inp f-grow-1">{this.state.charData.color}</div>
+            <div className={`p-absolute t-100 ${toggleColorPickerClass}`}>
+              <GithubPicker color={this.state.charData.color} colors={this.colorList} onChange={this.handleColorChange} triangle={'hide'} width={240}/>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="mb-2 d-flex">
-        <div className="char-inp-label pr-1">{charPrivacyLabel[this.props.global.lang]}:</div>
-        <div className="sel-cont char-sel f-grow-1">
-          <select value={this.state.charData.privacy} onChange={this.handlePrivacyChange}>
-            <option value={CHAR_PRIVACY_LEVEL_ZERO}>{privacyLevelZeroLabel[this.props.global.lang]}</option>
-            <option value={CHAR_PRIVACY_LEVEL_ONE}>{privacyLevelOneLabel[this.props.global.lang]}</option>
-            <option value={CHAR_PRIVACY_LEVEL_TWO}>{privacyLevelTwoLabel[this.props.global.lang]}</option>
-            <option value={CHAR_PRIVACY_LEVEL_THREE}>{privacyLevelThreeLabel[this.props.global.lang]}</option>
-          </select>
+        <div className="mb-2 d-flex">
+          <div className="char-inp-label pr-1">{charPrivacyLabel[this.props.global.lang]}:</div>
+          <div className="sel-cont char-sel f-grow-1">
+            <select value={this.state.charData.privacy} onChange={this.handlePrivacyChange}>
+              <option value={CHAR_PRIVACY_LEVEL_ZERO}>{privacyLevelZeroLabel[this.props.global.lang]}</option>
+              <option value={CHAR_PRIVACY_LEVEL_ONE}>{privacyLevelOneLabel[this.props.global.lang]}</option>
+              <option value={CHAR_PRIVACY_LEVEL_TWO}>{privacyLevelTwoLabel[this.props.global.lang]}</option>
+              <option value={CHAR_PRIVACY_LEVEL_THREE}>{privacyLevelThreeLabel[this.props.global.lang]}</option>
+            </select>
+          </div>
         </div>
-      </div>
-
-      <div className="mb-2 d-flex">
-        <div className="char-inp-link-label pr-1">
-          <div>{charLinkLabel[this.props.global.lang]}:</div>
-          <span className="font-size-sm text-optional">({optionalLabel[this.props.global.lang]})</span>
-        </div>
-        <input className="inp f-grow-1" type="text" placeholder="http(s)://..." value={this.state.charData.link} onChange={this.handleLinkChange}/>
-      </div>
-      {this.state.charData.link.trim().length !== 0 && !/^http(s)?:\/\/.+/.test(this.state.charData.link.trim())
-        ? (<div className="text-danger">Link must start with "http(s)://""</div>)
-        : null}
 
       </div>
     );

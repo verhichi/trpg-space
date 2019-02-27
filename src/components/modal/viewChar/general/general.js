@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, CHAR_PRIVACY_LEVEL_TWO, CHAR_TYPE_ALLY, CHAR_TYPE_ENEMY } from '../../../../constants/constants';
-import { charImageLabel, charTypeLabel, charTypeAllyLabel, charTypeEnemyLabel, charNameLabel, charColorLabel, charPrivacyLabel, charLinkLabel, privacyLevelZeroLabel, privacyLevelOneLabel, privacyLevelTwoLabel } from './general.i18n';
+import { charImageLabel, charTypeLabel, charTypeAllyLabel, charTypeEnemyLabel, charNameLabel, charColorLabel, charPrivacyLabel, privacyLevelZeroLabel, privacyLevelOneLabel, privacyLevelTwoLabel } from './general.i18n';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -61,12 +61,6 @@ class General extends Component {
           <div className="pl-2">{privacyText[this.props.general.privacy]}</div>
         </div>
 
-        <div className="mb-2 font-size-lg">
-          <div>{charLinkLabel[this.props.global.lang]}:</div>
-          { this.props.general.link.length === 0
-              ? (<div className="pl-2">-</div>)
-              : (<a  className="pl-2" href={this.props.general.link} target="_blank" rel='noreferrer noopener'>{this.props.general.link}</a>)}
-        </div>
       </div>
     );
   }

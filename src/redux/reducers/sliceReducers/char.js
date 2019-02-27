@@ -14,7 +14,6 @@ const initialState = [
     //     color: '#010101',
     //     image: 'image-src',
     //     privacy: '0/1/2/3',
-    //     link: 'link to an external character sheet link'(must start with https://)
     //   },
     //   status: [
     //     {

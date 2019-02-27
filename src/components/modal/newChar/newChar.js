@@ -44,7 +44,6 @@ class NewChar extends Component {
         color:   '#ff0000',
         image:   '',
         privacy: CHAR_PRIVACY_LEVEL_ZERO,
-        link:    ''
       },
       status: [],
       detail: []
@@ -102,10 +101,9 @@ class NewChar extends Component {
   returnGeneralValue (general){
     const trimmedData = {
       ...general,
-      name: general.name.trim(),
+      name:  general.name.trim(),
       color: general.color.trim(),
       image: general.image.trim(),
-      link: general.link.trim()
     }
     this.setState({ general: trimmedData });
   }
@@ -146,8 +144,7 @@ class NewChar extends Component {
     const toggleStatusTabClass =  this.state.tabMode === CHAR_MODAL_TAB_STATUS  ? 'is-active' : '';
     const toggleDetailTabClass =  this.state.tabMode === CHAR_MODAL_TAB_DETAIL  ? 'is-active' : '';
 
-    const hasErrorGeneral = this.state.general.name.length === 0 ||
-                            (this.state.general.link.length !== 0 && !/^http(s)?:\/\/.+/.test(this.state.general.link));
+    const hasErrorGeneral = this.state.general.name.length === 0;
 
     const hasErrorStatus  = this.state.status.some(status => {
       if (status.type === STATUS_TYPE_VALUE){
