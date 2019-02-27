@@ -54,9 +54,9 @@ class EditUser extends Component {
   handleSubmit (e){
     e.preventDefault();
 
-    if (!this.state.submitted){
+    if (!this.state.submitted && this.state.name.trim().length > 0){
       this.setState({ submitted: true });
-      
+
       this.props.editUser({
         id: this.props.global.id,
         name: this.state.name.trim()

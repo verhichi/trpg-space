@@ -60,7 +60,7 @@ class NewUser extends Component {
   handleSubmit (e){
     e.preventDefault();
 
-    if (!this.state.submitted){
+    if (!this.state.submitted && this.state.name.trim().length > 0){
       this.setState({ submitted: true });
 
       this.props.showModal(MODAL_TYPE_REQUESTING, {
