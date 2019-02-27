@@ -1,31 +1,6 @@
 @import '../../../../../styles/partials/variables';
 @import '../../../../../styles/partials/mediaQueries';
 
-// // SIDE BAR(NO ANIMATION)
-// .list-cont{
-//   background: $secondary-clr;
-//   border-bottom: 1px solid $primary-clr;
-//   border-top: 1px solid $primary-clr;
-//   height: 100%;
-//   overflow: hidden;
-//   position: absolute;
-//   width: 0;
-//   z-index: 70;
-//
-//   @include md{
-//     height: auto;
-//     position: static;
-//   }
-//
-//   &.is-active{
-//     width: 100%;
-//
-//     @include md{
-//       width: 350px;
-//     }
-//   }
-// }
-
 // SIDE BAR (WITH SLIDEIN ANIMATION)
 .list-cont{
   background: $secondary-clr;
@@ -37,7 +12,7 @@
   position: absolute;
   transition: left 0.3s;
   width: 100%;
-  z-index: 70;
+  z-index: 75;
 
   & + div{
     transition: margin-left 0.3s;
