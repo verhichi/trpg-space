@@ -12,10 +12,8 @@ const mapStateToProps = (state) => {
 class Image extends Component {
   render() {
     return (
-      <div className="d-flex f-dir-col f-grow-1">
-        <div className="modal-img-cont">
-          <img className="modal-img" src={this.props.modalSetting.modalProp.src}/>
-        </div>
+      <div className="d-flex f-grow-1 f-align-items-center justify-content-center">
+        <img className="modal-img" src={this.props.modalSetting.modalProp.src}/>
       </div>
     );
   }
