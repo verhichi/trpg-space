@@ -43,13 +43,18 @@ class NewMap extends Component {
       fileExist:     false,
       fileSizeError: false,
       fileTypeError: false,
+      isDragOver:    false
     };
 
-    this.fileInput             = React.createRef();
-    this.handleNameChange      = this.handleNameChange.bind(this);
-    this.handleAllCheckChange  = this.handleAllCheckChange.bind(this);
-    this.handleFileChange      = this.handleFileChange.bind(this);
-    this.handleButtonClick     = this.handleButtonClick.bind(this);
+    this.fileInput            = React.createRef();
+    this.handleNameChange     = this.handleNameChange.bind(this);
+    this.handleAllCheckChange = this.handleAllCheckChange.bind(this);
+    this.handleFileChange     = this.handleFileChange.bind(this);
+    this.handleButtonClick    = this.handleButtonClick.bind(this);
+    this.handleDrop           = this.handleDrop.bind(this);
+    this.handleDragOver       = this.handleDragOver.bind(this);
+    this.handleDragLeave      = this.handleDragLeave.bind(this);
+    this.handleFile           = this.handleFile.bind(this);
   }
 
   handleNameChange (e){
@@ -64,13 +69,49 @@ class NewMap extends Component {
 
   handleFileChange (e){
     e.preventDefault();
-    const imagePattern = /\.(jpg|jpeg|png|gif)$/i;
-    const file = this.fileInput.current.files[0];
 
+    this.handleFile(this.fileInput.current.files[0]);
+  }
+
+  handleDragOver (e){
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!this.state.isDragOver){
+      this.setState({ isDragOver: true });
+    }
+  }
+
+  handleDragLeave (e){
+    e.preventDefault();
+    e.stopPropagation();
+
+    this.setState({ isDragOver: false });
+  }
+
+  handleDrop (e){
+    e.preventDefault();
+    e.stopPropagation();
+
+    this.setState({ isDragOver: false });
+    if (e.dataTransfer.items){
+      const imageTypePattern = /^image\//;
+      for (let file of e.dataTransfer.items){
+        if (file.kind === 'file' && imageTypePattern.test(file.type)){
+          this.handleFile(file.getAsFile());
+          break;
+        }
+      }
+    }
+  }
+
+  handleFile (file){
     const reader = new FileReader();
-    reader.readAsDataURL(this.fileInput.current.files[0]);
+    reader.readAsDataURL(file);
 
     reader.onload = () => {
+      const imagePattern = /\.(jpg|jpeg|png|gif)$/i;
+
       this.setState({
         fileName:      file.name,
         fileTypeError: !imagePattern.test(file.name),
@@ -111,16 +152,17 @@ class NewMap extends Component {
   }
 
   render() {
-    const isDisabled = !this.state.fileExist || this.state.fileTypeError || this.state.fileSizeError || this.state.name.trim().length === 0 || this.state.submitted;
+    const dragOverClass = this.state.isDragOver ? 'is-dragover' : '';
+    const isDisabled    = !this.state.fileExist || this.state.fileTypeError || this.state.fileSizeError || this.state.name.trim().length === 0 || this.state.submitted;
 
     return (
       <div className="d-flex f-dir-col f-grow-1">
         <div className="d-flex f-dir-col f-grow-1">
           <div className="font-size-lg mb-2">
             <div>{fileInpLabel[this.props.global.lang]}:</div>
-            <label class="inp-file-cont d-flex w-100 cursor-pointer">
+            <label class={`inp-file-cont d-flex w-100 cursor-pointer ${dragOverClass}`}  onDragOver={this.handleDragOver} onDragLeave={this.handleDragLeave} onDrop={this.handleDrop}>
               <FontAwesomeIcon icon="upload"/>
-              <div className="inp-file-text f-grow-1 pl-3">{this.state.fileName.length === 0 ? 'Choose an image...' : this.state.fileName}</div>
+              <div className="one-line-ellipsis f-grow-1 pl-3">{this.state.fileName.length === 0 ? 'Choose or Drag an image...' : this.state.fileName}</div>
               <input id="imageInput" className="d-none" type="file" accept="image/*" ref={this.fileInput} onChange={this.handleFileChange}/>
             </label>
             {this.state.fileTypeError

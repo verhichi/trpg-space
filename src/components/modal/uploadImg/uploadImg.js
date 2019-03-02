@@ -139,7 +139,7 @@ class UploadImg extends Component {
   }
 
   render() {
-    const dragOverClass = this.state.isDragOver ? 'file-dragover' : '';
+    const dragOverClass = this.state.isDragOver ? 'is-dragover' : '';
     const isDisabled    = !this.state.fileExist || this.state.fileTypeError || this.state.fileSizeError || this.state.submitted;
 
     return (
@@ -148,7 +148,7 @@ class UploadImg extends Component {
           <div>{fileInpLabel[this.props.global.lang]}:</div>
           <label class={`inp-file-cont d-flex w-100 cursor-pointer ${dragOverClass}`} onDragOver={this.handleDragOver} onDragLeave={this.handleDragLeave} onDrop={this.handleDrop}>
             <FontAwesomeIcon icon="upload"/>
-            <div className="inp-file-text f-grow-1 pl-3">{this.state.fileName.length === 0 ? 'Choose or Drag an image...' : this.state.fileName}</div>
+            <div className="one-line-ellipsis f-grow-1 pl-3">{this.state.fileName.length === 0 ? 'Choose or Drag an image...' : this.state.fileName}</div>
             <input id="imageInput" className="d-none" type="file" accept="image/*" ref={this.fileInput} onChange={this.handleFileChange}/>
           </label>
           {this.state.fileTypeError

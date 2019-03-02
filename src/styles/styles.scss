@@ -330,6 +330,16 @@
       padding: 5px;
     }
 
+  // Input file
+    .inp-file-cont{
+      border: 1px solid #BBB;
+      padding: 10px 10px 10px 15px;
+
+      &.is-dragover{
+        background: rgba(0, 0, 0, 0.3);
+      }
+    }
+
   // Color Circle to display current color
     .inp-clr-circle{
       border: 3px solid $white-clr;
