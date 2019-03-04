@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { MODAL_TYPE_ALERT, MODAL_TYPE_HELP, MODAL_TYPE_CONFIRM, MODAL_TYPE_EDIT_CHAR, MODAL_TYPE_EDIT_USER, MODAL_TYPE_IMAGE, MODAL_TYPE_NEW_CHAR, MODAL_TYPE_NEW_USER, MODAL_TYPE_NOTES, MODAL_TYPE_REQUESTING, MODAL_TYPE_ROOM_SETTING, MODAL_TYPE_UPLOAD_IMG, MODAL_TYPE_VIEW_CHAR, MODAL_TYPE_NEW_MAP, MODAL_TYPE_EDIT_MAP } from '../../constants/constants';
+import { MODAL_TYPE_ALERT, MODAL_TYPE_HELP, MODAL_TYPE_CONFIRM, MODAL_TYPE_EDIT_CHAR, MODAL_TYPE_EDIT_USER, MODAL_TYPE_IMAGE, MODAL_TYPE_NEW_CHAR, MODAL_TYPE_NEW_USER, MODAL_TYPE_ADD_NOTE, MODAL_TYPE_EDIT_NOTE, MODAL_TYPE_REQUESTING, MODAL_TYPE_ROOM_SETTING, MODAL_TYPE_UPLOAD_IMG, MODAL_TYPE_VIEW_CHAR, MODAL_TYPE_NEW_MAP, MODAL_TYPE_EDIT_MAP } from '../../constants/constants';
 import { hideModal } from '../../redux/actions/modal';
 
 // Font Awesome Component
@@ -20,7 +20,7 @@ import Image       from './image/image';
 import NewChar     from './newChar/newChar';
 import NewMap      from './newMap/newMap';
 import NewUser     from './newUser/newUser';
-import Notes       from './notes/notes';
+import NewNote     from './newNote/newNote';
 import Requesting  from './requesting/requesting';
 import RoomSetting from './roomSetting/roomSetting';
 import UploadImg   from './uploadImg/uploadImg';
@@ -63,7 +63,8 @@ class Modal extends Component {
       [MODAL_TYPE_NEW_CHAR]:     <NewChar />,
       [MODAL_TYPE_NEW_MAP]:      <NewMap />,
       [MODAL_TYPE_NEW_USER]:     <NewUser />,
-      [MODAL_TYPE_NOTES]:        <Notes />,
+      [MODAL_TYPE_ADD_NOTE]:     <NewNote />,
+      [MODAL_TYPE_EDIT_NOTE]:    <EditNote />,
       [MODAL_TYPE_REQUESTING]:   <Requesting />,
       [MODAL_TYPE_ROOM_SETTING]: <RoomSetting />,
       [MODAL_TYPE_UPLOAD_IMG]:   <UploadImg />,

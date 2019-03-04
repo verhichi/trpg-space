@@ -139,3 +139,15 @@
 .char-inp-link-label{
   height: 40px;
 }
+
+.notes-textarea{
+  border: 1px solid black;
+  border-radius: 0;
+  flex-grow: 1;
+  resize: none;
+}
+
+.notes-btn{
+  border: none;
+  flex-basis: 35%;
+}
