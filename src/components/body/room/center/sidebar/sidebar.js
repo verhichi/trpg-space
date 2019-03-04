@@ -12,7 +12,7 @@ import './sidebar.scss';
 
 // // Component
 import CharList from './charList/charList';
-import Notes    from './notes/notes';
+import NoteList from './noteList/noteList';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -55,7 +55,7 @@ class Sidebar extends Component {
 
     const tabType = {
       [SIDEBAR_MODE_CHAR]: <CharList/>,
-      [SIDEBAR_MODE_NOTE]: <Notes/>
+      [SIDEBAR_MODE_NOTE]: <NoteList/>
     };
 
     return (
