@@ -27,7 +27,7 @@ const appReducer = combineReducers({
   mapList:        mapReducer,
   mapCharList:    mapCharReducer,
   modalSetting:   modalReducer,
-  noteSetting:    noteReducer,
+  noteList:       noteReducer,
   noticeSetting:  noticeReducer,
   userList:       userReducer,
 });
