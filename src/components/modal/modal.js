@@ -14,6 +14,7 @@ import Alert       from './alert/alert';
 import Confirm     from './confirm/confirm';
 import EditChar    from './editChar/editChar';
 import EditMap     from './editMap/editMap';
+import EditNote     from './editNote/editNote'
 import EditUser    from './editUser/editUser';
 import Help        from './help/help';
 import Image       from './image/image';
