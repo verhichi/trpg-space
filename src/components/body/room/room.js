@@ -9,7 +9,7 @@ import { setDisplayMap } from '../../../redux/actions/display';
 import { addChar, editChar, removeChar } from '../../../redux/actions/char';
 import { addMap, editMap, removeMap, setMapMode, setCharToPlace } from '../../../redux/actions/map';
 import { addMapChar, editMapChar, removeMapChar, removeAllCharFromSelMap, removeSelCharFromAllMap } from '../../../redux/actions/mapChar';
-import { lockNote, unlockNote, editNote } from '../../../redux/actions/note';
+import { addNote, editNote, removeNote } from '../../../redux/actions/note';
 import { removeSendMsgUser, checkSendMsgToAll } from '../../../redux/actions/chatSetting';
 import { addGeo, editGeo, removeGeo, removeAllGeoFromSelMap } from '../../../redux/actions/geo';
 import socket from '../../../socket/socketClient';
@@ -34,7 +34,7 @@ const mapStateToProps = (state) => {
     mapList:        state.mapList,
     mapCharList:    state.mapCharList,
     chatSetting:    state.chatSetting,
-    noteSetting:    state.noteSetting
+    noteList:       state.noteList
   };
 };
 
@@ -51,9 +51,9 @@ const mapDispatchToProps = (dispatch) => {
     addMapChar:               (mapCharData)   => dispatch(addMapChar(mapCharData)),
     editMapChar:              (mapCharData)   => dispatch(editMapChar(mapCharData)),
     removeMapChar:            (mapId, charId) => dispatch(removeMapChar(mapId, charId)),
-    editNote:                 (notes)         => dispatch(editNote(notes)),
-    lockNote:                 (userId)        => dispatch(lockNote(userId)),
-    unlockNote:               ()              => dispatch(unlockNote()),
+    addNote:                  (noteData)      => dispatch(addNote(noteData)),
+    editNote:                 (noteData)      => dispatch(editNote(noteData)),
+    removeNote:               (noteId)        => dispatch(removeNote(noteId)),
     removeSendMsgUser:        (userId)        => dispatch(removeSendMsgUser(userId)),
     checkSendMsgToAll:        ()              => dispatch(checkSendMsgToAll()),
     editChar:                 (charData)      => dispatch(editChar(charData)),
@@ -231,10 +231,6 @@ class Room extends Component {
         }
       }
 
-      if (leaveData.id === this.props.noteSetting.isNoteLocked){
-        this.props.unlockNote();
-      }
-
       this.props.removeUser(leaveData.id);
     });
 
@@ -280,16 +276,16 @@ class Room extends Component {
       this.props.removeGeo(geoId, mapId);
     });
 
-    socket.on('lockNote', (userId) => {
-      this.props.lockNote(userId);
+    socket.on('note', noteData => {
+      if (this.props.noteList.some(note => note.noteId === noteData.noteId)){
+        this.props.editNote(noteData);
+      } else {
+        this.props.addNote(noteData);
+      }
     });
 
-    socket.on('unlockNote', () => {
-      this.props.unlockNote();
-    });
-
-    socket.on('editNote', (notes) => {
-      this.props.editNote(notes);
+    socket.on('delNote', noteId => {
+      this.props.removeNote(noteId);
     });
 
     socket.on('roomExpire', roomExpireSettingData => {
