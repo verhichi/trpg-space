@@ -5,6 +5,14 @@ import {
 } from '../../../constants/actionTypes';
 
 const initialState = {
+  // note: [
+  //   {
+  //     noteId:  id of note,
+  //     ownerId: id of owner of note,
+  //     title:   title of note,
+  //     text:    content of note
+  //   }
+  // ],
   note: '',
   isNoteLocked: ''
 };
