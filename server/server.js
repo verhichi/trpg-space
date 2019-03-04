@@ -140,18 +140,13 @@ io.on('connection', (socket) => {
   });
 
   // Logic for when a user edits shared notes
-  socket.on('editNote', (roomId, notes) => {
-    socket.broadcast.to(roomId).emit('editNote', notes);
+  socket.on('note', (roomId, noteData) => {
+    socket.broadcast.to(roomId).emit('note', noteData);
   });
 
-  // Logic for when a user locks a note
-  socket.on('lockNote', (roomId, userId) => {
-    socket.broadcast.to(roomId).emit('lockNote', userId);
-  });
-
-  // Logic for when a user unlocks a note
-  socket.on('unlockNote', (roomId) => {
-    socket.broadcast.to(roomId).emit('unlockNote');
+  // Logic for when a user edits shared notes
+  socket.on('delNote', (roomId, noteId) => {
+    socket.broadcast.to(roomId).emit('delNote', noteId);
   });
 
   // Logic to send room expiration information
