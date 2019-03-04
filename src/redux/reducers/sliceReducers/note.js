@@ -4,16 +4,14 @@ import {
   REMOVE_NOTE
 } from '../../../constants/actionTypes';
 
-const initialState = {
-  note: [
+const initialState = [
     // {
     //   noteId:  id of note,
     //   ownerId: id of owner of note,
     //   title:   title of note,
     //   text:    content of note
     // }
-  ]
-};
+  ];
 
 const noteReducer = (state = initialState, action) => {
   switch(action.type){
