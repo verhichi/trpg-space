@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { MODAL_TYPE_NOTES } from '../../../../../../constants/constants';
+import { MODAL_TYPE_ADD_NOTE } from '../../../../../../constants/constants';
 import { showModal } from '../../../../../../redux/actions/modal';
 import socket from '../../../../../../socket/socketClient';
 import { noteEditBtnLabel, sharedNotesLabel } from './noteList.i18n';
@@ -33,12 +33,12 @@ class NoteList extends Component {
   constructor (props){
     super(props);
 
-    this.handleEditClick = this.handleEditClick.bind(this, this.props.global.id);
+    this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
-  handleEditClick (userId, e){
-    this.props.showModal(MODAL_TYPE_NOTES, {
-      title:        'Edit Shared Notes',
+  handleButtonClick (e){
+    this.props.showModal(MODAL_TYPE_ADD_NOTE, {
+      title:        'Create New Note',
       displayClose: false
     });
   }
@@ -49,7 +49,7 @@ class NoteList extends Component {
     return (
       <Fragment>
 
-        <button className="btn-slim btn-hot cursor-pointer align-center mb-2 mt-2 p-2 f-shrink-0" onClick={this.handleEditClick}>
+        <button className="btn-slim btn-hot cursor-pointer align-center mb-2 mt-2 p-2 f-shrink-0" onClick={this.handleButtonClick}>
           <div><FontAwesomeIcon icon="plus"/></div>
           <div className="btn-text">{noteEditBtnLabel[this.props.global.lang]}</div>
         </button>
