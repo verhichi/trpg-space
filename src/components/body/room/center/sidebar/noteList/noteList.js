@@ -11,6 +11,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Style
 import './noteList.scss';
 
+// Component
+import Note from './note/note';
+
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
@@ -41,6 +44,8 @@ class NoteList extends Component {
   }
 
   render() {
+    const noteList = this.props.noteList.map(noteData => <Note noteData={noteData}/>);
+
     return (
       <Fragment>
 
@@ -52,11 +57,11 @@ class NoteList extends Component {
         <div className="mb-2 f-grow-1">
           <div className="notes-label align-center font-weight-bold text-dec-underline pb-1">{sharedNotesLabel[this.props.global.lang]}</div>
           <div className="notes-cont">
-            { this.props.noteSetting.note }
+            { noteList }
           </div>
         </div>
 
-       </Fragment>
+      </Fragment>
     );
   }
 }
