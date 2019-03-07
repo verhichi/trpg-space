@@ -72,7 +72,7 @@ class EditNote extends Component {
   }
 
   render() {
-    const isDisabled = this.state.submitted;
+    const isDisabled = this.state.submitted || this.state.title.trim().length === 0 || this.state.text.trim().length === 0;;
 
     return (
       <div className="d-flex f-dir-col f-grow-1">

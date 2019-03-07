@@ -150,4 +150,9 @@
 .notes-btn{
   border: none;
   flex-basis: 35%;
+
+  &[disabled]{
+    background: $disabled-clr;
+    color: $white-clr;
+  }
 }
