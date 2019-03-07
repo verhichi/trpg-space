@@ -1,0 +1,32 @@
+@import '../../../../../../../styles/partials/variables';
+@import '../../../../../../../styles/partials/mediaQueries';
+
+.note-cont{
+  background: $white-clr;
+  color: $primary-clr;
+  margin-bottom: 5px;
+}
+
+.note-text-cont{
+  overflow: hidden;
+}
+
+.note-text{
+  font-size: $font-size-sm;
+  height: 75px;
+  overflow: hidden;
+
+  &.is-expand{
+    font-size: $font-size-sm;
+    height: auto;
+    min-height: 75px;
+  }
+}
+
+.note-btn{
+  flex-basis: 30px;
+}
+
+.note-shrink-btn{
+  background: #CCC;
+}

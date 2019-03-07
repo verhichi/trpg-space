@@ -54,6 +54,8 @@ import {
   faPlus,
   faAngleLeft,
   faAngleRight,
+  faAngleDown,
+  faAngleUp,
   faVectorSquare,
   faArrowsAlt,
   faCopy
@@ -111,6 +113,8 @@ library.add(
   faPlus,
   faAngleLeft,
   faAngleRight,
+  faAngleDown,
+  faAngleUp,
   faVectorSquare,
   faArrowsAlt,
   faCopy

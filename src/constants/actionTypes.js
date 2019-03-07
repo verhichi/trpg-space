@@ -61,9 +61,10 @@ export const CHECK_SEND_AS_USER      = 'CHECK_SEND_AS_USER';
 export const UNCHECK_SEND_AS_USER    = 'UNCHECK_SEND_AS_USER';
 
 // Note
-export const ADD_NOTE    = 'ADD_NOTE';
-export const EDIT_NOTE   = 'EDIT_NOTE';
-export const REMOVE_NOTE = 'REMOVE_NOTE';
+export const ADD_NOTE         = 'ADD_NOTE';
+export const EDIT_NOTE        = 'EDIT_NOTE';
+export const REMOVE_NOTE      = 'REMOVE_NOTE';
+export const REMOVE_USER_NOTE = 'REMOVE_USER_NOTE';
 
 // Modal
 export const SHOW_MODAL = 'SHOW_MODAL';

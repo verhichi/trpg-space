@@ -9,7 +9,7 @@ import { setDisplayMap } from '../../../redux/actions/display';
 import { addChar, editChar, removeChar } from '../../../redux/actions/char';
 import { addMap, editMap, removeMap, setMapMode, setCharToPlace } from '../../../redux/actions/map';
 import { addMapChar, editMapChar, removeMapChar, removeAllCharFromSelMap, removeSelCharFromAllMap } from '../../../redux/actions/mapChar';
-import { addNote, editNote, removeNote } from '../../../redux/actions/note';
+import { addNote, editNote, removeNote, removeUserNote } from '../../../redux/actions/note';
 import { removeSendMsgUser, checkSendMsgToAll } from '../../../redux/actions/chatSetting';
 import { addGeo, editGeo, removeGeo, removeAllGeoFromSelMap } from '../../../redux/actions/geo';
 import socket from '../../../socket/socketClient';
@@ -54,6 +54,7 @@ const mapDispatchToProps = (dispatch) => {
     addNote:                  (noteData)      => dispatch(addNote(noteData)),
     editNote:                 (noteData)      => dispatch(editNote(noteData)),
     removeNote:               (noteId)        => dispatch(removeNote(noteId)),
+    removeUserNote:           (userId)        => dispatch(removeUserNote(userId)),
     removeSendMsgUser:        (userId)        => dispatch(removeSendMsgUser(userId)),
     checkSendMsgToAll:        ()              => dispatch(checkSendMsgToAll()),
     editChar:                 (charData)      => dispatch(editChar(charData)),
@@ -155,11 +156,15 @@ class Room extends Component {
         hostCurTimestamp:      curTimestamp
       });
 
-      socket.emit('editNote', this.props.global.roomId, this.props.noteSetting.notes);
-
       this.props.charList.forEach((char) => {
         if (char.ownerId === this.props.global.id && char.general.privacy !== CHAR_PRIVACY_LEVEL_THREE){
           socket.emit('char', this.props.global.roomId, char);
+        }
+      });
+
+      this.props.noteList.forEach(note => {
+        if (note.ownerId === this.props.global.id){
+          socket.emit('note', this.props.global.roomId, note);
         }
       });
 
@@ -223,6 +228,8 @@ class Room extends Component {
           this.props.removeChar(char.charId);
         }
       });
+
+      this.props.removeUserNote(leaveData.id);
 
       if (this.props.chatSetting.sendTo.sendToUsers.includes(leaveData.id)){
         this.props.removeSendMsgUser(leaveData.id);

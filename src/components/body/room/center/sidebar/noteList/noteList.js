@@ -56,7 +56,7 @@ class NoteList extends Component {
 
         <div className="mb-2 f-grow-1">
           <div className="notes-label align-center font-weight-bold text-dec-underline pb-1">{sharedNotesLabel[this.props.global.lang]}</div>
-          <div className="notes-cont">
+          <div className="note-list-cont">
             { noteList }
           </div>
         </div>

@@ -1,7 +1,8 @@
 import {
   ADD_NOTE,
   EDIT_NOTE,
-  REMOVE_NOTE
+  REMOVE_NOTE,
+  REMOVE_USER_NOTE
 } from '../../../constants/actionTypes';
 
 const initialState = [
@@ -37,6 +38,9 @@ const noteReducer = (state = initialState, action) => {
 
     case REMOVE_NOTE:
       return state.filter(note => note.noteId !== action.noteId);
+
+    case REMOVE_USER_NOTE:
+      return state.filter(note => note.ownerId !== action.userId);
 
     default:
       return state;
