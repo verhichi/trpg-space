@@ -49,7 +49,7 @@ class Note extends Component {
     this.props.showModal(MODAL_TYPE_CONFIRM, {
       title:        '',
       displayClose: false,
-      confirmText:  'Delete this note?',
+      confirmText:  'Are you sure you want to delete this note?',
       accept:       [
         this.props.removeNote.bind(this, this.props.noteData.noteId),
         socket.emit.bind(socket, 'delNote', this.props.global.roomId, this.props.noteData.noteId),

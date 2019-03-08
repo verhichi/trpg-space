@@ -82,7 +82,7 @@ class MapTab extends Component {
     this.props.showModal(MODAL_TYPE_CONFIRM, {
       title:        'Delete Map',
       displayClose: false,
-      confirmText:  'Are you sure you want to delete map?',
+      confirmText: 'Are you sure you want to delete this map?',
       accept:       [
         this.props.setDisplayMap.bind(this, ''),
         this.props.removeAllCharFromSelMap.bind(this, mapId),

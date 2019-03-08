@@ -49,7 +49,8 @@ export const REMOVE_GEO                  = 'REMOVE_GEO';
 export const REMOVE_ALL_GEO_FROM_SEL_MAP = 'REMOVE_ALL_GEO_FROM_SEL_MAP';
 
 // Chat
-export const ADD_CHAT = 'ADD_CHAT';
+export const ADD_CHAT        = 'ADD_CHAT';
+export const REMOVE_ALL_CHAT = 'REMOVE_ALL_CHAT';
 
 // Chat Setting
 export const CHECK_SEND_MSG_TO_ALL   = 'CHECK_SEND_MSG_TO_ALL';

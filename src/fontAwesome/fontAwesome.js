@@ -58,7 +58,8 @@ import {
   faAngleUp,
   faVectorSquare,
   faArrowsAlt,
-  faCopy
+  faCopy,
+  faCommentSlash
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -117,5 +118,6 @@ library.add(
   faAngleUp,
   faVectorSquare,
   faArrowsAlt,
-  faCopy
+  faCopy,
+  faCommentSlash
 );

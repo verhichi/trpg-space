@@ -14,7 +14,7 @@ const mapDispatchToProps = (dispatch) => {
   return { showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)) };
 };
 
-class ChatToolbar extends Component {
+class SendImage extends Component {
   constructor (props){
     super(props);
 
@@ -40,4 +40,4 @@ class ChatToolbar extends Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(ChatToolbar);
+export default connect(null, mapDispatchToProps)(SendImage);

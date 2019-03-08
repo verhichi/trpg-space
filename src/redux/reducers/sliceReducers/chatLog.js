@@ -1,5 +1,5 @@
 import uuid from 'uuid';
-import { ADD_CHAT } from '../../../constants/actionTypes';
+import { ADD_CHAT, REMOVE_ALL_CHAT } from '../../../constants/actionTypes';
 import { CHAT_TYPE_HELP } from '../../../constants/constants';
 
 const initialState = [
@@ -52,6 +52,9 @@ const chatReducer = (state = initialState, action) => {
         time,
         id
       }];
+
+    case REMOVE_ALL_CHAT:
+      return [];
 
     default:
       return state;
