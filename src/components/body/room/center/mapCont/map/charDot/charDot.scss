@@ -16,8 +16,12 @@
   width: 60px;
   z-index: 60;
 
-  &:hover .map-char-balloon{
-    display: block;
+  &:hover{
+    z-index: 100;
+
+    .map-char-balloon{
+      display: block;
+    }
   }
 
   &.is-moving{
