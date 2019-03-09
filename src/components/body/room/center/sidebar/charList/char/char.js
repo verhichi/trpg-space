@@ -15,6 +15,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Style
 import './char.scss';
 
+// Component
+import StatusMeter from '../../../../../../partials/statusMeter';
+
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
@@ -124,7 +127,12 @@ class Char extends Component {
 
     const charDataType = {
       [STATUS_TYPE_VALUE]: (status) => (<div className="char-data"><span className="font-weight-bold">{status.label}</span>: {showStat ? status.value : '???'}</div>),
-      [STATUS_TYPE_PARAM]: (status) => (<div className="char-data"><span className="font-weight-bold">{status.label}</span>: {showStat ? status.value : '???'} / {showStat ? status.maxValue : '???'}</div>)
+      [STATUS_TYPE_PARAM]: (status) => (
+        <div className="char-data">
+          <div><span className="font-weight-bold">{status.label}</span>: {showStat ? status.value : '???'} / {showStat ? status.maxValue : '???'}</div>
+          { showStat && <StatusMeter value={status.value} maxValue={status.maxValue} color={this.props.charData.general.color}/> }
+        </div>
+      )
     }
 
     const statList   = this.props.charData.status.map(status => charDataType[status.type](status));
@@ -135,7 +143,7 @@ class Char extends Component {
     return(
       <div className="char-cont d-flex" style={{background: `linear-gradient(135deg, ${this.props.charData.general.color} 10%, #fff 0)`}}>
         <div className="char-profile-circle f-shrink-0" style={imageStyle}></div>
-        <div className="char-data-cont d-flex f-dir-col f-grow-1 pl-1 pt-1 pb-1">
+        <div className="char-data-cont d-flex f-dir-col f-grow-1 p-1">
           <div className="char-owner one-line-ellipsis font-size-sm font-weight-bold">{userName}</div>
           <div className="one-line-ellipsis font-weight-bold pb-1">{charName}</div>
           { statList }

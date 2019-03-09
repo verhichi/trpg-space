@@ -15,7 +15,7 @@ class StatusMeter extends Component {
     const calcMaxVal = isNaN(this.props.maxValue) ? 1 : this.props.maxValue;
     const calcVal    = isNaN(this.props.value)    ? 0 : this.props.value;
 
-    const statusMeterWidth = Math.floor(calcVal / calcMaxVal) * 100;
+    const statusMeterWidth = calcVal / calcMaxVal * 100;
     const calcStatusMeterWidth = statusMeterWidth < 0
                                    ? 0
                                    : statusMeterWidth > 100
