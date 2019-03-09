@@ -1,0 +1,14 @@
+@import '../../styles/partials/variables';
+@import '../../styles/partials/mediaQueries';
+
+.status-meter-cont{
+  background: $disabled-clr;
+  height: 20px;
+  position: relative;
+  width: 100%;
+}
+
+.status-meter{
+  background: #F00;
+  height: 100%;
+}
