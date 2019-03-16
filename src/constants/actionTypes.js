@@ -21,6 +21,7 @@ export const NEW_HOST    = 'NEW_HOST';
 export const ADD_CHAR    = 'ADD_CHAR';
 export const EDIT_CHAR   = 'EDIT_CHAR';
 export const REMOVE_CHAR = 'REMOVE_CHAR';
+export const EDIT_CHAR_STAT = 'EDIT_CHAR_STAT';
 
 // Map
 export const ADD_MAP           = 'ADD_MAP';

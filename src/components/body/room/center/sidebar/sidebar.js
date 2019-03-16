@@ -34,8 +34,8 @@ class Sidebar extends Component {
   constructor (props){
     super(props);
 
-    this.handleCharTabClick  = this.handleCharTabClick.bind(this);
-    this.handleNoteTabClick  = this.handleNoteTabClick.bind(this);
+    this.handleCharTabClick = this.handleCharTabClick.bind(this);
+    this.handleNoteTabClick = this.handleNoteTabClick.bind(this);
   }
 
   handleCharTabClick (e){

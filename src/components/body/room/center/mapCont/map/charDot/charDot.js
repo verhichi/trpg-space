@@ -75,7 +75,6 @@ class CharDot extends Component {
   }
 
   handleMouseUp (e){
-    e.stopPropagation();
     e.preventDefault();
 
     if (this.state.isCharMoveMode && this.props.charData.general.privacy !== CHAR_PRIVACY_LEVEL_THREE && !this.props.mapPrivate){

@@ -109,7 +109,6 @@ class GeoCornerTopLeft extends Component {
   }
 
   handleMouseUp (e){
-    e.stopPropagation();
     e.preventDefault();
 
     if (this.state.isGeoResizeMode){

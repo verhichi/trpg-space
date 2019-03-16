@@ -4,7 +4,7 @@ import uuid from 'uuid';
 import { CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, CHAR_PRIVACY_LEVEL_THREE, MODAL_TYPE_VIEW_CHAR, MODAL_TYPE_CONFIRM, MODAL_TYPE_EDIT_CHAR, STATUS_TYPE_VALUE, STATUS_TYPE_PARAM } from '../../../../../../../constants/constants'
 import { showModal, hideModal } from '../../../../../../../redux/actions/modal';
 import { removeMapChar, removeSelCharFromAllMap } from '../../../../../../../redux/actions/mapChar';
-import { addChar, removeChar } from '../../../../../../../redux/actions/char';
+import { addChar, removeChar, editCharStat } from '../../../../../../../redux/actions/char';
 import { checkSendAsUser, editSendAs } from '../../../../../../../redux/actions/chatSetting';
 
 import socket from '../../../../../../../socket/socketClient';
@@ -32,14 +32,15 @@ const mapStateToProps = (state) => {
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
   return {
-    showModal:               (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
-    hideModal:               ()                     => dispatch(hideModal()),
-    addChar:                 (charData)             => dispatch(addChar(charData)),
-    removeChar:              (charId)               => dispatch(removeChar(charId)),
-    removeMapChar:           (mapId, charId)        => dispatch(removeMapChar(mapId, charId)),
-    checkSendAsUser:         ()                     => dispatch(checkSendAsUser()),
-    editSendAs:              (charId)               => dispatch(editSendAs(charId)),
-    removeSelCharFromAllMap: (charId)               => dispatch(removeSelCharFromAllMap(charId))
+    showModal:               (modalType, modalProp)  => dispatch(showModal(modalType, modalProp)),
+    hideModal:               ()                      => dispatch(hideModal()),
+    addChar:                 (charData)              => dispatch(addChar(charData)),
+    removeChar:              (charId)                => dispatch(removeChar(charId)),
+    removeMapChar:           (mapId, charId)         => dispatch(removeMapChar(mapId, charId)),
+    checkSendAsUser:         ()                      => dispatch(checkSendAsUser()),
+    editSendAs:              (charId)                => dispatch(editSendAs(charId)),
+    removeSelCharFromAllMap: (charId)                => dispatch(removeSelCharFromAllMap(charId)),
+    editCharStat:            (charId, statId, value) => dispatch(editCharStat(charId, statId, value))
   };
 };
 
@@ -47,13 +48,15 @@ class Char extends Component {
   constructor (props){
     super(props);
 
-    this.handleRemoveClick   = this.handleRemoveClick.bind(this);
-    this.handleRemoveConfirm = this.handleRemoveConfirm.bind(this);
-    this.handleEditClick     = this.handleEditClick.bind(this);
-    this.handleViewClick     = this.handleViewClick.bind(this);
-    this.resetSendAsState    = this.resetSendAsState.bind(this);
-    this.handleCopyClick     = this.handleCopyClick.bind(this);
-    this.handleCopyConfirm   = this.handleCopyConfirm.bind(this);
+    this.handleRemoveClick    = this.handleRemoveClick.bind(this);
+    this.handleRemoveConfirm  = this.handleRemoveConfirm.bind(this);
+    this.handleEditClick      = this.handleEditClick.bind(this);
+    this.handleViewClick      = this.handleViewClick.bind(this);
+    this.resetSendAsState     = this.resetSendAsState.bind(this);
+    this.handleCopyClick      = this.handleCopyClick.bind(this);
+    this.handleCopyConfirm    = this.handleCopyConfirm.bind(this);
+    this.handleMeterChange    = this.handleMeterChange.bind(this);
+    this.handleMeterChangeEnd = this.handleMeterChangeEnd.bind(this);
   }
 
   handleRemoveClick (charId, e){
@@ -119,6 +122,18 @@ class Char extends Component {
     this.props.hideModal();
   }
 
+  handleMeterChange (statId, value){
+    this.props.editCharStat(this.props.charData.charId, statId, value);
+  }
+
+  handleMeterChangeEnd (statId, value){
+    socket.emit('editCharStat', this.props.global.roomId,
+      this.props.charData.charId,
+      statId,
+      value
+    );
+  }
+
   render() {
     const showName = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ONE || this.props.charData.ownerId === this.props.global.id;
     const showStat = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ZERO || this.props.charData.ownerId === this.props.global.id;
@@ -130,7 +145,7 @@ class Char extends Component {
       [STATUS_TYPE_PARAM]: (status) => (
         <div className="char-data">
           <div><span className="font-weight-bold">{status.label}</span>: {showStat ? status.value : '???'} / {showStat ? status.maxValue : '???'}</div>
-          { showStat && <StatusMeter value={status.value} maxValue={status.maxValue} color={this.props.charData.general.color}/> }
+          { showStat && <StatusMeter statId={status.id} value={status.value} maxValue={status.maxValue} color={this.props.charData.general.color} editable={this.props.charData.ownerId === this.props.global.id && !(isNaN(status.value) || isNaN(status.maxValue))} onChange={this.handleMeterChange} onChangeEnd={this.handleMeterChangeEnd}/> }
         </div>
       )
     }

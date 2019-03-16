@@ -105,11 +105,12 @@ class Map extends Component {
 
 
   handleMouseUp (e){
-    e.stopPropagation();
     e.preventDefault();
 
-    this.setState({ isMapMoveMode: false });
-    document.querySelector('.map-img-cont').removeEventListener('mousemove', this.handleMouseMove);
+    if (this.state.isMapMoveMode){
+      this.setState({ isMapMoveMode: false });
+      document.querySelector('.map-img-cont').removeEventListener('mousemove', this.handleMouseMove);
+    }
   }
 
 

@@ -6,7 +6,7 @@ import { setRoomExpireTime, setRoomExpireNoticeFalse } from '../../../redux/acti
 import { addUser, editUser, removeUser, newHost } from '../../../redux/actions/user';
 import { addChat } from '../../../redux/actions/chatLog';
 import { setDisplayMap } from '../../../redux/actions/display';
-import { addChar, editChar, removeChar } from '../../../redux/actions/char';
+import { addChar, editChar, removeChar, editCharStat } from '../../../redux/actions/char';
 import { addMap, editMap, removeMap, setMapMode, setCharToPlace } from '../../../redux/actions/map';
 import { addMapChar, editMapChar, removeMapChar, removeAllCharFromSelMap, removeSelCharFromAllMap } from '../../../redux/actions/mapChar';
 import { addNote, editNote, removeNote, removeUserNote } from '../../../redux/actions/note';
@@ -58,6 +58,7 @@ const mapDispatchToProps = (dispatch) => {
     removeSendMsgUser:        (userId)        => dispatch(removeSendMsgUser(userId)),
     checkSendMsgToAll:        ()              => dispatch(checkSendMsgToAll()),
     editChar:                 (charData)      => dispatch(editChar(charData)),
+    editCharStat:             (charId, statId, value) => dispatch(editCharStat(charId, statId, value)),
     addChar:                  (charData)      => dispatch(addChar(charData)),
     removeChar:               (charId)        => dispatch(removeChar(charId)),
     addMap:                   (mapData)       => dispatch(addMap(mapData)),
@@ -126,6 +127,10 @@ class Room extends Component {
       } else {
         this.props.addChar(content);
       }
+    });
+
+    socket.on('editCharStat', (charId, statId, value) => {
+      this.props.editCharStat(charId, statId, value);
     });
 
     socket.on('delChar', (charId) => {

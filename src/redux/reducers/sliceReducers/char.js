@@ -1,7 +1,8 @@
 import {
   ADD_CHAR,
   EDIT_CHAR,
-  REMOVE_CHAR
+  REMOVE_CHAR,
+  EDIT_CHAR_STAT
 } from '../../../constants/actionTypes';
 
 const initialState = [
@@ -61,6 +62,27 @@ const charReducer = (state = initialState, action) => {
 
     case REMOVE_CHAR:
       return state.filter(char => char.charId !== action.charId);
+
+    case EDIT_CHAR_STAT:
+      return state.map(char => {
+        if (char.charId === action.charId){
+          return {
+            ...char,
+            status: char.status.map(stat => {
+              if (stat.id === action.statId){
+                return {
+                  ...stat,
+                  value: action.value
+                }
+              } else {
+                return stat;
+              }
+            })
+          }
+        } else {
+          return char;
+        }
+      });
 
     default:
       return state;

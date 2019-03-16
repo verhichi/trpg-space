@@ -84,6 +84,11 @@ io.on('connection', (socket) => {
     socket.broadcast.to(roomId).emit('char', content);
   });
 
+  // Logic for when a user edits a single stat
+  socket.on('editCharStat', (roomId, charId, statId, value) => {
+    socket.broadcast.to(roomId).emit('editCharStat', charId, statId, value);
+  });
+
   // Logic for when a user removes a character
   socket.on('delChar', (roomId, charId) => {
     socket.broadcast.to(roomId).emit('delChar', charId);

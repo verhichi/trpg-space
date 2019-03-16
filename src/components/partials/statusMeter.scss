@@ -11,4 +11,15 @@
 .status-meter{
   background: #F00;
   height: 100%;
+  position: relative;
+}
+
+.status-meter-circle{
+  background: #F00;
+  border: none;
+  border-radius: 50%;
+  bottom: -6px;
+  height: 15px;
+  position: absolute;
+  width: 15px;
 }

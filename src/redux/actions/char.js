@@ -2,6 +2,7 @@ import {
   ADD_CHAR,
   EDIT_CHAR,
   REMOVE_CHAR,
+  EDIT_CHAR_STAT
 } from '../../constants/actionTypes';
 
 export const addChar = (charData) => {
@@ -23,4 +24,13 @@ export const removeChar = (charId) => {
     type: REMOVE_CHAR,
     charId
   };
+};
+
+export const editCharStat = (charId, statId, value) => {
+  return {
+    type: EDIT_CHAR_STAT,
+    charId,
+    statId,
+    value
+  }
 };
