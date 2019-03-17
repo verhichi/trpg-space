@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { CHAT_TYPE_TEXT, CENTER_MODE_CHAT } from '../../../../constants/constants';
+import { CHAT_TYPE_TEXT, CHAT_TYPE_ROLL, CENTER_MODE_CHAT } from '../../../../constants/constants';
 import { addChat } from '../../../../redux/actions/chatLog';
 import { showSidebar, hideSidebar, hideDiceBubble, showDiceBubble, showChat, showMap } from '../../../../redux/actions/display'
+import { parseMessageType } from '../../../../utils/parseMessage';
 import socket from '../../../../socket/socketClient';
 
 // Font Awesome Component
@@ -57,6 +58,7 @@ class Bottom extends Component {
     this.handleSidebarClick     = this.handleSidebarClick.bind(this);
     this.handleOutsideClick     = this.handleOutsideClick.bind(this);
     this.handleKeyDown          = this.handleKeyDown.bind(this);
+    this.sendMessage            = this.sendMessage.bind(this);
   }
 
   handleFocus (e){
@@ -76,53 +78,57 @@ class Bottom extends Component {
 
   handleSendClick (e){
     e.preventDefault();
-
     document.removeEventListener('click', this.handleOnFocusClick);
     this.setState({inputFocus: false});
-
-    const name = this.props.chatSetting.sendAs.sendAsUser
-                   ? this.props.userList.find((user) => this.props.global.id === user.id).name
-                   : this.props.charList.find((char) => this.props.chatSetting.sendAs.sendAsCharacter === char.charId).general.name;
-
-    const chatData = {
-      type:        CHAT_TYPE_TEXT,
-      text:        this.state.chatText.trim(),
-      private:     !this.props.chatSetting.sendTo.sendToAll,
-      sendTo:      this.props.chatSetting.sendTo.sendToUsers,
-      sendToNames: this.props.chatSetting.sendTo.sendToUsers.map(id => this.props.userList.find(user => user.id === id).name).join(', '),
-      name
-    };
-
-    this.props.addChat({ ...chatData, self: true });
-    socket.emit('chat', this.props.global.roomId, { ...chatData, self: false });
-    this.setState({ chatText: '' });
+    const text = this.state.chatText.trim();
+    this.sendMessage(text);
   }
 
   handleKeyDown (e){
     const text = this.state.chatText.trim();
     if (e.which === 13 && !e.shiftKey){
       e.preventDefault();
-
       if (text.length !== 0){
-        const name = this.props.chatSetting.sendAs.sendAsUser
-                       ? this.props.userList.find(user => this.props.global.id === user.id).name
-                       : this.props.charList.find(char => this.props.chatSetting.sendAs.sendAsCharacter === char.charId).general.name;
-
-        const chatData = {
-          type:        CHAT_TYPE_TEXT,
-          text:        this.state.chatText.trim(),
-          private:     !this.props.chatSetting.sendTo.sendToAll,
-          sendTo:      this.props.chatSetting.sendTo.sendToUsers,
-          sendToNames: this.props.chatSetting.sendTo.sendToUsers.map(id => this.props.userList.find(user => user.id === id).name).join(', '),
-          name
-        };
-
-        this.props.addChat({ ...chatData, self: true });
-        socket.emit('chat', this.props.global.roomId, { ...chatData, self: false });
-        this.setState({ chatText: '' });
+        this.sendMessage(text);
       }
     }
   }
+
+  sendMessage (text){
+    const messageParseResult = parseMessageType(text);
+
+    if (messageParseResult.type === CHAT_TYPE_TEXT){
+      const name = this.props.chatSetting.sendAs.sendAsUser
+                     ? this.props.userList.find(user => this.props.global.id === user.id).name
+                     : this.props.charList.find(char => this.props.chatSetting.sendAs.sendAsCharacter === char.charId).general.name;
+
+      const chatData = {
+        type:        CHAT_TYPE_TEXT,
+        text:        text,
+        private:     !this.props.chatSetting.sendTo.sendToAll,
+        sendTo:      this.props.chatSetting.sendTo.sendToUsers,
+        sendToNames: this.props.chatSetting.sendTo.sendToUsers.map(id => this.props.userList.find(user => user.id === id).name).join(', '),
+        name
+      };
+
+      this.props.addChat({ ...chatData, self: true });
+      socket.emit('chat', this.props.global.roomId, { ...chatData, self: false });
+    } else if (messageParseResult.type === CHAT_TYPE_ROLL){
+      const rollData = {
+        type: CHAT_TYPE_ROLL,
+        name: this.props.userList.find(user => this.props.global.id === user.id).name,
+        ...messageParseResult
+      };
+      this.props.addChat({ ...rollData, self: true });
+
+      if (!rollData.private){
+        socket.emit('chat', this.props.global.roomId, { ...rollData, self: false});
+      }
+    }
+
+    this.setState({ chatText: '' });
+  }
+
 
   handleDiceSettingClick (e){
     if (this.props.displaySetting.displayDiceSetting){
@@ -133,6 +139,7 @@ class Bottom extends Component {
       this.props.showDiceBubble();
     }
   }
+
 
   handleOutsideClick (e){
     if (this.diceRef.current.contains(e.target)) return;

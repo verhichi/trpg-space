@@ -1,3 +1,12 @@
+/**
+ * Return object containing result of dice roll based on diceSetting argument
+ *
+ * @input diceSetting - [Object] data that contains the dice setting for the roll
+ *          diceNumber - [Number] number of dice to roll
+ *          diceType   - [Number] number of faces the dice has
+ *          symbol     - [String] + or -, the value of the modifier.
+ *          modifier   - [Number] bonus value
+ */
 export const getDiceRollResult = (diceSetting) => {
   let resultArray = [];
 
