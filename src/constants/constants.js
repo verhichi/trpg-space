@@ -71,4 +71,4 @@ export const APP_LANG_JP = 'JP';
 export const MIN_GEO_LENGTH = 50;
 
 // DiceBot Reg Exp
-export const DICE_BOT_REGEXP = /^([sp])?([1-9][\d]*)d([1-9][\d]*)(([+-])([1-9][\d]*))?$/;
+export const DICE_BOT_REGEXP = /^([sp])?(\d{1,2})d(\d{1,3})(([+-])(\d{1,3}))?$/i;

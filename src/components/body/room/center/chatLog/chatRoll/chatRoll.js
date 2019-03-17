@@ -20,12 +20,12 @@ class ChatRoll extends Component {
         <div className="chat-log-body p-2 ml-3">
           <div className="d-flex">
             <div>
-              <div>Dice Roll Result(Bonus):</div>
-              <div className="font-size-xxl">{this.props.chatData.result}</div>
+              <div className="font-weight-bold">Dice Roll Result(Bonus):</div>
+              <div className="font-size-lg">{this.props.chatData.result}</div>
             </div>
-            <div className="pl-3">
-              <div>Total:</div>
-              <div className="font-size-xxl">{this.props.chatData.total}</div>
+            <div className="pl-3 f-shrink-0">
+              <div className="font-weight-bold">Total:</div>
+              <div className="font-size-lg">{this.props.chatData.total}</div>
             </div>
           </div>
         </div>
