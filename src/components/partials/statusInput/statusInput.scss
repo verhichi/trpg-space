@@ -1,0 +1,15 @@
+@import '../../../styles/partials/variables';
+@import '../../../styles/partials/mediaQueries';
+
+.char-stat-inp{
+  background: #ddd;
+  border: none;
+  border-radius: 3px;
+  width: 150px;
+}
+
+.char-stat-text:hover{
+  border: none;
+  border-radius: 3px;
+  background: #ddd;
+}

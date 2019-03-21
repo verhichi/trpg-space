@@ -6,7 +6,6 @@ import { showModal, hideModal } from '../../../../../../../redux/actions/modal';
 import { removeMapChar, removeSelCharFromAllMap } from '../../../../../../../redux/actions/mapChar';
 import { addChar, removeChar, editCharStat } from '../../../../../../../redux/actions/char';
 import { checkSendAsUser, editSendAs } from '../../../../../../../redux/actions/chatSetting';
-
 import socket from '../../../../../../../socket/socketClient';
 
 // Font Awesome Component
@@ -16,7 +15,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './char.scss';
 
 // Component
-import StatusMeter from '../../../../../../partials/statusMeter';
+import StatusMeter from '../../../../../../partials/statusMeter/statusMeter';
+import StatusInput from '../../../../../../partials/statusInput/statusInput';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -55,8 +55,8 @@ class Char extends Component {
     this.resetSendAsState     = this.resetSendAsState.bind(this);
     this.handleCopyClick      = this.handleCopyClick.bind(this);
     this.handleCopyConfirm    = this.handleCopyConfirm.bind(this);
-    this.handleMeterChange    = this.handleMeterChange.bind(this);
-    this.handleMeterChangeEnd = this.handleMeterChangeEnd.bind(this);
+    this.handleValueChange    = this.handleValueChange.bind(this);
+    this.handleValueChangeEnd = this.handleValueChangeEnd.bind(this);
   }
 
   handleRemoveClick (charId, e){
@@ -122,11 +122,11 @@ class Char extends Component {
     this.props.hideModal();
   }
 
-  handleMeterChange (statId, value){
+  handleValueChange (statId, value){
     this.props.editCharStat(this.props.charData.charId, statId, value);
   }
 
-  handleMeterChangeEnd (statId, value){
+  handleValueChangeEnd (statId, value){
     socket.emit('editCharStat', this.props.global.roomId,
       this.props.charData.charId,
       statId,
@@ -134,18 +134,20 @@ class Char extends Component {
     );
   }
 
+
   render() {
-    const showName = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ONE || this.props.charData.ownerId === this.props.global.id;
-    const showStat = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ZERO || this.props.charData.ownerId === this.props.global.id;
+    const isOwnChar = this.props.charData.ownerId === this.props.global.id;
+    const showName = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ONE;
+    const showStat = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ZERO;
     const charName = showName ? this.props.charData.general.name : 'UNKNOWN';
     const userName = this.props.userList.find(user => user.id === this.props.charData.ownerId).name;
 
     const charDataType = {
-      [STATUS_TYPE_VALUE]: (status) => (<div className="char-data"><span className="font-weight-bold">{status.label}</span>: {showStat ? status.value : '???'}</div>),
+      [STATUS_TYPE_VALUE]: (status) => (<div className="char-data"><span className="font-weight-bold">{status.label}</span>: {isOwnChar ? <StatusInput statId={status.id} value={status.value} onChange={this.handleValueChange} onChangeEnd={this.handleValueChangeEnd}/> : showStat ? status.value : '???'}</div>),
       [STATUS_TYPE_PARAM]: (status) => (
         <div className="char-data">
-          <div><span className="font-weight-bold">{status.label}</span>: {showStat ? status.value : '???'} / {showStat ? status.maxValue : '???'}</div>
-          { showStat && <StatusMeter statId={status.id} value={status.value} maxValue={status.maxValue} color={this.props.charData.general.color} editable={this.props.charData.ownerId === this.props.global.id && !(isNaN(status.value) || isNaN(status.maxValue))} onChange={this.handleMeterChange} onChangeEnd={this.handleMeterChangeEnd}/> }
+          <div><span className="font-weight-bold">{status.label}</span>: {isOwnChar ? <StatusInput statId={status.id} value={status.value} onChange={this.handleValueChange} onChangeEnd={this.handleValueChangeEnd}/> : showStat ? status.value : '???'} / {isOwnChar || showStat ? status.maxValue : '???'}</div>
+          { showStat && <StatusMeter statId={status.id} value={status.value} maxValue={status.maxValue} color={this.props.charData.general.color} editable={isOwnChar && !(isNaN(status.value) || isNaN(status.maxValue))} onChange={this.handleValueChange} onChangeEnd={this.handleValueChangeEnd}/> }
         </div>
       )
     }
@@ -164,19 +166,19 @@ class Char extends Component {
           { statList }
         </div>
         <div className="d-flex f-dir-col f-shrink-0 pr-1 pt-1">
-          {this.props.charData.ownerId === this.props.global.id
+          {isOwnChar
             ? (<div className="char-btn cursor-pointer align-center" onClick={this.handleRemoveClick}>
                  <FontAwesomeIcon icon="window-close"/>
                </div>)
             : null}
-          {this.props.charData.ownerId === this.props.global.id
+          {isOwnChar
             ? (<div className="cursor-pointer char-btn align-center f-shrink-0" onClick={this.handleEditClick}>
                  <FontAwesomeIcon icon="pen-square"/>
                </div>)
             : (<div className="cursor-pointer char-btn align-center f-shrink-0" onClick={this.handleViewClick}>
                  <FontAwesomeIcon icon="eye"/>
                </div>)}
-          {this.props.charData.ownerId === this.props.global.id
+          {isOwnChar
             && (<div className="cursor-pointer char-btn align-center f-shrink-0" onClick={this.handleCopyClick}>
                  <FontAwesomeIcon icon="copy"/>
                </div>)}

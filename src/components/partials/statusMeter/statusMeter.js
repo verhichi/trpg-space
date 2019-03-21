@@ -5,6 +5,7 @@ import './statusMeter.scss';
 
 /**
  *  @props editable    - [bool]   true editable / false read-only
+ *  @props statId      - [String] id of status to change
  *  @props value       - [string] numerator value
  *  @props MaxValue    - [string] denominator value
  *  @props color       - [string] hex code of color
