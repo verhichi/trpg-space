@@ -7,20 +7,18 @@
   margin-bottom: 5px;
 }
 
-.note-text-cont{
-  overflow: hidden;
-}
-
-.note-text{
-  font-size: $font-size-sm;
+.note-body{
   height: 75px;
   overflow: hidden;
 
   &.is-expand{
-    font-size: $font-size-sm;
     height: auto;
     min-height: 75px;
   }
+}
+
+.note-text-cont{
+  overflow: hidden;
 }
 
 .note-btn{

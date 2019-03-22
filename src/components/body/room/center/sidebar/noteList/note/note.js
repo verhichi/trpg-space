@@ -28,6 +28,7 @@ const mapDispatchToProps = (dispatch) => {
 class Note extends Component {
   constructor (props){
     super(props);
+    this.noteRef = React.createRef();
     this.state = { isExpand: false };
 
     this.handleEditClick   = this.handleEditClick.bind(this);
@@ -70,11 +71,11 @@ class Note extends Component {
     return (
       <div className="note-cont">
 
-        <div className="note-body p-1 d-flex">
+        <div className={`note-body p-1 d-flex ${expandClass}`}>
 
           <div className="note-text-cont f-grow-1 pr-1">
             <div className="one-line-ellipsis font-size-xl font-weight-bold mb-1">{this.props.noteData.title}</div>
-            <div class={`note-text ${expandClass}`}>{this.props.noteData.text}</div>
+            <div class="font-size-sm" ref={this.noteRef}>{this.props.noteData.text}</div>
           </div>
 
           {this.props.noteData.ownerId === this.props.global.id &&
