@@ -36,12 +36,8 @@ const SortableItem = SortableElement(({value}) => <Note noteData={value}/>);
 const SortableList = SortableContainer(({items}) => {
   return (
     <div className="note-list-cont">
-      {items.map((value, index) => {
-        if (value !== null || index !== null){
-          return <SortableItem key={value.noteId} index={index} value={value}/>;
-        } else {
-          return null;
-        }
+      {items.filter((value, index) => !(value === undefined || index === undefined)).map((value, index) => {
+        return <SortableItem key={value.noteId} index={index} value={value}/>;
       })}
     </div>
   );
