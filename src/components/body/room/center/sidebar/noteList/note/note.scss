@@ -5,6 +5,12 @@
   background: $white-clr;
   color: $primary-clr;
   margin-bottom: 5px;
+  user-select: none;
+
+  &.note-selected{
+    background: #ddd;
+    z-index: 100;
+  }
 }
 
 .note-body{
@@ -21,10 +27,19 @@
   overflow: hidden;
 }
 
+.note-text{
+  font-size: $font-size-sm;
+  white-space: pre-line;
+}
+
 .note-btn{
   flex-basis: 30px;
 }
 
 .note-shrink-btn{
   background: #CCC;
+}
+
+.drag-handle{
+  color: #AAA;
 }

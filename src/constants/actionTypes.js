@@ -67,6 +67,7 @@ export const ADD_NOTE         = 'ADD_NOTE';
 export const EDIT_NOTE        = 'EDIT_NOTE';
 export const REMOVE_NOTE      = 'REMOVE_NOTE';
 export const REMOVE_USER_NOTE = 'REMOVE_USER_NOTE';
+export const REORDER_NOTE     = 'REORDER_NOTE';
 
 // Modal
 export const SHOW_MODAL = 'SHOW_MODAL';

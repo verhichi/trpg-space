@@ -2,8 +2,11 @@ import {
   ADD_NOTE,
   EDIT_NOTE,
   REMOVE_NOTE,
-  REMOVE_USER_NOTE
+  REMOVE_USER_NOTE,
+  REORDER_NOTE
 } from '../../../constants/actionTypes';
+
+import { arrayMove } from 'react-sortable-hoc';
 
 const initialState = [
     // {
@@ -41,6 +44,9 @@ const noteReducer = (state = initialState, action) => {
 
     case REMOVE_USER_NOTE:
       return state.filter(note => note.ownerId !== action.userId);
+
+    case REORDER_NOTE:
+      return arrayMove(state, action.oldIndex, action.newIndex);
 
     default:
       return state;

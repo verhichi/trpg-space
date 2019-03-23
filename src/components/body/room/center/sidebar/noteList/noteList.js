@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { MODAL_TYPE_ADD_NOTE } from '../../../../../../constants/constants';
 import { showModal } from '../../../../../../redux/actions/modal';
-import socket from '../../../../../../socket/socketClient';
+import { reorderNote } from '../../../../../../redux/actions/note';
 import { noteEditBtnLabel, sharedNotesLabel } from './noteList.i18n';
 
 // Font Awesome Component
@@ -13,6 +13,8 @@ import './noteList.scss';
 
 // Component
 import Note from './note/note';
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -26,8 +28,24 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
+    reorderNote: ({oldIndex, newIndex}) => dispatch(reorderNote(oldIndex, newIndex))
   };
 };
+
+const SortableItem = SortableElement(({value}) => <Note noteData={value}/>);
+const SortableList = SortableContainer(({items}) => {
+  return (
+    <div className="note-list-cont">
+      {items.map((value, index) => {
+        if (value !== null || index !== null){
+          return <SortableItem key={value.noteId} index={index} value={value}/>;
+        } else {
+          return null;
+        }
+      })}
+    </div>
+  );
+});
 
 class NoteList extends Component {
   constructor (props){
@@ -44,8 +62,6 @@ class NoteList extends Component {
   }
 
   render() {
-    const noteList = this.props.noteList.map(noteData => <Note noteData={noteData}/>);
-
     return (
       <Fragment>
 
@@ -56,9 +72,7 @@ class NoteList extends Component {
 
         <div className="mb-2 f-grow-1">
           <div className="notes-label align-center font-weight-bold text-dec-underline pb-1">{sharedNotesLabel[this.props.global.lang]}</div>
-          <div className="note-list-cont">
-            { noteList }
-          </div>
+          <SortableList items={this.props.noteList} onSortEnd={this.props.reorderNote} lockAxis={'y'} transitionDuration={300} lockOffset={'0px'} helperClass={'note-selected'} useDragHandle lockToContainerEdges/>
         </div>
 
       </Fragment>

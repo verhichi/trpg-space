@@ -11,6 +11,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Style
 import './note.scss';
 
+// Component
+import { SortableHandle } from 'react-sortable-hoc';
+
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return { global:   state.global };
@@ -24,6 +27,14 @@ const mapDispatchToProps = (dispatch) => {
     removeNote: (noteId)               => dispatch(removeNote(noteId))
   };
 };
+
+const DragHandle = SortableHandle(() => {
+  return (
+    <div className="drag-handle p-1">
+      <FontAwesomeIcon icon="bars"/>
+    </div>
+  );
+});
 
 class Note extends Component {
   constructor (props){
@@ -67,34 +78,41 @@ class Note extends Component {
   render() {
     const expandClass = this.state.isExpand ? 'is-expand' : '';
 
-    return (
-      <div className="note-cont">
+    if (this.props.noteData ){
+      return (
+        <div className="note-cont">
 
-        <div className={`note-body p-1 d-flex ${expandClass}`}>
+          <div className={`note-body p-1 d-flex ${expandClass}`}>
 
           <div className="note-text-cont f-grow-1 pr-1">
-            <div className="one-line-ellipsis font-size-xl font-weight-bold mb-1">{this.props.noteData.title}</div>
-            <div class="font-size-sm" ref={this.noteRef}>{this.props.noteData.text}</div>
+            <div className="d-flex">
+              <DragHandle/>
+              <div className="one-line-ellipsis font-size-xl font-weight-bold mb-1 f-grow-1">{this.props.noteData.title}</div>
+            </div>
+            <div class="note-text">{this.props.noteData.text}</div>
           </div>
 
-          {this.props.noteData.ownerId === this.props.global.id &&
-            (<div className="font-size-lg f-shrink-0 d-flex f-dir-col">
-               <div className="note-btn cursor-pointer" onClick={this.handleRemoveClick}>
-                 <FontAwesomeIcon icon="window-close"/>
-               </div>
-               <div className="note-btn cursor-pointer" onClick={this.handleEditClick}>
-                 <FontAwesomeIcon icon="pen-square"/>
-               </div>
-             </div>)}
-        </div>
+        {this.props.noteData.ownerId === this.props.global.id &&
+          (<div className="font-size-lg f-shrink-0 d-flex f-dir-col">
+          <div className="note-btn cursor-pointer" onClick={this.handleRemoveClick}>
+          <FontAwesomeIcon icon="window-close"/>
+          </div>
+          <div className="note-btn cursor-pointer" onClick={this.handleEditClick}>
+          <FontAwesomeIcon icon="pen-square"/>
+          </div>
+          </div>)}
+          </div>
 
-        <div className="note-shrink-btn align-center cursor-pointer f-shrink-0" onClick={this.handleExpandClick}>
-          {this.state.isExpand
-             ? <span><FontAwesomeIcon icon="angle-up"/></span>
-             : <span><FontAwesomeIcon icon="angle-down"/></span>}
+          <div className="note-shrink-btn align-center cursor-pointer f-shrink-0" onClick={this.handleExpandClick}>
+            {this.state.isExpand
+              ? <span><FontAwesomeIcon icon="angle-up"/></span>
+              : <span><FontAwesomeIcon icon="angle-down"/></span>}
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return null;
+    }
   }
 }
 

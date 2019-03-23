@@ -2,7 +2,8 @@ import {
   ADD_NOTE,
   EDIT_NOTE,
   REMOVE_NOTE,
-  REMOVE_USER_NOTE
+  REMOVE_USER_NOTE,
+  REORDER_NOTE
 } from '../../constants/actionTypes';
 
 export const addNote = (noteData) => {
@@ -31,4 +32,12 @@ export const removeUserNote = (userId) => {
     type: REMOVE_USER_NOTE,
     userId
   };
-}
+};
+
+export const reorderNote = (oldIndex, newIndex) => {
+  return {
+    type: REORDER_NOTE,
+    oldIndex,
+    newIndex
+  };
+};
