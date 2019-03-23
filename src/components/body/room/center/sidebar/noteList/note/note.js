@@ -28,7 +28,6 @@ const mapDispatchToProps = (dispatch) => {
 class Note extends Component {
   constructor (props){
     super(props);
-    this.noteRef = React.createRef();
     this.state = { isExpand: false };
 
     this.handleEditClick   = this.handleEditClick.bind(this);
