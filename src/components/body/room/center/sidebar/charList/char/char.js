@@ -137,8 +137,8 @@ class Char extends Component {
 
   render() {
     const isOwnChar = this.props.charData.ownerId === this.props.global.id;
-    const showName = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ONE;
-    const showStat = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ZERO;
+    const showName = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ONE || isOwnChar;
+    const showStat = this.props.charData.general.privacy <= CHAR_PRIVACY_LEVEL_ZERO || isOwnChar;
     const charName = showName ? this.props.charData.general.name : 'UNKNOWN';
     const userName = this.props.userList.find(user => user.id === this.props.charData.ownerId).name;
 
