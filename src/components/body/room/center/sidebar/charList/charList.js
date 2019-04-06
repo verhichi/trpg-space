@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { CHAR_TYPE_ALLY, CHAR_TYPE_ENEMY, MODAL_TYPE_NEW_CHAR } from '../../../../../../constants/constants';
+import { CHAR_TYPE_ALLY, CHAR_TYPE_ENEMY, MODAL_TYPE_NEW_CHAR, MODAL_TYPE_IMPORT_CHAR } from '../../../../../../constants/constants';
 import { showModal } from '../../../../../../redux/actions/modal';
 import { createCharBtnLabel, charListLabel, enemyListLabel } from './charList.i18n';
 
@@ -31,11 +31,19 @@ class CharList extends Component {
     super(props);
 
     this.handleNewClick = this.handleNewClick.bind(this);
+    this.handleImportClick = this.handleImportClick.bind(this);
   }
 
   handleNewClick (){
     this.props.showModal(MODAL_TYPE_NEW_CHAR, {
       title:        'Create New Character',
+      displayClose: true
+    });
+  }
+
+  handleImportClick (){
+    this.props.showModal(MODAL_TYPE_IMPORT_CHAR, {
+      title:        'Import Character',
       displayClose: true
     });
   }
@@ -59,7 +67,7 @@ class CharList extends Component {
             </div>
             <div className="btn-text">{createCharBtnLabel[this.props.global.lang]}</div>
           </button>
-          <button className="btn-slim btn-hot cursor-pointer align-center f-shrink-0 p-2">
+          <button className="btn-slim btn-hot cursor-pointer align-center f-shrink-0 p-2" onClick={this.handleImportClick}>
             <div>
               <FontAwesomeIcon icon="file-import"/>
             </div>
