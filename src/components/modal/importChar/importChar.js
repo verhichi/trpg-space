@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
 import { hideModal } from '../../../redux/actions/modal';
 import { addChar } from '../../../redux/actions/char';
 import socket from '../../../socket/socketClient';
-import { CHAR_PRIVACY_LEVEL_THREE } from '../../../constants/constants';
-import { fileInpLabel, fileTypeError, fileContError, submitBtnLabel } from './importChar.i18n';
+import { CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, CHAR_PRIVACY_LEVEL_TWO, CHAR_PRIVACY_LEVEL_THREE, CHAR_TYPE_ALLY, CHAR_TYPE_ENEMY } from '../../../constants/constants';
+import { fileInpLabel, fileTypeError, fileContError, submitBtnLabel, charImageLabel, charTypeLabel, charTypeAllyLabel, charTypeEnemyLabel, charNameLabel, charPrivacyLabel, privacyLevelZeroLabel, privacyLevelOneLabel, privacyLevelTwoLabel, privacyLevelThreeLabel } from './importChar.i18n';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -101,6 +101,8 @@ class ImportChar extends Component {
       }, () => {
         if (!this.state.fileTypeError && !this.state.fileContError){
           this.setState({ charData: JSON.parse(reader.result) });
+        } else {
+          this.setState({ charData: null });
         }
       });
     }
@@ -160,6 +162,24 @@ class ImportChar extends Component {
     const dragOverClass = this.state.isDragOver ? 'is-dragover' : '';
     const isDisabled    = !this.state.fileExist || this.state.fileTypeError || this.state.fileContError || this.state.submitted;
 
+    const privacyText = {
+      [CHAR_PRIVACY_LEVEL_ZERO]:  privacyLevelZeroLabel[this.props.global.lang],
+      [CHAR_PRIVACY_LEVEL_ONE]:   privacyLevelOneLabel[this.props.global.lang],
+      [CHAR_PRIVACY_LEVEL_TWO]:   privacyLevelTwoLabel[this.props.global.lang],
+      [CHAR_PRIVACY_LEVEL_THREE]: privacyLevelThreeLabel[this.props.global.lang]
+    };
+
+    const typeText = {
+      [CHAR_TYPE_ALLY]:  charTypeAllyLabel[this.props.global.lang],
+      [CHAR_TYPE_ENEMY]: charTypeEnemyLabel[this.props.global.lang]
+    };
+
+    const imageStyle = this.state.charData
+                         ? this.state.charData.general.image.length === 0
+                             ? null
+                             : { backgroundImage: `url(${this.state.charData.general.image})`}
+                         : null;
+
     return (
       <div className="d-flex f-dir-col f-grow-1">
         <div className="f-grow-1 font-size-lg">
@@ -171,7 +191,32 @@ class ImportChar extends Component {
           </label>
           {this.state.fileTypeError && (<div className="text-danger">{fileTypeError[this.props.global.lang]}</div>)}
           {this.state.fileContError && (<div className="text-danger">{fileContError[this.props.global.lang]}</div>)}
+
+          { this.state.charData !== null
+            && (<Fragment>
+              <div className="mt-2 mb-2">
+                <div>{charImageLabel[this.props.global.lang]}:</div>
+                <div className="profile-circle d-inline-block" style={imageStyle}></div>
+              </div>
+
+              <div className="mb-2 font-size-lg">
+                <div>{charNameLabel[this.props.global.lang]}:</div>
+                <div className="pl-2">{this.state.charData.general.name}</div>
+              </div>
+
+              <div className="mb-2 font-size-lg">
+                <div>{charTypeLabel[this.props.global.lang]}:</div>
+                <div className="pl-2">{typeText[this.state.charData.general.type]}</div>
+              </div>
+
+              <div className="mb-2 font-size-lg">
+                <div>{charPrivacyLabel[this.props.global.lang]}:</div>
+                <div className="pl-2">{privacyText[this.state.charData.general.privacy]}</div>
+              </div>
+            </Fragment>
+          )}
         </div>
+
         <button className="btn btn-hot cursor-pointer" disabled={isDisabled} onClick={this.handleSubmitClick}>
           <FontAwesomeIcon icon="check"/>
           <div className="btn-text">{submitBtnLabel[this.props.global.lang]}</div>
