@@ -47,6 +47,7 @@ const mapDispatchToProps = (dispatch) => {
 class Char extends Component {
   constructor (props){
     super(props);
+    this.exportRef = React.createRef();
 
     this.handleRemoveClick    = this.handleRemoveClick.bind(this);
     this.handleRemoveConfirm  = this.handleRemoveConfirm.bind(this);
@@ -57,6 +58,22 @@ class Char extends Component {
     this.handleCopyConfirm    = this.handleCopyConfirm.bind(this);
     this.handleValueChange    = this.handleValueChange.bind(this);
     this.handleValueChangeEnd = this.handleValueChangeEnd.bind(this);
+    this.createExportFile     = this.createExportFile.bind(this);
+  }
+
+  componentDidMount (){
+    this.createExportFile();
+  }
+
+  componentDidUpdate (){
+    this.createExportFile();
+  }
+
+  createExportFile (){
+    const element = this.exportRef.current;
+    const file = new Blob([JSON.stringify({...this.props.charData, ownerId: ''})], {type: 'application/json'});
+    element.href = URL.createObjectURL(file);
+    element.download = `${this.props.charData.general.name}.json`;
   }
 
   handleRemoveClick (charId, e){
@@ -182,6 +199,9 @@ class Char extends Component {
             && (<div className="cursor-pointer char-btn align-center f-shrink-0" onClick={this.handleCopyClick}>
                  <FontAwesomeIcon icon="copy"/>
                </div>)}
+          <a href="#" className="cursor-pointer remove-link-dec char-btn align-center f-shrink-0" ref={this.exportRef}>
+            <FontAwesomeIcon icon="download"/>
+          </a>
         </div>
       </div>
     );
