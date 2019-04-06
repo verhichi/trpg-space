@@ -52,12 +52,20 @@ class CharList extends Component {
     return (
       <Fragment>
 
-        <button className="btn-slim btn-hot cursor-pointer align-center mb-2 mt-2 p-2 f-shrink-0" onClick={this.handleNewClick}>
-          <div>
-            <FontAwesomeIcon icon="user-plus"/>
-          </div>
-          <div className="btn-text">{createCharBtnLabel[this.props.global.lang]}</div>
-        </button>
+        <div className="d-flex mb-2 mt-2 f-shrink-0">
+          <button className="new-char-btn btn-slim btn-hot cursor-pointer align-center f-grow-1 p-2" onClick={this.handleNewClick}>
+            <div>
+              <FontAwesomeIcon icon="user-plus"/>
+            </div>
+            <div className="btn-text">{createCharBtnLabel[this.props.global.lang]}</div>
+          </button>
+          <button className="btn-slim btn-hot cursor-pointer align-center f-shrink-0 p-2">
+            <div>
+              <FontAwesomeIcon icon="file-import"/>
+            </div>
+          </button>
+        </div>
+
 
         <div className="mb-2">
           <div className="char-list-label align-center font-weight-bold text-dec-underline pb-1">{charListLabel[this.props.global.lang]}</div>

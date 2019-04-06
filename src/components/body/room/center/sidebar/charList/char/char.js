@@ -200,7 +200,7 @@ class Char extends Component {
                  <FontAwesomeIcon icon="copy"/>
                </div>)}
           <a href="#" className="cursor-pointer remove-link-dec char-btn align-center f-shrink-0" ref={this.exportRef}>
-            <FontAwesomeIcon icon="download"/>
+            <FontAwesomeIcon icon="file-export"/>
           </a>
         </div>
       </div>

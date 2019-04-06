@@ -61,7 +61,8 @@ import {
   faCopy,
   faCommentSlash,
   faBars,
-  faDownload,
+  faFileImport,
+  faFileExport,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -123,5 +124,6 @@ library.add(
   faCopy,
   faCommentSlash,
   faBars,
-  faDownload,
+  faFileImport,
+  faFileExport,
 );
