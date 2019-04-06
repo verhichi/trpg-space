@@ -10,6 +10,11 @@ export const fileTypeError = {
   [APP_LANG_JP]: 'ファイルフォーマットはjsonのみ'
 };
 
+export const fileContError = {
+  [APP_LANG_EN]: 'File content error',
+  [APP_LANG_JP]: 'ファイルのデータが正しくありません'
+};
+
 export const submitBtnLabel = {
   [APP_LANG_EN]: 'Import',
   [APP_LANG_JP]: 'インポート'

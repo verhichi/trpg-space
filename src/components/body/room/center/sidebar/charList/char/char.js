@@ -70,10 +70,12 @@ class Char extends Component {
   }
 
   createExportFile (){
-    const element = this.exportRef.current;
-    const file = new Blob([JSON.stringify({...this.props.charData, ownerId: ''})], {type: 'application/json'});
-    element.href = URL.createObjectURL(file);
-    element.download = `${this.props.charData.general.name}.json`;
+    if (this.props.charData.ownerId === this.props.global.id || this.props.charData.general.privacy === CHAR_PRIVACY_LEVEL_ZERO){
+      const element = this.exportRef.current;
+      const file = new Blob([JSON.stringify({ ...this.props.charData, ownerId: '', charId: '' })], {type: 'application/json'});
+      element.href = URL.createObjectURL(file);
+      element.download = `${this.props.charData.general.name}.json`;
+    }
   }
 
   handleRemoveClick (charId, e){
@@ -184,10 +186,9 @@ class Char extends Component {
         </div>
         <div className="d-flex f-dir-col f-shrink-0 pr-1 pt-1">
           {isOwnChar
-            ? (<div className="char-btn cursor-pointer align-center" onClick={this.handleRemoveClick}>
+            && (<div className="char-btn cursor-pointer align-center" onClick={this.handleRemoveClick}>
                  <FontAwesomeIcon icon="window-close"/>
-               </div>)
-            : null}
+                </div>)}
           {isOwnChar
             ? (<div className="cursor-pointer char-btn align-center f-shrink-0" onClick={this.handleEditClick}>
                  <FontAwesomeIcon icon="pen-square"/>
@@ -199,9 +200,10 @@ class Char extends Component {
             && (<div className="cursor-pointer char-btn align-center f-shrink-0" onClick={this.handleCopyClick}>
                  <FontAwesomeIcon icon="copy"/>
                </div>)}
-          <a href="#" className="cursor-pointer remove-link-dec char-btn align-center f-shrink-0" ref={this.exportRef}>
-            <FontAwesomeIcon icon="file-export"/>
-          </a>
+          {(isOwnChar || this.props.charData.general.privacy === CHAR_PRIVACY_LEVEL_ZERO)
+             && (<a href="#" className="cursor-pointer remove-link-dec char-btn align-center f-shrink-0" ref={this.exportRef}>
+               <FontAwesomeIcon icon="file-export"/>
+              </a>)}
         </div>
       </div>
     );

@@ -122,11 +122,6 @@ class NewChar extends Component {
         general: this.state.general,
         status:  this.state.status,
         detail:  this.state.detail,
-        map: {
-          onMap: false,
-          x: '',
-          y: ''
-        }
       };
 
       this.props.addChar(charData);
