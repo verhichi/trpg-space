@@ -453,3 +453,12 @@
     .github-picker{
       z-index: 1;
     }
+
+  // Quill
+    .quill{
+      flex-grow: 1;
+    }
+
+    .ql-container{
+      height: calc(100% - 45px) !important;
+    }

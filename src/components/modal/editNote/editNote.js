@@ -7,6 +7,10 @@ import { titleInpLabel, sharedNotesInpLabel, closeBtnLabel, submitBtnLabel } fro
 
 // Style
 import './editNote.scss';
+import 'react-quill/dist/quill.snow.css';
+
+// Compnents
+import ReactQuill from 'react-quill';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -32,7 +36,15 @@ class EditNote extends Component {
     this.state = {
       title:     this.previousNoteData.title,
       text:      this.previousNoteData.text,
-      submitted: false
+      submitted: false,
+      quillModule: {
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ list: 'ordered'}, { list: 'bullet' }],
+          [{ color: [] }, { background: [] }],
+          ['clean']
+        ]
+      }
     };
 
     this.handleTextChange  = this.handleTextChange.bind(this);
@@ -41,8 +53,8 @@ class EditNote extends Component {
     this.handleSubmitClick = this.handleSubmitClick.bind(this);
   }
 
-  handleTextChange (e){
-    this.setState({ text: e.target.value });
+  handleTextChange (value){
+    this.setState({ text: value });
   }
 
   handleTitleChange (e){
@@ -83,7 +95,7 @@ class EditNote extends Component {
         </div>
 
         <div>{sharedNotesInpLabel[this.props.global.lang]}:</div>
-        <textarea className="notes-textarea f-grow-1 p-1" value={this.state.text} onChange={this.handleTextChange}></textarea>
+        <ReactQuill modules={this.state.quillModule} value={this.state.text} onChange={this.handleTextChange} />
 
         <div className="d-flex justify-content-around pt-2 f-shrink-0">
           <button className="notes-btn p-2 btn-danger align-center cursor-pointer" onClick={this.handleCloseClick} >{closeBtnLabel[this.props.global.lang]}</button>

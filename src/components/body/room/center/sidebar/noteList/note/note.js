@@ -89,7 +89,7 @@ class Note extends Component {
               <DragHandle/>
               <div className="one-line-ellipsis font-size-xl font-weight-bold mb-1 f-grow-1">{this.props.noteData.title}</div>
             </div>
-            <div class="note-text">{this.props.noteData.text}</div>
+            <div class="note-text" dangerouslySetInnerHTML={{ __html: this.props.noteData.text }}></div>
           </div>
 
         {this.props.noteData.ownerId === this.props.global.id &&

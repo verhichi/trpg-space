@@ -28,8 +28,11 @@
 }
 
 .note-text{
-  font-size: $font-size-sm;
   white-space: pre-line;
+
+  p{
+    margin: 0;
+  }
 }
 
 .note-btn{
