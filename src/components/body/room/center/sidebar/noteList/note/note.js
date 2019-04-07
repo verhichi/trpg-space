@@ -39,11 +39,31 @@ const DragHandle = SortableHandle(() => {
 class Note extends Component {
   constructor (props){
     super(props);
+    this.exportRef = React.createRef();
     this.state = { isExpand: false };
 
     this.handleEditClick   = this.handleEditClick.bind(this);
     this.handleExpandClick = this.handleExpandClick.bind(this);
     this.handleRemoveClick = this.handleRemoveClick.bind(this);
+    this.createExportFile  = this.createExportFile.bind(this);
+
+  }
+
+  componentDidMount (){
+    this.createExportFile();
+  }
+
+  componentDidUpdate (){
+    this.createExportFile();
+  }
+
+  createExportFile (){
+    if (this.props.noteData.ownerId === this.props.global.id){
+      const element = this.exportRef.current;
+      const file = new Blob([JSON.stringify({ ...this.props.noteData, noteId: '', ownerId: '' })], {type: 'application/json'});
+      element.href = URL.createObjectURL(file);
+      element.download = `note_${this.props.noteData.title}.json`;
+    }
   }
 
   handleEditClick (e){
@@ -77,6 +97,7 @@ class Note extends Component {
 
   render() {
     const expandClass = this.state.isExpand ? 'is-expand' : '';
+    const isOwnNote = this.props.noteData.ownerId === this.props.global.id;
 
     if (this.props.noteData ){
       return (
@@ -84,23 +105,28 @@ class Note extends Component {
 
           <div className={`note-body p-1 d-flex ${expandClass}`}>
 
-          <div className="note-text-cont f-grow-1 pr-1">
-            <div className="d-flex">
-              <DragHandle/>
-              <div className="one-line-ellipsis font-size-xl font-weight-bold mb-1 f-grow-1">{this.props.noteData.title}</div>
+            <div className="note-text-cont f-grow-1 pr-1">
+              <div className="d-flex">
+                <DragHandle/>
+                <div className="one-line-ellipsis font-size-xl font-weight-bold mb-1 f-grow-1">{this.props.noteData.title}</div>
+              </div>
+              <div class="note-text" dangerouslySetInnerHTML={{ __html: this.props.noteData.text }}></div>
             </div>
-            <div class="note-text" dangerouslySetInnerHTML={{ __html: this.props.noteData.text }}></div>
-          </div>
 
-        {this.props.noteData.ownerId === this.props.global.id &&
-          (<div className="font-size-lg f-shrink-0 d-flex f-dir-col">
-          <div className="note-btn cursor-pointer" onClick={this.handleRemoveClick}>
-          <FontAwesomeIcon icon="window-close"/>
-          </div>
-          <div className="note-btn cursor-pointer" onClick={this.handleEditClick}>
-          <FontAwesomeIcon icon="pen-square"/>
-          </div>
-          </div>)}
+            <div className="font-size-lg f-shrink-0 d-flex f-dir-col">
+             {isOwnNote
+                && (<div className="note-btn cursor-pointer" onClick={this.handleRemoveClick}>
+                      <FontAwesomeIcon icon="window-close"/>
+                    </div>)}
+             {isOwnNote
+                && (<div className="note-btn cursor-pointer" onClick={this.handleEditClick}>
+                      <FontAwesomeIcon icon="pen-square"/>
+                    </div>)}
+              {isOwnNote
+                 && (<a href="#" className="cursor-pointer remove-link-dec char-btn align-center f-shrink-0" ref={this.exportRef}>
+                       <FontAwesomeIcon icon="file-export"/>
+                     </a>)}
+            </div>
           </div>
 
           <div className="note-shrink-btn align-center cursor-pointer f-shrink-0" onClick={this.handleExpandClick}>

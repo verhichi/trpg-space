@@ -14,12 +14,12 @@
 }
 
 .note-body{
-  height: 75px;
+  height: 100px;
   overflow: hidden;
 
   &.is-expand{
     height: auto;
-    min-height: 75px;
+    min-height: 100px;
   }
 }
 
