@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { MODAL_TYPE_ADD_NOTE } from '../../../../../../constants/constants';
+import { MODAL_TYPE_ADD_NOTE, MODAL_TYPE_IMPORT_NOTE } from '../../../../../../constants/constants';
 import { showModal } from '../../../../../../redux/actions/modal';
 import { reorderNote } from '../../../../../../redux/actions/note';
 import { noteEditBtnLabel, sharedNotesLabel } from './noteList.i18n';
@@ -47,13 +47,21 @@ class NoteList extends Component {
   constructor (props){
     super(props);
 
-    this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleNewClick = this.handleNewClick.bind(this);
+    this.handleImportClick = this.handleImportClick.bind(this);
   }
 
-  handleButtonClick (e){
+  handleNewClick (e){
     this.props.showModal(MODAL_TYPE_ADD_NOTE, {
       title:        'Create New Note',
       displayClose: false
+    });
+  }
+
+  handleImportClick (e){
+    this.props.showModal(MODAL_TYPE_IMPORT_NOTE, {
+      title:        'Import Note',
+      displayClose: true
     });
   }
 
@@ -61,10 +69,19 @@ class NoteList extends Component {
     return (
       <Fragment>
 
-        <button className="btn-slim btn-hot cursor-pointer align-center mb-2 mt-2 p-2 f-shrink-0" onClick={this.handleButtonClick}>
-          <div><FontAwesomeIcon icon="plus"/></div>
-          <div className="btn-text">{noteEditBtnLabel[this.props.global.lang]}</div>
-        </button>
+        <div className="d-flex mb-2 mt-2 f-shrink-0">
+          <button className="new-char-btn btn-slim btn-hot cursor-pointer align-center f-grow-1 p-2" onClick={this.handleNewClick}>
+            <div>
+              <FontAwesomeIcon icon="plus"/>
+            </div>
+            <div className="btn-text">{noteEditBtnLabel[this.props.global.lang]}</div>
+          </button>
+          <button className="btn-slim btn-hot cursor-pointer align-center f-shrink-0 p-2" onClick={this.handleImportClick}>
+            <div>
+              <FontAwesomeIcon icon="file-import"/>
+            </div>
+          </button>
+        </div>
 
         <div className="mb-2 f-grow-1">
           <div className="notes-label align-center font-weight-bold text-dec-underline pb-1">{sharedNotesLabel[this.props.global.lang]}</div>

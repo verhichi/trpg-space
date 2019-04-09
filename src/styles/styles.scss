@@ -456,9 +456,19 @@
 
   // Quill
     .quill{
+      display: flex;
+      flex-direction: column;
       flex-grow: 1;
     }
 
     .ql-container{
-      height: calc(100% - 45px) !important;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .ql-editor{
+      flex-grow: 1;
+      flex-basis: 1px;
+      overflow-y: scroll;
     }
