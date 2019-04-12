@@ -7,6 +7,8 @@ import { removeMapChar, removeSelCharFromAllMap } from '../../../../../../../red
 import { addChar, removeChar, editCharStat } from '../../../../../../../redux/actions/char';
 import { checkSendAsUser, editSendAs } from '../../../../../../../redux/actions/chatSetting';
 import socket from '../../../../../../../socket/socketClient';
+import jszip from 'jszip';
+import { saveAs } from 'file-saver';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -47,7 +49,6 @@ const mapDispatchToProps = (dispatch) => {
 class Char extends Component {
   constructor (props){
     super(props);
-    this.exportRef = React.createRef();
 
     this.handleRemoveClick    = this.handleRemoveClick.bind(this);
     this.handleRemoveConfirm  = this.handleRemoveConfirm.bind(this);
@@ -61,21 +62,12 @@ class Char extends Component {
     this.createExportFile     = this.createExportFile.bind(this);
   }
 
-  componentDidMount (){
-    this.createExportFile();
-  }
-
-  componentDidUpdate (){
-    this.createExportFile();
-  }
-
   createExportFile (){
-    if (this.props.charData.ownerId === this.props.global.id || this.props.charData.general.privacy === CHAR_PRIVACY_LEVEL_ZERO){
-      const element = this.exportRef.current;
-      const file = new Blob([JSON.stringify({ ...this.props.charData, ownerId: '', charId: '' })], {type: 'application/json'});
-      element.href = URL.createObjectURL(file);
-      element.download = `${this.props.charData.general.name}.json`;
-    }
+    const file = new Blob([JSON.stringify({ ...this.props.charData, ownerId: '', charId: '' })], {type: 'application/json'});
+    const zip = jszip().file(`char_${this.props.charData.general.name}.json`, file)
+    zip.generateAsync({ type: 'blob' }).then(content => {
+      saveAs(content, `char_${this.props.charData.general.name}.zip`)
+    })
   }
 
   handleRemoveClick (charId, e){
@@ -201,9 +193,9 @@ class Char extends Component {
                  <FontAwesomeIcon icon="copy"/>
                </div>)}
           {(isOwnChar || this.props.charData.general.privacy === CHAR_PRIVACY_LEVEL_ZERO)
-             && (<a href="#" className="cursor-pointer remove-link-dec char-btn align-center f-shrink-0" ref={this.exportRef}>
+             && (<div className="cursor-pointer char-btn align-center f-shrink-0" onClick={this.createExportFile}>
                <FontAwesomeIcon icon="file-export"/>
-              </a>)}
+              </div>)}
         </div>
       </div>
     );

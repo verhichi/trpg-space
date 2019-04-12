@@ -4,6 +4,8 @@ import { MODAL_TYPE_EDIT_NOTE, MODAL_TYPE_CONFIRM } from '../../../../../../../c
 import { showModal, hideModal } from '../../../../../../../redux/actions/modal';
 import { removeNote } from '../../../../../../../redux/actions/note';
 import socket from '../../../../../../../socket/socketClient';
+import jszip from 'jszip';
+import { saveAs } from 'file-saver';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -39,31 +41,20 @@ const DragHandle = SortableHandle(() => {
 class Note extends Component {
   constructor (props){
     super(props);
-    this.exportRef = React.createRef();
     this.state = { isExpand: false };
 
     this.handleEditClick   = this.handleEditClick.bind(this);
     this.handleExpandClick = this.handleExpandClick.bind(this);
     this.handleRemoveClick = this.handleRemoveClick.bind(this);
     this.createExportFile  = this.createExportFile.bind(this);
-
-  }
-
-  componentDidMount (){
-    this.createExportFile();
-  }
-
-  componentDidUpdate (){
-    this.createExportFile();
   }
 
   createExportFile (){
-    if (this.props.noteData.ownerId === this.props.global.id){
-      const element = this.exportRef.current;
-      const file = new Blob([JSON.stringify({ ...this.props.noteData, noteId: '', ownerId: '' })], {type: 'application/json'});
-      element.href = URL.createObjectURL(file);
-      element.download = `note_${this.props.noteData.title}.json`;
-    }
+    const file = new Blob([JSON.stringify({ ...this.props.noteData, noteId: '', ownerId: '' })], {type: 'application/json'});
+    const zip = jszip().file(`note_${this.props.noteData.title}.json`, file)
+    zip.generateAsync({ type: 'blob' }).then(content => {
+      saveAs(content, `note_${this.props.noteData.title}.zip`)
+    })
   }
 
   handleEditClick (e){
@@ -123,9 +114,9 @@ class Note extends Component {
                       <FontAwesomeIcon icon="pen-square"/>
                     </div>)}
               {isOwnNote
-                 && (<a href="#" className="cursor-pointer remove-link-dec char-btn align-center f-shrink-0" ref={this.exportRef}>
+                 && (<div className="note-btn cursor-pointer" onClick={this.createExportFile}>
                        <FontAwesomeIcon icon="file-export"/>
-                     </a>)}
+                     </div>)}
             </div>
           </div>
 
