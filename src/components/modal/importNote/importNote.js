@@ -1,10 +1,12 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
 import { hideModal } from '../../../redux/actions/modal';
 import { addNote } from '../../../redux/actions/note';
 import socket from '../../../socket/socketClient';
 import { fileInpLabel, fileTypeError, fileContError, submitBtnLabel, titleInpLabel, sharedNotesInpLabel } from './importNote.i18n';
+import jszip from 'jszip';
+
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -78,7 +80,7 @@ class ImportNote extends Component {
     this.setState({ isDragOver: false });
     if (e.dataTransfer.items){
       for (let file of e.dataTransfer.items){
-        if (file.kind === 'file' && file.type === 'application/json'){
+        if (file.kind === 'file' && file.type === 'application/x-zip-compressed'){
           this.handleFile(file.getAsFile());
           break;
         }
@@ -86,25 +88,32 @@ class ImportNote extends Component {
     }
   }
 
-  handleFile (file){
-    const reader = new FileReader();
-    reader.readAsText(file);
-
-    reader.onload = () => {
-      const fileTypePattern = /\.json$/i;
-      this.setState({
-        fileExist: file.name.length !== 0,
-        fileTypeError: !fileTypePattern.test(file.name),
-        fileContError: !this.validateNoteData(reader.result),
-        fileName: file.name
-      }, () => {
-        if (!this.state.fileTypeError && !this.state.fileContError){
-          this.setState({ noteData: JSON.parse(reader.result) });
-        } else {
-          this.setState({ noteData: null });
-        }
-      });
-    }
+  handleFile (zipFile){
+    jszip
+      .loadAsync(zipFile)
+      .then(content => {
+        const file = content.files[Object.keys(content.files)[0]];
+        this.setState({
+          fileExist: file.name.length !== 0,
+          fileTypeError: !/\.json$/i.test(file.name),
+          fileName: zipFile.name
+        })
+        return file.async('string')
+      })
+      .then(noteData => {
+        this.setState({
+          fileContError: !this.validateNoteData(noteData)
+        }, () => {
+          if (!this.state.fileTypeError && !this.state.fileContError){
+            this.setState({ noteData: JSON.parse(noteData) });
+          } else {
+            this.setState({ noteData: null });
+          }
+        });
+      })
+      .catch(() => {
+        this.setState({ fileTypeError: true })
+      })
   }
 
   validateNoteData (objStr){
@@ -160,8 +169,8 @@ class ImportNote extends Component {
           <div>{fileInpLabel[this.props.global.lang]}:</div>
           <label class={`inp-file-cont d-flex w-100 cursor-pointer ${dragOverClass}`} onDragOver={this.handleDragOver} onDragLeave={this.handleDragLeave} onDrop={this.handleDrop}>
             <FontAwesomeIcon icon="upload"/>
-            <div className="one-line-ellipsis f-grow-1 pl-3">{this.state.fileName.length === 0 ? 'Choose or Drag a Character File...' : this.state.fileName}</div>
-            <input id="imageInput" className="d-none" type="file" accept=".json" ref={this.fileInput} onChange={this.handleFileChange}/>
+            <div className="one-line-ellipsis f-grow-1 pl-3">{this.state.fileName.length === 0 ? 'Choose or Drag a Note File...' : this.state.fileName}</div>
+            <input id="imageInput" className="d-none" type="file" accept=".zip" ref={this.fileInput} onChange={this.handleFileChange}/>
           </label>
           {this.state.fileTypeError && (<div className="text-danger">{fileTypeError[this.props.global.lang]}</div>)}
           {this.state.fileContError && (<div className="text-danger">{fileContError[this.props.global.lang]}</div>)}
