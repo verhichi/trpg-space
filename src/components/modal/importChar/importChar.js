@@ -6,6 +6,8 @@ import { addChar } from '../../../redux/actions/char';
 import socket from '../../../socket/socketClient';
 import { CHAR_PRIVACY_LEVEL_ZERO, CHAR_PRIVACY_LEVEL_ONE, CHAR_PRIVACY_LEVEL_TWO, CHAR_PRIVACY_LEVEL_THREE, CHAR_TYPE_ALLY, CHAR_TYPE_ENEMY } from '../../../constants/constants';
 import { fileInpLabel, fileTypeError, fileContError, submitBtnLabel, charImageLabel, charTypeLabel, charTypeAllyLabel, charTypeEnemyLabel, charNameLabel, charPrivacyLabel, privacyLevelZeroLabel, privacyLevelOneLabel, privacyLevelTwoLabel, privacyLevelThreeLabel } from './importChar.i18n';
+import jszip from 'jszip';
+
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -79,7 +81,7 @@ class ImportChar extends Component {
     this.setState({ isDragOver: false });
     if (e.dataTransfer.items){
       for (let file of e.dataTransfer.items){
-        if (file.kind === 'file' && file.type === 'application/json'){
+        if (file.kind === 'file' && file.type === 'application/x-zip-compressed'){
           this.handleFile(file.getAsFile());
           break;
         }
@@ -87,25 +89,32 @@ class ImportChar extends Component {
     }
   }
 
-  handleFile (file){
-    const reader = new FileReader();
-    reader.readAsText(file);
-
-    reader.onload = () => {
-      const fileTypePattern = /\.json$/i;
-      this.setState({
-        fileExist: file.name.length !== 0,
-        fileTypeError: !fileTypePattern.test(file.name),
-        fileContError: !this.validateCharData(reader.result),
-        fileName: file.name
-      }, () => {
-        if (!this.state.fileTypeError && !this.state.fileContError){
-          this.setState({ charData: JSON.parse(reader.result) });
-        } else {
-          this.setState({ charData: null });
-        }
-      });
-    }
+  handleFile (zipFile){
+    jszip
+      .loadAsync(zipFile)
+      .then(content => {
+        const file = content.files[Object.keys(content.files)[0]];
+        this.setState({
+          fileExist: file.name.length !== 0,
+          fileTypeError: !/\.json$/i.test(file.name),
+          fileName: zipFile.name
+        })
+        return file.async('string')
+      })
+      .then(charData => {
+        this.setState({
+           fileContError: !this.validateCharData(charData)
+         }, () => {
+          if (!this.state.fileTypeError && !this.state.fileContError){
+            this.setState({ charData: JSON.parse(charData) });
+          } else {
+            this.setState({ charData: null });
+          }
+        });
+      })
+      .catch(() => {
+        this.setState({ fileTypeError: true })
+      })
   }
 
   validateCharData (objStr){
@@ -187,7 +196,7 @@ class ImportChar extends Component {
           <label class={`inp-file-cont d-flex w-100 cursor-pointer ${dragOverClass}`} onDragOver={this.handleDragOver} onDragLeave={this.handleDragLeave} onDrop={this.handleDrop}>
             <FontAwesomeIcon icon="upload"/>
             <div className="one-line-ellipsis f-grow-1 pl-3">{this.state.fileName.length === 0 ? 'Choose or Drag a Character File...' : this.state.fileName}</div>
-            <input id="imageInput" className="d-none" type="file" accept=".json" ref={this.fileInput} onChange={this.handleFileChange}/>
+            <input id="imageInput" className="d-none" type="file" accept=".zip" ref={this.fileInput} onChange={this.handleFileChange}/>
           </label>
           {this.state.fileTypeError && (<div className="text-danger">{fileTypeError[this.props.global.lang]}</div>)}
           {this.state.fileContError && (<div className="text-danger">{fileContError[this.props.global.lang]}</div>)}

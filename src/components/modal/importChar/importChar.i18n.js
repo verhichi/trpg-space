@@ -6,8 +6,8 @@ export const fileInpLabel = {
 };
 
 export const fileTypeError = {
-  [APP_LANG_EN]: 'File must be in json format',
-  [APP_LANG_JP]: 'ファイルフォーマットはjsonのみ'
+  [APP_LANG_EN]: 'File must be in the correct format',
+  [APP_LANG_JP]: 'ファイルの形式が正しくありません'
 };
 
 export const fileContError = {
