@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './geo.scss';
 
 // Component
-import GeoCornerTopLeft     from './geoCorner/geoCornerTopleft';
+import GeoCornerTopLeft     from './geoCorner/geoCornerTopLeft';
 import GeoCornerTopRight    from './geoCorner/geoCornerTopRight';
 import GeoCornerBottomRight from './geoCorner/geoCornerBottomRight';
 import GeoCornerBottomLeft  from './geoCorner/geoCornerBottomLeft';
