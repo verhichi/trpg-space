@@ -6,6 +6,8 @@ import { removeMap } from '../../../../../../redux/actions/map';
 import { removeAllCharFromSelMap } from '../../../../../../redux/actions/mapChar';
 import { setDisplayMap } from '../../../../../../redux/actions/display';
 import socket from '../../../../../../socket/socketClient';
+import jszip from 'jszip'
+import { saveAs } from 'file-saver';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,7 +20,8 @@ const mapStateToProps = (state) => {
   return {
     displaySetting: state.displaySetting,
     global:         state.global,
-    mapList:        state.mapList
+    mapList:        state.mapList,
+    geoList:        state.geoList
   };
 };
 
@@ -42,6 +45,29 @@ class MapTab extends Component {
     this.handleLeftScrollClick  = this.handleLeftScrollClick.bind(this);
     this.handleTouchMove        = this.handleTouchMove.bind(this);
     this.handleNewMapClick      = this.handleNewMapClick.bind(this);
+  }
+
+  createExportFile (mapData){
+    const file = new Blob([JSON.stringify({
+      mapData: {
+        ownerId: '',
+        mapId: '',
+        src: mapData.src,
+        name: mapData.name,
+        fileName: mapData.fileName,
+        private: mapData.private
+      },
+      geoList: this.props.geoList.filter(geo => geo.mapId === mapData.mapId).map(geo => {
+        return {
+          ...geo,
+          mapId: ''
+        }
+      })
+    })], {type: 'application/json'});
+    const zip = jszip().file(`map_${mapData.name}.json`, file)
+    zip.generateAsync({ type: 'blob' }).then(content => {
+      saveAs(content, `map_${mapData.name}.zip`)
+    })
   }
 
   handleTabClick (e, mapId){
@@ -111,6 +137,10 @@ class MapTab extends Component {
           {this.props.global.id === mapTab.ownerId &&
             (<div className="map-tab-btn pr-1 pl-1" onClick={e => this.handleEditMapClick(e, mapTab.mapId)}>
               <FontAwesomeIcon icon="pen-square"/>
+            </div>)}
+          {this.props.global.id === mapTab.ownerId &&
+            (<div className="map-tab-btn pr-1 pl-1" onClick={() => this.createExportFile(mapTab)}>
+              <FontAwesomeIcon icon="file-export"/>
             </div>)}
           {this.props.global.id === mapTab.ownerId &&
             (<div className="map-tab-btn pr-1 pl-1" onClick={e => this.handleRemoveMapClick(e, mapTab.mapId)}>
