@@ -46,6 +46,7 @@ export const MODAL_TYPE_EDIT_USER    = 'EDIT_USER';
 export const MODAL_TYPE_HELP         = 'HELP';
 export const MODAL_TYPE_IMAGE        = 'IMAGE';
 export const MODAL_TYPE_IMPORT_CHAR  = 'IMPORT_CHAR';
+export const MODAL_TYPE_IMPORT_MAP   = 'IMPORT_MAP';
 export const MODAL_TYPE_IMPORT_NOTE  = 'IMPORT_NOTE';
 export const MODAL_TYPE_LANG         = 'LANG';
 export const MODAL_TYPE_NEW_CHAR     = 'NEW_CHAR';
