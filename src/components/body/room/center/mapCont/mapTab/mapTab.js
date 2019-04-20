@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { MODAL_TYPE_CONFIRM, MODAL_TYPE_NEW_MAP, MODAL_TYPE_EDIT_MAP } from '../../../../../../constants/constants';
+import { MODAL_TYPE_CONFIRM, MODAL_TYPE_NEW_MAP, MODAL_TYPE_EDIT_MAP, MODAL_TYPE_IMPORT_MAP } from '../../../../../../constants/constants';
 import { showModal, hideModal } from '../../../../../../redux/actions/modal';
 import { removeMap } from '../../../../../../redux/actions/map';
 import { removeAllCharFromSelMap } from '../../../../../../redux/actions/mapChar';
@@ -45,6 +45,7 @@ class MapTab extends Component {
     this.handleLeftScrollClick  = this.handleLeftScrollClick.bind(this);
     this.handleTouchMove        = this.handleTouchMove.bind(this);
     this.handleNewMapClick      = this.handleNewMapClick.bind(this);
+    this.handleImportClick      = this.handleImportClick.bind(this);
   }
 
   createExportFile (mapData){
@@ -68,6 +69,13 @@ class MapTab extends Component {
     zip.generateAsync({ type: 'blob' }).then(content => {
       saveAs(content, `map_${mapData.name}.zip`)
     })
+  }
+
+  handleImportClick (){
+    this.props.showModal(MODAL_TYPE_IMPORT_MAP, {
+      title:        'Import Map',
+      displayClose: true
+    });
   }
 
   handleTabClick (e, mapId){
@@ -153,10 +161,10 @@ class MapTab extends Component {
     return (
       <div className="map-tab-cont d-flex">
         <div className="map-tab-new p-1 f-shrink-0 align-center cursor-pointer" onClick={this.handleNewMapClick}>
-          <span className="fa-layers fa-fw">
-            <FontAwesomeIcon icon="plus" transform="shrink-8 up-7"/>
-            <FontAwesomeIcon icon="map" transform="shrink-3 down-3"/>
-          </span>
+          <FontAwesomeIcon icon="plus"/>
+        </div>
+        <div className="map-tab-new p-1 f-shrink-0 align-center cursor-pointer" onClick={this.handleImportClick}>
+          <FontAwesomeIcon icon="file-import"/>
         </div>
         <div className="map-tab-scroll p-1 f-shrink-0 align-center cursor-pointer" onClick={this.handleLeftScrollClick}>
           <FontAwesomeIcon icon="angle-left"/>
