@@ -21,6 +21,7 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin-alt');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 
 // Webpack uses `publicPath` to determine where the app is being served from.
@@ -260,7 +261,7 @@ module.exports = {
             options: {
               formatter: require.resolve('react-dev-utils/eslintFormatter'),
               eslintPath: require.resolve('eslint'),
-              
+
             },
             loader: require.resolve('eslint-loader'),
           },
@@ -293,7 +294,7 @@ module.exports = {
               customize: require.resolve(
                 'babel-preset-react-app/webpack-overrides'
               ),
-              
+
               plugins: [
                 [
                   require.resolve('babel-plugin-named-asset-import'),
@@ -331,7 +332,7 @@ module.exports = {
               cacheDirectory: true,
               // Save disk space when time isn't as important
               cacheCompression: true,
-              
+
               // If an error happens in a package, it's possible to be
               // because it was compiled. Thus, we don't want the browser
               // debugger to show the original code. Instead, the code
@@ -523,6 +524,10 @@ module.exports = {
         silent: true,
         formatter: typescriptFormatter,
       }),
+
+    new CompressionPlugin({
+      test: /\.(js|css)$/i
+    }),
   ].filter(Boolean),
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
