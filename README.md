@@ -1,16 +1,16 @@
-## TRPG PARTY TOOL
+# TRPG PARTY TOOL
 **(naming in progress)**  
 Free responsive web application for private online TRPG sessions that anyone can use without having to subscribe.  
 Comes with real-time chat, multilingual support(English and Japanese), and basic TRPG functionalities.
 
 
-## Tables of Contents
+# Tables of Contents
 - [Functionalities](#functionalities)
 - [Supported Browsers](#supported-browsers)
 - [Developers](#developers)
 
 
-### Functionalities
+## Functionalities
 Listed below are some of the functionalities that are available within this tool.
 
 - Multilingual Support
@@ -47,7 +47,7 @@ Listed below are some of the functionalities that are available within this tool
     - importing / exporting notes
 
 
-### Supported Browsers
+## Supported Browsers
 This application has been tested on these browsers and devices.
 
 - Browsers
@@ -65,7 +65,7 @@ This application has been tested on these browsers and devices.
   - Android
 
 
-### Developers
+## Developers
 #### Clone, Install, and Run
 Once cloned, run the following command to install dependencies.
 ```
