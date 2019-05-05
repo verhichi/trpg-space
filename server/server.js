@@ -3,6 +3,7 @@ const app     = express();                    // instantiating express
 const http    = require('http');              // import http package
 const server  = http.Server(app);             // Create server
 const io      = require('socket.io')(server); // set socket.io with server
+const redisAdapter = require('socket.io-redis'); // redis adapter
 const uuid    = require('uuid');              // Used to generate unique string for room id
 
 const portNo  = process.env.PORT || 3000; // set port number
@@ -71,6 +72,8 @@ app.get('/*', (req, res) => {
   res.redirect('/');
 });
 
+// socket.io and redis adapter
+io.adapter(redisAdapter({ host: 'localhost', port: 6379 }));
 
 // Place Holder socket.io logic
 io.on('connection', (socket) => {
