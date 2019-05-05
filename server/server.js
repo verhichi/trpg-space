@@ -73,7 +73,7 @@ app.get('/*', (req, res) => {
 });
 
 // socket.io and redis adapter
-io.adapter(redisAdapter({ host: 'localhost', port: 6379 }));
+io.adapter(redisAdapter({ host: '192.168.200.24', port: 6379 }));
 
 // Place Holder socket.io logic
 io.on('connection', (socket) => {
