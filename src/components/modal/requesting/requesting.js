@@ -8,10 +8,10 @@ class Requesting extends Component {
   render() {
 
     return (
-      <div className="requesting-cont d-flex f-grow-1">
-        <div>
-          <div className="requesting-circle"></div>
-          <div className="align-center font-size-xl mt-3">Loading...Please wait...</div>
+      <div className="h-100 d-flex f-align-items-center justify-content-center">
+        <div className="loader-cont align-center loader-dark">
+          <div className="loader-dice d-inline-block"></div>
+          <div class="mt-2">Now Loading...</div>
         </div>
       </div>
     );

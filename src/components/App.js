@@ -14,10 +14,6 @@ const Header = lazy(() => import('./header/header'));
 const Body   = lazy(() => import('./body/body'));
 const Modal  = lazy(() => import('./modal/modal'));
 const Notice = lazy(() => import('./notice/notice'));
-// import Header from './header/header';
-// import Body   from './body/body';
-// import Modal  from './modal/modal';
-// import Notice from './notice/notice';
 
 
 // Redux Map State To Prop
