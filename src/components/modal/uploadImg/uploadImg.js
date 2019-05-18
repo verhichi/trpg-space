@@ -159,8 +159,8 @@ class UploadImg extends Component {
             : null}
         </div>
         <button className="btn btn-hot cursor-pointer" disabled={isDisabled} onClick={this.handleButtonClick}>
-          <FontAwesomeIcon icon="check"/>
-          <div className="btn-text">{submitBtnLabel[this.props.global.lang]}</div>
+          <span class="mr-3"><FontAwesomeIcon icon="check"/></span>
+          {submitBtnLabel[this.props.global.lang]}
         </button>
       </div>
     );

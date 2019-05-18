@@ -61,16 +61,12 @@ class CharList extends Component {
       <Fragment>
 
         <div className="d-flex mb-2 mt-2 f-shrink-0">
-          <button className="new-char-btn btn-slim btn-hot cursor-pointer align-center f-grow-1 p-2" onClick={this.handleNewClick}>
-            <div>
-              <FontAwesomeIcon icon="user-plus"/>
-            </div>
-            <div className="btn-text">{createCharBtnLabel[this.props.global.lang]}</div>
+          <button className="btn-append btn-slim btn-hot cursor-pointer align-center f-grow-1 p-2" onClick={this.handleNewClick}>
+            <span class="mr-3"><FontAwesomeIcon icon="user-plus"/></span>
+            {createCharBtnLabel[this.props.global.lang]}
           </button>
-          <button className="btn-slim btn-hot cursor-pointer align-center f-shrink-0 p-2" onClick={this.handleImportClick}>
-            <div>
-              <FontAwesomeIcon icon="file-import"/>
-            </div>
+          <button className="btn-prepend btn-slim btn-hot cursor-pointer align-center f-shrink-0 p-2" onClick={this.handleImportClick}>
+            <FontAwesomeIcon icon="file-import"/>
           </button>
         </div>
 

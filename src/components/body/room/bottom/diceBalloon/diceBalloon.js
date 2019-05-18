@@ -92,7 +92,7 @@ class DiceBalloon extends Component {
 
     return (
       <div className={`dice-help-balloon font-weight-bold font-size-md ${toggleClass}`} ref={node => this.diceNode = node}>
-        <div className="dice-setting">
+        <div className="dice-setting mb-1 d-flex">
           Dice:
           <div className="sel-cont dice-sel">
             <select name="dice-number" value={this.state.diceNumber} onChange={this.handleDiceNumberChange}>
@@ -116,7 +116,7 @@ class DiceBalloon extends Component {
             </select>
           </div>
         </div>
-        <div className="dice-setting">
+        <div className="dice-setting mb-1 d-flex">
           Bonus:
           <div className="sel-cont dice-sel">
             <select name="symbol" value={this.state.symbol} onChange={this.handleSymbolChange}>

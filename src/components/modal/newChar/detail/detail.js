@@ -130,13 +130,13 @@ class Detail extends Component {
           <div className="font-size-sm align-center pb-1">{detailHelpText[this.props.global.lang]}</div>
           <div className="d-flex justify-content-around mb-2">
             <button className="btn-slim btn-hot p-2 align-center cursor-pointer" type="button" onClick={this.handleNewValueDetailButtonClick}>
-              <div className="d-none-sm pr-2"><FontAwesomeIcon icon="plus-square"/></div>
-              <div className="btn-text">{addValBtnLabel[this.props.global.lang]}</div>
+              <span className="d-none-sm mr-2"><FontAwesomeIcon icon="plus-square"/></span>
+              {addValBtnLabel[this.props.global.lang]}
             </button>
             <button className="btn-slim btn-hot p-2 align-center cursor-pointer" type="button" onClick={this.handleNewParameterDetailButtonClick}>
-              <div className="d-none-sm pr-2"><FontAwesomeIcon icon="plus-square"/></div>
-              <div className="btn-text">{addParamBtnLabel[this.props.global.lang]}</div>
-              <div className="d-none-sm pl-2"><FontAwesomeIcon icon="percent"/></div>
+              <span className="d-none-sm mr-2"><FontAwesomeIcon icon="plus-square"/></span>
+              {addParamBtnLabel[this.props.global.lang]}
+              <span className="d-none-sm ml-2"><FontAwesomeIcon icon="percent"/></span>
             </button>
           </div>
 

@@ -21,15 +21,28 @@
 .modal-cont{
   background: $white-clr;
   border: none;
+  border-radius: 3px;
   height: 100%;
   width: 100%;
   overflow: hidden;
   padding: 10px;
 
   @include md{
-    height: 75%;
-    width:  75%;
+    max-height: 500px;
+    max-width: 500px;
+
+    &.modal-sm{
+      max-height: 300px;
+      max-width: 300px;
+    }
+
+    &.modal-lg{
+      max-height: 750px;
+      max-width: 750px;
+    }
   }
+
+
 }
 
 .stat-inp{
@@ -149,6 +162,7 @@
 
 .notes-btn{
   border: none;
+  border-radius: 3px;
   flex-basis: 35%;
 
   &[disabled]{

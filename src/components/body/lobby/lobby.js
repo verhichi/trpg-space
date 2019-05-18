@@ -68,29 +68,27 @@ class Lobby extends Component {
 
         <div>
 
-          <div className="lobby-animate-cont">
-            <div className="lobby-inp-cont">
-              <div className="lobby-inp-label">{lobbyInpJoinLabel[this.props.global.lang]}</div>
-              <div><input className="lobby-inp-field w-100" type="text" onChange={this.handleRoomIdChange}/></div>
-              <button className="btn btn-hot w-100 cursor-pointer" disabled={isDisabled} onClick={this.handleJoinClick}>
-                <FontAwesomeIcon icon="sign-in-alt"/>
-                <div className="btn-text">{lobbyInpJoinBtnLabel[this.props.global.lang]}</div>
-              </button>
-            </div>
+          <div className="lobby-inp-cont">
+            <div className="lobby-inp-label">{lobbyInpJoinLabel[this.props.global.lang]}</div>
+            <div><input className="inp w-100" type="text" onChange={this.handleRoomIdChange}/></div>
+            <button className="btn btn-hot w-100 cursor-pointer" disabled={isDisabled} onClick={this.handleJoinClick}>
+              <div>
+                <span class="mr-3"><FontAwesomeIcon icon="sign-in-alt"/></span>
+                {lobbyInpJoinBtnLabel[this.props.global.lang]}
+              </div>
+            </button>
           </div>
 
-          <div className="lobby-animate-cont">
-            <div className="lobby-or-cont">or</div>
-          </div>
+          <div className="align-center">or</div>
 
-          <div className="lobby-animate-cont">
-            <div className="lobby-inp-cont">
-              <div className="lobby-inp-label">{lobbyInpCreateLabel[this.props.global.lang]}</div>
-              <button className="btn btn-hot w-100 cursor-pointer" onClick={this.handleNewClick}>
-                <FontAwesomeIcon icon="tools"/>
-                <div className="btn-text">{lobbyInpCreateBtnLabel[this.props.global.lang]}</div>
-              </button>
-            </div>
+          <div className="lobby-inp-cont">
+            <div className="lobby-inp-label">{lobbyInpCreateLabel[this.props.global.lang]}</div>
+            <button className="btn btn-hot w-100 cursor-pointer" onClick={this.handleNewClick}>
+              <div>
+                <span class="mr-3"><FontAwesomeIcon icon="tools"/></span>
+                {lobbyInpCreateBtnLabel[this.props.global.lang]}
+              </div>
+            </button>
           </div>
 
         </div>
