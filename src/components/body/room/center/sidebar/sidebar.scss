@@ -42,6 +42,7 @@
 
   &.is-active{
     background: $secondary-clr;
+    border-bottom: 3px solid $hot-clr;
     color: $white-clr;
   }
 }
