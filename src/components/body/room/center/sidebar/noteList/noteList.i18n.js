@@ -1,7 +1,7 @@
 import { APP_LANG_EN, APP_LANG_JP } from '../../../../../../constants/constants';
 
 export const noteEditBtnLabel = {
-  [APP_LANG_EN]: 'Create New Note',
+  [APP_LANG_EN]: 'Create Note',
   [APP_LANG_JP]: 'メモ作成'
 };
 

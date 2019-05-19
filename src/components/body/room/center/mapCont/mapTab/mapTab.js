@@ -133,25 +133,23 @@ class MapTab extends Component {
   }
 
   render() {
-    const hideScrollClass = this.props.global.isMobile ? '' : 'hide-scroll';
-
     const mapTabList = this.props.mapList.map(mapTab => {
-      const activeClass = this.props.displaySetting.displayMap === mapTab.mapId
-                            ? 'is-active'
-                            : '';
+    const activeClass = this.props.displaySetting.displayMap === mapTab.mapId
+                          ? 'is-active'
+                          : '';
       return (
-        <div className={`map-tab p-1 d-inline-flex cursor-pointer ${activeClass}`} key={mapTab.mapId} onClick={e => this.handleTabClick(e, mapTab.mapId)}>
+        <div className={`map-tab p-1 d-flex f-align-items-center cursor-pointer ${activeClass}`} key={mapTab.mapId} onClick={e => this.handleTabClick(e, mapTab.mapId)}>
           <div className="map-tab-name f-grow-1 one-line-ellipsis">{mapTab.name}</div>
           {this.props.global.id === mapTab.ownerId &&
-            (<div className="map-tab-btn pr-1 pl-1" onClick={e => this.handleEditMapClick(e, mapTab.mapId)}>
+            (<div className="map-tab-btn mr-1 ml-1" onClick={e => this.handleEditMapClick(e, mapTab.mapId)}>
               <FontAwesomeIcon icon="pen-square"/>
             </div>)}
           {this.props.global.id === mapTab.ownerId &&
-            (<div className="map-tab-btn pr-1 pl-1" onClick={() => this.createExportFile(mapTab)}>
+            (<div className="map-tab-btn mr-1 ml-1" onClick={() => this.createExportFile(mapTab)}>
               <FontAwesomeIcon icon="file-export"/>
             </div>)}
           {this.props.global.id === mapTab.ownerId &&
-            (<div className="map-tab-btn pr-1 pl-1" onClick={e => this.handleRemoveMapClick(e, mapTab.mapId)}>
+            (<div className="map-tab-btn mr-1 ml-1" onClick={e => this.handleRemoveMapClick(e, mapTab.mapId)}>
               <FontAwesomeIcon icon="window-close"/>
             </div>)}
         </div>
@@ -160,16 +158,16 @@ class MapTab extends Component {
 
     return (
       <div className="map-tab-cont d-flex">
-        <div className="map-tab-new p-1 f-shrink-0 align-center cursor-pointer" onClick={this.handleNewMapClick}>
+        <div className="map-tab-new btn-hot p-1 f-shrink-0 align-center cursor-pointer" onClick={this.handleNewMapClick}>
           <FontAwesomeIcon icon="plus"/>
         </div>
-        <div className="map-tab-new p-1 f-shrink-0 align-center cursor-pointer" onClick={this.handleImportClick}>
+        <div className="map-tab-new p-1 btn-hot f-shrink-0 align-center cursor-pointer" onClick={this.handleImportClick}>
           <FontAwesomeIcon icon="file-import"/>
         </div>
         <div className="map-tab-scroll p-1 f-shrink-0 align-center cursor-pointer" onClick={this.handleLeftScrollClick}>
           <FontAwesomeIcon icon="angle-left"/>
         </div>
-        <div className={`map-tab-wrap f-grow-1 ${hideScrollClass}`} onTouchMove={this.handleTouchMove} ref={this.mapTabWrapRef}>
+        <div className="map-tab-wrap d-flex f-grow-1" onTouchMove={this.handleTouchMove} ref={this.mapTabWrapRef}>
           { mapTabList }
         </div>
         <div className="map-tab-scroll p-1 f-shrink-0 align-center cursor-pointer" onClick={this.handleRightScrollClick}>
