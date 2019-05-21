@@ -10,6 +10,9 @@ import { diceShareResultLabel, diceRollBtnLabel } from './diceBalloon.i18n';
 // Style
 import './diceBalloon.scss';
 
+// Component
+import AppCheckbox from '../../../../partials/appCheckbox/appCheckbox'
+
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
@@ -62,8 +65,8 @@ class DiceBalloon extends Component {
     this.setState({ modifier: e.target.value });
   }
 
-  handlePrivateChange (e){
-    this.setState({ private: !this.state.private });
+  handlePrivateChange (checked){
+    this.setState({ private: checked });
   }
 
   handleButtonClick (e){
@@ -151,7 +154,7 @@ class DiceBalloon extends Component {
           </div>
         </div>
         <div>
-          <label><input type="checkbox" checked={!this.state.private} onChange={this.handlePrivateChange}/> {diceShareResultLabel[this.props.global.lang]}</label>
+          <AppCheckbox checked={this.state.private} id={'dice_private'} label={diceShareResultLabel[this.props.global.lang]} handleChange={this.handlePrivateChange}/>
         </div>
         <button className="btn btn-hot w-100 cursor-pointer" onClick={this.handleButtonClick}>
           <div className="btn-text font-weight-bold">{diceRollBtnLabel[this.props.global.lang]}</div>
