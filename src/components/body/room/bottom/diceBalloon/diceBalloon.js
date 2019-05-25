@@ -65,8 +65,8 @@ class DiceBalloon extends Component {
     this.setState({ modifier: e.target.value });
   }
 
-  handlePrivateChange (checked){
-    this.setState({ private: checked });
+  handlePrivateChange (e){
+    this.setState({ private: e.target.checked });
   }
 
   handleButtonClick (e){

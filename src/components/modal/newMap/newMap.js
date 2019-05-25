@@ -13,6 +13,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Style
 import './newMap.scss';
 
+// Components
+import AppCheckbox from '../../partials/appCheckbox/appCheckbox'
+
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
@@ -62,9 +65,7 @@ class NewMap extends Component {
   }
 
   handleAllCheckChange (e){
-    this.state.private
-      ? this.setState({ private: false })
-      : this.setState({ private: true  });
+    this.setState({ private: !e.target.checked  });
   }
 
   handleFileChange (e){
@@ -179,7 +180,7 @@ class NewMap extends Component {
           </div>
 
           <div className="mb-2 d-flex">
-            <div className="map-user one-line-ellipsis"><label><input type="checkbox" checked={!this.state.private} onChange={this.handleAllCheckChange}/>{mapPrivacyLabel[this.props.global.lang]}</label></div>
+            <AppCheckbox checked={!this.state.private} handleChange={this.handleAllCheckChange} label={mapPrivacyLabel[this.props.global.lang]} id={'map_private'}/>
           </div>
         </div>
 

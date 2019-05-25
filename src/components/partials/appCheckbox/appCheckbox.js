@@ -17,14 +17,14 @@ class AppCheckbox extends Component {
   }
 
   handleChange (e){
-    this.props.handleChange(e.target.checked)
+    this.props.handleChange(e)
   }
 
   render() {
     return (
       <div className="inp-check-cont d-flex f-align-items-center p-relative">
         <input className="inp-check p-absolute" type="checkbox" value={this.props.value} checked={this.props.checked} id={`checkbox_${this.props.id}`} onChange={this.handleChange}/>
-        <label className="inp-check-label" htmlFor={`checkbox_${this.props.id}`}>{ this.props.label }</label>
+        <label className="inp-check-label one-line-ellipsis" htmlFor={`checkbox_${this.props.id}`}>{ this.props.label }</label>
       </div>
     );
   }
