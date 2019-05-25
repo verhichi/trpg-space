@@ -8,6 +8,7 @@ import { setDisplayMap } from '../../../../../../redux/actions/display';
 import socket from '../../../../../../socket/socketClient';
 import jszip from 'jszip'
 import { saveAs } from 'file-saver';
+import { createMapModalTitle, editMapModalTitle, importMapModalTitle, deleteMapMessage } from './mapTab.i18n'
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -73,7 +74,7 @@ class MapTab extends Component {
 
   handleImportClick (){
     this.props.showModal(MODAL_TYPE_IMPORT_MAP, {
-      title:        'Import Map',
+      title:        importMapModalTitle[this.props.global.lang],
       displayClose: true
     });
   }
@@ -87,7 +88,7 @@ class MapTab extends Component {
     e.stopPropagation();
 
     this.props.showModal(MODAL_TYPE_NEW_MAP, {
-      title:        'Create New Map',
+      title:        createMapModalTitle[this.props.global.lang],
       displayClose: true
     });
   }
@@ -104,7 +105,7 @@ class MapTab extends Component {
     e.stopPropagation();
 
     this.props.showModal(MODAL_TYPE_EDIT_MAP, {
-      title:        'Edit Map',
+      title:        editMapModalTitle[this.props.global.lang],
       displayClose: true,
       mapId
     });
@@ -114,10 +115,10 @@ class MapTab extends Component {
     e.stopPropagation();
 
     this.props.showModal(MODAL_TYPE_CONFIRM, {
-      title:        'Delete Map',
+      title:        '',
       displayClose: false,
-      confirmText: 'Are you sure you want to delete this map?',
-      accept:       [
+      confirmText:  deleteMapMessage[this.props.global.lang],
+      accept: [
         this.props.setDisplayMap.bind(this, ''),
         this.props.removeAllCharFromSelMap.bind(this, mapId),
         this.props.removeMap.bind(this, mapId),

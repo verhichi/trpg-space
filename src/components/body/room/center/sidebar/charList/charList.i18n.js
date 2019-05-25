@@ -5,6 +5,11 @@ export const createCharBtnLabel = {
   [APP_LANG_JP]: 'キャラ作成'
 };
 
+export const importCharBtnLabel = {
+  [APP_LANG_EN]: 'Import Character',
+  [APP_LANG_JP]: 'キャラのインポート'
+};
+
 export const charListLabel = {
   [APP_LANG_EN]: 'Ally List',
   [APP_LANG_JP]: '仲間 一覧'

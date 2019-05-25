@@ -66,7 +66,7 @@ class DiceBalloon extends Component {
   }
 
   handlePrivateChange (e){
-    this.setState({ private: e.target.checked });
+    this.setState({ private: !e.target.checked });
   }
 
   handleButtonClick (e){
@@ -154,7 +154,7 @@ class DiceBalloon extends Component {
           </div>
         </div>
         <div>
-          <AppCheckbox checked={this.state.private} id={'dice_private'} label={diceShareResultLabel[this.props.global.lang]} handleChange={this.handlePrivateChange}/>
+          <AppCheckbox checked={!this.state.private} id={'dice_private'} label={diceShareResultLabel[this.props.global.lang]} handleChange={this.handlePrivateChange}/>
         </div>
         <button className="btn btn-hot w-100 cursor-pointer" onClick={this.handleButtonClick}>
           <div className="btn-text font-weight-bold">{diceRollBtnLabel[this.props.global.lang]}</div>

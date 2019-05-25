@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { CHAR_TYPE_ALLY, CHAR_TYPE_ENEMY, MODAL_TYPE_NEW_CHAR, MODAL_TYPE_IMPORT_CHAR } from '../../../../../../constants/constants';
 import { showModal } from '../../../../../../redux/actions/modal';
-import { createCharBtnLabel, charListLabel, enemyListLabel } from './charList.i18n';
+import { createCharBtnLabel, charListLabel, enemyListLabel, importCharBtnLabel } from './charList.i18n';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -36,14 +36,16 @@ class CharList extends Component {
 
   handleNewClick (){
     this.props.showModal(MODAL_TYPE_NEW_CHAR, {
-      title:        'Create New Character',
+      title:        createCharBtnLabel[this.props.global.lang],
+      size:         'lg',
       displayClose: true
     });
   }
 
   handleImportClick (){
     this.props.showModal(MODAL_TYPE_IMPORT_CHAR, {
-      title:        'Import Character',
+      title:        importCharBtnLabel[this.props.global.lang],
+      size:         'lg',
       displayClose: true
     });
   }

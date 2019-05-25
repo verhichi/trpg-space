@@ -6,6 +6,7 @@ import { showModal, hideModal } from '../../../../../../../redux/actions/modal';
 import { removeMapChar, removeSelCharFromAllMap } from '../../../../../../../redux/actions/mapChar';
 import { addChar, removeChar, editCharStat } from '../../../../../../../redux/actions/char';
 import { checkSendAsUser, editSendAs } from '../../../../../../../redux/actions/chatSetting';
+import { deleteCharMessage, editCharModalTitle, viewCharModalTitle, copyCharMessage } from './char.i18n';
 import socket from '../../../../../../../socket/socketClient';
 import jszip from 'jszip';
 import { saveAs } from 'file-saver';
@@ -72,9 +73,9 @@ class Char extends Component {
 
   handleRemoveClick (charId, e){
     this.props.showModal(MODAL_TYPE_CONFIRM, {
-      title:        'Delete Character',
+      title:        '',
       displayClose: false,
-      confirmText:  `Are you sure you want to delete ${this.props.charData.general.name}?`,
+      confirmText:  `${deleteCharMessage[this.props.global.lang]} "${this.props.charData.general.name}"?`,
       accept:       this.handleRemoveConfirm,
       decline:      this.props.hideModal
     });
@@ -98,7 +99,7 @@ class Char extends Component {
 
   handleEditClick (e){
     this.props.showModal(MODAL_TYPE_EDIT_CHAR, {
-      title:        'Edit Character',
+      title:        editCharModalTitle[this.props.global.lang],
       displayClose: true,
       charId:       this.props.charData.charId
     });
@@ -106,7 +107,7 @@ class Char extends Component {
 
   handleViewClick (e){
     this.props.showModal(MODAL_TYPE_VIEW_CHAR, {
-      title:        'View Character',
+      title:        viewCharModalTitle[this.props.global.lang],
       displayClose: true,
       charId:       this.props.charData.charId
     });
@@ -114,9 +115,9 @@ class Char extends Component {
 
   handleCopyClick (e){
     this.props.showModal(MODAL_TYPE_CONFIRM, {
-      title:        'Copy Character',
+      title:        '',
       displayClose: false,
-      confirmText:  `Create a copy of ${this.props.charData.general.name}?`,
+      confirmText:  `${copyCharMessage[this.props.global.lang]} "${this.props.charData.general.name}"?`,
       accept:       this.handleCopyConfirm,
       decline:      this.props.hideModal
     });

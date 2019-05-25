@@ -27,5 +27,5 @@ export const fileSizeError = {
 
 export const submitBtnLabel = {
   [APP_LANG_EN]: 'Submit',
-  [APP_LANG_JP]: '作成'
+  [APP_LANG_JP]: '修正'
 };

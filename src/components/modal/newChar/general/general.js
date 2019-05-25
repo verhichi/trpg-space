@@ -7,6 +7,9 @@ import { optionalLabel, charImageLabel, charTypeLabel, charTypeAllyLabel, charTy
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+// Components
+import AppRadio from '../../../partials/appRadio/appRadio'
+
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return { global: state.global };
@@ -163,8 +166,8 @@ class General extends Component {
 
         <div className="mb-2 d-flex">
           <div className="char-inp-label pr-1">{charTypeLabel[this.props.global.lang]}:</div>
-          <label className="char-inp-radio pr-1"><input className="inp-radio" type="radio" value={CHAR_TYPE_ALLY} checked={this.state.charData.type === CHAR_TYPE_ALLY} onChange={this.handleTypeChange}/>{charTypeAllyLabel[this.props.global.lang]}</label>
-          <label className="char-inp-radio"><input className="inp-radio" type="radio" value={CHAR_TYPE_ENEMY} checked={this.state.charData.type === CHAR_TYPE_ENEMY} onChange={this.handleTypeChange}/>{charTypeEnemyLabel[this.props.global.lang]}</label>
+          <AppRadio id={'char_type_ally'} className={'mr-1'} value={CHAR_TYPE_ALLY} checked={this.state.charData.type === CHAR_TYPE_ALLY} handleChange={this.handleTypeChange} label={charTypeAllyLabel[this.props.global.lang]}/>
+          <AppRadio id={'char_type_enemy'} value={CHAR_TYPE_ENEMY} checked={this.state.charData.type === CHAR_TYPE_ENEMY} handleChange={this.handleTypeChange} label={charTypeEnemyLabel[this.props.global.lang]}/>
         </div>
 
         <div className="mb-2 d-flex">

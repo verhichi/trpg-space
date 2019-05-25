@@ -29,16 +29,16 @@
 
   @include md{
     max-height: 500px;
-    max-width: 500px;
+    width: 500px;
 
     &.modal-sm{
       max-height: 300px;
-      max-width: 300px;
+      width: 300px;
     }
 
     &.modal-lg{
       max-height: 750px;
-      max-width: 750px;
+      width: 750px;
     }
   }
 

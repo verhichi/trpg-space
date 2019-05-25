@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { MODAL_TYPE_EDIT_NOTE, MODAL_TYPE_CONFIRM } from '../../../../../../../constants/constants';
 import { showModal, hideModal } from '../../../../../../../redux/actions/modal';
 import { removeNote } from '../../../../../../../redux/actions/note';
+import { deleteNoteMessage, editNoteModalTitle } from './note.i18n'
 import socket from '../../../../../../../socket/socketClient';
 import jszip from 'jszip';
 import { saveAs } from 'file-saver';
@@ -60,7 +61,7 @@ class Note extends Component {
   handleEditClick (e){
     e.preventDefault();
     this.props.showModal(MODAL_TYPE_EDIT_NOTE, {
-      title:        'Edit Note',
+      title:        editNoteModalTitle[this.props.global.lang],
       displayClose: false,
       noteId:       this.props.noteData.noteId
     });
@@ -71,7 +72,7 @@ class Note extends Component {
     this.props.showModal(MODAL_TYPE_CONFIRM, {
       title:        '',
       displayClose: false,
-      confirmText:  'Are you sure you want to delete this note?',
+      confirmText:  deleteNoteMessage[this.props.global.lang],
       accept:       [
         this.props.removeNote.bind(this, this.props.noteData.noteId),
         socket.emit.bind(socket, 'delNote', this.props.global.roomId, this.props.noteData.noteId),

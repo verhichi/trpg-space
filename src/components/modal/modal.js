@@ -55,6 +55,10 @@ class Modal extends Component {
 
   render() {
     const toggleClass = this.props.modalSetting.display ? 'is-active' : '';
+    const modalSizeClass = {
+      sm: 'modal-sm',
+      lg: 'modal-lg',
+    }
 
     const modalBody = {
       [MODAL_TYPE_ALERT]:        <Alert />,
@@ -80,7 +84,7 @@ class Modal extends Component {
 
     return (
       <div className={`modal-background w-100 h-100 ${toggleClass}`}>
-        <div className="modal-cont d-flex f-dir-col">
+        <div className={`modal-cont d-flex f-dir-col ${modalSizeClass[this.props.modalSetting.modalProp.size]}`}>
           <div className="d-flex font-size-xl pb-3">
             <div className="f-grow-1 align-center">
               {this.props.modalSetting.modalProp.title}
