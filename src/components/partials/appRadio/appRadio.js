@@ -23,7 +23,7 @@ class AppRadio extends Component {
 
   render() {
     return (
-      <div className={`inp-radio-cont d-flex f-align-items-center p-relative ${this.props.className}`}>
+      <div className={`inp-radio-cont cursor-pointer d-flex f-align-items-center p-relative ${this.props.className}`}>
         <input className="inp-radio p-absolute" type="radio" value={this.props.value} checked={this.props.checked} id={`radio_${this.props.id}`} onChange={this.handleChange}/>
         <label className="inp-radio-label one-line-ellipsis" htmlFor={`radio_${this.props.id}`}>{ this.props.label }</label>
       </div>

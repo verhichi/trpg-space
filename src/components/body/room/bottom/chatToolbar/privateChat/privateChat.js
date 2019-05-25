@@ -60,7 +60,7 @@ class PrivateChat extends Component {
     return(
       <div className="chat-opt-btn">
         <FontAwesomeIcon icon="user-secret"/>
-        <div className="chat-opt-private p-2 p-absolute align-left">
+        <div className="chat-opt-private p-2 p-absolute align-left cursor-default">
           <div>{sendMsgToLabel[this.props.global.lang]}</div>
           <AppCheckbox checked={this.props.chatSetting.sendTo.sendToAll} handleChange={this.handleAllCheckChange} label={everyoneLabel[this.props.global.lang]} id={'private_everyone'}/>
           { !this.props.chatSetting.sendTo.sendToAll && userCheckList}

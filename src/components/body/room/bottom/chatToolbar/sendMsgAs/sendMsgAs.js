@@ -6,6 +6,9 @@ import { sendMsgAsLabel, userLabel, charLabel } from './sendMsgAs.i18n';
 // Style
 import './sendMsgAs.scss';
 
+// Components
+import AppRadio from '../../../../../partials/appRadio/appRadio'
+
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -53,7 +56,7 @@ class SendMsgAs extends Component {
     const userName = this.props.userList.find(user => user.id === this.props.global.id).name;
 
     const charRadioList = this.props.charList.filter(char => char.ownerId === this.props.global.id).map(char => {
-      return (<div className="chat-sender-name one-line-ellipsis"><label><input type="radio" name="sender" value={char.charId} checked={this.props.chatSetting.sendAs.sendAsCharacter === char.charId} onChange={this.handleSendRadioChange}/>{char.general.name}</label></div>)
+      return (<AppRadio id={char.charId} label={char.general.name} value={char.charId} checked={this.props.chatSetting.sendAs.sendAsCharacter === char.charId} handleChange={this.handleSendRadioChange}/>)
     });
 
     return(
@@ -62,10 +65,10 @@ class SendMsgAs extends Component {
           <FontAwesomeIcon icon="user" transform="shrink-3 left-3 down-3"/>
           <FontAwesomeIcon icon="comment" transform="shrink-7 up-5 right-6"/>
         </span>
-        <div className="chat-opt-sender p-2 p-absolute align-left">
+        <div className="chat-opt-sender p-2 p-absolute align-left cursor-default">
           <div>{sendMsgAsLabel[this.props.global.lang]}</div>
           <div className="chat-opt-subtitle pt-2 pb-1 font-size-md text-dec-underline">{userLabel[this.props.global.lang]}</div>
-          <div><label><input type="radio" name="sender" checked={this.props.chatSetting.sendAs.sendAsUser} onChange={this.handleSendAsUserRadio}/>{userName}</label></div>
+          <AppRadio id={'send_as_user'} label={userName} checked={this.props.chatSetting.sendAs.sendAsUser} handleChange={this.handleSendAsUserRadio}/>
           { charRadioList.length !== 0 && (<div className="chat-opt-subtitle pt-2 pb-1 font-size-md text-dec-underline">{charLabel[this.props.global.lang]}</div>) }
           { charRadioList}
         </div>
