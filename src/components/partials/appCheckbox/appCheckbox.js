@@ -5,6 +5,7 @@ import './appCheckbox.scss';
 
 /**
  *  @props id          - [string] id used for htmlfor
+ *  @props className   - [string] additional class to cont
  *  @props checked     - [boolean] is checkbox checked
  *  @props value       - [string] value
  *  @props label       - [string] label
@@ -22,7 +23,7 @@ class AppCheckbox extends Component {
 
   render() {
     return (
-      <div className="inp-check-cont d-flex f-align-items-center p-relative">
+      <div className={`inp-check-cont d-flex f-align-items-center p-relative ${this.props.className}`}>
         <input className="inp-check p-absolute" type="checkbox" value={this.props.value} checked={this.props.checked} id={`checkbox_${this.props.id}`} onChange={this.handleChange}/>
         <label className="inp-check-label one-line-ellipsis" htmlFor={`checkbox_${this.props.id}`}>{ this.props.label }</label>
       </div>

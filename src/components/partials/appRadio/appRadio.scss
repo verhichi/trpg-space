@@ -1,14 +1,14 @@
 @import '../../../styles/partials/variables';
 @import '../../../styles/partials/mediaQueries';
 
-.inp-check-cont{
+.inp-radio-cont{
   padding-left: 20px;
 }
 
-.inp-check-label{
+.inp-radio-label{
   &::before{
     background: #dee2e6;
-    border-radius: 3px;
+    border-radius: 50%;
     content: "";
     display: block;
     height: 16px;
@@ -21,26 +21,26 @@
   }
 }
 
-.inp-check{
+.inp-radio{
   opacity: 0;
 
-  &:checked + .inp-check-label{
+  &:checked + .inp-radio-label{
     &::before{
       background: $hot-clr;
     }
 
     &::after{
-      border: 2px solid $white-clr;
-      border-right: 0;
-      border-top: 0;
+      background: $white-clr;
+      border: none;
+      border-radius: 50%;
       content: "";
       display: block;
-      height: 5px;
-      left: 3px;
+      height: 6px;
+      left: 5px;
       position: absolute;
-      top: 45%;
-      transform: translateY(-50%) rotate(-45deg);
-      width: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
     }
   }
 }
