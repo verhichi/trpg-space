@@ -62,6 +62,7 @@ class Note extends Component {
     e.preventDefault();
     this.props.showModal(MODAL_TYPE_EDIT_NOTE, {
       title:        editNoteModalTitle[this.props.global.lang],
+      size:         'lg',
       displayClose: false,
       noteId:       this.props.noteData.noteId
     });

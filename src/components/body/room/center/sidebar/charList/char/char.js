@@ -100,6 +100,7 @@ class Char extends Component {
   handleEditClick (e){
     this.props.showModal(MODAL_TYPE_EDIT_CHAR, {
       title:        editCharModalTitle[this.props.global.lang],
+      size:         'lg',
       displayClose: true,
       charId:       this.props.charData.charId
     });
@@ -108,6 +109,7 @@ class Char extends Component {
   handleViewClick (e){
     this.props.showModal(MODAL_TYPE_VIEW_CHAR, {
       title:        viewCharModalTitle[this.props.global.lang],
+      size:         'lg',
       displayClose: true,
       charId:       this.props.charData.charId
     });
