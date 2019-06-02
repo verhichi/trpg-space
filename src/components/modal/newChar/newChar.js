@@ -179,8 +179,8 @@ class NewChar extends Component {
         <Detail  isActive={this.state.tabMode === CHAR_MODAL_TAB_DETAIL} returnDetailValue={this.returnDetailValue}/>
 
         <button type="button" className="btn btn-hot w-100 cursor-pointer f-shrink-0 f-align-self-end" disabled={isDisabled} onClick={this.handleSubmitClick}>
-          <FontAwesomeIcon icon="check"/>
-          <div className="btn-text">{submitBtnLabel[this.props.global.lang]}</div>
+          <span class="mr-3"><FontAwesomeIcon icon="check"/></span>
+          {submitBtnLabel[this.props.global.lang]}
         </button>
 
       </div>

@@ -37,7 +37,7 @@ class Top extends Component {
 
   handleLeaveClick (e){
     this.props.showModal(MODAL_TYPE_CONFIRM, {
-      title:        'Leave Room',
+      title:        '',
       displayClose: false,
       confirmText:  leaveConfirmText[this.props.global.lang],
       accept:       [
@@ -50,7 +50,7 @@ class Top extends Component {
 
   handleSettingClick (e){
     this.props.showModal(MODAL_TYPE_ROOM_SETTING, {
-      title:        'Setting',
+      title:        settingLabel[this.props.global.lang],
       displayClose: true
     });
   }

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { MODAL_TYPE_ADD_NOTE, MODAL_TYPE_IMPORT_NOTE } from '../../../../../../constants/constants';
 import { showModal } from '../../../../../../redux/actions/modal';
 import { reorderNote } from '../../../../../../redux/actions/note';
-import { noteEditBtnLabel, sharedNotesLabel } from './noteList.i18n';
+import { noteNewBtnLabel, sharedNotesLabel, noteImportModalTitle } from './noteList.i18n';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -53,14 +53,16 @@ class NoteList extends Component {
 
   handleNewClick (e){
     this.props.showModal(MODAL_TYPE_ADD_NOTE, {
-      title:        'Create New Note',
+      title:        noteNewBtnLabel[this.props.global.lang],
+      size:         'lg',
       displayClose: false
     });
   }
 
   handleImportClick (e){
     this.props.showModal(MODAL_TYPE_IMPORT_NOTE, {
-      title:        'Import Note',
+      title:        noteImportModalTitle[this.props.global.lang],
+      size:         'lg',
       displayClose: true
     });
   }
@@ -70,16 +72,12 @@ class NoteList extends Component {
       <Fragment>
 
         <div className="d-flex mb-2 mt-2 f-shrink-0">
-          <button className="new-char-btn btn-slim btn-hot cursor-pointer align-center f-grow-1 p-2" onClick={this.handleNewClick}>
-            <div>
-              <FontAwesomeIcon icon="plus"/>
-            </div>
-            <div className="btn-text">{noteEditBtnLabel[this.props.global.lang]}</div>
+          <button className="btn-append btn-slim btn-hot cursor-pointer align-center f-grow-1 p-2" onClick={this.handleNewClick}>
+            <span class="mr-3"><FontAwesomeIcon icon="plus"/></span>
+            {noteNewBtnLabel[this.props.global.lang]}
           </button>
-          <button className="btn-slim btn-hot cursor-pointer align-center f-shrink-0 p-2" onClick={this.handleImportClick}>
-            <div>
-              <FontAwesomeIcon icon="file-import"/>
-            </div>
+          <button className="btn-prepend btn-slim btn-hot cursor-pointer align-center f-shrink-0 p-2" onClick={this.handleImportClick}>
+            <FontAwesomeIcon icon="file-import"/>
           </button>
         </div>
 

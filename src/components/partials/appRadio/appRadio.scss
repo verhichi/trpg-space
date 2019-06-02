@@ -1,0 +1,46 @@
+@import '../../../styles/partials/variables';
+@import '../../../styles/partials/mediaQueries';
+
+.inp-radio-cont{
+  padding-left: 20px;
+}
+
+.inp-radio-label{
+  &::before{
+    background: #dee2e6;
+    border-radius: 50%;
+    content: "";
+    display: block;
+    height: 16px;
+    left: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    user-select: none;
+    width: 16px;
+  }
+}
+
+.inp-radio{
+  opacity: 0;
+
+  &:checked + .inp-radio-label{
+    &::before{
+      background: $hot-clr;
+    }
+
+    &::after{
+      background: $white-clr;
+      border: none;
+      border-radius: 50%;
+      content: "";
+      display: block;
+      height: 6px;
+      left: 5px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+    }
+  }
+}

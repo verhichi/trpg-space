@@ -311,18 +311,24 @@
 
   // Input
     .inp{
-      border: 1px solid $black-clr;
-      border-radius: 0;
+      border: 1px solid $disabled-clr;
+      border-radius: 3px;
       height: 40px;
       line-height: 30px;
       min-width: 0;
       padding: 5px;
+      transition: box-shadow .15s ease-in-out;
+      -webkit-appearance: none;
+
+      &:focus{
+        box-shadow: 0 0 0 .2rem rgba(85,85,85,.25);
+      }
     }
 
   // Input-like container(NOT INPUT)
     .pseudo-inp{
       border: 1px solid $black-clr;
-      border-radius: 0;
+      border-radius: 3px;
       height: 40px;
       line-height: 30px;
       min-width: 0;
@@ -349,6 +355,7 @@
 
   // Select
     .sel-cont{
+      border-radius: 3px;
       display: inline-block;
       overflow: hidden;
       position: relative;
@@ -362,7 +369,6 @@
         pointer-events: none;
         position: absolute;
         right: 0;
-        // top: 0;
       }
 
       select{
@@ -383,38 +389,55 @@
   // Button styling
     .btn{
       border: none;
-      display: flex;
+      border-radius: 3px;
       font-size: $font-size-lg;
       margin-top: 5px;
       padding: 15px 10px;
 
       &[disabled]{
-        background: #555;
+        background:  $disabled-clr;
       }
+
     }
 
     .btn-slim{
       border: none;
-      display: flex;
+      border-radius: 3px;
       font-size: $font-size-lg;
 
       &[disabled]{
-        background: #555;
+        background: $disabled-clr;
       }
+    }
+
+    .btn-append{
+      border-radius: 3px 0 0 3px;
+      margin-right: 1px;
+    }
+
+    .btn-prepend{
+      border-radius: 0 3px 3px 0;
+      margin-left: 1px;
     }
 
     .btn-hot{
       background: $hot-clr;
       color: $white-clr;
+      transition: background .15s ease-in-out;
+
+      &:hover:not([disabled]){
+        background: #3697ea;
+      }
     }
 
     .btn-danger{
       background: $danger-clr;
       color: $white-clr;
-    }
+      transition: background .15s ease-in-out;
 
-    .btn-text{
-      flex-grow: 1;
+      &:hover:not([disabled]){
+        background: #ff4e4e;
+      }
     }
 
   // Text Color
