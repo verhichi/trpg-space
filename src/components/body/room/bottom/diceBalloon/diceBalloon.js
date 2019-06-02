@@ -4,7 +4,7 @@ import { CHAT_TYPE_ROLL } from '../../../../../constants/constants';
 import { addChat } from '../../../../../redux/actions/chatLog';
 import { hideDiceBubble } from '../../../../../redux/actions/display';
 import socket from '../../../../../socket/socketClient';
-import { getDiceRollResult } from '../../../../../utils/roll';
+import bcdice from '../../../../../bcdice/bcdice';
 import { diceShareResultLabel, diceRollBtnLabel } from './diceBalloon.i18n';
 
 // Style
@@ -70,14 +70,14 @@ class DiceBalloon extends Component {
   }
 
   handleButtonClick (e){
-    const result = getDiceRollResult(this.state);
+    const string = `${this.state.diceNumber}d${this.state.diceType}${this.state.symbol}${this.state.modifier}`
+    const result = bcdice.getDiceResult(string);
     const name = this.props.userList.find((user) => this.props.global.id === user.id).name;
     const rollData = {
-      type:        CHAT_TYPE_ROLL,
-      private:     this.state.private,
-      diceSetting: this.state.diceNumber + 'd' + this.state.diceType,
+      type:    CHAT_TYPE_ROLL,
+      private: this.state.private,
+      result:  result[0],
       name,
-      ...result
     };
 
     this.props.addChat({ ...rollData, self: true });
