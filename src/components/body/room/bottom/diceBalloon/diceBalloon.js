@@ -4,7 +4,7 @@ import { CHAT_TYPE_ROLL } from '../../../../../constants/constants';
 import { addChat } from '../../../../../redux/actions/chatLog';
 import { hideDiceBubble } from '../../../../../redux/actions/display';
 import socket from '../../../../../socket/socketClient';
-import bcdice from '../../../../../bcdice/bcdice';
+import bcdice from '../../../../../bcdice/bcdiceBot';
 import { diceShareResultLabel, diceRollBtnLabel } from './diceBalloon.i18n';
 
 // Style

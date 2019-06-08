@@ -3,7 +3,7 @@ import {
   CHAT_TYPE_ROLL
 } from '../constants/constants';
 
-import bcdice from '../bcdice/bcdice'
+import bcdice from '../bcdice/bcdiceBot'
 
 // Parse Text to see what type of message it is
 export const parseMessageType = (message) => {
