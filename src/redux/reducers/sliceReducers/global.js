@@ -16,10 +16,11 @@ const getBrowserLang = () => {
 };
 
 const initialState = {
-  lang:                  getBrowserLang(),
-  isMobile:              /Mobile/.test(navigator.userAgent),
-  id:                    '',
-  roomId:                ''
+  lang:     getBrowserLang(),
+  isMobile: /Mobile/.test(navigator.userAgent),
+  id:       '',
+  roomId:   '',
+  diceType: ''
 };
 
 const generalReducer = (state = initialState, action) => {
@@ -41,7 +42,7 @@ const generalReducer = (state = initialState, action) => {
         ...state,
         lang: action.lang
       };
-      
+
     default:
       return state;
   }

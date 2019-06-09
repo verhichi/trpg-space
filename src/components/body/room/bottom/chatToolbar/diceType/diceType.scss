@@ -1,23 +1,29 @@
 @import '../../../../../../styles/partials/variables';
 @import '../../../../../../styles/partials/mediaQueries';
 
-.chat-opt-btn:hover .chat-opt-sender{
+.chat-opt-btn:hover .chat-opt-dice-type{
   display: block;
 }
 
-.chat-opt-sender{
+.chat-opt-dice-type{
   background: $secondary-clr;
   border: 0;
   border-right: 1px solid $black-clr;
   bottom: 0;
   color: $white-clr;
+  cursor: default;
   display: none;
   line-height: 30px;
   right: 100%;
-  width: 200px;
+  width: 250px;
   z-index: 100;
-}
 
-.chat-opt-subtitle{
-  line-height: 0;
+  .inp-check-cont{
+    margin: 10px 0;
+
+    &:nth-child(3){
+      border-top: 1px solid $white-clr;
+    }
+  }
+
 }
