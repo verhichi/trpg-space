@@ -39,7 +39,7 @@ class DiceType extends Component {
     return(
       <div className="chat-opt-btn">
         <FontAwesomeIcon icon="dice" mask="folder" transform="shrink-8"/>
-        <div className="chat-opt-private p-2 p-absolute align-left cursor-default">
+        <div className="chat-opt-dice-type p-2 p-absolute align-left cursor-default">
           <div>{ selectDiceLabel[this.props.global.lang] }</div>
           <div className="sel-cont balloon-sel w-100">
             <select value={this.state.type} onChange={this.handleDiceTypeChange}>
