@@ -9,6 +9,7 @@ import Loader from '../../loader/loader'
 const General = lazy(() => import('./topics/general'));
 const HowToStart = lazy(() => import('./topics/howToStart'));
 const HowToRollDice = lazy(() => import('./topics/howToRollDice'));
+const HowToManageChar = lazy(() => import('./topics/howToManageChar'));
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -32,7 +33,8 @@ class Help extends Component {
     const helpTopic = {
       general: <General lang={this.props.global.lang}/>,
       howToStart: <HowToStart lang={this.props.global.lang}/>,
-      howToRollDice: <HowToRollDice lang={this.props.global.lang}/>
+      howToRollDice: <HowToRollDice lang={this.props.global.lang}/>,
+      howToManageChar: <HowToManageChar lang={this.props.global.lang}/>,
     };
 
     return (
@@ -44,6 +46,7 @@ class Help extends Component {
               <option value="general">General</option>
               <option value="howToStart">How to start</option>
               <option value="howToRollDice">How to roll the dice</option>
+              <option value="howToManageChar">How to manage characters</option>
             </select>
           </div>
         </div>
