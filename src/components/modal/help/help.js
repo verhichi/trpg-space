@@ -10,6 +10,8 @@ const General = lazy(() => import('./topics/general'));
 const HowToStart = lazy(() => import('./topics/howToStart'));
 const HowToRollDice = lazy(() => import('./topics/howToRollDice'));
 const HowToManageChar = lazy(() => import('./topics/howToManageChar'));
+const HowToManageNote = lazy(() => import('./topics/howToManageNote'));
+const HowToManageMap = lazy(() => import('./topics/howToManageMap'));
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -35,6 +37,8 @@ class Help extends Component {
       howToStart: <HowToStart lang={this.props.global.lang}/>,
       howToRollDice: <HowToRollDice lang={this.props.global.lang}/>,
       howToManageChar: <HowToManageChar lang={this.props.global.lang}/>,
+      howToManageNote: <HowToManageNote lang={this.props.global.lang}/>,
+      howToManageMap: <HowToManageMap lang={this.props.global.lang}/>,
     };
 
     return (
@@ -47,6 +51,8 @@ class Help extends Component {
               <option value="howToStart">How to start</option>
               <option value="howToRollDice">How to roll the dice</option>
               <option value="howToManageChar">How to manage characters</option>
+              <option value="howToManageNote">How to manage notes</option>
+              <option value="howToManageMap">How to manage boards</option>
             </select>
           </div>
         </div>
