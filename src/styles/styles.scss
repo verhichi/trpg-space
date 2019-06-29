@@ -163,7 +163,58 @@
       padding-left: 15px;
     }
 
+  // border
+    .border{
+      border: 1px solid $black-clr !important;
+    }
+
+    .border-bottom{
+      border-bottom: 1px solid $black-clr;
+    }
+
+    .border-left{
+      border-left: 1px solid $black-clr;
+    }
+
+    .border-right{
+      border-right: 1px solid $black-clr;
+    }
+
+    .border-top{
+      border-top: 1px solid $black-clr;
+    }
+
+  // border color
+    .border-primary{
+      border-color: $primary-clr;
+    }
+
+    .border-secondary{
+      border-color: $secondary-clr;
+    }
+
+    .border-tertiary{
+      border-color: $tertiary-clr;
+    }
+
+    .border-hot{
+      border-color: $hot-clr;
+    }
+
+    .border-danger{
+      border-color: $danger-clr;
+    }
+
+    .border-disabled{
+      border-color: $disabled-clr;
+    }
+
+
   // margin
+    .m-0{
+      margin: 0;
+    }
+
     .mt-1{
       margin-top: 5px;
     }
@@ -462,6 +513,11 @@
   // top
     .t-100{
       top: 100%;
+    }
+
+  // overflow
+    .overflow-y-auto{
+      overflow-y: auto;
     }
 
   // One line ellipsis

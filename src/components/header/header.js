@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { showModal } from '../../redux/actions/modal';
 import { setAppLang } from '../../redux/actions/global';
 import { MODAL_TYPE_HELP, APP_LANG_EN, APP_LANG_JP } from '../../constants/constants';
+import { helpModalTitle } from './header.i18n';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -34,8 +35,9 @@ class Header extends Component {
 
   handleHelpClick (e){
     this.props.showModal(MODAL_TYPE_HELP, {
-      title:        'Help',
-      displayClose: true
+      title:        helpModalTitle[this.props.global.lang],
+      displayClose: true,
+      size:         'lg'
     });
   }
 
