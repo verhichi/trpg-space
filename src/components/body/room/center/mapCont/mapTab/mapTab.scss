@@ -14,16 +14,18 @@
 }
 
 .map-tab-wrap{
+  -ms-overflow-style: none;
   overflow-x: scroll;
+  scrollbar-width: none;
   white-space: nowrap;
 
-  &.hide-scroll{
-    height: 60px;
+  &::-webkit-scrollbar{
+    width: 0;
+    height: 0;
   }
 }
 
 .map-tab-new{
-  background: $secondary-clr;
   border-right: 1px solid $black-clr;
   flex-basis: 46px;
   font-size: $font-size-lg;
@@ -41,14 +43,20 @@
 }
 
 .map-tab{
-  background: $black-clr;
+  background: $tertiary-clr;
   border-right: 1px solid $secondary-clr;
-  height: 35px;
+  color: #888;
   line-height: 25px;
   vertical-align: top;
   width: 175px;
 
   &.is-active{
     background: $secondary-clr;
+    border-bottom: 3px solid $hot-clr;
+    color: $white-clr;
   }
+}
+
+.map-tab-btn:hover{
+  color: $white-clr;
 }

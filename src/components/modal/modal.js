@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { MODAL_TYPE_ALERT, MODAL_TYPE_HELP, MODAL_TYPE_CONFIRM, MODAL_TYPE_EDIT_CHAR, MODAL_TYPE_EDIT_USER, MODAL_TYPE_IMAGE, MODAL_TYPE_NEW_CHAR, MODAL_TYPE_NEW_USER, MODAL_TYPE_ADD_NOTE, MODAL_TYPE_EDIT_NOTE, MODAL_TYPE_REQUESTING, MODAL_TYPE_ROOM_SETTING, MODAL_TYPE_UPLOAD_IMG, MODAL_TYPE_VIEW_CHAR, MODAL_TYPE_NEW_MAP, MODAL_TYPE_EDIT_MAP, MODAL_TYPE_IMPORT_CHAR, MODAL_TYPE_IMPORT_NOTE } from '../../constants/constants';
+import { MODAL_TYPE_ALERT, MODAL_TYPE_HELP, MODAL_TYPE_CONFIRM, MODAL_TYPE_EDIT_CHAR, MODAL_TYPE_EDIT_USER, MODAL_TYPE_IMAGE, MODAL_TYPE_NEW_CHAR, MODAL_TYPE_NEW_USER, MODAL_TYPE_ADD_NOTE, MODAL_TYPE_EDIT_NOTE, MODAL_TYPE_REQUESTING, MODAL_TYPE_ROOM_SETTING, MODAL_TYPE_UPLOAD_IMG, MODAL_TYPE_VIEW_CHAR, MODAL_TYPE_NEW_MAP, MODAL_TYPE_EDIT_MAP, MODAL_TYPE_IMPORT_CHAR, MODAL_TYPE_IMPORT_NOTE, MODAL_TYPE_IMPORT_MAP } from '../../constants/constants';
 import { hideModal } from '../../redux/actions/modal';
 
 // Font Awesome Component
@@ -19,6 +19,7 @@ import EditUser    from './editUser/editUser';
 import Help        from './help/help';
 import Image       from './image/image';
 import ImportChar  from './importChar/importChar';
+import ImportMap   from './importMap/importMap';
 import ImportNote  from './importNote/importNote';
 import NewChar     from './newChar/newChar';
 import NewMap      from './newMap/newMap';
@@ -54,6 +55,10 @@ class Modal extends Component {
 
   render() {
     const toggleClass = this.props.modalSetting.display ? 'is-active' : '';
+    const modalSizeClass = {
+      sm: 'modal-sm',
+      lg: 'modal-lg',
+    }
 
     const modalBody = {
       [MODAL_TYPE_ALERT]:        <Alert />,
@@ -64,6 +69,7 @@ class Modal extends Component {
       [MODAL_TYPE_HELP]:         <Help />,
       [MODAL_TYPE_IMAGE]:        <Image />,
       [MODAL_TYPE_IMPORT_CHAR]:  <ImportChar />,
+      [MODAL_TYPE_IMPORT_MAP]:   <ImportMap />,
       [MODAL_TYPE_IMPORT_NOTE]:  <ImportNote />,
       [MODAL_TYPE_NEW_CHAR]:     <NewChar />,
       [MODAL_TYPE_NEW_MAP]:      <NewMap />,
@@ -78,7 +84,7 @@ class Modal extends Component {
 
     return (
       <div className={`modal-background w-100 h-100 ${toggleClass}`}>
-        <div className="modal-cont d-flex f-dir-col">
+        <div className={`modal-cont d-flex f-dir-col ${modalSizeClass[this.props.modalSetting.modalProp.size]}`}>
           <div className="d-flex font-size-xl pb-3">
             <div className="f-grow-1 align-center">
               {this.props.modalSetting.modalProp.title}

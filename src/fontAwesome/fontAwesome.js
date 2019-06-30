@@ -63,6 +63,8 @@ import {
   faBars,
   faFileImport,
   faFileExport,
+  faFolder,
+  faDiceD20,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -126,4 +128,6 @@ library.add(
   faBars,
   faFileImport,
   faFileExport,
+  faFolder,
+  faDiceD20,
 );

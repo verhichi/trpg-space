@@ -12,7 +12,6 @@ import SendMsgAs from './sendMsgAs/sendMsgAs';
 class ChatToolbar extends Component {
 
   render (){
-
     return(
       <div className="chat-opt-toolbar p-absolute d-flex f-dir-col">
         <RemoveChat/>

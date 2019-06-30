@@ -12,6 +12,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Style
 import './editMap.scss';
 
+// Components
+import AppCheckbox from '../../partials/appCheckbox/appCheckbox'
+
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
   return {
@@ -194,13 +197,13 @@ class EditMap extends Component {
           </div>
 
           <div className="mb-2 d-flex">
-            <div className="map-user one-line-ellipsis"><label><input type="checkbox" checked={!this.state.private} onChange={this.handleAllCheckChange}/>{mapPrivacyLabel[this.props.global.lang]}</label></div>
+            <AppCheckbox checked={!this.state.private} handleChange={this.handleAllCheckChange} label={mapPrivacyLabel[this.props.global.lang]} id={'map_private'}/>
           </div>
         </div>
 
         <button type="button" className="btn btn-hot w-100 cursor-pointer f-shrink-0 f-align-self-end" disabled={isDisabled} onClick={this.handleButtonClick}>
-          <FontAwesomeIcon icon="check"/>
-          <div className="btn-text">{submitBtnLabel[this.props.global.lang]}</div>
+          <span class="mr-3"><FontAwesomeIcon icon="check"/></span>
+          {submitBtnLabel[this.props.global.lang]}
         </button>
       </div>
     );

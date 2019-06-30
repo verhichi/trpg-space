@@ -22,11 +22,7 @@ class NoMap extends Component {
           <div className="font-weight-bold">Users can place characters on the map and share its position.</div>
           <div className="font-weight-bold pb-1">Maps are separated by tabs, click on the tabs to change maps.</div>
           <div className="pb-2">
-            <span className="fa-layers fa-fw">
-              <FontAwesomeIcon icon="plus" transform="shrink-8 up-7"/>
-              <FontAwesomeIcon icon="map" transform="shrink-3 down-3"/>
-            </span>
-            to create new map.
+              <FontAwesomeIcon icon="plus"/>to create new map.
           </div>
           <div className="font-weight-bold pb-1">Once map is in view, buttons with the following icon and functionality will be available.</div>
           <div className="pb-1">

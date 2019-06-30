@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, lazy, Suspense } from 'react';
 import { connect } from 'react-redux';
 
 // Font Awesome Library
@@ -9,10 +9,12 @@ import '../styles/normalize.css';
 import '../styles/styles.scss';
 
 // Components
-import Header from './header/header';
-import Body   from './body/body';
-import Modal  from './modal/modal';
-import Notice from './notice/notice';
+import Loader from './loader/loader'
+const Header = lazy(() => import('./header/header'));
+const Body   = lazy(() => import('./body/body'));
+const Modal  = lazy(() => import('./modal/modal'));
+const Notice = lazy(() => import('./notice/notice'));
+
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -33,12 +35,14 @@ class App extends Component {
 
   render() {
     return (
-      <Fragment>
-        <Header/>
-        <Body/>
-        <Modal/>
-        <Notice/>
-      </Fragment>
+      <Suspense fallback={<Loader/>}>
+        <Fragment>
+          <Header/>
+          <Body/>
+          <Modal/>
+          <Notice/>
+        </Fragment>
+      </Suspense>
     );
   }
 }

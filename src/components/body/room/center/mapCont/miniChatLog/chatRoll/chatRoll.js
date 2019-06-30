@@ -15,10 +15,9 @@ class ChatRoll extends Component {
         </div>
         {this.props.chatData.private && <div className="d-inline-block">[PRIVATE]</div>}
         [{this.props.chatData.name}]
-        [{this.props.chatData.diceSetting}] {this.props.chatData.result} -> {this.props.chatData.total}
+        [{this.props.chatData.diceSetting}] {this.props.chatData.total} = {this.props.chatData.result}
       </div>
     );
-
   }
 }
 

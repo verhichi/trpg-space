@@ -1,6 +1,8 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "TRPG Party Tool",
+  "name": "TRPG Party Tool",
+  "description": "Free responsive web application for private online TRPG sessions that anyone can use without having to subscribe.
+Comes with real-time chat, multilingual support(English and Japanese), and basic TRPG functionalities.",
   "icons": [
     {
       "src": "favicon.ico",

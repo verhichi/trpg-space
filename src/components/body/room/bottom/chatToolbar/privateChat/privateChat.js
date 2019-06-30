@@ -6,6 +6,9 @@ import { sendMsgToLabel, everyoneLabel } from './privateChat.i18n';
 // Style
 import './privateChat.scss';
 
+// Component
+import AppCheckbox from '../../../../../partials/appCheckbox/appCheckbox'
+
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -51,15 +54,15 @@ class PrivateChat extends Component {
   render (){
 
     const userCheckList = this.props.userList.filter(user => user.id !== this.props.global.id).map(user => {
-      return (<div className="private-chat-user one-line-ellipsis"><label><input className="p-1" type="checkbox" value={user.id} checked={this.props.chatSetting.sendTo.sendToUsers.includes(user.id)} onChange={this.handleUserCheckChange}/>{user.name}</label></div>);
+      return (<AppCheckbox key={user.id} value={user.id} checked={this.props.chatSetting.sendTo.sendToUsers.includes(user.id)} handleChange={this.handleUserCheckChange} label={user.name} id={user.id}/>);
     });
 
     return(
       <div className="chat-opt-btn">
         <FontAwesomeIcon icon="user-secret"/>
-        <div className="chat-opt-private p-2 p-absolute align-left">
+        <div className="chat-opt-private p-2 p-absolute align-left cursor-default">
           <div>{sendMsgToLabel[this.props.global.lang]}</div>
-          <div><label><input type="checkbox" checked={this.props.chatSetting.sendTo.sendToAll} onChange={this.handleAllCheckChange}/>{everyoneLabel[this.props.global.lang]}</label></div>
+          <AppCheckbox checked={this.props.chatSetting.sendTo.sendToAll} handleChange={this.handleAllCheckChange} label={everyoneLabel[this.props.global.lang]} id={'private_everyone'}/>
           { !this.props.chatSetting.sendTo.sendToAll && userCheckList}
         </div>
       </div>

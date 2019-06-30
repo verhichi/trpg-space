@@ -75,8 +75,8 @@ class RoomSetting extends Component {
           <div className="setting-detail">Room Expires in: {timeLeft}</div>
         </div>
         {isHost && (<button type="button" className="btn btn-hot w-100 cursor-pointer f-shrink-0 f-align-self-end mb-3" disabled={isDisabled} onClick={this.handleButtonClick}>
-          <FontAwesomeIcon icon="plus"/>
-          <div className="btn-text">{extendRoomLifeBtnLabel[this.props.global.lang]}</div>
+          <span class="mr-3"><FontAwesomeIcon icon="plus"/></span>
+          {extendRoomLifeBtnLabel[this.props.global.lang]}
         </button>)}
         <div>
           <div className="setting-title font-weight-bold mb-2">{userRoomLabel[this.props.global.lang]}</div>

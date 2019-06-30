@@ -26,13 +26,27 @@ server.listen(portNo, () => {
 });
 
 
-// Set path for file to ./dist
-app.use(express.static(path.join(__dirname, '../build')));
-
 // All URL sends user to home page
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'));
 });
+
+app.get('/static/js/*.js', (req, res, next) => {
+  req.url = req.url + '.gz';
+  res.set('Content-Encoding', 'gzip');
+  res.set('Content-Type', 'text/javascript');
+  next();
+});
+
+app.get('/static/css/*.css', (req, res, next) => {
+  req.url = req.url + '.gz';
+  res.set('Content-Encoding', 'gzip');
+  res.set('Content-Type', 'text/css');
+  next();
+});
+
+// Set path for file to ./dist
+app.use(express.static(path.join(__dirname, '../build')));
 
 // GET new room id to host a new room
 app.get('/newRoomId', (req, res) => {

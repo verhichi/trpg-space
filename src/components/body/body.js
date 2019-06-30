@@ -8,8 +8,8 @@ import { Switch, Route } from 'react-router';
 import './body.scss';
 
 // Components
-import Lobby from './lobby/lobby';
-import Room from './room/room';
+import Lobby from './lobby/lobby'
+import Room from './room/room'
 
 class Body extends Component {
   render() {

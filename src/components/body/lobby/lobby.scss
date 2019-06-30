@@ -8,58 +8,11 @@
   justify-content: center;
 }
 
-.lobby-animate-cont{
-  overflow: hidden;
-  position: relative;
-
-  &::after{
-    animation: revealBar 1s ease-in-out;
-    animation-fill-mode: both;
-    background: $white-clr;
-    bottom: 0;
-    content: "";
-    height: 100%;
-    position: absolute;
-    right: 0;
-    transform-origin: right;
-    top: 0;
-    width: 100%;
-  }
-
-  &:nth-child(1)::after{
-    animation-delay: 0.2s;
-  }
-
-  &:nth-child(2)::after{
-    animation-delay: 0.4s;
-  }
-
-  &:nth-child(3)::after{
-    animation-delay: 0.6s;
-  }
-}
-
-@keyframes revealBar{
-  0%{ left: -100%; }
-  25%, 75%{ left: 0; }
-  100%{ left: 100%; }
-}
-
 .lobby-inp-cont{
-  animation: contReveal 1s linear 0.5s 1 normal both;
   background: #303030;
+  border-radius: 3px;
   margin: 10px 0;
   padding: 10px 15px;
-}
-
-.lobby-or-cont{
-  animation: contReveal 1s linear 0.5s 1 normal both;
-  text-align: center;
-}
-
-@keyframes contReveal{
-  0%, 25%{ opacity: 0 }
-  100%{ opacity: 1 }
 }
 
 .lobby-inp-label{
@@ -68,12 +21,4 @@
   @include md{
     font-size: $font-size-xl;
   }
-}
-
-.lobby-inp-field{
-  border: none;
-  border-radius: 0;
-  height: 40px;
-  line-height: 30px;
-  padding: 5px;
 }

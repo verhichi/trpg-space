@@ -1,13 +1,13 @@
 import { APP_LANG_EN, APP_LANG_JP } from '../../../constants/constants';
 
 export const newUserHelpText = {
-  [APP_LANG_EN]: 'Enter your name. This name will be used to identify you as a user inside the room. This is NOT your character name. You may change your name whenever you please.',
-  [APP_LANG_JP]: 'あなたの名前を入力してください。この名前は部屋の中であなたというユーザーを識別するために用います。キャラクターの名前ではありません。名前はいつでも変更できます。'
+  [APP_LANG_EN]: 'Enter your display name.  You may change this name whenever you please.',
+  [APP_LANG_JP]: 'あなたの表示名を入力してください。表示名いつでも変更できます。'
 };
 
 export const displayNameInpLabel = {
-  [APP_LANG_EN]: 'Name:',
-  [APP_LANG_JP]: '名前:'
+  [APP_LANG_EN]: 'Display Name:',
+  [APP_LANG_JP]: '表示名:'
 };
 
 export const submitBtnLabel = {

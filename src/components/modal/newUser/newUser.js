@@ -132,8 +132,8 @@ class NewUser extends Component {
           <input className="inp w-100" type="text" placeholder="Enter name..." value={this.state.name} onChange={this.handleNameChange} ref={this.nameRef}/>
         </div>
         <button type="submit" className="btn btn-hot cursor-pointer" disabled={isDisabled}>
-          <FontAwesomeIcon icon="check"/>
-          <div className="btn-text">{submitBtnLabel[this.props.global.lang]}</div>
+          <span class="mr-3"><FontAwesomeIcon icon="check"/></span>
+          {submitBtnLabel[this.props.global.lang]}
         </button>
       </form>
     );

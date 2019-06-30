@@ -3,9 +3,14 @@ import { connect } from 'react-redux';
 import { MODAL_TYPE_CONFIRM } from '../../../../../../constants/constants';
 import { showModal, hideModal } from '../../../../../../redux/actions/modal';
 import { removeAllChat } from '../../../../../../redux/actions/chatLog';
+import { deleteChatHistMessage } from './removeChat.i18n';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+const mapStateToProps = state => {
+  return { global: state.global }
+}
 
 // Redux Map Dispatch To Props
 const mapDispatchToProps = (dispatch) => {
@@ -29,8 +34,8 @@ class RemoveChat extends Component {
     this.props.showModal(MODAL_TYPE_CONFIRM, {
       title:        '',
       displayClose:  false,
-      confirmText:  'Are you sure you want to clear your chat history?',
-      accept:       [
+      confirmText:  deleteChatHistMessage[this.props.global.lang],
+      accept: [
         this.props.removeAllChat.bind(this),
         this.props.hideModal
       ],
@@ -47,4 +52,4 @@ class RemoveChat extends Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(RemoveChat);
+export default connect(mapStateToProps, mapDispatchToProps)(RemoveChat);
