@@ -52,7 +52,7 @@ class Header extends Component {
   render() {
     return (
       <header>
-        <div className="header-title">TRPG PARTY TOOL</div>
+        <div className="header-title">TRPG SPACE</div>
         <div className="header-lang pl-2 pr-2 cursor-pointer" onClick={this.handleLangClick}>
           <FontAwesomeIcon icon="globe" />
           <div className="lang-list-cont">
