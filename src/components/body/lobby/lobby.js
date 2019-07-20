@@ -68,6 +68,10 @@ class Lobby extends Component {
 
         <div>
 
+          <div className="lobby-logo-cont align-center">
+            <img className="lobby-logo" alt="trpg-space-logo" src={require('../../../styles/images/trpg-space-logo.svg')}/>
+          </div>
+
           <div className="lobby-inp-cont">
             <div className="lobby-inp-label">{lobbyInpJoinLabel[this.props.global.lang]}</div>
             <div><input className="inp w-100" type="text" onChange={this.handleRoomIdChange}/></div>

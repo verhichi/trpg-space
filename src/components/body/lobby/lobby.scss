@@ -22,3 +22,13 @@
     font-size: $font-size-xl;
   }
 }
+
+.lobby-logo{
+  height: 150px;
+  width: 150px;
+
+  @include md{
+    height: 250px;
+    width: 250px;
+  }
+}
