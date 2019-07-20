@@ -48,7 +48,7 @@ Comes with real-time chat, multilingual support(English and Japanese), and basic
       "src": "icon512.png",
       "sizes": "512x512",
       "type": "image/png"
-    },
+    }
   ],
   "start_url": ".",
   "display": "standalone",
