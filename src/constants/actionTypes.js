@@ -6,12 +6,6 @@ export const SET_USER_ID   = 'SET_USER_ID';
 export const SET_APP_LANG  = 'SET_APP_LANG';
 export const SET_DICE_TYPE = 'SET_DICE_TYPE';
 
-// Expire
-export const SET_ROOM_EXPIRE_TIME         = 'SET_ROOM_EXPIRE_TIME';
-export const SET_ROOM_EXPIRE              = 'SET_ROOM_EXPIRE';
-export const SET_ROOM_EXPIRE_NOTICE_TRUE  = 'SET_ROOM_EXPIRE_NOTICE_TRUE';
-export const SET_ROOM_EXPIRE_NOTICE_FALSE = 'SET_ROOM_EXPIRE_NOTICE_FALSE';
-
 // User
 export const ADD_USER    = 'ADD_USER';
 export const EDIT_USER   = 'EDIT_USER';
@@ -73,10 +67,6 @@ export const REORDER_NOTE     = 'REORDER_NOTE';
 // Modal
 export const SHOW_MODAL = 'SHOW_MODAL';
 export const HIDE_MODAL = 'HIDE_MODAL';
-
-// Notice
-export const SHOW_NOTICE = 'SHOW_NOTICE';
-export const HIDE_NOTICE = 'HIDE_NOTICE';
 
 // Display
 export const SHOW_SIDEBAR     = 'SHOW_SIDEBAR';

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { CHAT_TYPE_HOST, CHAT_TYPE_LEAVE, CHAT_TYPE_JOIN, CHAR_PRIVACY_LEVEL_THREE } from '../../../constants/constants';
 import { setUserId, setRoomId } from '../../../redux/actions/global';
-import { setRoomExpireTime, setRoomExpireNoticeFalse } from '../../../redux/actions/expire';
 import { addUser, editUser, removeUser, newHost } from '../../../redux/actions/user';
 import { addChat } from '../../../redux/actions/chatLog';
 import { setDisplayMap } from '../../../redux/actions/display';
@@ -29,7 +28,6 @@ const mapStateToProps = (state) => {
     userList:       state.userList,
     charList:       state.charList,
     displaySetting: state.displaySetting,
-    expireSetting:  state.expireSetting,
     geoList:        state.geoList,
     mapList:        state.mapList,
     mapCharList:    state.mapCharList,
@@ -73,8 +71,6 @@ const mapDispatchToProps = (dispatch) => {
     editGeo:                  (geoData)       => dispatch(editGeo(geoData)),
     removeGeo:                (geoId, mapId)  => dispatch(removeGeo(geoId, mapId)),
     removeAllGeoFromSelMap:   (mapId)         => dispatch(removeAllGeoFromSelMap(mapId)),
-    setRoomExpireNoticeFalse: ()              => dispatch(setRoomExpireNoticeFalse()),
-    setRoomExpireTime: (roomExpireSettingHour, roomExpireTimestamp) => dispatch(setRoomExpireTime(roomExpireSettingHour, roomExpireTimestamp)),
   };
 };
 
@@ -152,14 +148,6 @@ class Room extends Component {
     socket.on('join', (content) => {
       this.props.addUser(content);
       socket.emit('user', this.props.global.roomId, this.props.userList.find(user => user.id === this.props.global.id));
-
-      const curDate = new Date();
-      const curTimestamp = curDate.getTime();
-      socket.emit('roomExpire', this.props.global.roomId, {
-        roomExpireSettingHour: this.props.expireSetting.roomExpireSettingHour,
-        roomExpireTimestamp:   this.props.expireSetting.roomExpireTimestamp,
-        hostCurTimestamp:      curTimestamp
-      });
 
       this.props.charList.forEach((char) => {
         if (char.ownerId === this.props.global.id && char.general.privacy !== CHAR_PRIVACY_LEVEL_THREE){
@@ -298,22 +286,6 @@ class Room extends Component {
 
     socket.on('delNote', noteId => {
       this.props.removeNote(noteId);
-    });
-
-    socket.on('roomExpire', roomExpireSettingData => {
-      if (this.props.expireSetting.roomExpireSettingHour !== roomExpireSettingData.roomExpireSettingHour){
-        const curDate      = new Date();
-        const curTimestamp = curDate.getTime()
-        const timeDif      = roomExpireSettingData.hostCurTimestamp - curTimestamp;
-        this.props.setRoomExpireTime(roomExpireSettingData.roomExpireSettingHour, roomExpireSettingData.roomExpireTimestamp - timeDif);
-      }
-    });
-
-    socket.on('extendRoomExpire', () => {
-      const newRoomExpireSettingHour = this.props.expireSetting.roomExpireSettingHour + 1;
-      const newExpireTimestamp       = this.props.expireSetting.roomExpireTimestamp + (60 * 60 * 1000);
-      this.props.setRoomExpireTime(newRoomExpireSettingHour, newExpireTimestamp);
-      this.props.setRoomExpireNoticeFalse();
     });
 
     socket.emit('join', this.props.match.params.roomId, this.props.userList.find((user) => user.id === this.props.global.id))

@@ -1,5 +1,4 @@
 import React, { Component, Fragment, lazy, Suspense } from 'react';
-import { connect } from 'react-redux';
 
 // Font Awesome Library
 import '../fontAwesome/fontAwesome.js';
@@ -13,13 +12,6 @@ import Loader from './loader/loader'
 const Header = lazy(() => import('./header/header'));
 const Body   = lazy(() => import('./body/body'));
 const Modal  = lazy(() => import('./modal/modal'));
-const Notice = lazy(() => import('./notice/notice'));
-
-
-// Redux Map State To Prop
-const mapStateToProps = (state) => {
-  return { noticeSetting: state.noticeSetting };
-};
 
 class App extends Component {
   constructor (props){
@@ -40,11 +32,10 @@ class App extends Component {
           <Header/>
           <Body/>
           <Modal/>
-          <Notice/>
         </Fragment>
       </Suspense>
     );
   }
 }
 
-export default connect(mapStateToProps)(App);
+export default App;

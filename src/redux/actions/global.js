@@ -3,7 +3,6 @@ import {
   SET_USER_ID,
   RESET_STATE,
   SET_APP_LANG,
-  SET_DICE_TYPE,
 } from '../../constants/actionTypes';
 
 export const setRoomId = (roomId) => {
