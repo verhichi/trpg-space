@@ -168,14 +168,4 @@ io.on('connection', (socket) => {
     socket.broadcast.to(roomId).emit('delNote', noteId);
   });
 
-  // Logic to send room expiration information
-  socket.on('roomExpire', (roomId, roomExpireSetting) => {
-    socket.broadcast.to(roomId).emit('roomExpire', roomExpireSetting);
-  });
-
-  // Logic to extend room expiration
-  socket.on('extendRoomExpire', roomId => {
-    socket.broadcast.to(roomId).emit('extendRoomExpire');
-  });
-
 });

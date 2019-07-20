@@ -9,8 +9,3 @@ export const userRoomLabel = {
   [APP_LANG_EN]: 'Users in Room:',
   [APP_LANG_JP]: '部屋にいるユーザー一覧:'
 };
-
-export const extendRoomLifeBtnLabel = {
-  [APP_LANG_EN]: 'Extend Room Life by 1 hour',
-  [APP_LANG_JP]: '部屋の期限を1時間延ばす'
-};

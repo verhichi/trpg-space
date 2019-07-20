@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import uuid from 'uuid';
-import { MODAL_TYPE_ALERT, MODAL_TYPE_REQUESTING, DEFAULT_ROOM_EXPIRE_SETTING_HOUR } from '../../../constants/constants';
+import { MODAL_TYPE_ALERT, MODAL_TYPE_REQUESTING } from '../../../constants/constants';
 import { showModal, hideModal} from '../../../redux/actions/modal';
 import { addUser } from '../../../redux/actions/user';
 import { setUserId, setRoomId } from '../../../redux/actions/global';
-import { setRoomExpireTime } from '../../../redux/actions/expire';
 import { newUserHelpText, displayNameInpLabel, submitBtnLabel, roomNotExistText } from './newUser.i18n';
 
 // Font Awesome Component
@@ -31,7 +30,6 @@ const mapDispatchToProps = (dispatch) => {
     showModal: (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
     setUserId: (userId)               => dispatch(setUserId(userId)),
     setRoomId: (roomId)               => dispatch(setRoomId(roomId)),
-    setRoomExpireTime: (roomExpireSettingHour, roomExpireTimestamp) => dispatch(setRoomExpireTime(roomExpireSettingHour, roomExpireTimestamp))
   };
 };
 
@@ -72,12 +70,9 @@ class NewUser extends Component {
         axios.get('/newRoomId')
         .then((result) => {
           const id                  = uuid.v4();
-          const curDate             = new Date();
-          const roomExpireTimestamp = curDate.getTime() + (DEFAULT_ROOM_EXPIRE_SETTING_HOUR * 60 * 60 * 1000);
 
           this.props.setUserId(id);
           this.props.setRoomId(result.data.roomId);
-          this.props.setRoomExpireTime(DEFAULT_ROOM_EXPIRE_SETTING_HOUR, roomExpireTimestamp);
 
           this.props.addUser({
             id: id,
