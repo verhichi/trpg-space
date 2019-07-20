@@ -103,6 +103,4 @@ class NewNote extends Component {
   }
 }
 
-// <textarea className="notes-textarea f-grow-1 p-1" value={this.state.text} onChange={this.handleTextChange}></textarea>
-
 export default connect(mapStateToProps, mapDispatchToProps)(NewNote);
