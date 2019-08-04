@@ -1,6 +1,30 @@
 @import '../../../styles/partials/variables';
 @import '../../../styles/partials/mediaQueries';
 
+#particles-js{
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+footer{
+  height: 50px;
+}
+
+section{
+  z-index: 1;
+}
+
+.lobby-bg{
+  background-image: url('../../../styles/images/bg.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .lobby-cont{
   align-items: center;
   color: $white-clr;
@@ -23,12 +47,77 @@
   }
 }
 
-.lobby-logo{
-  height: 150px;
-  width: 150px;
+.lobby-scroll-down-icon{
+  animation: scrollDown 0.5s infinite alternate;
+}
 
-  @include md{
-    height: 250px;
-    width: 250px;
+
+@keyframes scrollDown{
+  0%{ transform: translateY(0%);}
+  100%{ transform: translateY(-50%); }
+}
+
+
+.lobbySection01,
+.lobbySection02,
+.lobbySection03{
+  padding: 50px;
+}
+
+.lobbySection01Text,
+.lobbySection03Text{
+  margin: 5px auto;
+  max-width: 650px;
+}
+
+.lobbySection02Inner{
+  @include xl{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    margin: 0 auto;
+    max-width: 1200px;
   }
+}
+
+.lobbySection02Text{
+  margin: 0 auto 10px auto;
+  max-width: 650px; 
+
+  @include xl{
+    max-width: 300px;
+  }
+}
+
+.lobbySection02Img{
+  display: none;
+  height: auto;
+  margin: auto;
+  max-width: 650px;
+  width: 100%;
+
+  &:hover{
+    transition: box-shadow .15s ease-in-out;
+    box-shadow: 0 0 0 10px rgba(85,85,85,.25);
+  }
+
+  &.is-active{
+    display: block !important;
+  }
+}
+
+.lobbySection03ThreeCard{
+  display: flex;
+  text-align: center;
+  margin: 15px auto 0 auto;
+  max-width: 650px;
+  justify-content: space-around;
+}
+
+.lobbySection03Card + .lobbySection03Card{
+  margin-left: 20px;
+}
+
+.lobbySection03CardIcon{
+  font-size: 64px;
 }
