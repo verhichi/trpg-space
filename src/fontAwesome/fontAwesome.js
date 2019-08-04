@@ -64,7 +64,10 @@ import {
   faFileImport,
   faFileExport,
   faFolder,
-  faDiceD20,
+  faAngleDoubleDown,
+  faMobileAlt,
+  faTabletAlt,
+  faDesktop
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -129,5 +132,8 @@ library.add(
   faFileImport,
   faFileExport,
   faFolder,
-  faDiceD20,
+  faAngleDoubleDown,
+  faMobileAlt,
+  faTabletAlt,
+  faDesktop
 );
