@@ -1,24 +1,25 @@
 @import '../../../styles/partials/variables';
 @import '../../../styles/partials/mediaQueries';
 
-.modal-img{
-  height: auto;
-  max-height: 300px;
-  max-width:  300px;
-  width: auto;
+.image-modal-toolbar {
+  background: $black-clr;
+  color: $white-clr;
+  left: 0;
+  padding: 10px;
+  position: fixed;
+  top: 0;
+}
 
-  @include md{
-    max-height: 400px;
-    max-width:  700px;
-  }
+.modal-img-cont{
+  background: rgba(0, 0, 0, 0.9);
+  height: calc(100% - 56.89px);
+  padding: 20px;
+  position: relative;
+  text-align: center;
+  top: 56.89px;
+}
 
-  @include lg{
-    max-height: 500px;
-    max-width:  900px;
-  }
-
-  @include xl{
-    max-height: 675px;
-    max-width:  1200px;
-  }
+.modal-img {
+  max-width: 90%;
+  max-height: 90%;
 }

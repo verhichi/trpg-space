@@ -67,7 +67,6 @@ class Modal extends Component {
       [MODAL_TYPE_EDIT_MAP]:     <EditMap />,
       [MODAL_TYPE_EDIT_USER]:    <EditUser />,
       [MODAL_TYPE_HELP]:         <Help />,
-      [MODAL_TYPE_IMAGE]:        <Image />,
       [MODAL_TYPE_IMPORT_CHAR]:  <ImportChar />,
       [MODAL_TYPE_IMPORT_MAP]:   <ImportMap />,
       [MODAL_TYPE_IMPORT_NOTE]:  <ImportNote />,
@@ -84,19 +83,22 @@ class Modal extends Component {
 
     return (
       <div className={`modal-background w-100 h-100 ${toggleClass}`}>
-        <div className={`modal-cont d-flex f-dir-col ${modalSizeClass[this.props.modalSetting.modalProp.size]}`}>
-          <div className="d-flex font-size-xl pb-3">
-            <div className="f-grow-1 align-center">
-              {this.props.modalSetting.modalProp.title}
-            </div>
-            {this.props.modalSetting.modalProp.displayClose
-              ? (<div className="cursor-pointer" onClick={this.handleCloseClick}>
-                   <FontAwesomeIcon icon="times"/>
-                 </div>)
-              : null}
-          </div>
-          {modalBody[this.props.modalSetting.modalType]}
-        </div>
+        {this.props.modalSetting.modalType === MODAL_TYPE_IMAGE
+          ? <Image />
+          : (<div className={`modal-cont d-flex f-dir-col ${modalSizeClass[this.props.modalSetting.modalProp.size]}`}>
+              <div className="d-flex font-size-xl pb-3">
+                <div className="f-grow-1 align-center">
+                  {this.props.modalSetting.modalProp.title}
+                </div>
+                {this.props.modalSetting.modalProp.displayClose &&
+                  (<div className="cursor-pointer" onClick={this.handleCloseClick}>
+                      <FontAwesomeIcon icon="times"/>
+                  </div>)
+                }
+              </div>
+              {modalBody[this.props.modalSetting.modalType]}
+            </div>)
+        }
       </div>
     );
   }
