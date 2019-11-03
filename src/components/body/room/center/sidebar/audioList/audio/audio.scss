@@ -1,0 +1,17 @@
+@import '../../../../../../../styles/partials/variables';
+@import '../../../../../../../styles/partials/mediaQueries';
+
+.audio-cont{
+  background: $white-clr;
+  color: $primary-clr;
+  margin-bottom: 5px;
+  user-select: none;
+}
+
+.audio-owner{
+  color: $disabled-clr;
+}
+
+.audio-btn{
+  flex-basis: 30px;
+}

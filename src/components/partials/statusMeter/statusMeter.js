@@ -11,6 +11,10 @@ import './statusMeter.scss';
  *  @props color       - [string] hex code of color
  *  @props onChange    - [func]   what to do when a user edits the meter(while user is moving it)
  *  @props onChangeEnd - [func]   what to do when a user finishes editting the meter
+ *  @props onMove      - [func]   what to do when a user moves the cursor
+ *  @props onUp        - [func]   what to do when a user MouseUp/TouchEnd
+ *  @props onDown      - [func]   what to do when a user MouseDown/TouchStart the cursor
+ * 
  */
 class StatusMeter extends Component {
   constructor (props){
@@ -38,6 +42,9 @@ class StatusMeter extends Component {
 
   handleMouseDown (e){
     e.stopPropagation();
+    if (this.props.onDown) {
+      this.props.onDown();
+    }
 
     if (!this.state.isMoveMode && this.props.editable){
       this.setState({ isMoveMode: true });
@@ -51,6 +58,9 @@ class StatusMeter extends Component {
   handleMouseMove (e){
     e.preventDefault();
     e.stopPropagation();
+    if (this.props.onMove) {
+      this.props.onMove();
+    }
 
     if (this.state.isMoveMode && this.props.editable){
       this.moveCircle(e.pageX);
@@ -60,6 +70,9 @@ class StatusMeter extends Component {
 
   handleMouseUp (e){
     e.preventDefault();
+    if (this.props.onUp) {
+      this.props.onUp();
+    }
 
     if (this.state.isMoveMode && this.props.editable){
       this.setState({ isMoveMode: false });
@@ -72,6 +85,9 @@ class StatusMeter extends Component {
 
   handleTouchStart (e){
     e.stopPropagation();
+    if (this.props.onDown) {
+      this.props.onDown();
+    }
 
     if (!this.state.isMoveMode && this.props.editable){
       this.setState({ isMoveMode: true });
@@ -84,6 +100,9 @@ class StatusMeter extends Component {
 
   handleTouchMove (e){
     e.stopPropagation();
+    if (this.props.onMove) {
+      this.props.onMove();
+    }
 
     if (this.state.isMoveMode && this.props.editable){
       this.moveCircle(e.touches[0].pageX);
@@ -93,6 +112,9 @@ class StatusMeter extends Component {
 
   handleTouchEnd (e){
     e.preventDefault();
+    if (this.props.onUp) {
+      this.props.onUp();
+    }
 
     if (this.state.isMoveMode && this.props.editable){
       this.setState({ isMoveMode: false });
@@ -128,7 +150,7 @@ class StatusMeter extends Component {
                                  : this.props.value / this.props.maxValue * 100;
 
     return(
-      <div className={`pt-1 pb-1 pr-2 ${cursorClass}`} onTouchStart={this.handleTouchStart} onMouseDown={this.handleMouseDown}>
+      <div className={`f-grow-1 pt-1 pb-1 pr-2 ${cursorClass}`} onTouchStart={this.handleTouchStart} onMouseDown={this.handleMouseDown}>
         <div className="status-meter-cont" ref={this.meterRef}>
           <div className="status-meter" style={{background: this.props.color, width: `${statusMeterWidth}%`}}></div>
           { this.props.editable && <div className="status-meter-circle" style={{background: this.props.color, left: `calc(${statusMeterWidth}% - 5px)`}}></div>}

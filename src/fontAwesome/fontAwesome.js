@@ -67,7 +67,12 @@ import {
   faAngleDoubleDown,
   faMobileAlt,
   faTabletAlt,
-  faDesktop
+  faDesktop,
+  faMusic,
+  faPlay,
+  faPause,
+  faVolumeMute,
+  faVolumeUp
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -135,5 +140,10 @@ library.add(
   faAngleDoubleDown,
   faMobileAlt,
   faTabletAlt,
-  faDesktop
+  faDesktop,
+  faMusic,
+  faPlay,
+  faPause,
+  faVolumeMute,
+  faVolumeUp
 );

@@ -15,6 +15,7 @@ import {
   HIDE_MAP_GEO,
   SET_SIDEBAR_CHAR,
   SET_SIDEBAR_NOTE,
+  SET_SIDEBAR_AUDIO,
   SET_DISPLAY_MAP
 } from '../../constants/actionTypes';
 
@@ -40,6 +41,10 @@ export const setSidebarChar = () => {
 
 export const setSidebarNote = () => {
   return { type: SET_SIDEBAR_NOTE };
+};
+
+export const setSidebarAudio = () => {
+  return { type: SET_SIDEBAR_AUDIO };
 };
 
 export const showChat = () => {

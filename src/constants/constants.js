@@ -8,6 +8,7 @@ export const CENTER_MODE_MAP  = 'map';
 // Sidebar mode
 export const SIDEBAR_MODE_CHAR = 'char';
 export const SIDEBAR_MODE_NOTE = 'note';
+export const SIDEBAR_MODE_AUDIO = 'audio';
 
 // Character Tab Mode
 export const CHAR_MODAL_TAB_GENERAL = 'general';

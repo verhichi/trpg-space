@@ -9,3 +9,8 @@ export const noteTabLabel = {
   [APP_LANG_EN]: 'Notes',
   [APP_LANG_JP]: 'メモ'
 };
+
+export const audioTabLabel = {
+  [APP_LANG_EN]: 'Audio',
+  [APP_LANG_JP]: '音楽'
+};
