@@ -98,7 +98,7 @@ class Lobby extends Component {
                 <div><input className="inp w-100" type="text" onChange={this.handleRoomIdChange}/></div>
                 <button className="btn btn-hot w-100 cursor-pointer" disabled={isDisabled} onClick={this.handleJoinClick}>
                   <div>
-                    <span class="mr-3"><FontAwesomeIcon icon="sign-in-alt"/></span>
+                    <span className="mr-3"><FontAwesomeIcon icon="sign-in-alt"/></span>
                     {lobbyInpJoinBtnLabel[this.props.global.lang]}
                   </div>
                 </button>
@@ -110,7 +110,7 @@ class Lobby extends Component {
                 <div className="lobby-inp-label">{lobbyInpCreateLabel[this.props.global.lang]}</div>
                 <button className="btn btn-hot w-100 cursor-pointer" onClick={this.handleNewClick}>
                   <div>
-                    <span class="mr-3"><FontAwesomeIcon icon="tools"/></span>
+                    <span className="mr-3"><FontAwesomeIcon icon="tools"/></span>
                     {lobbyInpCreateBtnLabel[this.props.global.lang]}
                   </div>
                 </button>

@@ -178,7 +178,7 @@ class EditMap extends Component {
         <div className="d-flex f-dir-col f-grow-1">
           <div className="font-size-lg mb-2">
             <div>{fileInpLabel[this.props.global.lang]}:</div>
-            <label class={`inp-file-cont d-flex w-100 cursor-pointer ${dragOverClass}`}  onDragOver={this.handleDragOver} onDragLeave={this.handleDragLeave} onDrop={this.handleDrop}>
+            <label className={`inp-file-cont d-flex w-100 cursor-pointer ${dragOverClass}`}  onDragOver={this.handleDragOver} onDragLeave={this.handleDragLeave} onDrop={this.handleDrop}>
               <FontAwesomeIcon icon="upload"/>
               <div className="one-line-ellipsis f-grow-1 pl-3">{this.state.fileName.length === 0 ? 'Choose or Drag an image...' : this.state.fileName}</div>
               <input id="imageInput" className="d-none" type="file" accept="image/*" ref={this.fileInput} onChange={this.handleFileChange}/>
@@ -202,7 +202,7 @@ class EditMap extends Component {
         </div>
 
         <button type="button" className="btn btn-hot w-100 cursor-pointer f-shrink-0 f-align-self-end" disabled={isDisabled} onClick={this.handleButtonClick}>
-          <span class="mr-3"><FontAwesomeIcon icon="check"/></span>
+          <span className="mr-3"><FontAwesomeIcon icon="check"/></span>
           {submitBtnLabel[this.props.global.lang]}
         </button>
       </div>
