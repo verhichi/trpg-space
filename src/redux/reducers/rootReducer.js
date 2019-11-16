@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 
+import audioReducer        from './sliceReducers/audio';
 import charReducer        from './sliceReducers/char';
 import chatLogReducer     from './sliceReducers/chatLog';
 import chatSettingReducer from './sliceReducers/chatSetting';
@@ -15,6 +16,7 @@ import userReducer        from './sliceReducers/user';
 import { RESET_STATE } from '../../constants/actionTypes';
 
 const appReducer = combineReducers({
+  audioList:      audioReducer,
   charList:       charReducer,
   chatLog:        chatLogReducer,
   chatSetting:    chatSettingReducer,

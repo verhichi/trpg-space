@@ -15,12 +15,14 @@ import {
   HIDE_MAP_GEO,
   SET_SIDEBAR_CHAR,
   SET_SIDEBAR_NOTE,
+  SET_SIDEBAR_AUDIO,
   SET_DISPLAY_MAP
 } from '../../../constants/actionTypes';
 
 import {
   SIDEBAR_MODE_CHAR,
   SIDEBAR_MODE_NOTE,
+  SIDEBAR_MODE_AUDIO,
   CENTER_MODE_CHAT,
   CENTER_MODE_MAP
 } from '../../../constants/constants';
@@ -133,6 +135,12 @@ const displayReducer = (state = initialState, action) => {
       return {
         ...state,
         sidebarTabMode: SIDEBAR_MODE_NOTE
+      };
+    
+    case SET_SIDEBAR_AUDIO:
+      return {
+        ...state,
+        sidebarTabMode: SIDEBAR_MODE_AUDIO
       };
 
     case SET_DISPLAY_MAP:

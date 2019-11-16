@@ -1,8 +1,7 @@
 {
   "short_name": "TRPG SPACE",
   "name": "TRPG SPACE",
-  "description": "Free responsive web application for private online TRPG sessions that anyone can use without having to subscribe.
-Comes with real-time chat, multilingual support(English and Japanese), and basic TRPG functionalities.",
+  "description": "Free responsive web application for private online TRPG sessions that anyone can use without having to subscribe. Comes with real-time chat, multilingual support(English and Japanese), and basic TRPG functionalities.",
   "icons": [
     {
       "src": "icon72.png",
