@@ -12,5 +12,5 @@ export const noteTabLabel = {
 
 export const audioTabLabel = {
   [APP_LANG_EN]: 'Audio',
-  [APP_LANG_JP]: '音楽'
+  [APP_LANG_JP]: 'オーディオ'
 };

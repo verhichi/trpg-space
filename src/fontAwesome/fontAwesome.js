@@ -72,7 +72,8 @@ import {
   faPlay,
   faPause,
   faVolumeMute,
-  faVolumeUp
+  faVolumeUp,
+  faPodcast
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -145,5 +146,6 @@ library.add(
   faPlay,
   faPause,
   faVolumeMute,
-  faVolumeUp
+  faVolumeUp,
+  faPodcast
 );

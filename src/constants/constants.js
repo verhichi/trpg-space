@@ -59,6 +59,8 @@ export const MODAL_TYPE_REQUESTING   = 'REQUESTING';
 export const MODAL_TYPE_ROOM_SETTING = 'ROOM_SETTING';
 export const MODAL_TYPE_UPLOAD_IMG   = 'UPLOAD_IMG';
 export const MODAL_TYPE_VIEW_CHAR    = 'VIEW_CHAR';
+export const MODAL_TYPE_NEW_AUDIO    = 'NEW_AUDIO';
+export const MODAL_TYPE_IMPORT_AUDIO = 'IMPORT_AUDIO';
 
 // Notice Type
 export const NOTICE_TYPE_EXPIRE = 'NOTICE_TYPE_EXPIRE';
@@ -76,3 +78,7 @@ export const MIN_GEO_LENGTH = 50;
 
 // DiceBot Reg Exp
 export const DICE_BOT_REGEXP = /^([s])?(\d{1,2})d(\d{1,3})(([+-])(\d{1,3}))?$/i;
+
+// Audio Type
+export const AUDIO_TYPE_BGM = 'BGM'
+export const AUDIO_TYPE_SE = 'SE'

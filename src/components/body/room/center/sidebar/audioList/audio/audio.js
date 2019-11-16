@@ -1,12 +1,10 @@
-import React, { Component } from 'react';
-// import { connect } from 'react-redux';
-// import { MODAL_TYPE_EDIT_NOTE, MODAL_TYPE_CONFIRM } from '../../../../../../../constants/constants';
-// import { showModal, hideModal } from '../../../../../../../redux/actions/modal';
-// import { removeNote } from '../../../../../../../redux/actions/note';
-// import { deleteNoteMessage, editNoteModalTitle } from './note.i18n'
-// import socket from '../../../../../../../socket/socketClient';
-// import jszip from 'jszip';
-// import { saveAs } from 'file-saver';
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { MODAL_TYPE_CONFIRM } from '../../../../../../../constants/constants';
+import { showModal, hideModal } from '../../../../../../../redux/actions/modal';
+import { removeAudio, setAudio, playAudio, pauseAudio, muteAudio, unmuteAudio, timeUpdateAudio } from '../../../../../../../redux/actions/audio';
+import { deleteAudioMessage, groupPlayAudioMessage } from './audio.i18n'
+import socket from '../../../../../../../socket/socketClient';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,27 +15,28 @@ import './audio.scss';
 // Components
 import StatusMeter from '../../../../../../partials/statusMeter/statusMeter'
 
-// // Redux Map State To Prop
-// const mapStateToProps = (state) => {
-//   return { global:   state.global };
-// };
+// Redux Map State To Prop
+const mapStateToProps = (state) => {
+  return {
+    global: state.global,
+    userList: state.userList
+  };
+};
 
-// // Redux Map Dispatch To Props
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     hideModal:  ()                     => dispatch(hideModal()),
-//     showModal:  (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
-//     removeNote: (noteId)               => dispatch(removeNote(noteId))
-//   };
-// };
-
-// const DragHandle = SortableHandle(() => {
-//   return (
-//     <div className="drag-handle p-1">
-//       <FontAwesomeIcon icon="bars"/>
-//     </div>
-//   );
-// });
+// Redux Map Dispatch To Props
+const mapDispatchToProps = (dispatch) => {
+  return {
+    showModal:  (modalType, modalProp) => dispatch(showModal(modalType, modalProp)),
+    hideModal: () => dispatch(hideModal()),
+    setAudio: (audioId) => dispatch(setAudio(audioId)),
+    playAudio: (audioId) => dispatch(playAudio(audioId)),
+    removeAudio: (audioId) => dispatch(removeAudio(audioId)),
+    pauseAudio: (audioId) => dispatch(pauseAudio(audioId)),
+    muteAudio: (audioId) => dispatch(muteAudio(audioId)),
+    unmuteAudio: (audioId) => dispatch(unmuteAudio(audioId)),
+    timeUpdateAudio: (audioId, curTime) => dispatch(timeUpdateAudio(audioId, curTime))
+  };
+};
 
 // CREATE mi:ss FORMAT STRING FROM SECOND
 function formatAudioDuration(audio_duration_sec){
@@ -49,140 +48,130 @@ function formatAudioDuration(audio_duration_sec){
 class Audio extends Component {
   constructor (props){
     super(props);
-    this.audioRef = React.createRef();
-    this.fileInput = React.createRef();
-    this.state = {
-      isPlaying: false,
-      isMuted: false,
-      curTime: 0,
-      endTime: 0,
-      isPauseBeforeSeek: false
-    }
+    this.state = { isPlayingBeforeSeek: false }
 
     this.handleValueChange     = this.handleValueChange.bind(this);
     this.handleValueChangeEnd  = this.handleValueChangeEnd.bind(this);
     this.handlePlayClickToggle = this.handlePlayClickToggle.bind(this);
+    this.handleGroupPlay       = this.handleGroupPlay.bind(this);
     this.handleMuteClickToggle = this.handleMuteClickToggle.bind(this);
-    this.handleFileChange      = this.handleFileChange.bind(this);
     this.handleSeekStart       = this.handleSeekStart.bind(this);
     this.handleSeekEnd         = this.handleSeekEnd.bind(this);
-  }
-
-  componentDidMount () {
-    // this.audioRef.current.src = this.props.src
-
-    this.audioRef.current.addEventListener('loadedmetadata', (e) => {
-      e.stopPropagation();
-      this.setState({ curTime: Math.floor(this.audioRef.current.currentTime) })
-      this.setState({ endTime: Math.floor(this.audioRef.current.duration) })
-    })
-
-    this.audioRef.current.addEventListener('timeupdate', (e) => {
-      e.stopPropagation();
-      this.setState({ curTime: Math.floor(this.audioRef.current.currentTime) })
-    })
+    this.handleRemoveClick     = this.handleRemoveClick.bind(this);
   }
 
   handleValueChange (statId, value){
-    this.audioRef.current.currentTime = Math.floor(value)
-    this.setState({ curTime: Math.floor(value) })
+    this.props.timeUpdateAudio(this.props.audio.audioId, Math.floor(value))
   }
 
   handleValueChangeEnd (statId, value){
-    this.audioRef.current.currentTime = Math.floor(value)
-    this.setState({ curTime: Math.floor(value) })
+    this.props.timeUpdateAudio(this.props.audio.audioId, Math.floor(value))
   }
 
   handlePlayClickToggle (e) {
     e.stopPropagation();
-    this.setState({ isPlaying: !this.state.isPlaying }, () => {
-      this.state.isPlaying ? this.audioRef.current.play() : this.audioRef.current.pause();
+    if (this.props.audio.isPlaying) {
+      this.props.pauseAudio(this.props.audio.audioId)
+    } else {
+      this.props.setAudio(this.props.audio.audioId)
+      this.props.playAudio(this.props.audio.audioId)
+    }
+  }
+
+  handleGroupPlay (e) {
+    e.stopPropagation();
+    this.props.showModal(MODAL_TYPE_CONFIRM, {
+      title:        '',
+      displayClose: false,
+      confirmText:  groupPlayAudioMessage[this.props.global.lang] + this.props.audio.title,
+      accept:       [
+        socket.emit.bind(socket, 'groupPlayAudio', this.props.global.roomId, this.props.audio.audioId),
+        this.props.setAudio.bind(this, this.props.audio.audioId),
+        this.props.playAudio.bind(this, this.props.audio.audioId),
+        this.props.hideModal
+      ],
+      decline:      this.props.hideModal
     });
   }
 
   handleMuteClickToggle (e) {
     e.stopPropagation();
-    this.setState({ isMuted: !this.state.isMuted }, () => {
-      this.audioRef.current.muted = this.state.isMuted
-    });
+    this.props.audio.isMuted
+      ? this.props.unmuteAudio(this.props.audio.audioId)
+      : this.props.muteAudio(this.props.audio.audioId)
   }
 
   handleSeekStart () {
-    this.setState({ isPauseBeforeSeek: this.audioRef.current.paused });
-    this.audioRef.current.pause();
-  }
-
-  handleSeekEnd () {
-    this.state.isPauseBeforeSeek ? this.audioRef.current.pause() : this.audioRef.current.play();
-  }
-
-  handleFileChange (e){
-    e.preventDefault();
-
-    const reader = new FileReader();
-    reader.readAsDataURL(this.fileInput.current.files[0]);
-
-    reader.onload = () => {
-      this.audioRef.current.src = reader.result
+    if (this.props.audio.isPlaying) {
+      this.setState({ isPlayingBeforeSeek: true });
+      this.props.pauseAudio(this.props.audio.audioId);
     }
   }
 
-  // handleRemoveClick (e){
-  //   e.preventDefault();
-  //   this.props.showModal(MODAL_TYPE_CONFIRM, {
-  //     title:        '',
-  //     displayClose: false,
-  //     confirmText:  deleteNoteMessage[this.props.global.lang],
-  //     accept:       [
-  //       this.props.removeNote.bind(this, this.props.noteData.noteId),
-  //       socket.emit.bind(socket, 'delNote', this.props.global.roomId, this.props.noteData.noteId),
-  //       this.props.hideModal
-  //     ],
-  //     decline:      this.props.hideModal
-  //   });
-  // }
+  handleSeekEnd () {
+    if (this.state.isPlayingBeforeSeek) {
+      this.setState({ isPlayingBeforeSeek: false });
+      this.props.playAudio(this.props.audio.audioId);
+    }
+  }
+
+  handleRemoveClick (e){
+    e.preventDefault();
+    this.props.showModal(MODAL_TYPE_CONFIRM, {
+      title:        '',
+      displayClose: false,
+      confirmText:  deleteAudioMessage[this.props.global.lang] + this.props.audio.title,
+      accept:       [
+        this.props.removeAudio.bind(this, this.props.audio.audioId),
+        socket.emit.bind(socket, 'delAudio', this.props.global.roomId, this.props.audio.audioId),
+        this.props.hideModal
+      ],
+      decline:      this.props.hideModal
+    });
+  }
 
   render() {
-    const isOwnAudio = true
-    const playIcon = this.state.isPlaying ? 'pause' : 'play'
-    const muteIcon = this.state.isMuted ? 'volume-mute' : 'volume-up'
-    const curTime = formatAudioDuration(this.state.curTime)
-    const endTime = formatAudioDuration(this.state.endTime)
+    const isOwnAudio = this.props.audio.ownerId === this.props.global.id
+    const playIcon = this.props.audio.isPlaying ? 'pause' : 'play'
+    const muteIcon = this.props.audio.isMuted ? 'volume-mute' : 'volume-up'
+    const curTime = formatAudioDuration(this.props.audio.curTime)
+    const endTime = formatAudioDuration(this.props.audio.duration)
+    const userName = this.props.userList.find(user => user.id === this.props.audio.ownerId).name;
 
     return (
       <div className="audio-cont d-flex">
         <div className="f-grow-1 p-1">
-          <label className="inp-file-cont d-flex w-100 cursor-pointer">
-            <FontAwesomeIcon icon="upload"/>
-            <div className="one-line-ellipsis f-grow-1 pl-3"></div>
-            <input id="imageInput" className="d-none" type="file" ref={this.fileInput} onChange={this.handleFileChange}/>
-          </label>
-          <div className="audio-owner one-line-ellipsis font-size-sm font-weight-bold">Daichi</div>
-          <div className="one-line-ellipsis font-size-lg font-weight-bold mb-2">Audio Title</div>
+          <div className="audio-owner one-line-ellipsis font-size-sm font-weight-bold">{ userName }</div>
+          <div className="one-line-ellipsis font-size-lg font-weight-bold mb-2">{ this.props.audio.title }</div>
           <div className="audio-meter-cont d-flex">
             <div className="cursor-pointer mr-2" onClick={this.handlePlayClickToggle}>
-              <FontAwesomeIcon icon={playIcon} />
+              <FontAwesomeIcon icon={ playIcon } />
             </div>
             <div className="cursor-pointer mr-2" onClick={this.handleMuteClickToggle}>
-              <FontAwesomeIcon icon={muteIcon} />
+              <FontAwesomeIcon icon={ muteIcon } />
             </div>
             <span className="mr-2">{ curTime }</span>
-            <StatusMeter statId={'123'} color={'#F00'} value={this.state.curTime} maxValue={this.state.endTime} editable={true} onChange={this.handleValueChange} onChangeEnd={this.handleValueChangeEnd} onDown={this.handleSeekStart} onUp={this.handleSeekEnd} />
+            <StatusMeter statId={this.props.audio.audioId} color={'#3697EA'} value={this.props.audio.curTime} maxValue={this.props.audio.duration} editable={true} onChange={this.handleValueChange} onChangeEnd={this.handleValueChangeEnd} onDown={this.handleSeekStart} onUp={this.handleSeekEnd} />
             <span className="ml-2">{ endTime }</span>
           </div>
         </div>
         <div className="font-size-lg d-flex f-dir-col f-shrink-0 pr-1 pt-1">
-          {isOwnAudio
-            && (<div className="audio-btn cursor-pointer align-center">
+          { isOwnAudio
+            && (
+              <Fragment>
+                <div className="audio-btn cursor-pointer align-center" onClick={this.handleRemoveClick}>
                  <FontAwesomeIcon icon="window-close"/>
-                </div>)}
+                </div>
+                <div className="audio-btn cursor-pointer" onClick={this.handleGroupPlay}>
+                  <FontAwesomeIcon icon="podcast" />
+                </div>
+              </Fragment>
+            )
+          }
         </div>
-
-        <audio ref={this.audioRef}></audio>
       </div>
     );
   }
 }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Note);
-export default Audio;
+export default connect(mapStateToProps, mapDispatchToProps)(Audio);

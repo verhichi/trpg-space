@@ -168,4 +168,19 @@ io.on('connection', (socket) => {
     socket.broadcast.to(roomId).emit('delNote', noteId);
   });
 
+  // Logic for when a user adds audio
+  socket.on('audio', (roomId, audioData) => {
+    socket.broadcast.to(roomId).emit('audio', audioData);
+  });
+
+  // Logic for when a user adds audio
+  socket.on('delAudio', (roomId, audioId) => {
+    socket.broadcast.to(roomId).emit('delAudio', audioId);
+  });
+
+  // Logic for when a user adds audio
+  socket.on('groupPlayAudio', (roomId, audioId) => {
+    socket.broadcast.to(roomId).emit('groupPlayAudio', audioId);
+  });
+
 });

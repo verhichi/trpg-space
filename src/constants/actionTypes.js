@@ -87,3 +87,14 @@ export const SET_SIDEBAR_CHAR  = 'SET_SIDEBAR_CHAR';
 export const SET_SIDEBAR_NOTE  = 'SET_SIDEBAR_NOTE';
 export const SET_SIDEBAR_AUDIO = 'SET_SIDEBAR_AUDIO';
 export const SET_DISPLAY_MAP   = 'SET_DISPLAY_MAP';
+
+// AUDIO
+export const ADD_AUDIO = 'ADD_AUDIO';
+export const REMOVE_AUDIO = 'REMOVE_AUDIO';
+export const REMOVE_USER_AUDIO = 'REMOVE_USER_AUDIO';
+export const PLAY_AUDIO = 'PLAY_AUDIO';
+export const PAUSE_AUDIO = 'PAUSE_AUDIO';
+export const MUTE_AUDIO = 'MUTE_AUDIO';
+export const UNMUTE_AUDIO = 'UNMUTE_AUDIO';
+export const TIME_UPDATE_AUDIO = 'TIME_UPDATE_AUDIO';
+export const SET_AUDIO = 'SET_AUDIO';

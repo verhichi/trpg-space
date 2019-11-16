@@ -613,3 +613,18 @@
       flex-basis: 1px;
       overflow-y: scroll;
     }
+
+  // spinner
+  .spinner-sm {
+    animation: 1s linear infinite spin;
+    border: 3px solid #aaa;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+  }
+
+  @keyframes spin {
+    0%{transform: rotate(0deg)}
+    100%{transform: rotate(360deg)}
+  }
