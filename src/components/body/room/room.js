@@ -11,7 +11,7 @@ import { addMapChar, editMapChar, removeMapChar, removeAllCharFromSelMap, remove
 import { addNote, editNote, removeNote, removeUserNote } from '../../../redux/actions/note';
 import { removeSendMsgUser, checkSendMsgToAll } from '../../../redux/actions/chatSetting';
 import { addGeo, editGeo, removeGeo, removeAllGeoFromSelMap } from '../../../redux/actions/geo';
-import { setAudio, playAudio, addAudio, removeAudio, removeUserAudio } from '../../../redux/actions/audio';
+import { setAudio, unsetAudio, addAudio, removeAudio, removeUserAudio } from '../../../redux/actions/audio';
 import socket from '../../../socket/socketClient';
 
 // Style
@@ -74,7 +74,7 @@ const mapDispatchToProps = (dispatch) => {
     removeGeo:                (geoId, mapId)  => dispatch(removeGeo(geoId, mapId)),
     removeAllGeoFromSelMap:   (mapId)         => dispatch(removeAllGeoFromSelMap(mapId)),
     setAudio:                 (audioId)       => dispatch(setAudio(audioId)),
-    playAudio:                (audioId)       => dispatch(playAudio(audioId)),
+    unsetAudio:               (audioId)       => dispatch(unsetAudio(audioId)),
     addAudio:                 (audioData)     => dispatch(addAudio(audioData)),
     removeAudio:              (audioId)       => dispatch(removeAudio(audioId)),
     removeUserAudio:          (userId)        => dispatch(removeUserAudio(userId))
@@ -312,7 +312,6 @@ class Room extends Component {
 
     socket.on('groupPlayAudio', audioId => {
       this.props.setAudio(audioId)
-      this.props.playAudio(audioId)
     })
 
     socket.emit('join', this.props.match.params.roomId, this.props.userList.find((user) => user.id === this.props.global.id))

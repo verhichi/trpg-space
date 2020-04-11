@@ -42,8 +42,7 @@ class AudioList extends Component {
   }
 
   render() {
-    const audioBgmList = this.props.audioList.filter(audio => audio.type === AUDIO_TYPE_BGM).map(audio => <Audio key={audio.audioId} audio={audio} />);
-    const audioSeList = this.props.audioList.filter(audio => audio.type === AUDIO_TYPE_SE).map(audio => <Audio key={audio.audioId} audio={audio} />);
+    const audioList = this.props.audioList.map(audio => <Audio key={audio.audioId} audio={audio} />);
 
     return (
       <Fragment>
@@ -56,25 +55,14 @@ class AudioList extends Component {
 
         <div className="mb-2">
           <div className="char-list-label align-center font-weight-bold text-dec-underline pb-1">
-            BGM
+            YouTube Videos
           </div>
-          {audioBgmList.length === 0
+          {audioList.length === 0
               ? (<div className="empty-cont p-3 font-size-lg align-center font-weight-bold cursor-pointer" onClick={this.handleNewClick}>
-                Create New BGM
+                Add YouTube Video
                 </div>)
-              : audioBgmList}
+              : audioList}
         </div>
-
-        <div className="mb-2">
-          <div className="char-list-label align-center font-weight-bold text-dec-underline pb-1">
-            SE
-          </div>
-          {audioSeList.length === 0
-              ? (<div className="empty-cont p-3 font-size-lg align-center font-weight-bold cursor-pointer" onClick={this.handleNewClick}>
-                Create New SE
-                </div>)
-              : audioSeList}
-          </div>
       </Fragment>
     );
   }

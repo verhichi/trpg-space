@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { SIDEBAR_MODE_CHAR, SIDEBAR_MODE_NOTE, SIDEBAR_MODE_AUDIO } from '../../../../../constants/constants';
 import { setSidebarChar, setSidebarNote, setSidebarAudio } from '../../../../../redux/actions/display';
-import { charTabLabel, noteTabLabel, audioTabLabel } from './sidebar.i18n';
+import { charTabLabel, noteTabLabel, youtubeTabLabel } from './sidebar.i18n';
+import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -80,8 +81,8 @@ class Sidebar extends Component {
             <span className="d-none-sm"> {noteTabLabel[this.props.global.lang]}</span>
           </div>
           <div className={`list-tab f-shrink-0 align-center p-1 cursor-pointer ${toggleAudioTabClass}`} onClick={this.handleAudioTabClick}>
-            <FontAwesomeIcon icon="music"/>
-            <span className="d-none-sm"> {audioTabLabel[this.props.global.lang]}</span>
+            <FontAwesomeIcon icon={faYoutube}/>
+            <span className="d-none-sm"> {youtubeTabLabel[this.props.global.lang]}</span>
           </div>
         </div>
 
