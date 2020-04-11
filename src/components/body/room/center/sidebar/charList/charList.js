@@ -64,7 +64,7 @@ class CharList extends Component {
 
         <div className="d-flex mb-2 mt-2 f-shrink-0">
           <button className="btn-append btn-slim btn-hot cursor-pointer align-center f-grow-1 p-2" onClick={this.handleNewClick}>
-            <span class="mr-3"><FontAwesomeIcon icon="user-plus"/></span>
+            <span className="mr-3"><FontAwesomeIcon icon="user-plus"/></span>
             {createCharBtnLabel[this.props.global.lang]}
           </button>
           <button className="btn-prepend btn-slim btn-hot cursor-pointer align-center f-shrink-0 p-2" onClick={this.handleImportClick}>

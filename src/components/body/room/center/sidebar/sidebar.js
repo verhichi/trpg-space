@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { SIDEBAR_MODE_CHAR, SIDEBAR_MODE_NOTE } from '../../../../../constants/constants';
-import { setSidebarChar, setSidebarNote } from '../../../../../redux/actions/display';
-import { charTabLabel, noteTabLabel } from './sidebar.i18n';
+import { SIDEBAR_MODE_CHAR, SIDEBAR_MODE_NOTE, SIDEBAR_MODE_AUDIO } from '../../../../../constants/constants';
+import { setSidebarChar, setSidebarNote, setSidebarAudio } from '../../../../../redux/actions/display';
+import { charTabLabel, noteTabLabel, audioTabLabel } from './sidebar.i18n';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,6 +13,7 @@ import './sidebar.scss';
 // // Component
 import CharList from './charList/charList';
 import NoteList from './noteList/noteList';
+import AudioList from './audioList/audioList';
 
 // Redux Map State To Prop
 const mapStateToProps = (state) => {
@@ -26,7 +27,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setSidebarChar: () => dispatch(setSidebarChar()),
-    setSidebarNote: () => dispatch(setSidebarNote())
+    setSidebarNote: () => dispatch(setSidebarNote()),
+    setSidebarAudio: () => dispatch(setSidebarAudio()),
   };
 };
 
@@ -36,14 +38,19 @@ class Sidebar extends Component {
 
     this.handleCharTabClick = this.handleCharTabClick.bind(this);
     this.handleNoteTabClick = this.handleNoteTabClick.bind(this);
+    this.handleAudioTabClick = this.handleAudioTabClick.bind(this);
   }
 
-  handleCharTabClick (e){
+  handleCharTabClick (){
     this.props.setSidebarChar();
   }
 
-  handleNoteTabClick (e){
+  handleNoteTabClick (){
     this.props.setSidebarNote();
+  }
+
+  handleAudioTabClick (){
+    this.props.setSidebarAudio();
   }
 
   render() {
@@ -52,10 +59,12 @@ class Sidebar extends Component {
 
     const toggleCharTabClass  = this.props.displaySetting.sidebarTabMode === SIDEBAR_MODE_CHAR ? 'is-active' : '';
     const toggleNotesTabClass = this.props.displaySetting.sidebarTabMode === SIDEBAR_MODE_NOTE ? 'is-active' : '';
+    const toggleAudioTabClass = this.props.displaySetting.sidebarTabMode === SIDEBAR_MODE_AUDIO ? 'is-active' : '';
 
     const tabType = {
       [SIDEBAR_MODE_CHAR]: <CharList/>,
-      [SIDEBAR_MODE_NOTE]: <NoteList/>
+      [SIDEBAR_MODE_NOTE]: <NoteList/>,
+      [SIDEBAR_MODE_AUDIO]: <AudioList/>
     };
 
     return (
@@ -69,6 +78,10 @@ class Sidebar extends Component {
           <div className={`list-tab f-shrink-0 align-center p-1 cursor-pointer ${toggleNotesTabClass}`} onClick={this.handleNoteTabClick}>
             <FontAwesomeIcon icon="sticky-note"/>
             <span className="d-none-sm"> {noteTabLabel[this.props.global.lang]}</span>
+          </div>
+          <div className={`list-tab f-shrink-0 align-center p-1 cursor-pointer ${toggleAudioTabClass}`} onClick={this.handleAudioTabClick}>
+            <FontAwesomeIcon icon="music"/>
+            <span className="d-none-sm"> {audioTabLabel[this.props.global.lang]}</span>
           </div>
         </div>
 

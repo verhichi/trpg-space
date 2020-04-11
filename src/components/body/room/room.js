@@ -11,6 +11,7 @@ import { addMapChar, editMapChar, removeMapChar, removeAllCharFromSelMap, remove
 import { addNote, editNote, removeNote, removeUserNote } from '../../../redux/actions/note';
 import { removeSendMsgUser, checkSendMsgToAll } from '../../../redux/actions/chatSetting';
 import { addGeo, editGeo, removeGeo, removeAllGeoFromSelMap } from '../../../redux/actions/geo';
+import { setAudio, playAudio, addAudio, removeAudio, removeUserAudio } from '../../../redux/actions/audio';
 import socket from '../../../socket/socketClient';
 
 // Style
@@ -32,7 +33,8 @@ const mapStateToProps = (state) => {
     mapList:        state.mapList,
     mapCharList:    state.mapCharList,
     chatSetting:    state.chatSetting,
-    noteList:       state.noteList
+    noteList:       state.noteList,
+    audioList:      state.audioList
   };
 };
 
@@ -71,6 +73,11 @@ const mapDispatchToProps = (dispatch) => {
     editGeo:                  (geoData)       => dispatch(editGeo(geoData)),
     removeGeo:                (geoId, mapId)  => dispatch(removeGeo(geoId, mapId)),
     removeAllGeoFromSelMap:   (mapId)         => dispatch(removeAllGeoFromSelMap(mapId)),
+    setAudio:                 (audioId)       => dispatch(setAudio(audioId)),
+    playAudio:                (audioId)       => dispatch(playAudio(audioId)),
+    addAudio:                 (audioData)     => dispatch(addAudio(audioData)),
+    removeAudio:              (audioId)       => dispatch(removeAudio(audioId)),
+    removeUserAudio:          (userId)        => dispatch(removeUserAudio(userId))
   };
 };
 
@@ -161,6 +168,12 @@ class Room extends Component {
         }
       });
 
+      this.props.audioList.forEach(audio => {
+        if (audio.ownerId === this.props.global.id){
+          socket.emit('audio', this.props.global.roomId, audio)
+        }
+      })
+
       this.props.mapList.forEach(map => {
         if (!map.private){
           if (map.ownerId === this.props.global.id){
@@ -223,6 +236,7 @@ class Room extends Component {
       });
 
       this.props.removeUserNote(leaveData.id);
+      this.props.removeUserAudio(leaveData.id);
 
       if (this.props.chatSetting.sendTo.sendToUsers.includes(leaveData.id)){
         this.props.removeSendMsgUser(leaveData.id);
@@ -287,6 +301,19 @@ class Room extends Component {
     socket.on('delNote', noteId => {
       this.props.removeNote(noteId);
     });
+
+    socket.on('audio', audio => {
+      this.props.addAudio(audio)
+    });
+
+    socket.on('delAudio', audioId => {
+      this.props.removeAudio(audioId);
+    });
+
+    socket.on('groupPlayAudio', audioId => {
+      this.props.setAudio(audioId)
+      this.props.playAudio(audioId)
+    })
 
     socket.emit('join', this.props.match.params.roomId, this.props.userList.find((user) => user.id === this.props.global.id))
       .then(() => {

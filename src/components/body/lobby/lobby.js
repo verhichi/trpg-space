@@ -4,7 +4,6 @@ import { MODAL_TYPE_NEW_USER, APP_LANG_EN, APP_LANG_JP } from '../../../constant
 import { lobbyInpJoinLabel, lobbyInpJoinBtnLabel, lobbyInpCreateLabel, lobbyInpCreateBtnLabel, lobbyNameInpModalTitle, lobbySection01Title, lobbySection01Text, lobbySection02Title, lobbySection02Text1, lobbySection02Text2, lobbySection02Text3, lobbySection02Text4, lobbySection03Title, lobbySection03Text } from './lobby.i18n';
 import { showModal } from '../../../redux/actions/modal';
 import { resetState } from '../../../redux/actions/global';
-import Particles from 'particlesjs';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -42,13 +41,6 @@ class Lobby extends Component {
   componentDidMount (){
     this.props.resetState();
     this.intervalKey = setInterval(this.setImageIdx, 5000);
-    setTimeout(function (){
-      Particles.init({
-        selector: '#particles-js',
-        maxParticles: 30,
-        color: ['#FFF', '#999', '#BBB', '#DDD']
-      });
-    }, 500);
   }
 
   componentWillUnmount (){
@@ -106,7 +98,7 @@ class Lobby extends Component {
                 <div><input className="inp w-100" type="text" onChange={this.handleRoomIdChange}/></div>
                 <button className="btn btn-hot w-100 cursor-pointer" disabled={isDisabled} onClick={this.handleJoinClick}>
                   <div>
-                    <span class="mr-3"><FontAwesomeIcon icon="sign-in-alt"/></span>
+                    <span className="mr-3"><FontAwesomeIcon icon="sign-in-alt"/></span>
                     {lobbyInpJoinBtnLabel[this.props.global.lang]}
                   </div>
                 </button>
@@ -118,7 +110,7 @@ class Lobby extends Component {
                 <div className="lobby-inp-label">{lobbyInpCreateLabel[this.props.global.lang]}</div>
                 <button className="btn btn-hot w-100 cursor-pointer" onClick={this.handleNewClick}>
                   <div>
-                    <span class="mr-3"><FontAwesomeIcon icon="tools"/></span>
+                    <span className="mr-3"><FontAwesomeIcon icon="tools"/></span>
                     {lobbyInpCreateBtnLabel[this.props.global.lang]}
                   </div>
                 </button>
@@ -203,7 +195,6 @@ class Lobby extends Component {
           &copy; verhichi 2019
         </footer>
 
-        <canvas id="particles-js"></canvas>
       </div>
     );
   }

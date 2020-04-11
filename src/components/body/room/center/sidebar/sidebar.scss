@@ -38,7 +38,8 @@
 .list-tab{
   background: $tertiary-clr;
   color: #888;
-  flex-basis: 50%;
+  flex-basis: 33.33%;
+  font-size: 18px;
 
   &.is-active{
     background: $secondary-clr;

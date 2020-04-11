@@ -64,9 +64,17 @@
       width: 100%;
     }
 
+    .min-w-100{
+      min-width: 100%;
+    }
+
   // Height
     .h-100{
       height: 100%;
+    }
+
+    .min-h-100{
+      min-height: 100%;
     }
 
     .vh-100{
@@ -566,6 +574,10 @@
     }
 
   // overflow
+    .overflow-auto{
+      overflow: auto;
+    }
+
     .overflow-y-auto{
       overflow-y: auto;
     }
@@ -601,3 +613,18 @@
       flex-basis: 1px;
       overflow-y: scroll;
     }
+
+  // spinner
+  .spinner-sm {
+    animation: 1s linear infinite spin;
+    border: 3px solid #aaa;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+  }
+
+  @keyframes spin {
+    0%{transform: rotate(0deg)}
+    100%{transform: rotate(360deg)}
+  }
