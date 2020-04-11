@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import uuid from 'uuid';
 import { addAudio } from '../../../redux/actions/audio';
 import { hideModal } from '../../../redux/actions/modal';
-import { audioUrlInpLabel, audioTitleInpLabel, urlFormatError, submitBtnLabel, audioTypeLabel, audioTypeSe, audioTypeBgm } from './newAudio.i18n';
+import { audioUrlInpLabel, audioTitleInpLabel, urlFormatError, submitBtnLabel } from './newAudio.i18n';
 import { YOUTUBE_IFRAME_URL_PREFIX } from '../../../constants/constants';
 import { isYoutubeUrl } from '../../../utils/validate';
 import { extractYoutubeId } from '../../../utils/extract';
@@ -11,9 +11,6 @@ import socket from '../../../socket/socketClient';
 
 // Font Awesome Component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-// Components
-import AppRadio from '../../partials/appRadio/appRadio'
 
 // Style
 import './newAudio.scss';
@@ -90,7 +87,7 @@ class NewAudio extends Component {
       <div className="d-flex f-dir-col f-grow-1">
         <div className="mb-2 font-size-lg">
           <div>{audioTitleInpLabel[this.props.global.lang]}</div>
-          <input className="inp w-100" type="text" placeholder="Enter audio title..." value={this.state.title} onChange={this.handleTitleChange} />
+          <input className="inp w-100" type="text" placeholder="Enter title..." value={this.state.title} onChange={this.handleTitleChange} />
         </div>
         <div className="font-size-lg">
           <div>{audioUrlInpLabel[this.props.global.lang]}</div>
@@ -108,7 +105,5 @@ class NewAudio extends Component {
     );
   }
 }
-
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewAudio);
