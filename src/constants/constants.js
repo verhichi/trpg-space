@@ -79,6 +79,10 @@ export const MIN_GEO_LENGTH = 50;
 // DiceBot Reg Exp
 export const DICE_BOT_REGEXP = /^([s])?(\d{1,2})d(\d{1,3})(([+-])(\d{1,3}))?$/i;
 
+// YoutubeURL Regexp
+export const YOUTUBE_URL_REGEXP = /^https:\/\/youtu\.be\/(.+)$/
+export const YOUTUBE_IFRAME_URL_PREFIX = 'https://www.youtube.com/embed/'
+
 // Audio Type
 export const AUDIO_TYPE_BGM = 'BGM'
 export const AUDIO_TYPE_SE = 'SE'

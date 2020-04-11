@@ -29,6 +29,22 @@
     height: 100%;
   }
 
+// iframe youtube
+  .iframe-cont {
+    padding-top: 56.25%;
+    position: relative;
+    width: 100%;
+  }
+
+  .iframe-youtube {
+    background: #f1f1f1;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+  }
+
 // Background
   main {
     background: $primary-clr;

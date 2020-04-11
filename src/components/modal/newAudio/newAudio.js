@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import uuid from 'uuid';
 import { addAudio } from '../../../redux/actions/audio';
 import { hideModal } from '../../../redux/actions/modal';
-import { fileInpLabel, audioTitleInpLabel, fileTypeError, fileSizeError, submitBtnLabel, audioTypeLabel, audioTypeSe, audioTypeBgm } from './newAudio.i18n';
-import { AUDIO_TYPE_BGM, AUDIO_TYPE_SE } from '../../../constants/constants';
+import { audioUrlInpLabel, audioTitleInpLabel, urlFormatError, submitBtnLabel, audioTypeLabel, audioTypeSe, audioTypeBgm } from './newAudio.i18n';
+import { YOUTUBE_IFRAME_URL_PREFIX, AUDIO_TYPE_BGM, AUDIO_TYPE_SE } from '../../../constants/constants';
+import { isYoutubeUrl } from '../../../utils/validate';
+import { extractYoutubeId } from '../../../utils/extract';
 import socket from '../../../socket/socketClient';
 
 // Font Awesome Component
@@ -41,33 +43,17 @@ class NewAudio extends Component {
     this.state = {
       submitted:     false,
       type:          AUDIO_TYPE_BGM,
-      fileExist:     false,
-      fileSizeError: false,
-      fileTypeError: false,
-      fileName:      '',
-      src:           '',
+      url:           '',
+      youtubeId:     '',
       title:         '',
-      duration:      0,
-      isDragOver:    false,
-      isLoading:     false
+      isLoading:     false,
+      isUrlFormatError: false,
     };
 
-    this.fileInput         = React.createRef();
     this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleUrlChange   = this.handleUrlChange.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
-    this.handleFileChange  = this.handleFileChange.bind(this);
-    this.handleDrop        = this.handleDrop.bind(this);
-    this.handleDragOver    = this.handleDragOver.bind(this);
-    this.handleDragLeave   = this.handleDragLeave.bind(this);
-    this.handleFile        = this.handleFile.bind(this);
     this.handleTypeChange  = this.handleTypeChange.bind(this);
-  }
-
-  componentDidMount () {
-    this.audioRef.current.addEventListener('loadedmetadata', (e) => {
-      e.stopPropagation();
-      this.setState({ duration: Math.floor(this.audioRef.current.duration) })
-    })
   }
 
   handleTitleChange (e) {
@@ -76,6 +62,11 @@ class NewAudio extends Component {
 
   handleTypeChange (e) {
     this.setState({ type: e.target.value });
+  }
+
+  handleUrlChange (e) {
+    const url = e.target.value.trim()
+    this.setState({ url, isUrlFormatError: !isYoutubeUrl(url), youtubeId: extractYoutubeId(url) });
   }
 
   handleButtonClick (e){
@@ -87,8 +78,8 @@ class NewAudio extends Component {
         ownerId: this.props.global.id,
         title: this.state.title,
         type: this.state.type,
-        src: this.state.src,
-        duration: this.state.duration
+        url: this.state.url,
+        youtubeId: this.state.youtubeId,
       };
 
       this.props.addAudio(audioData);
@@ -97,68 +88,10 @@ class NewAudio extends Component {
     }
   }
 
-  handleFileChange (e){
-    e.preventDefault();
 
-    this.handleFile(this.fileInput.current.files[0]);
-  }
-
-  handleDragOver (e){
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (!this.state.isDragOver){
-      this.setState({ isDragOver: true });
-    }
-  }
-
-  handleDragLeave (e){
-    e.preventDefault();
-    e.stopPropagation();
-
-    this.setState({ isDragOver: false });
-  }
-
-  handleDrop (e){
-    e.preventDefault();
-    e.stopPropagation();
-
-    this.setState({ isDragOver: false });
-    if (e.dataTransfer.items){
-      // const fileTypePattern = /^image\//;
-      for (let file of e.dataTransfer.items){
-        // if (file.kind === 'file' && imageTypePattern.test(file.type)){
-        if (file.kind === 'file'){
-          this.handleFile(file.getAsFile());
-          break;
-        }
-      }
-    }
-  }
-
-  handleFile (file){
-    this.setState({ isLoading: true });
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    reader.onload = () => {
-      const filePattern = /\.(mp3|wav|pcm|flac|alac)$/i;
-      this.audioRef.current.src = reader.result
-
-      this.setState({
-        fileExist:     file.name.length !== 0,
-        fileTypeError: !filePattern.test(file.name),
-        fileSizeError: file.size > 5000000,
-        fileName:      file.name,
-        src:           reader.result,
-        isLoading:     false
-      });
-    }
-  }
 
   render() {
-    const dragOverClass = this.state.isDragOver ? 'is-dragover' : '';
-    const isDisabled    = this.isLoading || !this.state.title.length || !this.state.fileExist || this.state.fileTypeError || this.state.fileSizeError || this.state.submitted;
+    const isDisabled = this.isLoading || !this.state.title.length || !this.state.url || this.state.submitted;
 
     return (
       <div className="d-flex f-dir-col f-grow-1">
@@ -172,26 +105,15 @@ class NewAudio extends Component {
           <input className="inp w-100" type="text" placeholder="Enter audio title..." value={this.state.title} onChange={this.handleTitleChange} />
         </div>
         <div className="f-grow-1 font-size-lg">
-          <div>{fileInpLabel[this.props.global.lang]}:</div>
-          <label class={`inp-file-cont d-flex w-100 cursor-pointer ${dragOverClass}`} onDragOver={this.handleDragOver} onDragLeave={this.handleDragLeave} onDrop={this.handleDrop}>
-            <FontAwesomeIcon icon="upload"/>
-            <div className="one-line-ellipsis f-grow-1 pl-3">
-              {this.state.isLoading ? (<div className="spinner-sm"></div>) : this.state.fileName.length === 0 ? 'Choose or Drag an image...' : this.state.fileName}
-            </div>
-            <input id="imageInput" className="d-none" type="file" ref={this.fileInput} onChange={this.handleFileChange}/>
-          </label>
-          {this.state.fileTypeError
-            ? (<div className="text-danger">{fileTypeError[this.props.global.lang]}</div>)
-            : null}
-          {this.state.fileSizeError
-            ? (<div className="text-danger">{fileSizeError[this.props.global.lang]}</div>)
-            : null}
+          <div>{audioUrlInpLabel[this.props.global.lang]}</div>
+          <input className="inp w-100" type="text" placeholder="https://youtu.be/XXXXXXXXXXX" value={this.state.url} onChange={this.handleUrlChange} />
+          {this.state.isUrlFormatError && <div className="text-danger">{urlFormatError[this.props.global.lang]}</div>}
         </div>
+        {!this.state.isUrlFormatError && this.state.url && this.state.youtubeId && <div className="iframe-cont"><iframe className="iframe-youtube" title="sample" frameborder="0" iv_load_policy="3" loop="1" src={`${YOUTUBE_IFRAME_URL_PREFIX}${this.state.youtubeId}`}></iframe></div>}
         <button className="btn btn-hot cursor-pointer" disabled={isDisabled} onClick={this.handleButtonClick}>
-          <span class="mr-3"><FontAwesomeIcon icon="check"/></span>
+          <span className="mr-3"><FontAwesomeIcon icon="check"/></span>
           {submitBtnLabel[this.props.global.lang]}
         </button>
-        <audio ref={this.audioRef}></audio>
       </div>
     );
   }

@@ -30,11 +30,9 @@ const initialState = [
 //     ownerId:   id of the owner of the audio,
 //     title:     title of audio,
 //     type:      BGM / SE,
-//     src:       src of audio,
+//     url:       youtube link of audio,
+//     youtubeId: youtube video id,
 //     isPlaying: is audio playing(true) or paused(false),
-//     isMuted:   is audio muted(true) or unmuted(false),
-//     curTime:   currentTime of audio(seconds),
-//     duration:  duration of audio(seconds),
 //   }
 ];
 
@@ -47,8 +45,6 @@ const audioReducer = (state = initialState, action) => {
         return [ ...state, {
           ...action.audio,
           isPlaying: false,
-          isMuted: false,
-          curTime: 0
         } ];
       }
 
@@ -74,113 +70,6 @@ const audioReducer = (state = initialState, action) => {
           AUDIO_EL1.src = ''
         }
         return audio.ownerId === action.userId
-      });
-
-    case SET_AUDIO:
-      const AUDIO1 = state.find(audio => audio.audioId === action.audioId)
-      if (AUDIO1) {
-        const AUDIO_EL = getAudioEl(AUDIO1.type)
-        AUDIO_EL.id = AUDIO1.audioId
-        AUDIO_EL.muted = AUDIO1.isMuted
-        AUDIO_EL.src = AUDIO1.src
-      }
-      return state
-
-    case PLAY_AUDIO:
-      const AUDIO2 = state.find(audio => audio.audioId === action.audioId)
-      if (AUDIO2){
-        const AUDIO_EL2 = getAudioEl(AUDIO2.type)
-        return state.map(audio => {
-          if (audio.audioId === AUDIO2.audioId) {
-            AUDIO_EL2.currentTime = AUDIO2.curTime
-            AUDIO_EL2.play()
-  
-            return {
-              ...audio,
-              isPlaying: true
-            }
-          } else if (audio.type === AUDIO2.type) {
-            return {
-              ...audio,
-              isPlaying: false
-            }
-          } else {
-            return audio
-          }
-        });
-      }
-      return state;
-
-    case PAUSE_AUDIO:
-      const AUDIO3 = state.find(audio => audio.audioId === action.audioId)
-      if (AUDIO3){
-        const AUDIO_EL3 = getAudioEl(AUDIO3.type)
-        return state.map(audio => {
-          if (audio.audioId === AUDIO3.audioId) {
-            AUDIO_EL3.pause()
-            return {
-              ...audio,
-              isPlaying: false
-            }
-          } else {
-            return audio
-          }
-        });
-      }
-      return state;
-
-    case MUTE_AUDIO:
-      const AUDIO4 = state.find(audio => audio.audioId === action.audioId)
-      if (AUDIO4){
-        const AUDIO_EL4 = getAudioEl(AUDIO4.type)
-        return state.map(audio => {
-          if (audio.audioId ===AUDIO4.audioId) {
-            if (AUDIO4.isPlaying) {
-              AUDIO_EL4.muted = true
-            }
-            return {
-              ...audio,
-              isMuted: true
-            }
-          } else {
-            return audio
-          }
-        });
-      }
-      return state
-
-
-    case UNMUTE_AUDIO:
-      const AUDIO5 = state.find(audio => audio.audioId === action.audioId)
-      if (AUDIO5){
-        const AUDIO_EL5 = getAudioEl(AUDIO5.type)
-        return state.map(audio => {
-          if (audio.audioId === AUDIO5.audioId) {
-            if (AUDIO5.isPlaying) {
-              AUDIO_EL5.muted = false
-            }
-            return {
-              ...audio,
-              isMuted: false
-            }
-          } else {
-            return audio
-          }
-        });
-      }
-      return state
-
-
-    case TIME_UPDATE_AUDIO:
-      return state.map(audio => {
-        if (audio.audioId === action.audioId){
-          return {
-            ...audio,
-            curTime: action.curTime
-          }
-        } else {
-          return audio
-        }
       });
     
     default:

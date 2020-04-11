@@ -146,7 +146,7 @@ class UploadImg extends Component {
       <div className="d-flex f-dir-col f-grow-1">
         <div className="f-grow-1 font-size-lg">
           <div>{fileInpLabel[this.props.global.lang]}:</div>
-          <label class={`inp-file-cont d-flex w-100 cursor-pointer ${dragOverClass}`} onDragOver={this.handleDragOver} onDragLeave={this.handleDragLeave} onDrop={this.handleDrop}>
+          <label className={`inp-file-cont d-flex w-100 cursor-pointer ${dragOverClass}`} onDragOver={this.handleDragOver} onDragLeave={this.handleDragLeave} onDrop={this.handleDrop}>
             <FontAwesomeIcon icon="upload"/>
             <div className="one-line-ellipsis f-grow-1 pl-3">{this.state.fileName.length === 0 ? 'Choose or Drag an image...' : this.state.fileName}</div>
             <input id="imageInput" className="d-none" type="file" accept="image/*" ref={this.fileInput} onChange={this.handleFileChange}/>
@@ -159,7 +159,7 @@ class UploadImg extends Component {
             : null}
         </div>
         <button className="btn btn-hot cursor-pointer" disabled={isDisabled} onClick={this.handleButtonClick}>
-          <span class="mr-3"><FontAwesomeIcon icon="check"/></span>
+          <span className="mr-3"><FontAwesomeIcon icon="check"/></span>
           {submitBtnLabel[this.props.global.lang]}
         </button>
       </div>
