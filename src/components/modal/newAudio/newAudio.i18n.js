@@ -11,11 +11,11 @@ export const audioTitleInpLabel = {
 };
 
 export const urlFormatError = {
-  [APP_LANG_EN]: 'Youtube URL must be in the https://youtu.be/XXXXXXXXXXX format!',
-  [APP_LANG_JP]: 'Youtube URLはhttps://youtu.be/XXXXXXXXXXXの形でなければいけません!'
+  [APP_LANG_EN]: 'YouTube URL must be in the https://youtu.be/XXXXXXXXXXX format!',
+  [APP_LANG_JP]: 'YouTube URLはhttps://youtu.be/XXXXXXXXXXXの形でなければいけません!'
 };
 
 export const submitBtnLabel = {
-  [APP_LANG_EN]: 'Add Audio',
-  [APP_LANG_JP]: 'オーディオの追加'
+  [APP_LANG_EN]: 'Add YouTube Video',
+  [APP_LANG_JP]: 'YouTube動画の追加'
 };
