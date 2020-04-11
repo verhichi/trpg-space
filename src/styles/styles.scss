@@ -37,9 +37,14 @@
     z-index: 100;
 
     &.mini-player {
-      width: 400px;
-      height: 225px;
+      width: 178px;
+      height: 100px;
       padding-top: 0 !important;
+
+      @include md {
+        width: 400px;
+        height: 225px;
+      }
     }
   }
 

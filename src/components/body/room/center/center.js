@@ -26,19 +26,19 @@ class Center extends Component {
       [CENTER_MODE_MAP]:  <MapCont/>
     }
 
-    const currentYoutubeBGM = this.props.audioList.find(audio => audio.isPlaying && audio.type === AUDIO_TYPE_BGM)
+    const currentYoutubeVideo = this.props.audioList.find(audio => audio.isPlaying)
 
     return (
       <div className="room-center-cont d-flex f-grow-1">
         <Sidebar/>
         {centerType[this.props.displaySetting.centerMode]}
-        {currentYoutubeBGM && 
+        {currentYoutubeVideo && 
           <div className="iframe-cont mini-player p-absolute bottom-0 right-0">
             <iframe
               className="iframe-youtube bottom-0 right-0"
               title="sample"
               frameBorder="0"
-              src={`${YOUTUBE_IFRAME_URL_PREFIX}${currentYoutubeBGM.youtubeId}?autoplay=1&loop=1&playlist=${currentYoutubeBGM.youtubeId}`}
+              src={`${YOUTUBE_IFRAME_URL_PREFIX}${currentYoutubeVideo.youtubeId}?autoplay=1&loop=1&playlist=${currentYoutubeVideo.youtubeId}`}
             />
           </div>
         }

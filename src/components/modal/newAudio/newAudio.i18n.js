@@ -6,23 +6,8 @@ export const audioUrlInpLabel = {
 };
 
 export const audioTitleInpLabel = {
-  [APP_LANG_EN]: 'Audio Title',
-  [APP_LANG_JP]: 'オーディオタイトル'
-};
-
-export const audioTypeLabel = {
-  [APP_LANG_EN]: 'Audio Type',
-  [APP_LANG_JP]: 'オーディオタイプ'
-};
-
-export const audioTypeBgm = {
-  [APP_LANG_EN]: 'BGM',
-  [APP_LANG_JP]: 'BGM'
-};
-
-export const audioTypeSe = {
-  [APP_LANG_EN]: 'Sound Effect',
-  [APP_LANG_JP]: '効果音'
+  [APP_LANG_EN]: 'Title',
+  [APP_LANG_JP]: 'Title'
 };
 
 export const urlFormatError = {

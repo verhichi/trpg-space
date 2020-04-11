@@ -11,7 +11,6 @@ const initialState = [
 //     audioId:   id of the audio,
 //     ownerId:   id of the owner of the audio,
 //     title:     title of audio,
-//     type:      BGM / SE,
 //     url:       youtube link of audio,
 //     youtubeId: youtube video id,
 //     isPlaying: is audio playing(true) or paused(false),
