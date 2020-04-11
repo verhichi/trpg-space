@@ -29,6 +29,34 @@
     height: 100%;
   }
 
+// iframe youtube
+  .iframe-cont {
+    padding-top: 56.25%;
+    position: relative;
+    width: 100%;
+    z-index: 100;
+
+    &.mini-player {
+      width: 178px;
+      height: 100px;
+      padding-top: 0 !important;
+
+      @include md {
+        width: 400px;
+        height: 225px;
+      }
+    }
+  }
+
+  .iframe-youtube {
+    background: #f1f1f1;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+  }
+
 // Background
   main {
     background: $primary-clr;
@@ -83,27 +111,27 @@
 
   // Font Size
     .font-size-xxl{
-      font-size: $font-size-xxl;
+      font-size: $font-size-xxl !important;
     }
 
     .font-size-xl{
-      font-size: $font-size-xl;
+      font-size: $font-size-xl !important;
     }
 
     .font-size-lg{
-      font-size: $font-size-lg;
+      font-size: $font-size-lg !important;
     }
 
     .font-size-md{
-      font-size: $font-size-md;
+      font-size: $font-size-md !important;
     }
 
     .font-size-sm{
-      font-size: $font-size-sm;
+      font-size: $font-size-sm !important;
     }
 
     .font-size-xs{
-      font-size: $font-size-xs;
+      font-size: $font-size-xs !important;
     }
 
     .font-size-xxs{
@@ -493,6 +521,15 @@
         top: 0;
         width: 100%;
       }
+    }
+
+  // positions
+    .bottom-0 {
+      bottom: 0 !important;
+    }
+
+    .right-0 {
+      right: 0 !important;
     }
 
   // Button styling

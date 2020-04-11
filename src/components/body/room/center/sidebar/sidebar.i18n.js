@@ -10,7 +10,7 @@ export const noteTabLabel = {
   [APP_LANG_JP]: 'メモ'
 };
 
-export const audioTabLabel = {
-  [APP_LANG_EN]: 'Audio',
-  [APP_LANG_JP]: 'オーディオ'
+export const youtubeTabLabel = {
+  [APP_LANG_EN]: 'YouTube',
+  [APP_LANG_JP]: 'YouTube'
 };
