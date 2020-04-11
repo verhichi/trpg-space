@@ -2,27 +2,9 @@ import {
   ADD_AUDIO,
   REMOVE_AUDIO,
   REMOVE_USER_AUDIO,
-  PLAY_AUDIO,
-  PAUSE_AUDIO,
-  MUTE_AUDIO,
-  UNMUTE_AUDIO,
-  TIME_UPDATE_AUDIO,
-  SET_AUDIO
+  SET_AUDIO,
+  UNSET_AUDIO,
 } from '../../../constants/actionTypes';
-
-import {
-  AUDIO_TYPE_BGM,
-  AUDIO_TYPE_SE
-} from '../../../constants/constants';
-
-const AUDIO_BGM_EL = document.querySelector('#audio_bgm');
-const AUDIO_SE_EL = document.querySelector('#audio_se');
-
-function getAudioEl (type) {
-  return type === AUDIO_TYPE_BGM ? AUDIO_BGM_EL : AUDIO_SE_EL;
-}
-
-// AUDIO_BGM_EL.addEventListener('timeupdate', )
 
 const initialState = [
 //   {
@@ -49,28 +31,24 @@ const audioReducer = (state = initialState, action) => {
       }
 
     case REMOVE_AUDIO:
-      const AUDIO = state.find(audio => audio.audioId === action.audioId)
-      if (AUDIO){
-        if (AUDIO.isPlaying) {
-          const AUDIO_EL0 = getAudioEl(AUDIO.type);
-          AUDIO_EL0.id = '';
-          AUDIO_EL0.pause();
-          AUDIO_EL0.src = ''
-        }
-        return state.filter(audio => audio.audioId !== AUDIO.audioId);
-      }
-      return state;
+      return state.filter(audio => action.audioId !== audio.audioId);
 
     case REMOVE_USER_AUDIO:
-      return state.filter(audio => {
-        if (audio.ownerId === action.userId && audio.isPlaying) {
-          const AUDIO_EL1 = getAudioEl(audio.type);
-          AUDIO_EL1.id = '';
-          AUDIO_EL1.pause();
-          AUDIO_EL1.src = ''
+      return state.filter(audio => audio.ownerId !== action.userId);
+
+    case SET_AUDIO:
+      return state.map(audio => {
+        return {
+          ...audio,
+          isPlaying: audio.audioId === action.audioId
         }
-        return audio.ownerId === action.userId
-      });
+      })
+
+    case UNSET_AUDIO:
+      return state.map(audio => {
+        if (audio.audioId === action.audioId) return { ...audio, isPlaying: false }
+        return audio
+      })
     
     default:
       return state;

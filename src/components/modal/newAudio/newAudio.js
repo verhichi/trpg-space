@@ -109,7 +109,7 @@ class NewAudio extends Component {
           <input className="inp w-100" type="text" placeholder="https://youtu.be/XXXXXXXXXXX" value={this.state.url} onChange={this.handleUrlChange} />
           {this.state.isUrlFormatError && <div className="text-danger">{urlFormatError[this.props.global.lang]}</div>}
         </div>
-        {!this.state.isUrlFormatError && this.state.url && this.state.youtubeId && <div className="iframe-cont"><iframe className="iframe-youtube" title="sample" frameborder="0" iv_load_policy="3" loop="1" src={`${YOUTUBE_IFRAME_URL_PREFIX}${this.state.youtubeId}`}></iframe></div>}
+        {!this.state.isUrlFormatError && this.state.url && this.state.youtubeId && <div className="iframe-cont"><iframe className="iframe-youtube" title="sample" frameBorder="0" iv_load_policy="3" loop="1" src={`${YOUTUBE_IFRAME_URL_PREFIX}${this.state.youtubeId}`}></iframe></div>}
         <button className="btn btn-hot cursor-pointer" disabled={isDisabled} onClick={this.handleButtonClick}>
           <span className="mr-3"><FontAwesomeIcon icon="check"/></span>
           {submitBtnLabel[this.props.global.lang]}
