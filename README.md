@@ -3,6 +3,7 @@
 Free responsive web application for private online TRPG sessions that anyone can use without having to subscribe.  
 Comes with real-time chat, multilingual support(English and Japanese), and basic TRPG functionalities.
 
+![1588968865908.jpg](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/317253/7d13d8b1-b5cc-7768-ef76-fa2e93ccd1a2.jpeg)
 
 # Tables of Contents
 - [Functionalities](#functionalities)
@@ -45,6 +46,21 @@ Listed below are some of the functionalities that are available within this tool
   - Note
     - creating and sharing multiple rich-text notes
     - importing / exporting notes
+
+<details><summary>Lobby</summary>
+
+![1588967975101.jpg](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/317253/fd703b2f-4fb8-7612-288e-f154aba75d29.jpeg)
+</details>
+
+<details><summary>Dice rolls and Messages</summary>
+
+![1588970030040.jpg](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/317253/ab86ed8f-4156-d46e-ac37-77d928e1cbab.jpeg)
+</details>
+
+<details><summary>Move characters around board</summary>
+
+![1588970385562.gif](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/317253/69787118-80e8-8c7b-a035-2bc1e6512ddc.gif)
+</details>
 
 
 ## Supported Browsers
