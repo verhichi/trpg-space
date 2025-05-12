@@ -47,21 +47,22 @@ Listed below are some of the functionalities that are available within this tool
     - creating and sharing multiple rich-text notes
     - importing / exporting notes
 
-<details><summary>Lobby</summary>
+Lobby
 
 ![1588967975101.jpg](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/317253/fd703b2f-4fb8-7612-288e-f154aba75d29.jpeg)
-</details>
 
-<details><summary>Dice rolls and Messages</summary>
+Dice rolls and Messages
 
 ![1588970030040.jpg](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/317253/ab86ed8f-4156-d46e-ac37-77d928e1cbab.jpeg)
-</details>
 
-<details><summary>Move characters around board</summary>
+
+Move characters around board
 
 ![1588970385562.gif](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/317253/69787118-80e8-8c7b-a035-2bc1e6512ddc.gif)
-</details>
 
+Covering areas on the board
+
+![1589020464479.gif](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/317253/dc0a6840-88de-79e7-d793-6e0b0c6706f5.gif)
 
 ## Supported Browsers
 This application has been tested on these browsers and devices.
